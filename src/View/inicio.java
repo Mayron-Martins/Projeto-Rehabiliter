@@ -5,6 +5,10 @@
  */
 package View;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+
 /**
  *
  * @author 55989
@@ -16,6 +20,11 @@ public class inicio extends javax.swing.JFrame {
      */
     public inicio() {
         initComponents();
+          Dimension tamTela = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension tamJan = getSize();
+            setLocation(new Point((tamTela.width - tamJan.width)/2, (tamTela.height- tamJan.height)/2));
+            setResizable(false);
+            
     }
 
     /**
@@ -27,21 +36,24 @@ public class inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Sem título-1.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2)
+            .addComponent(jLabel1)
         );
 
         pack();
@@ -83,6 +95,6 @@ public class inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
