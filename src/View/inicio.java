@@ -67,20 +67,14 @@ public class inicio extends javax.swing.JFrame {
         new Thread(){
             int i=0;
                 public void run(){
-                while(i<100)
-                {
+                while(i<100){
                 i++;
-                lblcarrega.setText(String.valueOf(i)+"%");
-                
+                lblcarrega.setText(String.valueOf(i)+"%");   
                 try {sleep(50);} catch (Exception e) {}
-                
                 }//!-->FECHA O WHILE-->
-                
                 inicio.this.dispose();
                 new LoginFuncionário().setVisible(true);
-                
                 }//!-->Fecha o run-->
-        
         }.start();//"-->Fecha o Thread-->
         
     }//GEN-LAST:event_formWindowActivated
