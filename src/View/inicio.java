@@ -72,8 +72,9 @@ public class inicio extends javax.swing.JFrame {
                 lblcarrega.setText(String.valueOf(i)+"%");   
                 try {sleep(30);} catch (Exception e) {}
                 }//!-->FECHA O WHILE-->
-                inicio.this.dispose();
+                
                 new LoginFuncionário().setVisible(true);
+                inicio.this.dispose();
                 }//!-->Fecha o run-->
         }.start();//"-->Fecha o Thread-->
         

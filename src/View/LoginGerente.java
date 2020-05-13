@@ -5,6 +5,8 @@
  */
 package View;
 
+import java.awt.Color;
+
 /**
  *
  * @author 55989
@@ -16,6 +18,10 @@ public class LoginGerente extends javax.swing.JFrame {
      */
     public LoginGerente() {
         initComponents();
+        botaoentrarGerente.setBackground(new Color(0,0,0,0));
+        botaoFuncionario.setBackground(new Color(0,0,0,0));
+        botaoDesenvolvedor.setBackground(new Color(0,0,0,0));
+        botaoSair.setBackground(new Color(0,0,0,0));
     }
 
     /**
@@ -27,21 +33,92 @@ public class LoginGerente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        inputCpfFuncionario = new javax.swing.JTextField();
+        inputSenha = new javax.swing.JPasswordField();
+        botaoentrarGerente = new javax.swing.JButton();
+        botaoFuncionario = new javax.swing.JButton();
+        botaoDesenvolvedor = new javax.swing.JButton();
+        botaoSair = new javax.swing.JButton();
+        plano_de_fundo = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        inputCpfFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputCpfFuncionarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(inputCpfFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 206, 300, 26));
+        getContentPane().add(inputSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 248, 300, 26));
+
+        botaoentrarGerente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoentrarGerente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/loginfuncionário/botaoHoverEntrar.png"))); // NOI18N
+        botaoentrarGerente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoentrarGerenteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoentrarGerente, new org.netbeans.lib.awtextra.AbsoluteConstraints(253, 312, 150, 32));
+
+        botaoFuncionario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoFuncionario.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logingerente/botaoHoverFuncionario.png"))); // NOI18N
+        botaoFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFuncionarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 361, 255, 31));
+
+        botaoDesenvolvedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoDesenvolvedor.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/loginfuncionário/botaoHoverDesenvolvedor.png"))); // NOI18N
+        botaoDesenvolvedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDesenvolvedorActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoDesenvolvedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 402, 255, 31));
+
+        botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSairActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 50, 30));
+
+        plano_de_fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logingerente/login-gerente.jpg"))); // NOI18N
+        getContentPane().add(plano_de_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 520));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void inputCpfFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputCpfFuncionarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputCpfFuncionarioActionPerformed
+
+    private void botaoentrarGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoentrarGerenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoentrarGerenteActionPerformed
+
+    private void botaoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionarioActionPerformed
+        // TODO add your handling code here:
+        
+        LoginFuncionário login = new LoginFuncionário();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_botaoFuncionarioActionPerformed
+
+    private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_botaoSairActionPerformed
+
+    private void botaoDesenvolvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDesenvolvedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoDesenvolvedorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +156,12 @@ public class LoginGerente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoDesenvolvedor;
+    private javax.swing.JButton botaoFuncionario;
+    private javax.swing.JButton botaoSair;
+    private javax.swing.JButton botaoentrarGerente;
+    private javax.swing.JTextField inputCpfFuncionario;
+    private javax.swing.JPasswordField inputSenha;
+    private javax.swing.JLabel plano_de_fundo;
     // End of variables declaration//GEN-END:variables
 }

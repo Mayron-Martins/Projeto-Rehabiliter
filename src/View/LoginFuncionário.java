@@ -19,7 +19,7 @@ public class LoginFuncionário extends javax.swing.JFrame {
     public LoginFuncionário() {
         initComponents();
         botaosair.setBackground(new Color(0,0,0,0));
-        botaoentrar.setBackground(new Color(0,0,0,0));
+        botaoentrarFuncionario.setBackground(new Color(0,0,0,0));
         botaoDesenvolvedor.setBackground(new Color(0,0,0,0));
         botaoGerente.setBackground(new Color(0,0,0,0));
        
@@ -36,9 +36,9 @@ public class LoginFuncionário extends javax.swing.JFrame {
 
         botaosair = new javax.swing.JButton();
         inputCpfFuncionario = new javax.swing.JTextField();
-        inputSenha = new javax.swing.JPasswordField();
+        inputSenhaFuncionario = new javax.swing.JPasswordField();
         botaoDesenvolvedor = new javax.swing.JButton();
-        botaoentrar = new javax.swing.JButton();
+        botaoentrarFuncionario = new javax.swing.JButton();
         botaoGerente = new javax.swing.JButton();
         plano_de_fundo = new javax.swing.JLabel();
 
@@ -53,7 +53,7 @@ public class LoginFuncionário extends javax.swing.JFrame {
                 botaosairActionPerformed(evt);
             }
         });
-        getContentPane().add(botaosair, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, 50, -1));
+        getContentPane().add(botaosair, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 40, -1));
 
         inputCpfFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,7 +61,7 @@ public class LoginFuncionário extends javax.swing.JFrame {
             }
         });
         getContentPane().add(inputCpfFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 206, 300, 26));
-        getContentPane().add(inputSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 248, 300, 26));
+        getContentPane().add(inputSenhaFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 248, 300, 26));
 
         botaoDesenvolvedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoDesenvolvedor.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/loginfuncionário/botaoHoverDesenvolvedor.png"))); // NOI18N
@@ -72,14 +72,14 @@ public class LoginFuncionário extends javax.swing.JFrame {
         });
         getContentPane().add(botaoDesenvolvedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 403, 255, 31));
 
-        botaoentrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoentrar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/loginfuncionário/botaoHoverEntrarazul.png"))); // NOI18N
-        botaoentrar.addActionListener(new java.awt.event.ActionListener() {
+        botaoentrarFuncionario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoentrarFuncionario.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/loginfuncionário/botaoHoverEntrar.png"))); // NOI18N
+        botaoentrarFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoentrarActionPerformed(evt);
+                botaoentrarFuncionarioActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoentrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 313, 150, 32));
+        getContentPane().add(botaoentrarFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 313, 150, 32));
 
         botaoGerente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoGerente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/loginfuncionário/botaoHoverGerenteescuroo.png"))); // NOI18N
@@ -106,9 +106,9 @@ public class LoginFuncionário extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_inputCpfFuncionarioActionPerformed
 
-    private void botaoentrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoentrarActionPerformed
+    private void botaoentrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoentrarFuncionarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoentrarActionPerformed
+    }//GEN-LAST:event_botaoentrarFuncionarioActionPerformed
 
     private void botaoDesenvolvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDesenvolvedorActionPerformed
         // TODO add your handling code here:
@@ -116,9 +116,10 @@ public class LoginFuncionário extends javax.swing.JFrame {
 
     private void botaoGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerenteActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+    
         LoginGerente login= new LoginGerente();
         login.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_botaoGerenteActionPerformed
 
     /**
@@ -159,10 +160,10 @@ public class LoginFuncionário extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoDesenvolvedor;
     private javax.swing.JButton botaoGerente;
-    private javax.swing.JButton botaoentrar;
+    private javax.swing.JButton botaoentrarFuncionario;
     private javax.swing.JButton botaosair;
     private javax.swing.JTextField inputCpfFuncionario;
-    private javax.swing.JPasswordField inputSenha;
+    private javax.swing.JPasswordField inputSenhaFuncionario;
     private javax.swing.JLabel plano_de_fundo;
     // End of variables declaration//GEN-END:variables
 }
