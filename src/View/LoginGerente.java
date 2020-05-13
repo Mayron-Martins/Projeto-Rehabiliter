@@ -6,6 +6,8 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Point;
+import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -102,7 +104,24 @@ public class LoginGerente extends javax.swing.JFrame {
     }//GEN-LAST:event_inputCpfFuncionarioActionPerformed
 
     private void botaoentrarGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoentrarGerenteActionPerformed
-        // TODO add your handling code here:
+        //!-->TELA TREMER-->
+        Point p= this.getLocation();
+        LoginGerente login=this;
+        new Thread(){
+        @Override
+        public void run(){ 
+            try {
+                 for(int i=0; i<3; i++){
+                    login.setLocation(p.x-10, p.y);
+                    sleep(20);
+                    login.setLocation(p.x+10, p.y);
+                    sleep(20);
+                } 
+            }catch (Exception e) {}
+                         }}.start();
+     //!-->FINAL TELA TREMER-->   
+        
+        
     }//GEN-LAST:event_botaoentrarGerenteActionPerformed
 
     private void botaoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionarioActionPerformed
@@ -120,6 +139,11 @@ public class LoginGerente extends javax.swing.JFrame {
 
     private void botaoDesenvolvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDesenvolvedorActionPerformed
         // TODO add your handling code here:
+        LoginDesenvolvedor login=new LoginDesenvolvedor();
+        login.setVisible(true);
+        this.dispose();
+        
+        
     }//GEN-LAST:event_botaoDesenvolvedorActionPerformed
 
     /**

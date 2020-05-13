@@ -6,13 +6,17 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Point;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author 55989
  */
 public class LoginFuncionário extends javax.swing.JFrame {
-
+    private Point point=new Point();
     /**
      * Creates new form LoginFuncionário
      */
@@ -44,6 +48,19 @@ public class LoginFuncionário extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaosair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/loginfuncionário/botãosair.png"))); // NOI18N
@@ -107,11 +124,31 @@ public class LoginFuncionário extends javax.swing.JFrame {
     }//GEN-LAST:event_inputCpfFuncionarioActionPerformed
 
     private void botaoentrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoentrarFuncionarioActionPerformed
-        // TODO add your handling code here:
+
+        
+        //!-->TELA TREMER-->
+        Point p= this.getLocation();
+        LoginFuncionário login=this;
+        new Thread(){
+        @Override
+        public void run(){ 
+            try {
+                 for(int i=0; i<3; i++){
+                    login.setLocation(p.x-10, p.y);
+                    sleep(20);
+                    login.setLocation(p.x+10, p.y);
+                    sleep(20);
+                } 
+            }catch (Exception e) {}
+                         }}.start();
+     //!-->FINAL TELA TREMER-->          
     }//GEN-LAST:event_botaoentrarFuncionarioActionPerformed
 
     private void botaoDesenvolvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDesenvolvedorActionPerformed
         // TODO add your handling code here:
+        LoginDesenvolvedor login=new LoginDesenvolvedor();
+        login.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_botaoDesenvolvedorActionPerformed
 
     private void botaoGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerenteActionPerformed
@@ -121,6 +158,23 @@ public class LoginFuncionário extends javax.swing.JFrame {
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoGerenteActionPerformed
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+        // TODO add your handling code here:
+       // Point p = this.getLocation();
+        //this.setLocation(p.x + evt.getX()-point.x, p.y + evt.getY()-point.y);
+    }//GEN-LAST:event_formMouseDragged
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+
+
+    }//GEN-LAST:event_formMouseClicked
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        // TODO add your handling code here
+        point.x=evt.getX();
+        point.y=evt.getY();
+    }//GEN-LAST:event_formMousePressed
 
     /**
      * @param args the command line arguments
