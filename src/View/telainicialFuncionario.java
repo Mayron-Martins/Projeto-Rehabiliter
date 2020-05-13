@@ -24,6 +24,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoFinanceiro.setBackground(new Color(0,0,0,0));
         botaoFrequencia.setBackground(new Color(0,0,0,0));
         botaoMenu.setBackground(new Color(0,0,0,0));
+        setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -77,6 +78,11 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
         botaoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuprincipal.png"))); // NOI18N
         botaoMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuHoverPrincipal.png"))); // NOI18N
+        botaoMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoMenuActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 40, 110, 70));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/tela-inicial-funcionário.jpg"))); // NOI18N
@@ -91,6 +97,12 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_botaoSairActionPerformed
+
+    private void botaoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMenuActionPerformed
+        // TODO add your handling code here:
+        Menu jump=new Menu();
+        jump.setVisible(true);
+    }//GEN-LAST:event_botaoMenuActionPerformed
 
     /**
      * @param args the command line arguments
