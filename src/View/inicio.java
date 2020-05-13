@@ -70,7 +70,7 @@ public class inicio extends javax.swing.JFrame {
                 while(i<100){
                 i++;
                 lblcarrega.setText(String.valueOf(i)+"%");   
-                try {sleep(50);} catch (Exception e) {}
+                try {sleep(30);} catch (Exception e) {}
                 }//!-->FECHA O WHILE-->
                 inicio.this.dispose();
                 new LoginFuncionário().setVisible(true);
