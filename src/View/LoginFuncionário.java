@@ -141,7 +141,10 @@ public class LoginFuncionário extends javax.swing.JFrame {
                 } 
             }catch (Exception e) {}
                          }}.start();
-     //!-->FINAL TELA TREMER-->          
+     //!-->FINAL TELA TREMER-->    
+     telainicialFuncionario jump = new telainicialFuncionario();
+     jump.setVisible(true);
+     this.dispose();
     }//GEN-LAST:event_botaoentrarFuncionarioActionPerformed
 
     private void botaoDesenvolvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDesenvolvedorActionPerformed
