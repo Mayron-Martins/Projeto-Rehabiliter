@@ -95,7 +95,9 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
     private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        this.dispose();
+        LoginFuncionário jump = new LoginFuncionário();
+        jump.setVisible(true);
     }//GEN-LAST:event_botaoSairActionPerformed
 
     private void botaoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMenuActionPerformed
