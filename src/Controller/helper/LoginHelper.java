@@ -6,7 +6,7 @@
 package Controller.helper;
 
 import Model.Funcionario;
-import View.LoginFuncionario;
+import View.LoginFuncionário;
 import View.LoginGerente;
 
 /**
@@ -16,10 +16,10 @@ import View.LoginGerente;
 public class LoginHelper {
     //HELPER (AJUDANTE) É COMO SE FOSSE O ESTÁGIARIO, VAMOS DELEGAR FUNÇÕES DO CONTROLLER PARA O HELPER
     
-    private final LoginFuncionario view;
+    private final LoginFuncionário view;
    
 
-    public LoginHelper(LoginFuncionario view) {
+    public LoginHelper(LoginFuncionário view) {
         //é necessário instaciar todas as variáveis
         this.view = view;
       
