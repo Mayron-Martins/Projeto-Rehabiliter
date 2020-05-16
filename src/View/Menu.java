@@ -26,6 +26,9 @@ public class Menu extends javax.swing.JFrame {
         botaoProdutos.setBackground(new Color(0,0,0,0));
         botaoServicos.setBackground(new Color(0,0,0,0));
         botaoFinanceiro.setBackground(new Color(0,0,0,0));
+        botaoBackup.setBackground(new Color(0,0,0,0));
+        botaoImprimirExportar.setBackground(new Color(0,0,0,0));
+        botaoCaixa.setBackground(new Color(0,0,0,0));
         this.setLocation(0, 1);
     }
 
@@ -39,7 +42,7 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         botaoFechar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        botaoBackup = new javax.swing.JButton();
         botaoImprimirExportar = new javax.swing.JButton();
         botaoFinanceiro = new javax.swing.JButton();
         botaoServicos = new javax.swing.JButton();
@@ -47,7 +50,7 @@ public class Menu extends javax.swing.JFrame {
         botaoSair = new javax.swing.JButton();
         botaoAlunos = new javax.swing.JButton();
         botaoProdutos = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        botaoCaixa = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,8 +64,9 @@ public class Menu extends javax.swing.JFrame {
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 0, 40, 40));
 
-        jButton1.setText("jButton1");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 500, 360, 50));
+        botaoBackup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoBackup.png"))); // NOI18N
+        botaoBackup.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverBackup.png"))); // NOI18N
+        getContentPane().add(botaoBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 500, 360, 50));
 
         botaoImprimirExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoImprimir.png"))); // NOI18N
         botaoImprimirExportar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverImprimir.png"))); // NOI18N
@@ -91,17 +95,28 @@ public class Menu extends javax.swing.JFrame {
 
         botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoAlunos.png"))); // NOI18N
         botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverAlunos.png"))); // NOI18N
+        botaoAlunos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlunosActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 113, 360, 50));
 
         botaoProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoProdutos.png"))); // NOI18N
         botaoProdutos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverProdutos.png"))); // NOI18N
         getContentPane().add(botaoProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 242, 360, 50));
 
-        jButton9.setText("jButton1");
-        getContentPane().add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 564, 360, 50));
+        botaoCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoCaixa.png"))); // NOI18N
+        botaoCaixa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverCaixa.png"))); // NOI18N
+        botaoCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCaixaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoCaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 564, 360, 50));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/menu-principal-funcionário.png"))); // NOI18N
-        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 760));
+        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -60, -1, 880));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -116,6 +131,17 @@ public class Menu extends javax.swing.JFrame {
         System.exit(0);
         
     }//GEN-LAST:event_botaoSairActionPerformed
+
+    private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoCaixaActionPerformed
+
+    private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Alunos jump=new Alunos();
+        jump.setVisible(true);
+    }//GEN-LAST:event_botaoAlunosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,6 +180,8 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAlunos;
+    private javax.swing.JButton botaoBackup;
+    private javax.swing.JButton botaoCaixa;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoFinanceiro;
     private javax.swing.JButton botaoImprimirExportar;
@@ -161,8 +189,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton botaoSair;
     private javax.swing.JButton botaoServicos;
     private javax.swing.JButton botaoTurmas;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel planodefundo;
     // End of variables declaration//GEN-END:variables
 }

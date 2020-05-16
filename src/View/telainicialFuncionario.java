@@ -66,6 +66,11 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
         botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosprincipal.png"))); // NOI18N
         botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosHoverprincipal.png"))); // NOI18N
+        botaoAlunos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlunosActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 168, 203));
 
         botaoFrequencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaprincipal.png"))); // NOI18N
@@ -105,6 +110,12 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         Menu jump=new Menu();
         jump.setVisible(true);
     }//GEN-LAST:event_botaoMenuActionPerformed
+
+    private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
+        // TODO add your handling code here:
+        Alunos jump=new Alunos();
+        jump.setVisible(true);
+    }//GEN-LAST:event_botaoAlunosActionPerformed
 
     /**
      * @param args the command line arguments
