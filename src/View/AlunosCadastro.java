@@ -39,8 +39,6 @@ public class AlunosCadastro extends javax.swing.JFrame {
         jTextField11 = new javax.swing.JTextField();
         jTextField12 = new javax.swing.JTextField();
         jTextField13 = new javax.swing.JTextField();
-        jTextField14 = new javax.swing.JTextField();
-        jTextField15 = new javax.swing.JTextField();
         jTextField16 = new javax.swing.JTextField();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
@@ -50,6 +48,8 @@ public class AlunosCadastro extends javax.swing.JFrame {
         jFormattedTextField6 = new javax.swing.JFormattedTextField();
         jFormattedTextField7 = new javax.swing.JFormattedTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jFormattedTextField8 = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         planodefundo = new javax.swing.JLabel();
 
@@ -58,10 +58,8 @@ public class AlunosCadastro extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 50));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 470, -1, -1));
-
-        jButton3.setText("jButton3");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 690, -1, -1));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 468, 190, 32));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 690, 330, 60));
 
         campodeTextoNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,30 +76,26 @@ public class AlunosCadastro extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 336, 240, 32));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 468, 230, 32));
+        getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 468, 170, 32));
 
-        jButton2.setText("jButton2");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 470, -1, -1));
+        jTextField11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField11ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 581, 240, 32));
 
-        jTextField10.setText("jTextField10");
-        getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 470, -1, -1));
+        jTextField12.setText("Santa Inês");
+        getContentPane().add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 582, 140, 30));
 
-        jTextField11.setText("jTextField11");
-        getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 580, -1, -1));
-
-        jTextField12.setText("jTextField12");
-        getContentPane().add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 590, -1, -1));
-
-        jTextField13.setText("jTextField13");
-        getContentPane().add(jTextField13, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 590, -1, -1));
-
-        jTextField14.setText("jTextField14");
-        getContentPane().add(jTextField14, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 590, -1, -1));
-
-        jTextField15.setText("jTextField15");
-        getContentPane().add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 660, -1, -1));
-
-        jTextField16.setText("jTextField16");
-        getContentPane().add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 660, -1, -1));
+        jTextField13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField13ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField13, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 582, 140, 30));
+        getContentPane().add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 650, 140, 32));
         getContentPane().add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 267, 160, 32));
 
         jFormattedTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -118,6 +112,10 @@ public class AlunosCadastro extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 405, 190, 32));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 580, 140, 30));
+        getContentPane().add(jFormattedTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 650, 130, 32));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/fundoteste.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -140,6 +138,14 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private void jFormattedTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField2ActionPerformed
+
+    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField11ActionPerformed
+
+    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField13ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,6 +189,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
@@ -190,13 +197,12 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField5;
     private javax.swing.JFormattedTextField jFormattedTextField6;
     private javax.swing.JFormattedTextField jFormattedTextField7;
+    private javax.swing.JFormattedTextField jFormattedTextField8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField6;
