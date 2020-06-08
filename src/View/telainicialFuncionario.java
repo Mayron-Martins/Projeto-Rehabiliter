@@ -91,7 +91,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 40, 110, 70));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/tela-inicial-funcionário.jpg"))); // NOI18N
-        planodefundo.setText("jLabel1");
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
