@@ -20,9 +20,12 @@ private Point point = new Point();
      */
     public Alunos() {
         initComponents();
+        botaobuscar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
         botaoRemover.setBackground(new Color(0,0,0,0));
+        botaoEditar.setBackground(new Color(0,0,0,0));
+        botaoListar.setBackground(new Color(0,0,0,0));
         tabelaAlunos.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tabelaAlunos.getTableHeader().setOpaque(false);
         tabelaAlunos.getTableHeader().setBackground(new Color(0,0,0));
@@ -43,10 +46,10 @@ private Point point = new Point();
         painelderolagem = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
         botaoRemover = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        botaoEditar = new javax.swing.JButton();
+        botaoListar = new javax.swing.JButton();
         botaoFechar = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        botaobuscar = new javax.swing.JButton();
         botaoAdicionar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -95,17 +98,25 @@ private Point point = new Point();
 
         botaoRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoRemover.png"))); // NOI18N
         botaoRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverremover.png"))); // NOI18N
-        getContentPane().add(botaoRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 168, 205, 50));
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoEditar.png"))); // NOI18N
-        jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoEditarHover.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botaoRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botaoRemoverActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 168, 205, 50));
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 205, 50));
+        getContentPane().add(botaoRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 168, 205, 50));
+
+        botaoEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoEditar.png"))); // NOI18N
+        botaoEditar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoEditarHover.png"))); // NOI18N
+        botaoEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEditarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 168, 205, 50));
+
+        botaoListar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoListar.png"))); // NOI18N
+        botaoListar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverListar.png"))); // NOI18N
+        getContentPane().add(botaoListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 205, 50));
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
@@ -115,7 +126,10 @@ private Point point = new Point();
             }
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 50, 40));
+
+        botaobuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
+        botaobuscar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
+        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 50, 40));
 
         botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
         botaoAdicionar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverAdicionar.png"))); // NOI18N
@@ -155,9 +169,9 @@ private Point point = new Point();
         this.setLocation(p.x+ evt.getX()-point.x,p.y+ evt.getY()-point.y);
     }//GEN-LAST:event_formMouseDragged
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void tabelaAlunosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosComponentHidden
         // TODO add your handling code here:
@@ -171,6 +185,10 @@ private Point point = new Point();
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoAdicionarActionPerformed
+
+    private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoRemoverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,11 +227,11 @@ private Point point = new Point();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
+    private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoFechar;
+    private javax.swing.JButton botaoListar;
     private javax.swing.JButton botaoRemover;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton botaobuscar;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JScrollPane painelderolagem;
