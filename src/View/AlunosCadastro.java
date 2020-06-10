@@ -5,6 +5,8 @@
  */
 package View;
 
+import java.awt.Color;
+
 /**
  *
  * @author 55989
@@ -16,6 +18,9 @@ public class AlunosCadastro extends javax.swing.JFrame {
      */
     public AlunosCadastro() {
         initComponents();
+        botaofechar.setBackground(new Color (0,0,0,0));
+       turmasehorarios.setBackground(new Color (0,0,0,0));
+       botaoConfirmar.setBackground(new Color (0,0,0,0));
     }
 
     /**
@@ -27,14 +32,14 @@ public class AlunosCadastro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        botaofechar = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
+        botaoConfirmar = new javax.swing.JButton();
         campodeTextoNome = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        turmasehorarios = new javax.swing.JButton();
         jTextField10 = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
         jTextField12 = new javax.swing.JTextField();
@@ -50,16 +55,28 @@ public class AlunosCadastro extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox3 = new javax.swing.JComboBox<>();
         jFormattedTextField8 = new javax.swing.JFormattedTextField();
-        jLabel1 = new javax.swing.JLabel();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 50));
+
+        botaofechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
+        botaofechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
+        botaofechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaofecharActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaofechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 50));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 468, 190, 32));
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 690, 330, 60));
+
+        botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
+        botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
+        getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 690, 330, 60));
 
         campodeTextoNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,7 +93,15 @@ public class AlunosCadastro extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 336, 240, 32));
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 468, 230, 32));
+
+        turmasehorarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHora.png"))); // NOI18N
+        turmasehorarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHoraHover.png"))); // NOI18N
+        turmasehorarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turmasehorariosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(turmasehorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 468, 230, 32));
         getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 468, 170, 32));
 
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
@@ -117,9 +142,6 @@ public class AlunosCadastro extends javax.swing.JFrame {
         getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 580, 140, 30));
         getContentPane().add(jFormattedTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 650, 130, 32));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/fundoteste.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/fundo jframecadastroalunos.png"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -146,6 +168,17 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField13ActionPerformed
+
+    private void botaofecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaofecharActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_botaofecharActionPerformed
+
+    private void turmasehorariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turmasehorariosActionPerformed
+        // TODO add your handling code here:
+        AlunosCadastroTurmasEHorarios abrir = new AlunosCadastroTurmasEHorarios();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_turmasehorariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,10 +216,9 @@ public class AlunosCadastro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoConfirmar;
+    private javax.swing.JButton botaofechar;
     private javax.swing.JTextField campodeTextoNome;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -198,7 +230,6 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField6;
     private javax.swing.JFormattedTextField jFormattedTextField7;
     private javax.swing.JFormattedTextField jFormattedTextField8;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
@@ -208,5 +239,6 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JLabel planodefundo;
+    private javax.swing.JButton turmasehorarios;
     // End of variables declaration//GEN-END:variables
 }
