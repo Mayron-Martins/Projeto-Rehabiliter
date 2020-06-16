@@ -26,6 +26,8 @@ public class DatabaseCriator {
     
     //Cria a base de dados e as pastas subjacentes, assim como os grupos de arquivos e delimita um tamanho incial
     public void databaseCriation(String user, String pass){
+        FileCriator criarPastas = new FileCriator();
+        criarPastas.fileCriator();
         try{
             Connection conexao = DriverManager.getConnection(url, user, pass);
             Statement statement = conexao.createStatement();
