@@ -158,6 +158,8 @@ public class Turmas extends javax.swing.JFrame {
 
     private void botaoListarTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarTurmasActionPerformed
         // TODO add your handling code here:
+        turmasFrequencia abrir=new turmasFrequencia();
+        abrir.setVisible(true);
     }//GEN-LAST:event_botaoListarTurmasActionPerformed
 
     /**
