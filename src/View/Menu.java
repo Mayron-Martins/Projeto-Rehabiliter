@@ -83,6 +83,11 @@ public class Menu extends javax.swing.JFrame {
 
         botaoTurmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoTurmas.png"))); // NOI18N
         botaoTurmas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverTurmas.png"))); // NOI18N
+        botaoTurmas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoTurmasActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 179, 360, 50));
 
         botaoSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoSair.png"))); // NOI18N
@@ -143,6 +148,13 @@ public class Menu extends javax.swing.JFrame {
         Alunos jump=new Alunos();
         jump.setVisible(true);
     }//GEN-LAST:event_botaoAlunosActionPerformed
+
+    private void botaoTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTurmasActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Turmas abrir=new Turmas();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_botaoTurmasActionPerformed
 
     /**
      * @param args the command line arguments
