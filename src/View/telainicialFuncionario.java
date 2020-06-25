@@ -76,6 +76,11 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
         botaoFrequencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaprincipal.png"))); // NOI18N
         botaoFrequencia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaHoverprincipal.png"))); // NOI18N
+        botaoFrequencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFrequenciaActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 90, 168, 203));
 
         botaoFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroprincipal.png"))); // NOI18N
@@ -116,6 +121,12 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         Alunos jump=new Alunos();
         jump.setVisible(true);
     }//GEN-LAST:event_botaoAlunosActionPerformed
+
+    private void botaoFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFrequenciaActionPerformed
+        // TODO add your handling code here:
+        turmasFrequencia abrir= new turmasFrequencia();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_botaoFrequenciaActionPerformed
 
     /**
      * @param args the command line arguments

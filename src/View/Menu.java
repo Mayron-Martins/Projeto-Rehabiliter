@@ -110,6 +110,11 @@ public class Menu extends javax.swing.JFrame {
 
         botaoProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoProdutos.png"))); // NOI18N
         botaoProdutos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverProdutos.png"))); // NOI18N
+        botaoProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoProdutosActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 242, 360, 50));
 
         botaoCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoCaixa.png"))); // NOI18N
@@ -155,6 +160,14 @@ public class Menu extends javax.swing.JFrame {
         Turmas abrir=new Turmas();
         abrir.setVisible(true);
     }//GEN-LAST:event_botaoTurmasActionPerformed
+
+    private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        produtos abrir=new produtos();
+        abrir.setVisible(true);
+        
+    }//GEN-LAST:event_botaoProdutosActionPerformed
 
     /**
      * @param args the command line arguments
