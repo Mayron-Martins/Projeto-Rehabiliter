@@ -34,8 +34,8 @@ public class DatabaseCriator {
             statement.execute("CREATE DATABASE Rehabiliter_Database ON PRIMARY ("
                + "NAME = 'Rehabiliter_Database', FILENAME = 'c:\\Rehabiliter\\Databases\\Rehabiliter_Database.mdf'"
                + ",SIZE = 10MB, FILEGROWTH = 20MB"
-               + "), FILEGROUP [Alunos]("
-               + "NAME = 'Alunos', FILENAME = 'c:\\Rehabiliter\\Databases\\Alunos.ndf'"
+               + "), FILEGROUP [AlunoseClientes]("
+               + "NAME = 'Alunos_e_Clientes', FILENAME = 'c:\\Rehabiliter\\Databases\\Alunos e Clientes.ndf'"
                + "), FILEGROUP [Funcionarios]("
                + "NAME = 'Funcionarios', FILENAME = 'c:\\Rehabiliter\\Databases\\Funcionarios.ndf'"
                + "), FILEGROUP [Produtos]("
@@ -45,7 +45,7 @@ public class DatabaseCriator {
                + "), FILEGROUP [Transacoes]("
                + "NAME = 'Transacoes', FILENAME = 'c:\\Rehabiliter\\Databases\\Transacoes.ndf'"
                + ") LOG ON("
-               + "NAME = 'Teste_Log', FILENAME = 'c:\\Rehabiliter\\Databases\\Teste_Log.ldf'"
+               + "NAME = 'Rehabiliter_Log', FILENAME = 'c:\\Rehabiliter\\Databases\\Rehabiliter_Log.ldf'"
                + ");");
         } catch(java.sql.SQLException erro){
             mensagemdeErro();
