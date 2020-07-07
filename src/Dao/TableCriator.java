@@ -50,6 +50,10 @@ public class TableCriator {
         this.tableLogdeAcoesdoFunc();
         this.tableFreqFuncionarios();
         this.tableFreqTurmas();
+        
+        //Referenciação das tabelas.
+        ReferencesTable referencestable = new ReferencesTable();
+        referencestable.referencesTables(this.gerarStatement());
     }
     
     //Criação da tabela de alunos.
@@ -119,7 +123,7 @@ public class TableCriator {
                 + "telefone VARCHAR(20) NOT NULL,"
                 + "email VARCHAR(50) NULL,"
                 + "dataNascimento DATE NOT NULL,"
-                + "codEndereco INT NOT NULL,"     //Código do endereço do funcionário, cadastrado numa tabela à parte
+                + "codEndereco INT NULL,"     //Código do endereço do funcionário, cadastrado numa tabela à parte
                 + "usuario VARCHAR(16) PRIMARY KEY," // Cada funcionário terá um usuário único
                 + "senha VARCHAR(10) NOT NULL,"
                 + "cargo VARCHAR(25) NOT NULL,"
@@ -194,7 +198,8 @@ public class TableCriator {
                 + "codLote VARCHAR(50) PRIMARY KEY," //Código físico do lote, apresentado no rótulo das caixas.
                 + "dataAdicionamento DATE NOT NULL,"
                 + "validadeMeses VARCHAR(8) NULL," //Caso o produto possua validade e essa seja em meses.
-                + "validadeData DATE NULL" //Caso o produto apresente validade e essa seja em uma data fixada.
+                + "validadeData DATE NULL,"
+                + "codProduto INT NOT NULL" //Caso o produto apresente validade e essa seja em uma data fixada.
                 + ") ON [Produtos];");
     }
     
@@ -387,7 +392,7 @@ public class TableCriator {
     
     
     //Função para identificar a quantidade de turmas dentro do banco.
-    private int quantTurmas() throws SQLException{
+    public int quantTurmas() throws SQLException{
         ResultSet count = this.gerarStatement().executeQuery("SELECT COUNT(codTurma) AS quant FROM tblTurmas;"); //Conta a quantidade de itens na coluna quant do count.
         int contador = 0;
         while(count.next()){
@@ -398,7 +403,7 @@ public class TableCriator {
     }
     
     //Função para identificar a quantidade de funcionários dentro do banco.
-    private int quantFuncionarios() throws SQLException{
+    public int quantFuncionarios() throws SQLException{
         ResultSet count = this.gerarStatement().executeQuery("SELECT COUNT(codFuncionario) AS quant FROM tblFuncionarios;"); //Conta a quantidade de itens na coluna quant do count.
         int contador = 0;
         while(count.next()){
