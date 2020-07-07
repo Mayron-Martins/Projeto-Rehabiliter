@@ -17,18 +17,45 @@ public class TableCriator {
     private final Conexao conexao = new Conexao();
     private final String criarSeNaoExistir = "CREATE TABLE IF NOT EXISTS";
     
+    //Criação do statement para execução de comando no banco.
     private Statement gerarStatement() throws SQLException{
         Statement statement = conexao.getConnection().createStatement();
         return statement;
     }
     
-    public void createTables(){
-        
+    
+    //Criação de todas as tabelas seguindo a ordem em que estão apresentadas abaixo.
+    public void createTables() throws SQLException{
+        this.tableAlunos();
+        this.tableEndAlunoseClientes();
+        this.tableClientes();
+        this.tableFuncionarios();
+        this.tableEndFuncionarios();
+        this.tableEmpresa();
+        this.tableEndEmpresa();
+        this.tableProdutos();
+        this.tableLoteDeProdutos();
+        this.tableFornProdutos();
+        this.tableTurmas();
+        this.tableHorarios();
+        this.tableMatriculas();
+        this.tableServicos();
+        this.tableVendas();
+        this.tableItensVendidos();
+        this.tableGastos();
+        this.tableItensComprados();
+        this.tableDetOrcamentario();
+        this.tablePlanos();
+        this.tableBackups();
+        this.tableLogdeAcoesdoFunc();
+        this.tableFreqFuncionarios();
+        this.tableFreqTurmas();
     }
     
-    public void tableAlunos() throws SQLException{
+    //Criação da tabela de alunos.
+    private void tableAlunos() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblAlunos("
-                + "codAluno INT PRIMARY KEY,"
+                + "codAluno INT PRIMARY KEY,"   //É gerado um código único no banco para cada aluno.
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cpf VARCHAR(15) NULL,"
                 + "rg VARCHAR(20) NULL,"
@@ -36,25 +63,26 @@ public class TableCriator {
                 + "telefone VARCHAR(20) NULL,"
                 + "email VARCHAR(50) NULL,"
                 + "dataNascimento DATE NOT NULL,"
-                + "codEndereco INT NOT NULL,"
+                + "codEndereco INT NOT NULL,"     //O endereço de cada aluno é cadastrado numa tabela à parte.
                 + "nomeMae VARCHAR(50) NULL,"
                 + "nomePai VARCHAR(50) NULL,"
                 + "telefoneMae VARCHAR(20) NULL,"
                 + "telefonePai VARCHAR(20) NULL,"
                 + "cpfMae VARCHAR(15) NULL,"
                 + "cpfPai VARCHAR(15) NULL,"
-                + "matriculas VARCHAR(MAX) NOT NULL,"
-                + "codDiasDaSemana INT NOT NULL,"
-                + "codServico INT NOT NULL,"
+                + "matriculas VARCHAR(MAX) NOT NULL,"   //Como cada aluno pode ter mais de uma matrícula, então elas são armazenadas sequencialmente num varhar.
+                + "codDiasDaSemana INT NOT NULL,"  //código dos dias da semana que irá ter aula, coincide com os dias da turma.
+                + "codServico INT NOT NULL,"  //Código do serviço e tempo para pagamento.
                 + "descricao VARCHAR(MAX) NULL,"
-                + "debito DECIMAL NULL"
+                + "debito DECIMAL NULL"  //Valor incrementado ou decrementado conforme o aluno faz compras.
                 + ") ON [AlunoseClientes];");
     }
     
-    public void tableEndAlunoseClientes() throws SQLException{
+    //Criação da tabela de endereço do aluno.
+    private void tableEndAlunoseClientes() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblEndAlunoseClientes("
-                + "codEndAlunoseClientes INT PRIMARY KEY,"
-                + "codAluno INT NOT NULL,"
+                + "codEndAlunoseClientes INT PRIMARY KEY," //É gerado um endereço único para cada aluno.
+                + "codAluno INT NOT NULL," //Abstrai o código de um aluno para que exista.
                 + "logradouro VARCHAR(50) NOT NULL,"
                 + "bairro VARCHAR(25) NOT NULL,"
                 + "numero VARCHAR(10) NOT NULL,"
@@ -65,23 +93,25 @@ public class TableCriator {
                 + "CEP VARCHAR(10) NULL"
                 + ") ON [AlunoseClientes];");
     }
-        
-    public void tableClientes() throws SQLException{
+     
+    //Criação da tabela de Clientes (que não são alunos, mas que desejam pagar por algum plano, geralmente diária).
+    private void tableClientes() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblClientes("
-                + "codCliente INT PRIMARY KEY,"
+                + "codCliente INT PRIMARY KEY,"  //Cada cliente tem um código único.
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cpf VARCHAR(15) NOT NULL,"
                 + "telefone VARCHAR(20) NOT NULL,"
                 + "codEndereco INT NULL,"
-                + "codServico INT NULL,"
-                + "diasAcordados INT NULL,"
+                + "codServico INT NULL," //Código do tipo de serviço e período de pagamento (diária).
+                + "diasAcordados INT NULL,"  //Dias que foram agendados para uso dos serviços.
                 + "debito DECIMAL NULL"
                 + ") ON [AlunoseClientes];");
     }
     
-    public void tableFuncionarios() throws SQLException{
+    //Criação da tabela de funcionários.
+    private void tableFuncionarios() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblFuncionarios("
-                + "codFuncionario INT PRIMARY KEY,"
+                + "codFuncionario INT PRIMARY KEY," //Cada funcionário terá um código único.
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cpf VARCHAR(15) NOT NULL,"
                 + "rg VARCHAR(20) NOT NULL,"
@@ -89,18 +119,19 @@ public class TableCriator {
                 + "telefone VARCHAR(20) NOT NULL,"
                 + "email VARCHAR(50) NULL,"
                 + "dataNascimento DATE NOT NULL,"
-                + "codEndereco INT NOT NULL,"
-                + "usuario VARCHAR(16) NOT NULL,"
+                + "codEndereco INT NOT NULL,"     //Código do endereço do funcionário, cadastrado numa tabela à parte
+                + "usuario VARCHAR(16) PRIMARY KEY," // Cada funcionário terá um usuário único
                 + "senha VARCHAR(10) NOT NULL,"
                 + "cargo VARCHAR(25) NOT NULL,"
                 + "salario DECIMAL NOT NULL"
                 + ") ON [Funcionarios];");
     }
-        
-    public void tableEndFuncionarios() throws SQLException{
+    
+    //Criação da tabela de Endereço dos Funcionários
+    private void tableEndFuncionarios() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblEndFuncionarios("
-                + "codEndFuncionarios INT PRIMARY KEY,"
-                + "codFuncionario INT NOT NULL,"
+                + "codEndFuncionarios INT PRIMARY KEY," // É gerado um código único de endereço de funcionário
+                + "codFuncionario INT NOT NULL,"  //Associação do endereço ao funcionário.
                 + "logradouro VARCHAR(50) NOT NULL,"
                 + "bairro VARCHAR(25) NOT NULL,"
                 + "numero VARCHAR(10) NOT NULL,"
@@ -112,21 +143,23 @@ public class TableCriator {
                 + ") ON [Funcionarios];");
     }
     
-    public void tableEmpresa() throws SQLException{
+    //Criação da tabela da empresa, para cadastro no banco dos seus dados.
+    private void tableEmpresa() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblEmpresa("
-                + "razaoSocial VARCHAR(50) NOT NULL,"
+                + "razaoSocial VARCHAR(50) NOT NULL," //Nome da empresa.
                 + "cnpj VARCHAR(20) NOT NULL,"
-                + "nomeFantasia VARCHAR(50) NULL,"
+                + "nomeFantasia VARCHAR(50) NULL," //Outro nome cadastrado no governo.
                 + "telefone VARCHAR(20) NULL,"
                 + "email VARCHAR(50) NULL,"
                 + "site VARCHAR(50) NULL,"
-                + "codEndereco INT NULL"
+                + "codEndereco INT NULL" //Código do endereço da loja.
                 + ");");
     }
-    
-   public void tableEndEmpresa() throws SQLException{
+   
+   //Criação da tabela de endereço da empresa, pode ter uso futuro caso haja filiais
+   private void tableEndEmpresa() throws SQLException{
        this.gerarStatement().execute(this.criarSeNaoExistir+" tblEndEmpresa("
-                + "codEndEmpresa INT PRIMARY KEY,"
+                + "codEndEmpresa INT PRIMARY KEY," //Código do endereço.
                 + "logradouro VARCHAR(50) NOT NULL,"
                 + "bairro VARCHAR(25) NOT NULL,"
                 + "numero VARCHAR(10) NOT NULL,"
@@ -138,171 +171,187 @@ public class TableCriator {
                 + ");");
    }
     
-    public void tableProdutos() throws SQLException{
+    //Criação da tabela de produtos
+    private void tableProdutos() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblProdutos("
-                + "codProduto INT PRIMARY KEY,"
-                + "nome VARCHAR(50) NOT NULL,"
-                + "tipo VARCHAR(20) NOT NULL,"
-                + "unMedida CHAR(2) NOT NULL,"
+                + "codProduto INT PRIMARY KEY," //Cada produto terá um código único no banco
+                + "nome VARCHAR(50) NOT NULL," 
+                + "tipo VARCHAR(20) NULL," //Caso queira classificá-los para melhor filtragem (ex.: roupas, acessórios, etc.)
+                + "unMedida VARCHAR(3) NULL," //Caso queira definir uma unidade de medida (ex.: UN, KG, PAC).
                 + "quantidade FLOAT NOT NULL,"
                 + "descricao VARCHAR(MAX) NULL,"
-                + "valorDeCompra DECIMAL NULL,"
-                + "dataDeCompra DATE NULL,"
+                + "valorDeCompra DECIMAL NULL," //Caso queira definir por qual valor o produto foi comprado, e então definir o lucro.
+                + "dataDeCompra DATE NULL," //data que o produto foi comprado do fornecedor.
                 + "valorDeVenda DECIMAL NOT NULL,"
-                + "chaveDeLote INT NULL"
+                + "chaveDeLote INT NULL" //Utiliza a chave única de um lote cadastrado no banco e em uma tabela à parte.
                 + ") ON [Produtos];");
     }
-        
-    public void tableLoteDeProdutos() throws SQLException{
+    
+    //Criação da tabela de lote do produtos, caso queira cadastrar lotes de produtos (facilita para troca ou definição de validade)
+    private void tableLoteDeProdutos() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblLoteDeProdutos("
-                + "chaveDeLote INT PRIMARY KEY,"
-                + "codLote VARCHAR(50) PRIMARY KEY,"
+                + "chaveDeLote INT PRIMARY KEY," //Código único gerado a partir de uma função data-tipo-codProduto.
+                + "codLote VARCHAR(50) PRIMARY KEY," //Código físico do lote, apresentado no rótulo das caixas.
                 + "dataAdicionamento DATE NOT NULL,"
-                + "validadeMeses VARCHAR(8) NULL,"
-                + "validadeData DATE NULL"
+                + "validadeMeses VARCHAR(8) NULL," //Caso o produto possua validade e essa seja em meses.
+                + "validadeData DATE NULL" //Caso o produto apresente validade e essa seja em uma data fixada.
                 + ") ON [Produtos];");
     }
-        
-    public void tableFornProdutos() throws SQLException{
+    
+    //Criação da tabela de fornecedores de produtos, caso queira cadastrá-los.
+    private void tableFornProdutos() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblFornProdutos("
-                + "codFornecedor INT PRIMARY KEY,"
+                + "codFornecedor INT PRIMARY KEY," //Cada fornecedor tem um código único.
                 + "nome VARCHAR(50) NOT KEY,"
                 + "cnpj VARCHAR NULL,"
-                + "codProduto VARCHAR(MAX) NOT NULL"
+                + "codProduto VARCHAR(MAX) NOT NULL" //Produtos aos quais o fornecedor é associado, havendo a possibilidade de diversos fornecedores fornecerem um mesmo produto.
                 + ") ON [Produtos];");
     }
     
-    public void tableTurmas() throws SQLException{
+    //Criação da tabela de turmas.
+    private void tableTurmas() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblTurmas("
-                + "codTurma INT PRIMARY KEY,"
+                + "codTurma INT PRIMARY KEY," //Código único para cada turma.
                 + "nome VARCHAR(15) NOT NULL,"
-                + "subgrupo CHAR(2) NULL,"
-                + "quantAlunos INT NULL,"
-                + "quantLimiteDeAlunos INT NULL,"
-                + "diasDaSemana VARCHAR(MAX) NOT NULL"
+                + "subgrupo CHAR(2) NULL," //Caso seja turma A, B ou 1,2 etc.
+                + "quantAlunos INT NULL," //Caso queira colocar a quantidade presente de alunos.
+                + "quantLimiteDeAlunos INT NULL," //Caso queira definir um valor máximo de alunos para uma turma.
+                + "diasDaSemana VARCHAR(MAX) NOT NULL" //Dias da semana que a turma irá utilizar.
                 + ") ON [AlunoseClientes];");
     }
     
-    public void tableHorarios() throws SQLException{
+    //Criação da tabela de horários, cada dia da semana que uma turma irá utilizar deverá ter um horário.
+    private void tableHorarios() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblHorarios("
-                + "codHorario INT PRIMARY KEY,"
-                + "diaDaSemana VARCHAR(15) NOT NULL,"
-                + "horario DATE NOT NULL,"
-                + "codCliente INT NULL,"
-                + "codTurma INT NULL"
-                + ") ON [AlunoseClientes];");
-    }
-
-    public void tableMatriculas() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblMatriculas("
-                + "codMatricula INT PRIMARY KEY,"
-                + "codTurma INT NOT NULL,"
-                + "codAluno INT NOT NULL,"
-                + "anoMatricula INT NOT NULL,"
-                + "matricula VARCHAR(12) NOT NULL"
+                + "codHorario INT PRIMARY KEY," //Código único para cada horário.
+                + "diaDaSemana VARCHAR(15) NOT NULL," //Dia da semana correspondente ao horário.
+                + "horario DATE NOT NULL," //hora.
+                + "codCliente INT NULL," //Caso um cliente tenha agendado um horário.
+                + "codTurma INT NULL" //Caso a turma utilize o horário.
                 + ") ON [AlunoseClientes];");
     }
     
-    public void tableServicos() throws SQLException{
+    //Criação da tabela de matrículas.
+    private void tableMatriculas() throws SQLException{
+        this.gerarStatement().execute(this.criarSeNaoExistir+" tblMatriculas("
+                + "codMatricula INT PRIMARY KEY," //Código único para cada matrícula.
+                + "codTurma INT NOT NULL," //A turma a qual a matrícula é relacionada.
+                + "codAluno INT NOT NULL," //O aluno ao qual a matrícula é relacionada.
+                + "anoMatricula INT NOT NULL," //O ano da matrícula.
+                + "matricula VARCHAR(12) NOT NULL" //String gerada por função que utiliza código da turma, código do aluno e ano.
+                + ") ON [AlunoseClientes];");
+    }
+    
+    //Criação da tabela de serviços.
+    private void tableServicos() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblServicos("
-                + "codServico INT PRIMARY KEY,"
-                + "nome VARCHAR(15) NOT NULL,"
-                + "periodo VARCHAR(10) NOT NULL,"
+                + "codServico INT PRIMARY KEY," //Cada serviço terá um código único no banco.
+                + "nome VARCHAR(15) NOT NULL," //Nome do Serviço (natação, hidroginástica, etc.).
+                + "periodo VARCHAR(10) NOT NULL," //Diária, Semanal, Mensal, etc.
                 + "valorAVista DECIMAL NULL,"
                 + "valorBoleto DECIMAL NULL,"
                 + "valorCartao DECIMAL NULL"
                 + ") ON [AlunoseClientes];");
     }
     
-    public void tableVendas() throws SQLException{
+    //Criação da tabela de vendas.
+    private void tableVendas() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblVendas("
-                + "codVenda INT PRIMARY KEY,"
-                + "codCliente INT NULL,"
-                + "codAluno INT NULL,"
-                + "valorVenda DECIMAL NOT NULL,"
-                + "valorPagoCliente DECIMAL NOT NULL,"
-                + "valorTroco DECIMAL NOT NULL,"
+                + "codVenda INT PRIMARY KEY," //Cada venda terá um código único.
+                + "codCliente INT NULL," //Caso a venda ocorra com um cliente.
+                + "codAluno INT NULL," //Caso a venda ocorra com um aluno.
+                + "valorVenda DECIMAL NOT NULL," //Valor total da venda.
+                + "valorPagoCliente DECIMAL NOT NULL," //Valor pago pelo cliente.
+                + "valorTroco DECIMAL NOT NULL," //Troco da venda.
                 + "dataVenda DATE NOT NULL,"
-                + "chaveVenda INT PRIMARY KEY,"
-                + "formaPagamento VARCHAR(10) NOT NULL"
+                + "chaveVenda INT PRIMARY KEY," //Cada venda gera uma chave única do tipo data-hora codificada, utilizada para identificação de produtos vendidos.
+                + "formaPagamento VARCHAR(10) NOT NULL" //Dinheiro ou cartão.
                 + ") ON [Transacoes];");
     }
     
-    public void tableItensVendidos() throws SQLException{
+    //Criação da tabela de itens vendidos durante uma venda.
+    private void tableItensVendidos() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblItensVendidos("
-                + "chaveVenda INT NOT NULL,"
-                + "codProduto INT NOT NULL,"
+                + "chaveVenda INT NOT NULL," //Associação do item à chave gerada.
+                + "codProduto INT NOT NULL," //Código do produto vendido.
                 + "quantidade FLOAT NOT NULL,"
                 + "valor DECIMAL NOT NULL,"
                 + "subtotal DECIMAL NOT NULL"
                 + ") ON [Transacoes];");
     }
-    public void tableGastos() throws SQLException{
+    
+    //Criação da tabela de gastos.
+    private void tableGastos() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblGastos("
-                + "codGasto INT PRIMARY KEY,"
+                + "codGasto INT PRIMARY KEY," //Cada gasto terá um código único.
                 + "motivo VARCHAR(MAX) NOT NULL,"
                 + "valorGasto DECIMAL NOT NULL,"
                 + "dataGasto DATE NOT NULL,"
-                + "chaveTransacao INT NOT NULL,"
-                + "situacao VARCHAR(10) NOT NULL"
+                + "chaveTransacao INT PRIMARY KEY," //Chave gerada por meio de função data-hora codificada, utilizada para idenficação de itens comprados.
+                + "situacao VARCHAR(10) NOT NULL" //Pago ou Pendente.
                 + ") ON [Transacoes];");
     }
-        
-    public void tableItensComprados() throws SQLException{
+     
+    //Criação da tabela de itens comprados (vide gastos).
+    private void tableItensComprados() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblItensComprados("
-                + "chaveCompra INT NOT NULL,"
-                + "itemComprado VARCHAR(MAX) NOT NULL"
+                + "chaveTransacao INT NOT NULL," //Associação do produto ou item à chave de transação.
+                + "itemComprado VARCHAR(MAX) NOT NULL" //Item que foi comprado ou pago.
                 + "quantidade FLOAT NOT NULL,"
                 + "valor DECIMAL NOT NULL,"
                 + "subtotal DECIMAL NOT NULL,"
-                + "codProduto INT NULL,"
-                + "codLote INT NULL"
+                + "codProduto INT NULL," //O item comprado pode ser associado a um produto já cadastrado.
+                + "codLote INT NULL" //Caso o produto esteja no banco e queira cadastrar o lote correspondente.
                 + ") ON [Transacoes];");
     }
 
-    public void tableDetOrcamentario() throws SQLException{
+    //Criação da tabela de Detalhamento Orçamentário.
+    private void tableDetOrcamentario() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblDetOrcamentario("
-                + "chaveVenda INT NULL,"
-                + "chaveCompra INT NULL,"
-                + "chavePlano INT NULL,"
-                + "data DATE NOT NULL,"
-                + "valorRecebidoPago DECIMAL NULL,"
-                + "valorRecebidoPendente DECIMAL NULL"
-                + "valorGastoPago DECIMAL NULL,"
-                + "valorGastoPendente DECIMAL NULL,"
-                + "chaveOrcamentaria INT PRIMARY KEY"
+                + "chaveVenda INT NULL," //Caso trate-se de uma venda.
+                + "chaveTransacao INT NULL," //Caso trate-se de um gasto.
+                + "chavePlano INT NULL," //Caso trate-se do pagamento de um plano (se tiver sido pago na data utilizrá essa correspondência, se não tiver então será usado na data de vencimento).
+                + "data DATE NOT NULL," //
+                + "valorRecebidoPago DECIMAL NULL," //Valor recebido do pagamento da venda ou plano.
+                + "valorRecebidoPendente DECIMAL NULL" //Valor pendente de plano.
+                + "valorGastoPago DECIMAL NULL," //Valor gasto pago.
+                + "valorGastoPendente DECIMAL NULL," //Valor gasto pendente.
+                + "chaveOrcamentaria INT NOT NULL" //Chave gerada por meio de função data codificada. 
                 + ") ON [Orcamento];");
     }
     
-    public void tablePlanos() throws SQLException{
+    //Criação da tabela de Planos (cada aluno terá um plano específico)
+    private void tablePlanos() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblPlanos("
-                + "codAluno INT NOT NULL,"
-                + "codTurma INT NOT NULL,"
-                + "codServico INT NOT NULL,"
-                + "dataPagamento DATE NULL,"
-                + "dataVencimento DATE NULL,"
-                + "dataCancelamento DATE NULL,"
-                + "situacao VARCHAR(10) NOT NULL,"
-                + "chavePlano INT PRIMARY KEY"
+                + "codAluno INT NOT NULL," //Código do aluno ao qual o plano será associado.
+                + "codTurma INT NOT NULL," //Código da turma ao qual o plano será associado.
+                + "codServico INT NOT NULL," //Código do serviço ao qual o plano será associado.
+                + "dataPagamento DATE NULL," //Caso o plano tenha sido pago.
+                + "dataVencimento DATE NULL," //Data escolhida para vencimento do plano.
+                + "dataCancelamento DATE NULL," //Caso tenha sido cancelado, então a data em que ocorreu.
+                + "situacao VARCHAR(10) NOT NULL," //Pago, pendente, vencido, cancelado.
+                + "chavePlano INT PRIMARY KEY" //Cada plano terá uma chave única gerada por meio de função codificada aluno-turma-serviço.
                 + ") ON [AlunoseClientes];");
     }
-
-    public void tableBackups() throws SQLException{
+    
+    //Criação da tabela de Backups, para armazenamento do histórico.
+    private void tableBackups() throws SQLException{
         this.gerarStatement().execute(this.criarSeNaoExistir+" tblBackups("
-                + "codBackup INT PRIMARY KEY,"
-                + "nome VARCHAR(20) NOT NULL,"
-                + "data DATE NOT NULL,"
-                + "endArquivo VARCHAR(MAX) NOT NULL,"
-                + "tabelas VARCHAR(MAX) NOT NULL"
+                + "codBackup INT PRIMARY KEY," //Cada backup terá um código único.
+                + "nome VARCHAR(20) NOT NULL," //Data e horário como nome
+                + "data DATE NOT NULL," //
+                + "endArquivo VARCHAR(MAX) NOT NULL," //Localização no computador.
+                + "tabelas VARCHAR(MAX) NOT NULL" //String com as tabelas presentes no backup, sequencialmente.
                 + ");");
     }
     
+    //Criação da tabela de Log das ações do funcionário.
     public void tableLogdeAcoesdoFunc() throws SQLException{
         int quantidadeFuncionarios = this.quantFuncionarios();
-        while(quantidadeFuncionarios>0){
+        while(quantidadeFuncionarios>0){ //Verifica a quantidade de funcionários no banco, se não houver a função não é executada, é interessante utliza-la cada vez que cadastrar um novo funcionário.
             this.gerarStatement().execute(this.criarSeNaoExistir+" tblLogdeAcoesdoFun"+(this.quantFuncionarios() - quantidadeFuncionarios+1)+"("
-                + "codFuncionario INT NOT NULL,"
-                + "data DATE NOT NULL,"
+                + "codFuncionario INT NOT NULL," //Associa o log ao código do funcionário
+                + "data DATE NOT NULL," //data e hora do acontecimento.
                 + "acao VARCHAR(MAX) NOT NULL,"
                 + "descricao VARCHAR(MAX) NULL"
                 + ")ON [Funcionarios];");
@@ -311,46 +360,49 @@ public class TableCriator {
         }
     }
     
+    //Criação da tabela de frequencia turmas.
     public void tableFreqTurmas() throws SQLException{
         int quantidadeTurmas = this.quantTurmas();
-        while(quantidadeTurmas>0){
+        while(quantidadeTurmas>0){ //Verifica a quantidade de Turmas no banco, se não houver a função não é executada, é interessante utliza-la cada vez que cadastrar uma nova turma.
             this.gerarStatement().execute(this.criarSeNaoExistir+" tblFreqTurma"+(this.quantTurmas() - quantidadeTurmas+1)+"("
-                + "codTurma INT NOT NULL,"
-                + "codAluno INT NOT NULL,"
-                + "data DATE NOT NULL,"
-                + "situacao CHAR(1) NOT NULL"
+                + "codTurma INT NOT NULL," //Associa a turma à frequência.
+                + "codAluno INT NOT NULL," //Associa o código do aluno à frequência.
+                + "data DATE NOT NULL," //Data em que ocorre a chamada.
+                + "situacao CHAR(1) NOT NULL" //P-presente ou A-ausente.
                 + ")ON [AlunoseClientes];");
             
             quantidadeTurmas--;
         }
     }
     
-    public void tableFreqFuncionarios() throws SQLException{
+    //Criação da tabela de frequÊncia dos funcionários
+    private void tableFreqFuncionarios() throws SQLException{
             this.gerarStatement().execute(this.criarSeNaoExistir+" tblFreqFuncionarios("
-                + "data DATE NOT NULL,"
-                + "codFuncionario INT NOT NULL,"
-                + "situacao CHAR(1) NOT NULL"
+                + "data DATE NOT NULL," //Data em que ocorreu a entrada no sistema.
+                + "codFuncionario INT NOT NULL," //Associa a frequência ao código do funcionário.
+                + "situacao CHAR(1) NOT NULL" //P-presente (quando loga) ou A-ausente (quando deixa de logar o dia todo)
                 + ")ON [Funcionarios];");
 
     }
     
     
-    
+    //Função para identificar a quantidade de turmas dentro do banco.
     private int quantTurmas() throws SQLException{
-        ResultSet count = this.gerarStatement().executeQuery("SELECT COUNT(codTurma) AS quant FROM tblTurmas;");
+        ResultSet count = this.gerarStatement().executeQuery("SELECT COUNT(codTurma) AS quant FROM tblTurmas;"); //Conta a quantidade de itens na coluna quant do count.
         int contador = 0;
         while(count.next()){
-            contador = count.getInt("quant");
+            contador = count.getInt("quant"); //Como o count possui apenas uma linha então é igualado apenas uma vez.
         }
         
         return contador;
     }
     
+    //Função para identificar a quantidade de funcionários dentro do banco.
     private int quantFuncionarios() throws SQLException{
-        ResultSet count = this.gerarStatement().executeQuery("SELECT COUNT(codFuncionario) AS quant FROM tblFuncionarios;");
+        ResultSet count = this.gerarStatement().executeQuery("SELECT COUNT(codFuncionario) AS quant FROM tblFuncionarios;"); //Conta a quantidade de itens na coluna quant do count.
         int contador = 0;
         while(count.next()){
-            contador = count.getInt("quant");
+            contador = count.getInt("quant"); //Como o count possui apenas uma linha então é igualado apenas uma vez.
         }
         
         return contador;
