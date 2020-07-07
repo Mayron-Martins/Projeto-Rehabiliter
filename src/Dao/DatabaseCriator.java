@@ -7,6 +7,7 @@ package Dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -17,11 +18,19 @@ import java.sql.Statement;
 public class DatabaseCriator {
     private final String url = "jdbc:sqlserver://localhost:1433";
     
-    //Verifica se a base de dados já existe no sistema
+    //Verifica se a base de dados já existe no sistema, se existir retorna true
     public boolean databaseConfirmed(String user, String pass) throws SQLException{
             Connection conexao = DriverManager.getConnection(url, user, pass);
             Statement statement = conexao.createStatement();
-            return statement.execute("IF NOT EXISTS (SELECT * FROM sys.databases WHERE NAME = 'Rehabiliter_Database')");
+            ResultSet resultset = statement.executeQuery("SELECT * FROM sys.databases WHERE NAME = 'Rehabiliter_Database'");
+            
+            boolean resultado = false;
+            
+            while(resultset.next()){
+                resultado = true;
+            }
+            
+            return resultado;
     }
     
     //Cria a base de dados e as pastas subjacentes, assim como os grupos de arquivos e delimita um tamanho incial

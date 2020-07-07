@@ -23,9 +23,11 @@ public class Conexao {
     //NOTA: Verificar se o conversor mssql-jbdc-8.2.2.jre8.jar está adicionado no computador na pasta lib direto no projeto
     public void testConnection(){
          DatabaseCriator existenciaDeBase = new DatabaseCriator();
+         TableCriator criarTabelas = new TableCriator();
         try{
-            if(existenciaDeBase.databaseConfirmed(user, pass)){
+            if(existenciaDeBase.databaseConfirmed(user, pass) == false){
                 existenciaDeBase.databaseCriation(user, pass);
+                criarTabelas.createTables();
             }
              Connection conexao = DriverManager.getConnection(url, user, pass);
              System.out.println("Connection Successful");
