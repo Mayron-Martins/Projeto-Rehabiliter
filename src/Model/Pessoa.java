@@ -5,7 +5,7 @@
  */
 package Model;
 
-import Controller.helper.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import java.text.ParseException;
 import java.util.Date;
 
