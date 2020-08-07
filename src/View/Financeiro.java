@@ -94,6 +94,9 @@ public class Financeiro extends javax.swing.JFrame {
 
     private void btnPlanodeContraServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanodeContraServicosActionPerformed
         // TODO add your handling code here:
+       FinanceiroPlanodeContra abrir =new FinanceiroPlanodeContra();
+       abrir.setVisible(true);
+       
     }//GEN-LAST:event_btnPlanodeContraServicosActionPerformed
 
     private void btnAnaliseFinanceiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnaliseFinanceiraActionPerformed

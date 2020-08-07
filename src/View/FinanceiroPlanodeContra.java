@@ -5,6 +5,8 @@
  */
 package View;
 
+import java.awt.Color;
+
 /**
  *
  * @author 55989
@@ -16,6 +18,13 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
      */
     public FinanceiroPlanodeContra() {
         initComponents();
+        botaoFechar.setBackground(new Color(0,0,0,0));
+        btnAdicionar.setBackground(new Color(0,0,0,0));
+        btnAplicar.setBackground(new Color(0,0,0,0));
+        btnDetalhada.setBackground(new Color(0,0,0,0));
+        btnEditar.setBackground(new Color(0,0,0,0));
+        btnRemover.setBackground(new Color(0,0,0,0));
+        btnResumida.setBackground(new Color(0,0,0,0));
     }
 
     /**
@@ -33,9 +42,17 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox3 = new javax.swing.JComboBox<>();
+        btnAplicar = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
+        btnResumida = new javax.swing.JButton();
+        btnDetalhada = new javax.swing.JButton();
+        btnAdicionar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -72,18 +89,43 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
         getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 140, -1));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 140, -1));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 120, -1));
+        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 120, -1));
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 300, 130, -1));
+        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, 130, -1));
+
+        btnAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicar.png"))); // NOI18N
+        btnAplicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicarHover.png"))); // NOI18N
+        getContentPane().add(btnAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 290, 146, 35));
+
+        btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnRemover.png"))); // NOI18N
+        btnRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnRemoverHover.png"))); // NOI18N
+        getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, 146, 34));
+
+        btnResumida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumido.png"))); // NOI18N
+        btnResumida.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumidoHover.png"))); // NOI18N
+        getContentPane().add(btnResumida, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 146, 34));
+
+        btnDetalhada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnDetalhada.png"))); // NOI18N
+        btnDetalhada.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnDetalhadaHover.png"))); // NOI18N
+        getContentPane().add(btnDetalhada, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 146, 34));
+
+        btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAdicionar.png"))); // NOI18N
+        btnAdicionar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAdicionarHover.png"))); // NOI18N
+        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 146, 34));
+
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnEditar.png"))); // NOI18N
+        btnEditar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnEditarHover.png"))); // NOI18N
+        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 146, 34));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodecontra.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
@@ -132,6 +174,12 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoFechar;
+    private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnAplicar;
+    private javax.swing.JButton btnDetalhada;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnRemover;
+    private javax.swing.JButton btnResumida;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
