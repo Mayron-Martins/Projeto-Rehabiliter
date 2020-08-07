@@ -75,10 +75,20 @@ public class Menu extends javax.swing.JFrame {
 
         botaoFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoFinanceiro.png"))); // NOI18N
         botaoFinanceiro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverFinanceiro.png"))); // NOI18N
+        botaoFinanceiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFinanceiroActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 373, 360, 50));
 
         botaoServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoServicos.png"))); // NOI18N
         botaoServicos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverServicos.png"))); // NOI18N
+        botaoServicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoServicosActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 305, 360, 50));
 
         botaoTurmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoTurmas.png"))); // NOI18N
@@ -168,6 +178,20 @@ public class Menu extends javax.swing.JFrame {
         abrir.setVisible(true);
         
     }//GEN-LAST:event_botaoProdutosActionPerformed
+
+    private void botaoServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoServicosActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Servicos abrir=new Servicos();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_botaoServicosActionPerformed
+
+    private void botaoFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiroActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Financeiro abrir = new Financeiro();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_botaoFinanceiroActionPerformed
 
     /**
      * @param args the command line arguments

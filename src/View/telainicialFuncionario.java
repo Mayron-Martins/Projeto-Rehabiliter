@@ -85,6 +85,11 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
         botaoFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroprincipal.png"))); // NOI18N
         botaoFinanceiro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroHoverprincipal.png"))); // NOI18N
+        botaoFinanceiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFinanceiroActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 90, 168, 203));
 
         botaoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuprincipal.png"))); // NOI18N
@@ -127,6 +132,12 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         turmasFrequencia abrir= new turmasFrequencia();
         abrir.setVisible(true);
     }//GEN-LAST:event_botaoFrequenciaActionPerformed
+
+    private void botaoFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiroActionPerformed
+        // TODO add your handling code here:
+        Financeiro abrir=new Financeiro();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_botaoFinanceiroActionPerformed
 
     /**
      * @param args the command line arguments

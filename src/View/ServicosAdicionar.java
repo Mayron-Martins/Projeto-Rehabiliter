@@ -19,6 +19,7 @@ public class ServicosAdicionar extends javax.swing.JFrame {
     public ServicosAdicionar() {
         initComponents();
         btnFechar.setBackground(new Color(0,0,0,0));
+        botaoConfirmar.setBackground(new Color(0,0,0,0));
     }
 
     /**
