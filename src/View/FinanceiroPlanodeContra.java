@@ -28,6 +28,11 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
     private void initComponents() {
 
         botaoFechar = new javax.swing.JButton();
+        painelderolagem = new javax.swing.JScrollPane();
+        tabelaServicos = new javax.swing.JTable();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -42,6 +47,39 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
 
+        tabelaServicos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaServicos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"adsa", "adsa", "adsa", null}
+            },
+            new String [] {
+                "asdasdas", "asdasd", "dfdafsd", "asdas"
+            }
+        ));
+        tabelaServicos.setFocusable(false);
+        tabelaServicos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaServicos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaServicos.setRowHeight(25);
+        tabelaServicos.setShowVerticalLines(false);
+        tabelaServicos.getTableHeader().setReorderingAllowed(false);
+        tabelaServicos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaServicosComponentHidden(evt);
+            }
+        });
+        painelderolagem.setViewportView(tabelaServicos);
+
+        getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 140, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 120, -1));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 300, 130, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodecontra.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -52,6 +90,10 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
+
+    private void tabelaServicosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaServicosComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaServicosComponentHidden
 
     /**
      * @param args the command line arguments
@@ -90,6 +132,11 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoFechar;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane painelderolagem;
+    private javax.swing.JTable tabelaServicos;
     // End of variables declaration//GEN-END:variables
 }
