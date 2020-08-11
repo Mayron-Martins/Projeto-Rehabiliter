@@ -101,10 +101,14 @@ public class Financeiro extends javax.swing.JFrame {
 
     private void btnAnaliseFinanceiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnaliseFinanceiraActionPerformed
         // TODO add your handling code here:
+        FinanceiroAnaliseFinanceira abrir = new FinanceiroAnaliseFinanceira();
+        abrir.setVisible(true);
     }//GEN-LAST:event_btnAnaliseFinanceiraActionPerformed
 
     private void btnPlanodeEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanodeEntradasActionPerformed
         // TODO add your handling code here:
+        FinanceiroPlanodeEntradas abrir= new FinanceiroPlanodeEntradas();
+        abrir.setVisible(true);
     }//GEN-LAST:event_btnPlanodeEntradasActionPerformed
 
     /**
