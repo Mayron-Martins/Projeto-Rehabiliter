@@ -11,14 +11,14 @@ import java.awt.Color;
  *
  * @author 55989
  */
-public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
+public class FinanceiroPlanodeEntradasAdc extends javax.swing.JFrame {
 
     /**
-     * Creates new form FinanceiroPlanodeContraAdc
+     * Creates new form FinanceiroPlanodeEntradasAdc
      */
-    public FinanceiroPlanodeContraAdc() {
+    public FinanceiroPlanodeEntradasAdc() {
         initComponents();
-        botaoConfirmar.setBackground(new Color(0,0,0,0));
+        botaoFechar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
     }
 
@@ -89,20 +89,20 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FinanceiroPlanodeContraAdc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FinanceiroPlanodeEntradasAdc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FinanceiroPlanodeContraAdc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FinanceiroPlanodeEntradasAdc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FinanceiroPlanodeContraAdc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FinanceiroPlanodeEntradasAdc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FinanceiroPlanodeContraAdc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FinanceiroPlanodeEntradasAdc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FinanceiroPlanodeContraAdc().setVisible(true);
+                new FinanceiroPlanodeEntradasAdc().setVisible(true);
             }
         });
     }
