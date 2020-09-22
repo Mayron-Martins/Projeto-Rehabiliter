@@ -40,6 +40,7 @@ public class inicio extends javax.swing.JFrame {
     private void initComponents() {
 
         lblcarrega = new javax.swing.JLabel();
+        funcoes = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -57,6 +58,11 @@ public class inicio extends javax.swing.JFrame {
         lblcarrega.setText("0%");
         getContentPane().add(lblcarrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, -1));
 
+        funcoes.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        funcoes.setForeground(new java.awt.Color(254, 254, 254));
+        funcoes.setText("Criando tabelas...");
+        getContentPane().add(funcoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 590, 320));
 
@@ -70,8 +76,13 @@ public class inicio extends javax.swing.JFrame {
                 public void run(){
                 while(i<100){
                 i++;
+                
+                  
                 lblcarrega.setText(String.valueOf(i)+"%");   
                 try {sleep(30);} catch (Exception e) {}
+                
+                //Colocar verificacao aq
+                
                 }//!-->FECHA O WHILE-->
                 
                 new LoginFuncionário().setVisible(true);
@@ -116,10 +127,18 @@ public class inicio extends javax.swing.JFrame {
             }
         });
     }
-
+public void mudartexto(String texto){
+    funcoes.setText(texto);
+}
+   
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel funcoes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblcarrega;
     // End of variables declaration//GEN-END:variables
 }
+
+
 

@@ -19,7 +19,7 @@ public class FinanceiroPlanodeEntradasAdc extends javax.swing.JFrame {
     public FinanceiroPlanodeEntradasAdc() {
         initComponents();
         botaoFechar.setBackground(new Color(0,0,0,0));
-        botaoFechar.setBackground(new Color(0,0,0,0));
+        botaoConfirmar.setBackground(new Color(0,0,0,0));
     }
 
     /**
@@ -41,6 +41,8 @@ public class FinanceiroPlanodeEntradasAdc extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -65,6 +67,7 @@ public class FinanceiroPlanodeEntradasAdc extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
