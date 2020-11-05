@@ -26,6 +26,7 @@ public class LoginGerente extends javax.swing.JFrame {
         botaoFuncionario.setBackground(new Color(0,0,0,0));
         botaoDesenvolvedor.setBackground(new Color(0,0,0,0));
         botaoSair.setBackground(new Color(0,0,0,0));
+        btnCadastrar.setBackground(new Color(0,0,0,0));
     }
 
     /**
@@ -37,6 +38,7 @@ public class LoginGerente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnCadastrar = new javax.swing.JButton();
         inputCpfFuncionario = new javax.swing.JTextField();
         inputSenha = new javax.swing.JPasswordField();
         botaoentrarGerente = new javax.swing.JButton();
@@ -48,6 +50,15 @@ public class LoginGerente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logingerente/btnCadastro.png"))); // NOI18N
+        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 77, 180, 40));
 
         inputCpfFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,7 +103,7 @@ public class LoginGerente extends javax.swing.JFrame {
         });
         getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 50, 30));
 
-        plano_de_fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logingerente/login-gerente.jpg"))); // NOI18N
+        plano_de_fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logingerente/login-gerente2.jpg"))); // NOI18N
         getContentPane().add(plano_de_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 520));
 
         pack();
@@ -120,7 +131,9 @@ public class LoginGerente extends javax.swing.JFrame {
             }catch (Exception e) {}
                          }}.start();
      //!-->FINAL TELA TREMER-->   
-        
+     telaInicialGerente jump = new telaInicialGerente();
+     jump.setVisible(true);
+     this.dispose();
         
     }//GEN-LAST:event_botaoentrarGerenteActionPerformed
 
@@ -145,6 +158,12 @@ public class LoginGerente extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_botaoDesenvolvedorActionPerformed
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        // TODO add your handling code here:
+        RegistrodeGerente abrir= new RegistrodeGerente();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,6 +205,7 @@ public class LoginGerente extends javax.swing.JFrame {
     private javax.swing.JButton botaoFuncionario;
     private javax.swing.JButton botaoSair;
     private javax.swing.JButton botaoentrarGerente;
+    private javax.swing.JButton btnCadastrar;
     private javax.swing.JTextField inputCpfFuncionario;
     private javax.swing.JPasswordField inputSenha;
     private javax.swing.JLabel plano_de_fundo;
