@@ -5,6 +5,8 @@
  */
 package Dao;
 
+import View.inicio;
+import static java.lang.Thread.sleep;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -17,6 +19,13 @@ import java.sql.Statement;
  */
 public class DatabaseCriator {
     private final String url = "jdbc:sqlserver://localhost:1433";
+    private final inicio telaDeInicio;
+
+    public DatabaseCriator(inicio view) {
+        this.telaDeInicio = view;
+    }
+    
+    
     
     //Verifica se a base de dados já existe no sistema, se existir retorna true
     public boolean databaseConfirmed(String user, String pass) throws SQLException{
@@ -38,6 +47,8 @@ public class DatabaseCriator {
         FileCriator criarPastas = new FileCriator();
         criarPastas.fileCriator();
         try{
+            this.telaDeInicio.mudartexto("Criando Banco de Dados...");
+            this.telaDeInicio.mudarPercentual();
             Connection conexao = DriverManager.getConnection(url, user, pass);
             Statement statement = conexao.createStatement();
             statement.execute("CREATE DATABASE Rehabiliter_Database ON PRIMARY ("
@@ -55,7 +66,8 @@ public class DatabaseCriator {
                + "NAME = 'Transacoes', FILENAME = 'c:\\Rehabiliter\\Databases\\Transacoes.ndf'"
                + ") LOG ON("
                + "NAME = 'Rehabiliter_Log', FILENAME = 'c:\\Rehabiliter\\Databases\\Rehabiliter_Log.ldf'"
-               + ");");
+               + ")");
+            statement.close();
         } catch(java.sql.SQLException erro){
             mensagemdeErro();
                 }
@@ -63,7 +75,9 @@ public class DatabaseCriator {
     
     //Caso o programa não esteja intalado ou se houver algo de errado com o servidor a mensagem aparecerá
     public void mensagemdeErro(){
-        System.out.println("Não foi possível criar a base"); //Adicionar mensagem personalizada na tela
+        telaDeInicio.exibeMensagem("Não foi possível criar a base!");
+        try{sleep(100);}catch(InterruptedException erro){}
+        System.exit(1);
     }
     
 }

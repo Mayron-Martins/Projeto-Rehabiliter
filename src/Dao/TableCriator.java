@@ -5,6 +5,7 @@
  */
 package Dao;
 
+import View.inicio;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,7 +16,13 @@ import java.sql.Statement;
  */
 public class TableCriator {
     private final Conexao conexao = new Conexao();
-    private final String criarSeNaoExistir = "CREATE TABLE IF NOT EXISTS";
+    private final inicio telaDeInicio;
+
+    public TableCriator(inicio view) {
+        this.telaDeInicio = view;
+    }
+    
+    
     
     //Criação do statement para execução de comando no banco.
     private Statement gerarStatement() throws SQLException{
@@ -47,18 +54,19 @@ public class TableCriator {
         this.tableDetOrcamentario();
         this.tablePlanos();
         this.tableBackups();
-        this.tableLogdeAcoesdoFunc();
         this.tableFreqFuncionarios();
-        this.tableFreqTurmas();
         
         //Referenciação das tabelas.
-        ReferencesTable referencestable = new ReferencesTable();
+        ReferencesTable referencestable = new ReferencesTable(this.telaDeInicio);
         referencestable.referencesTables(this.gerarStatement());
+        gerarStatement().close();
     }
     
     //Criação da tabela de alunos.
     private void tableAlunos() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblAlunos("
+        telaDeInicio.mudartexto("Criando tabela de Alunos...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblAlunos("
                 + "codAluno INT PRIMARY KEY,"   //É gerado um código único no banco para cada aluno.
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cpf VARCHAR(15) NULL,"
@@ -84,7 +92,9 @@ public class TableCriator {
     
     //Criação da tabela de endereço do aluno.
     private void tableEndAlunoseClientes() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblEndAlunoseClientes("
+        telaDeInicio.mudartexto("Criando tabela de Endereços AC...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblEndAlunoseClientes("
                 + "codEndAlunoseClientes INT PRIMARY KEY," //É gerado um endereço único para cada aluno.
                 + "codAluno INT NOT NULL," //Abstrai o código de um aluno para que exista.
                 + "logradouro VARCHAR(50) NOT NULL,"
@@ -100,7 +110,9 @@ public class TableCriator {
      
     //Criação da tabela de Clientes (que não são alunos, mas que desejam pagar por algum plano, geralmente diária).
     private void tableClientes() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblClientes("
+        telaDeInicio.mudartexto("Criando tabela de Clientes...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblClientes("
                 + "codCliente INT PRIMARY KEY,"  //Cada cliente tem um código único.
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cpf VARCHAR(15) NOT NULL,"
@@ -114,7 +126,9 @@ public class TableCriator {
     
     //Criação da tabela de funcionários.
     private void tableFuncionarios() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblFuncionarios("
+        telaDeInicio.mudartexto("Criando tabela de Funcionários...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblFuncionarios("
                 + "codFuncionario INT PRIMARY KEY," //Cada funcionário terá um código único.
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cpf VARCHAR(15) NOT NULL,"
@@ -124,7 +138,7 @@ public class TableCriator {
                 + "email VARCHAR(50) NULL,"
                 + "dataNascimento DATE NOT NULL,"
                 + "codEndereco INT NULL,"     //Código do endereço do funcionário, cadastrado numa tabela à parte
-                + "usuario VARCHAR(16) PRIMARY KEY," // Cada funcionário terá um usuário único
+                + "usuario VARCHAR(16) NOT NULL," // Cada funcionário terá um usuário único
                 + "senha VARCHAR(10) NOT NULL,"
                 + "cargo VARCHAR(25) NOT NULL,"
                 + "salario DECIMAL NOT NULL"
@@ -133,7 +147,9 @@ public class TableCriator {
     
     //Criação da tabela de Endereço dos Funcionários
     private void tableEndFuncionarios() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblEndFuncionarios("
+        telaDeInicio.mudartexto("Criando tabela de Endereço F...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblEndFuncionarios("
                 + "codEndFuncionarios INT PRIMARY KEY," // É gerado um código único de endereço de funcionário
                 + "codFuncionario INT NOT NULL,"  //Associação do endereço ao funcionário.
                 + "logradouro VARCHAR(50) NOT NULL,"
@@ -149,7 +165,9 @@ public class TableCriator {
     
     //Criação da tabela da empresa, para cadastro no banco dos seus dados.
     private void tableEmpresa() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblEmpresa("
+        telaDeInicio.mudartexto("Criando tabela da Empresa...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblEmpresa("
                 + "razaoSocial VARCHAR(50) NOT NULL," //Nome da empresa.
                 + "cnpj VARCHAR(20) NOT NULL,"
                 + "nomeFantasia VARCHAR(50) NULL," //Outro nome cadastrado no governo.
@@ -162,7 +180,9 @@ public class TableCriator {
    
    //Criação da tabela de endereço da empresa, pode ter uso futuro caso haja filiais
    private void tableEndEmpresa() throws SQLException{
-       this.gerarStatement().execute(this.criarSeNaoExistir+" tblEndEmpresa("
+       telaDeInicio.mudartexto("Criando tabela de Endereço E...");
+       telaDeInicio.mudarPercentual();
+       this.gerarStatement().execute("CREATE TABLE tblEndEmpresa("
                 + "codEndEmpresa INT PRIMARY KEY," //Código do endereço.
                 + "logradouro VARCHAR(50) NOT NULL,"
                 + "bairro VARCHAR(25) NOT NULL,"
@@ -177,7 +197,9 @@ public class TableCriator {
     
     //Criação da tabela de produtos
     private void tableProdutos() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblProdutos("
+        telaDeInicio.mudartexto("Criando tabela de Produtos...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblProdutos("
                 + "codProduto INT PRIMARY KEY," //Cada produto terá um código único no banco
                 + "nome VARCHAR(50) NOT NULL," 
                 + "tipo VARCHAR(20) NULL," //Caso queira classificá-los para melhor filtragem (ex.: roupas, acessórios, etc.)
@@ -193,9 +215,11 @@ public class TableCriator {
     
     //Criação da tabela de lote do produtos, caso queira cadastrar lotes de produtos (facilita para troca ou definição de validade)
     private void tableLoteDeProdutos() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblLoteDeProdutos("
+        telaDeInicio.mudartexto("Criando tabela de Lotes...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblLoteDeProdutos("
                 + "chaveDeLote INT PRIMARY KEY," //Código único gerado a partir de uma função data-tipo-codProduto.
-                + "codLote VARCHAR(50) PRIMARY KEY," //Código físico do lote, apresentado no rótulo das caixas.
+                + "codLote VARCHAR(50) NOT NULL," //Código físico do lote, apresentado no rótulo das caixas.
                 + "dataAdicionamento DATE NOT NULL,"
                 + "validadeMeses VARCHAR(8) NULL," //Caso o produto possua validade e essa seja em meses.
                 + "validadeData DATE NULL,"
@@ -205,9 +229,11 @@ public class TableCriator {
     
     //Criação da tabela de fornecedores de produtos, caso queira cadastrá-los.
     private void tableFornProdutos() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblFornProdutos("
+        telaDeInicio.mudartexto("Criando tabela de Fornecedores...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblFornProdutos("
                 + "codFornecedor INT PRIMARY KEY," //Cada fornecedor tem um código único.
-                + "nome VARCHAR(50) NOT KEY,"
+                + "nome VARCHAR(50) NOT NULL,"
                 + "cnpj VARCHAR NULL,"
                 + "codProduto VARCHAR(MAX) NOT NULL" //Produtos aos quais o fornecedor é associado, havendo a possibilidade de diversos fornecedores fornecerem um mesmo produto.
                 + ") ON [Produtos];");
@@ -215,7 +241,9 @@ public class TableCriator {
     
     //Criação da tabela de turmas.
     private void tableTurmas() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblTurmas("
+        telaDeInicio.mudartexto("Criando tabela de Turmas...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblTurmas("
                 + "codTurma INT PRIMARY KEY," //Código único para cada turma.
                 + "nome VARCHAR(15) NOT NULL,"
                 + "subgrupo CHAR(2) NULL," //Caso seja turma A, B ou 1,2 etc.
@@ -227,7 +255,9 @@ public class TableCriator {
     
     //Criação da tabela de horários, cada dia da semana que uma turma irá utilizar deverá ter um horário.
     private void tableHorarios() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblHorarios("
+        telaDeInicio.mudartexto("Criando tabela de Horários...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblHorarios("
                 + "codHorario INT PRIMARY KEY," //Código único para cada horário.
                 + "diaDaSemana VARCHAR(15) NOT NULL," //Dia da semana correspondente ao horário.
                 + "horario DATE NOT NULL," //hora.
@@ -238,7 +268,9 @@ public class TableCriator {
     
     //Criação da tabela de matrículas.
     private void tableMatriculas() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblMatriculas("
+        telaDeInicio.mudartexto("Criando tabela de Matrículas...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblMatriculas("
                 + "codMatricula INT PRIMARY KEY," //Código único para cada matrícula.
                 + "codTurma INT NOT NULL," //A turma a qual a matrícula é relacionada.
                 + "codAluno INT NOT NULL," //O aluno ao qual a matrícula é relacionada.
@@ -249,7 +281,9 @@ public class TableCriator {
     
     //Criação da tabela de serviços.
     private void tableServicos() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblServicos("
+        telaDeInicio.mudartexto("Criando tabela de Serviços...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblServicos("
                 + "codServico INT PRIMARY KEY," //Cada serviço terá um código único no banco.
                 + "nome VARCHAR(15) NOT NULL," //Nome do Serviço (natação, hidroginástica, etc.).
                 + "periodo VARCHAR(10) NOT NULL," //Diária, Semanal, Mensal, etc.
@@ -261,8 +295,10 @@ public class TableCriator {
     
     //Criação da tabela de vendas.
     private void tableVendas() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblVendas("
-                + "codVenda INT PRIMARY KEY," //Cada venda terá um código único.
+        telaDeInicio.mudartexto("Criando tabela de Vendas...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblVendas("
+                + "codVenda INT NOT NULL," //Cada venda terá um código único.
                 + "codCliente INT NULL," //Caso a venda ocorra com um cliente.
                 + "codAluno INT NULL," //Caso a venda ocorra com um aluno.
                 + "valorVenda DECIMAL NOT NULL," //Valor total da venda.
@@ -276,7 +312,9 @@ public class TableCriator {
     
     //Criação da tabela de itens vendidos durante uma venda.
     private void tableItensVendidos() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblItensVendidos("
+        telaDeInicio.mudartexto("Criando tabela de Itens V...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblItensVendidos("
                 + "chaveVenda INT NOT NULL," //Associação do item à chave gerada.
                 + "codProduto INT NOT NULL," //Código do produto vendido.
                 + "quantidade FLOAT NOT NULL,"
@@ -287,8 +325,10 @@ public class TableCriator {
     
     //Criação da tabela de gastos.
     private void tableGastos() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblGastos("
-                + "codGasto INT PRIMARY KEY," //Cada gasto terá um código único.
+        telaDeInicio.mudartexto("Criando tabela de Gastos...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblGastos("
+                + "codGasto INT NOT NULL," //Cada gasto terá um código único.
                 + "motivo VARCHAR(MAX) NOT NULL,"
                 + "valorGasto DECIMAL NOT NULL,"
                 + "dataGasto DATE NOT NULL,"
@@ -299,9 +339,11 @@ public class TableCriator {
      
     //Criação da tabela de itens comprados (vide gastos).
     private void tableItensComprados() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblItensComprados("
+        telaDeInicio.mudartexto("Criando tabela de Itens C...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblItensComprados("
                 + "chaveTransacao INT NOT NULL," //Associação do produto ou item à chave de transação.
-                + "itemComprado VARCHAR(MAX) NOT NULL" //Item que foi comprado ou pago.
+                + "itemComprado VARCHAR(MAX) NOT NULL," //Item que foi comprado ou pago.
                 + "quantidade FLOAT NOT NULL,"
                 + "valor DECIMAL NOT NULL,"
                 + "subtotal DECIMAL NOT NULL,"
@@ -312,13 +354,15 @@ public class TableCriator {
 
     //Criação da tabela de Detalhamento Orçamentário.
     private void tableDetOrcamentario() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblDetOrcamentario("
+        telaDeInicio.mudartexto("Criando tabela de Orçamento...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblDetOrcamentario("
                 + "chaveVenda INT NULL," //Caso trate-se de uma venda.
                 + "chaveTransacao INT NULL," //Caso trate-se de um gasto.
                 + "chavePlano INT NULL," //Caso trate-se do pagamento de um plano (se tiver sido pago na data utilizrá essa correspondência, se não tiver então será usado na data de vencimento).
                 + "data DATE NOT NULL," //
                 + "valorRecebidoPago DECIMAL NULL," //Valor recebido do pagamento da venda ou plano.
-                + "valorRecebidoPendente DECIMAL NULL" //Valor pendente de plano.
+                + "valorRecebidoPendente DECIMAL NULL," //Valor pendente de plano.
                 + "valorGastoPago DECIMAL NULL," //Valor gasto pago.
                 + "valorGastoPendente DECIMAL NULL," //Valor gasto pendente.
                 + "chaveOrcamentaria INT NOT NULL" //Chave gerada por meio de função data codificada. 
@@ -327,7 +371,9 @@ public class TableCriator {
     
     //Criação da tabela de Planos (cada aluno terá um plano específico)
     private void tablePlanos() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblPlanos("
+        telaDeInicio.mudartexto("Criando tabela de Planos...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblPlanos("
                 + "codAluno INT NOT NULL," //Código do aluno ao qual o plano será associado.
                 + "codTurma INT NOT NULL," //Código da turma ao qual o plano será associado.
                 + "codServico INT NOT NULL," //Código do serviço ao qual o plano será associado.
@@ -341,7 +387,9 @@ public class TableCriator {
     
     //Criação da tabela de Backups, para armazenamento do histórico.
     private void tableBackups() throws SQLException{
-        this.gerarStatement().execute(this.criarSeNaoExistir+" tblBackups("
+        telaDeInicio.mudartexto("Criando tabela de Backups...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblBackups("
                 + "codBackup INT PRIMARY KEY," //Cada backup terá um código único.
                 + "nome VARCHAR(20) NOT NULL," //Data e horário como nome
                 + "data DATE NOT NULL," //
@@ -350,46 +398,47 @@ public class TableCriator {
                 + ");");
     }
     
-    //Criação da tabela de Log das ações do funcionário.
-    public void tableLogdeAcoesdoFunc() throws SQLException{
-        int quantidadeFuncionarios = this.quantFuncionarios();
-        while(quantidadeFuncionarios>0){ //Verifica a quantidade de funcionários no banco, se não houver a função não é executada, é interessante utliza-la cada vez que cadastrar um novo funcionário.
-            this.gerarStatement().execute(this.criarSeNaoExistir+" tblLogdeAcoesdoFun"+(this.quantFuncionarios() - quantidadeFuncionarios+1)+"("
-                + "codFuncionario INT NOT NULL," //Associa o log ao código do funcionário
-                + "data DATE NOT NULL," //data e hora do acontecimento.
-                + "acao VARCHAR(MAX) NOT NULL,"
-                + "descricao VARCHAR(MAX) NULL"
+    //Criação da tabela de frequÊncia dos funcionários
+    private void tableFreqFuncionarios() throws SQLException{
+        telaDeInicio.mudartexto("Criando tabela de Frequência F...");
+        telaDeInicio.mudarPercentual();    
+        this.gerarStatement().execute("CREATE TABLE tblFreqFuncionarios("
+                + "data DATE NOT NULL," //Data em que ocorreu a entrada no sistema.
+                + "codFuncionario INT NOT NULL," //Associa a frequência ao código do funcionário.
+                + "situacao CHAR(1) NOT NULL" //P-presente (quando loga) ou A-ausente (quando deixa de logar o dia todo)
                 + ")ON [Funcionarios];");
-            
-            quantidadeFuncionarios--;
-        }
     }
     
+    
+    //Usadas quando se cria uma turma ou um funcionário
+    //_________________________________________________________________________________________
     //Criação da tabela de frequencia turmas.
     public void tableFreqTurmas() throws SQLException{
-        int quantidadeTurmas = this.quantTurmas();
-        while(quantidadeTurmas>0){ //Verifica a quantidade de Turmas no banco, se não houver a função não é executada, é interessante utliza-la cada vez que cadastrar uma nova turma.
-            this.gerarStatement().execute(this.criarSeNaoExistir+" tblFreqTurma"+(this.quantTurmas() - quantidadeTurmas+1)+"("
+        telaDeInicio.mudartexto("Criando tabela de Frequência T....");
+        telaDeInicio.mudarPercentual();
+            this.gerarStatement().execute("CREATE TABLE tblFreqTurma"+this.quantTurmas()+"("
                 + "codTurma INT NOT NULL," //Associa a turma à frequência.
                 + "codAluno INT NOT NULL," //Associa o código do aluno à frequência.
                 + "data DATE NOT NULL," //Data em que ocorre a chamada.
                 + "situacao CHAR(1) NOT NULL" //P-presente ou A-ausente.
                 + ")ON [AlunoseClientes];");
-            
-            quantidadeTurmas--;
-        }
-    }
-    
-    //Criação da tabela de frequÊncia dos funcionários
-    private void tableFreqFuncionarios() throws SQLException{
-            this.gerarStatement().execute(this.criarSeNaoExistir+" tblFreqFuncionarios("
-                + "data DATE NOT NULL," //Data em que ocorreu a entrada no sistema.
-                + "codFuncionario INT NOT NULL," //Associa a frequência ao código do funcionário.
-                + "situacao CHAR(1) NOT NULL" //P-presente (quando loga) ou A-ausente (quando deixa de logar o dia todo)
-                + ")ON [Funcionarios];");
 
     }
     
+    
+    //Criação da tabela de Log das ações do funcionário.
+    public void tableLogdeAcoesdoFunc() throws SQLException{
+        telaDeInicio.mudartexto("Criando tabela de Log de Ações F...");
+        telaDeInicio.mudarPercentual();
+
+            this.gerarStatement().execute("CREATE TABLE tblLogdeAcoesdoFun"+this.quantFuncionarios()+"("
+                + "codFuncionario INT NOT NULL," //Associa o log ao código do funcionário
+                + "data DATE NOT NULL," //data e hora do acontecimento.
+                + "acao VARCHAR(MAX) NOT NULL,"
+                + "descricao VARCHAR(MAX) NULL"
+                + ")ON [Funcionarios];");
+
+    }
     
     //Função para identificar a quantidade de turmas dentro do banco.
     public int quantTurmas() throws SQLException{

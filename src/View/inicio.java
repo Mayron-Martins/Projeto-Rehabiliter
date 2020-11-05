@@ -5,11 +5,14 @@
  */
 package View;
 
+import Controller.InicioController;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,17 +20,20 @@ import java.util.logging.Logger;
  */
 
 public class inicio extends javax.swing.JFrame {
-
+    private final InicioController controller;
+    private int percentual=0;
     /**
      * Creates new form inicio
      */
     public inicio() {
         initComponents();
+        controller = new InicioController(this);
           Dimension tamTela = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension tamJan = getSize();
             setLocation(new Point((tamTela.width - tamJan.width)/2, (tamTela.height- tamJan.height)/2));
             setResizable(false);
-            
+        
+        //controller.iniciarCriacaoBanco();
     }
 
     /**
@@ -60,8 +66,8 @@ public class inicio extends javax.swing.JFrame {
 
         funcoes.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         funcoes.setForeground(new java.awt.Color(254, 254, 254));
-        funcoes.setText("Criando tabelas...");
-        getContentPane().add(funcoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, -1, -1));
+        funcoes.setText("Iniciando Programa");
+        getContentPane().add(funcoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 590, 320));
@@ -72,16 +78,18 @@ public class inicio extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // Tela de splash
         new Thread(){
-            int i=0;
                 public void run(){
-                while(i<100){
-                i++;
+                    try {
+                        controller.iniciarCriacaoBanco();
+                    } catch (SQLException ex) {
+                        //exibeMensagem("Impossível Continuar!");
+                    }
+                while(percentual<100){
+                percentual++;
                 
-                  
-                lblcarrega.setText(String.valueOf(i)+"%");   
+                mudartexto("Aguarde mais um pouco...");
+                lblcarrega.setText(String.valueOf(percentual)+"%");   
                 try {sleep(30);} catch (Exception e) {}
-                
-                //Colocar verificacao aq
                 
                 }//!-->FECHA O WHILE-->
                 
@@ -127,8 +135,18 @@ public class inicio extends javax.swing.JFrame {
             }
         });
     }
+    
+public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
 public void mudartexto(String texto){
     funcoes.setText(texto);
+}
+
+public void mudarPercentual (){
+    this.percentual++;
+    lblcarrega.setText(String.valueOf(this.percentual)+"%");
 }
    
     
