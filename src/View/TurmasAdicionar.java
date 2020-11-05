@@ -5,12 +5,14 @@
  */
 package View;
 
+import Controller.adicionais.AdicionarTurmasController;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javafx.scene.control.ScrollBar;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicScrollBarUI;
@@ -20,12 +22,14 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
  * @author 55989
  */
 public class TurmasAdicionar extends javax.swing.JFrame {
+    private final AdicionarTurmasController controller;
 
     /**
      * Creates new form TurmasAdicionar
      */
     public TurmasAdicionar() {
         initComponents();
+        controller = new AdicionarTurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
     }
@@ -40,9 +44,9 @@ public class TurmasAdicionar extends javax.swing.JFrame {
     private void initComponents() {
 
         botaoFechar = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        campoHorario = new javax.swing.JTextField();
+        campoCapMax = new javax.swing.JTextField();
+        campoNome = new javax.swing.JTextField();
         botaoConfirmar = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         barraDeRolagemDiasdaSemana = new javax.swing.JScrollBar();
@@ -69,26 +73,26 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 50));
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        campoHorario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                campoHorarioActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 200, 160, 30));
+        getContentPane().add(campoHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 200, 160, 30));
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        campoCapMax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                campoCapMaxActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 70, 30));
+        getContentPane().add(campoCapMax, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 70, 30));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        campoNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                campoNomeActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 195, 240, 30));
+        getContentPane().add(campoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 195, 240, 30));
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmar.png"))); // NOI18N
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmarhover.png"))); // NOI18N
@@ -149,17 +153,17 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_campoNomeActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void campoCapMaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCapMaxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_campoCapMaxActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void campoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoHorarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_campoHorarioActionPerformed
 
     private void barraDeRolagemDiasdaSemanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraDeRolagemDiasdaSemanaMouseDragged
 
@@ -227,11 +231,11 @@ public class TurmasAdicionar extends javax.swing.JFrame {
     private javax.swing.JCheckBox caixaSegunda;
     private javax.swing.JCheckBox caixaSexta;
     private javax.swing.JCheckBox caixaTerca;
+    private javax.swing.JTextField campoCapMax;
+    private javax.swing.JTextField campoHorario;
+    private javax.swing.JTextField campoNome;
     private javax.swing.JLabel fundo;
     private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 
 private void moverCaixas(){
@@ -254,7 +258,21 @@ private void moverCaixasClique(){
     this.caixaSexta.setLocation(192-positionX, 0);
     this.caixaSabado.setLocation(238-positionX, 0);
     this.caixaDomingo.setLocation(284-positionX, 0);
+
+    
 }
+
+    public JTextField getCampoCapMax() {
+        return campoCapMax;
+    }
+
+    public JTextField getCampoHorario() {
+        return campoHorario;
+    }
+
+    public JTextField getCampoNome() {
+        return campoNome;
+    }
 
 
 }

@@ -5,7 +5,6 @@
  */
 package Dao;
 
-import Controller.auxiliar.VerificarCodigoNoBanco;
 import Model.auxiliar.Horarios;
 import Model.auxiliar.Turmas;
 import java.sql.PreparedStatement;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
  */
 public class TurmasDao extends Conexao{
     private final String inserir = "INSERT INTO ";
-    private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     
     private PreparedStatement gerarStatement(String comando) throws SQLException{
         PreparedStatement statement = this.getConnection().prepareStatement(comando);
