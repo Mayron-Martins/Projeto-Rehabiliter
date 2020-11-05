@@ -195,7 +195,7 @@
     <Component class="javax.swing.JLabel" name="fundo">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/turmas/adicionarturma/fundo.png"/>
+          <Image iconType="3" name="/imagens/turmas/adicionarturma/fundoadc.jpg"/>
         </Property>
       </Properties>
       <Constraints>
