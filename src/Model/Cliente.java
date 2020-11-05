@@ -13,8 +13,8 @@ import java.util.Date;
  */
 public class Cliente extends Pessoa{
     
-    public Cliente(String nome, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
-        super(nome, sexo, telefone, email, datadenascimento, endereco_rua, endereco_bairro, endereco_numero, endereco_complemento, endereco_cep, endereco_cidade, endereco_estado);
+    public Cliente(int codBanco, String nome, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
+        super(codBanco, nome, sexo, telefone, email, datadenascimento, endereco_rua, endereco_bairro, endereco_numero, endereco_complemento, endereco_cep, endereco_cidade, endereco_estado);
     }
     
 }

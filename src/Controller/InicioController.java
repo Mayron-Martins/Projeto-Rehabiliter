@@ -21,7 +21,7 @@ public class InicioController {
     }
     
     public void iniciarCriacaoBanco() throws SQLException{
-        Conexao conexao = new Conexao();
+        Conexao conexao = new Conexao() {};
         conexao.testConnection(telaDeInicio);
     }
     

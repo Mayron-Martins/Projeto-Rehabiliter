@@ -26,8 +26,8 @@ public class Aluno extends Pessoa {
    //___________________________________________________________________________
    //ALUNO MENOR DE IDADE
    //SEM CPF e RG
-    public Aluno(String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int plano, String nome, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
-        super(nome, sexo, telefone, email, datadenascimento, endereco_rua, endereco_bairro, endereco_numero, endereco_complemento, endereco_cep, endereco_cidade, endereco_estado);
+    public Aluno(String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int plano, int codBanco, String nome, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
+        super(codBanco, nome, sexo, telefone, email, datadenascimento, endereco_rua, endereco_bairro, endereco_numero, endereco_complemento, endereco_cep, endereco_cidade, endereco_estado);
         this.nomedamae = nomedamae;
         this.nomedopai = nomedopai;
         this.telefonedamae = telefonedamae;
@@ -42,8 +42,8 @@ public class Aluno extends Pessoa {
     //___________________________________________________________________________
     //ALUNO MAIOR DE IDADE
     //COMPLETO
-    public Aluno(int turma, int plano, String nome, String cpf, String rg, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
-        super(nome, cpf, rg, sexo, telefone, email, datadenascimento, endereco_rua, endereco_bairro, endereco_numero, endereco_complemento, endereco_cep, endereco_cidade, endereco_estado);
+    public Aluno(int turma, int plano, int codBanco, String nome, String cpf, String rg, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
+        super(codBanco,nome, cpf, rg, sexo, telefone, email, datadenascimento, endereco_rua, endereco_bairro, endereco_numero, endereco_complemento, endereco_cep, endereco_cidade, endereco_estado);
         this.turma = turma;
         this.plano = plano;
     }

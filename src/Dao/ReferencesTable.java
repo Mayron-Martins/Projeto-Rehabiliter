@@ -96,7 +96,6 @@ public class ReferencesTable {
     private void fkTblItensVendidos_TblVendas(Statement statement) throws SQLException{
         telaDeInicio.mudartexto("Referenciando tabela Itens V com Ven...");
         telaDeInicio.mudarPercentual();
-        System.out.println("Início");
         statement.execute(this.alterarTabela+" tblItensVendidos "
                 +this.regra+" FK_ItensVendidos_Vendas "
                 +this.fk+"(chaveVenda) "

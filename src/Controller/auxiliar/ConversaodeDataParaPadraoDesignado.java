@@ -1,5 +1,7 @@
 package Controller.auxiliar;
 
+import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +36,11 @@ public class ConversaodeDataParaPadraoDesignado {
         String data_desformatada = parseDate(data);
         data_desformatada = data_desformatada.replace("/", "");
         return data_desformatada; 
+    }
+    
+    public Time parseHour(String hora) throws ParseException{
+      DateFormat formato = new SimpleDateFormat("HH:mm");
+      return new java.sql.Time(formato.parse(hora).getTime());
     }
     
 }

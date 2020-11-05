@@ -14,6 +14,7 @@ import java.util.Date;
  * @author Mayro
  */
 public abstract class Pessoa {
+    protected int codBanco;
     protected String nome;
     protected String cpf;
     protected String rg;
@@ -33,7 +34,8 @@ public abstract class Pessoa {
     //___________________________________________________________________________
     //CONSTRUTORES PARA ADICIONAR
     //PESSOA COM ENDEREÇO
-    public Pessoa(String nome, String cpf, String rg, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
+    public Pessoa(int codBanco, String nome, String cpf, String rg, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
+        this.codBanco = codBanco;
         this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;
@@ -50,7 +52,8 @@ public abstract class Pessoa {
         this.endereco_estado = endereco_estado;
     }
     //PESSOA SEM CPF E RG
-    public Pessoa(String nome, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
+    public Pessoa(int codBanco, String nome, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
+        this.codBanco = codBanco;
         this.nome = nome;
         this.sexo = sexo;
         this.telefone = telefone;
@@ -65,7 +68,8 @@ public abstract class Pessoa {
         this.endereco_estado = endereco_estado;
     }   
     //PESSOA COM ID
-    public Pessoa(String nome, String cpf, String rg, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado, String usuario) {    
+    public Pessoa(int codBanco, String nome, String cpf, String rg, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado, String usuario) {    
+        this.codBanco = codBanco;
         this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;
@@ -83,7 +87,8 @@ public abstract class Pessoa {
         this.usuario = usuario;
     }
     //PESSOA COM ID SEM ENDEREÇO
-    public Pessoa(String nome, String cpf, String rg, char sexo, String telefone, String email, Date datadenascimento, String usuario) {
+    public Pessoa(int codBanco, String nome, String cpf, String rg, char sexo, String telefone, String email, Date datadenascimento, String usuario) {
+        this.codBanco = codBanco;
         this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;

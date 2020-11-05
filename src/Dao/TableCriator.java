@@ -15,7 +15,7 @@ import java.sql.Statement;
  * @author Mayro
  */
 public class TableCriator {
-    private final Conexao conexao = new Conexao();
+    private final Conexao conexao = new Conexao() {};
     private final inicio telaDeInicio;
 
     public TableCriator(inicio view) {
@@ -258,9 +258,9 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Horários...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblHorarios("
-                + "codHorario INT PRIMARY KEY," //Código único para cada horário.
+                + "codHorario INT NOT NULL," //Código único para cada horário.
                 + "diaDaSemana VARCHAR(15) NOT NULL," //Dia da semana correspondente ao horário.
-                + "horario DATE NOT NULL," //hora.
+                + "horario TIME NOT NULL," //hora.
                 + "codCliente INT NULL," //Caso um cliente tenha agendado um horário.
                 + "codTurma INT NULL" //Caso a turma utilize o horário.
                 + ") ON [AlunoseClientes];");
