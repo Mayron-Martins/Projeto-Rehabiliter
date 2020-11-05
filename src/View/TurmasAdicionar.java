@@ -6,6 +6,14 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javafx.scene.control.ScrollBar;
+import javax.swing.JButton;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
  *
@@ -34,9 +42,17 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         botaoFechar = new javax.swing.JButton();
         jTextField4 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
         botaoConfirmar = new javax.swing.JButton();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        barraDeRolagemDiasdaSemana = new javax.swing.JScrollBar();
+        caixaSegunda = new javax.swing.JCheckBox();
+        caixaTerca = new javax.swing.JCheckBox();
+        caixaQuarta = new javax.swing.JCheckBox();
+        caixaQuinta = new javax.swing.JCheckBox();
+        caixaSexta = new javax.swing.JCheckBox();
+        caixaSabado = new javax.swing.JCheckBox();
+        caixaDomingo = new javax.swing.JCheckBox();
         fundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,7 +74,7 @@ public class TurmasAdicionar extends javax.swing.JFrame {
                 jTextField4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 195, 160, 30));
+        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 200, 160, 30));
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,13 +82,6 @@ public class TurmasAdicionar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 70, 30));
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 195, 190, 30));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +93,49 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmar.png"))); // NOI18N
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmarhover.png"))); // NOI18N
         getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 330, 50));
+
+        jLayeredPane1.setAutoscrolls(true);
+        jLayeredPane1.setInheritsPopupMenu(true);
+        jLayeredPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        barraDeRolagemDiasdaSemana.setOrientation(javax.swing.JScrollBar.HORIZONTAL);
+        barraDeRolagemDiasdaSemana.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                barraDeRolagemDiasdaSemanaMouseDragged(evt);
+            }
+        });
+        barraDeRolagemDiasdaSemana.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                barraDeRolagemDiasdaSemanaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                barraDeRolagemDiasdaSemanaMousePressed(evt);
+            }
+        });
+        jLayeredPane1.add(barraDeRolagemDiasdaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 27, 190, 10));
+
+        caixaSegunda.setText("Seg");
+        jLayeredPane1.add(caixaSegunda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        caixaTerca.setText("Ter");
+        jLayeredPane1.add(caixaTerca, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 0, -1, -1));
+
+        caixaQuarta.setText("Qua");
+        jLayeredPane1.add(caixaQuarta, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, -1, -1));
+
+        caixaQuinta.setText("Qui");
+        jLayeredPane1.add(caixaQuinta, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 0, -1, -1));
+
+        caixaSexta.setText("Sex");
+        jLayeredPane1.add(caixaSexta, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 0, -1, -1));
+
+        caixaSabado.setText("Sáb");
+        jLayeredPane1.add(caixaSabado, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 0, -1, -1));
+
+        caixaDomingo.setText("Dom");
+        jLayeredPane1.add(caixaDomingo, new org.netbeans.lib.awtextra.AbsoluteConstraints(274, 0, -1, -1));
+
+        getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, 190, 40));
 
         fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/fundo.png"))); // NOI18N
         getContentPane().add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -101,10 +153,6 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
@@ -112,6 +160,26 @@ public class TurmasAdicionar extends javax.swing.JFrame {
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void barraDeRolagemDiasdaSemanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraDeRolagemDiasdaSemanaMouseDragged
+
+      if(this.getMousePosition()!=null){
+          int posicaoX = this.getMousePosition().x-this.jLayeredPane1.getX();
+          if(posicaoX>=30&&posicaoX<=170){
+             this.moverCaixas(); 
+          }
+      } 
+      
+        
+    }//GEN-LAST:event_barraDeRolagemDiasdaSemanaMouseDragged
+
+    private void barraDeRolagemDiasdaSemanaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraDeRolagemDiasdaSemanaMouseClicked
+        this.moverCaixasClique();
+    }//GEN-LAST:event_barraDeRolagemDiasdaSemanaMouseClicked
+
+    private void barraDeRolagemDiasdaSemanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraDeRolagemDiasdaSemanaMousePressed
+        this.moverCaixasClique();
+    }//GEN-LAST:event_barraDeRolagemDiasdaSemanaMousePressed
 
     /**
      * @param args the command line arguments
@@ -149,12 +217,44 @@ public class TurmasAdicionar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollBar barraDeRolagemDiasdaSemana;
     private javax.swing.JButton botaoConfirmar;
     private javax.swing.JButton botaoFechar;
+    private javax.swing.JCheckBox caixaDomingo;
+    private javax.swing.JCheckBox caixaQuarta;
+    private javax.swing.JCheckBox caixaQuinta;
+    private javax.swing.JCheckBox caixaSabado;
+    private javax.swing.JCheckBox caixaSegunda;
+    private javax.swing.JCheckBox caixaSexta;
+    private javax.swing.JCheckBox caixaTerca;
     private javax.swing.JLabel fundo;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
+
+private void moverCaixas(){
+    int positionX = this.getMousePosition().x-this.jLayeredPane1.getX();
+    this.caixaSegunda.setLocation(30-positionX, 0);
+    this.caixaTerca.setLocation(76-positionX, 0);
+    this.caixaQuarta.setLocation(120-positionX, 0);
+    this.caixaQuinta.setLocation(168-positionX, 0);
+    this.caixaSexta.setLocation(212-positionX, 0);
+    this.caixaSabado.setLocation(258-positionX, 0);
+    this.caixaDomingo.setLocation(304-positionX, 0);
+}
+
+private void moverCaixasClique(){
+    int positionX = this.barraDeRolagemDiasdaSemana.getValue()*2;
+    this.caixaSegunda.setLocation(10-positionX, 0);
+    this.caixaTerca.setLocation(56-positionX, 0);
+    this.caixaQuarta.setLocation(100-positionX, 0);
+    this.caixaQuinta.setLocation(148-positionX, 0);
+    this.caixaSexta.setLocation(192-positionX, 0);
+    this.caixaSabado.setLocation(238-positionX, 0);
+    this.caixaDomingo.setLocation(284-positionX, 0);
+}
+
+
 }
