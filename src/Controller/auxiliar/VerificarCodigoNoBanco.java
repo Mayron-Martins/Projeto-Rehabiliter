@@ -18,17 +18,17 @@ public class VerificarCodigoNoBanco {
     public int verificarUltimo(String tabela, String dado) throws SQLException{
         int ultimo=0;
         String comandoDeBusca = "SELECT ";
-        comandoDeBusca = comandoDeBusca.concat("MAX("+dado+") FROM "+tabela);
+        comandoDeBusca = comandoDeBusca.concat("MAX("+dado+") AS valor FROM "+tabela);
         Conexao conexao = new Conexao() {};
         Statement statement = conexao.getConnection().createStatement();
         ResultSet resultset = statement.executeQuery(comandoDeBusca);
         
         while(resultset.next()){
-            if(resultset.getObject(0)==null){
+            if(resultset.getRow()== 0){
                 return ultimo;
             }
             else{
-                ultimo =(int) resultset.getObject(0);
+                ultimo =resultset.getInt("valor");
             }
         }
         statement.close();

@@ -6,12 +6,22 @@
 package View;
 
 import Controller.adicionais.AdicionarTurmasController;
+import Controller.auxiliar.GerenciamentoDeJCheckBox;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ScrollBar;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -23,6 +33,9 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
  */
 public class TurmasAdicionar extends javax.swing.JFrame {
     private final AdicionarTurmasController controller;
+    private String diasDaSemana=null;
+    private ArrayList <String> diasDaSemanaUnitarios;
+    private String campoHorario="";
 
     /**
      * Creates new form TurmasAdicionar
@@ -44,7 +57,9 @@ public class TurmasAdicionar extends javax.swing.JFrame {
     private void initComponents() {
 
         botaoFechar = new javax.swing.JButton();
-        campoHorario = new javax.swing.JTextField();
+        campoHoras = new javax.swing.JFormattedTextField();
+        campoMinutos = new javax.swing.JFormattedTextField();
+        campoSubgrupos = new javax.swing.JFormattedTextField();
         campoCapMax = new javax.swing.JTextField();
         campoNome = new javax.swing.JTextField();
         botaoConfirmar = new javax.swing.JButton();
@@ -73,19 +88,42 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 50));
 
-        campoHorario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoHorarioActionPerformed(evt);
+        try {
+            campoHoras.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("## h")));
+        } catch (java.text.ParseException erroHora) {
+            erroHora.printStackTrace();}
+        campoHoras.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        getContentPane().add(campoHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 195, 60, 30));
+
+        try {
+            campoMinutos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("## min")));
+        } catch (java.text.ParseException erroMinutos) {
+            erroMinutos.printStackTrace();}
+        campoMinutos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        getContentPane().add(campoMinutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 195, 90, 30));
+
+        campoSubgrupos.addKeyListener(new KeyListener(){
+            public void keyTyped(KeyEvent e) {
+                String texto = campoSubgrupos.getText();
+                if(texto != null && texto.length() == 2) {
+                    e.consume();
+                }
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
             }
         });
-        getContentPane().add(campoHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 200, 160, 30));
+        getContentPane().add(campoSubgrupos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 70, 30));
 
         campoCapMax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoCapMaxActionPerformed(evt);
             }
         });
-        getContentPane().add(campoCapMax, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 70, 30));
+        getContentPane().add(campoCapMax, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 70, 30));
 
         campoNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,6 +134,11 @@ public class TurmasAdicionar extends javax.swing.JFrame {
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmar.png"))); // NOI18N
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmarhover.png"))); // NOI18N
+        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfirmarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 330, 50));
 
         jLayeredPane1.setAutoscrolls(true);
@@ -139,7 +182,7 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         caixaDomingo.setText("Dom");
         jLayeredPane1.add(caixaDomingo, new org.netbeans.lib.awtextra.AbsoluteConstraints(274, 0, -1, -1));
 
-        getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, 190, 40));
+        getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 195, 190, 40));
 
         fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/fundoadc.jpg"))); // NOI18N
         getContentPane().add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -161,10 +204,6 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoCapMaxActionPerformed
 
-    private void campoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoHorarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoHorarioActionPerformed
-
     private void barraDeRolagemDiasdaSemanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraDeRolagemDiasdaSemanaMouseDragged
 
       if(this.getMousePosition()!=null){
@@ -184,6 +223,16 @@ public class TurmasAdicionar extends javax.swing.JFrame {
     private void barraDeRolagemDiasdaSemanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraDeRolagemDiasdaSemanaMousePressed
         this.moverCaixasClique();
     }//GEN-LAST:event_barraDeRolagemDiasdaSemanaMousePressed
+
+    private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
+        this.diasDaSemana();
+        this.edicaoDeHorario();
+        try {
+            controller.adicionarTurma();
+        } catch (SQLException ex) {
+            Logger.getLogger(TurmasAdicionar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,8 +281,10 @@ public class TurmasAdicionar extends javax.swing.JFrame {
     private javax.swing.JCheckBox caixaSexta;
     private javax.swing.JCheckBox caixaTerca;
     private javax.swing.JTextField campoCapMax;
-    private javax.swing.JTextField campoHorario;
+    private javax.swing.JFormattedTextField campoHoras;
+    private javax.swing.JFormattedTextField campoMinutos;
     private javax.swing.JTextField campoNome;
+    private javax.swing.JFormattedTextField campoSubgrupos;
     private javax.swing.JLabel fundo;
     private javax.swing.JLayeredPane jLayeredPane1;
     // End of variables declaration//GEN-END:variables
@@ -261,18 +312,109 @@ private void moverCaixasClique(){
 
     
 }
+    
+    private void diasDaSemana(){
+        String seg = null;
+        String ter =null;
+        String qua =null;
+        String qui =null;
+        String sex =null;
+        String sab =null;
+        String dom =null;
+        
+        this.diasDaSemanaUnitarios = new ArrayList<>();
+        
+        if(this.caixaSegunda.isSelected()){seg ="Seg"; 
+        this.diasDaSemanaUnitarios.add(seg);}
+        if(this.caixaTerca.isSelected()){ter = "Ter";
+        this.diasDaSemanaUnitarios.add(ter);}
+        if(this.caixaQuarta.isSelected()){qua = "Qua";
+        this.diasDaSemanaUnitarios.add(qua);}
+        if(this.caixaQuinta.isSelected()){qui="Qui";
+        this.diasDaSemanaUnitarios.add(qui);}
+        if(this.caixaSexta.isSelected()){sex="Sex";
+        this.diasDaSemanaUnitarios.add(sex);}
+        if(this.caixaSabado.isSelected()){sab="Sab";
+        this.diasDaSemanaUnitarios.add(sab);}
+        if(this.caixaDomingo.isSelected()){dom="Dom";
+        this.diasDaSemanaUnitarios.add(dom);}
+        this.diasDaSemana = seg+", "+ter+", "+qua+", "+qui+", "+sex+", "+sab+", "+dom;
+    }
+    
+    private void edicaoDeHorario(){
+        
+        String hora= null;
+        String minutos = null;
+        
+        if(!this.campoHoras.getText().replace("  h", "").equals("")){hora = this.campoHoras.getText().replace(" h", "");}
+        if(!this.campoMinutos.getText().replace(" min", "").equals("")){minutos = this.campoMinutos.getText().replace(" min", "");}
+        if(!hora.equals("")&&!minutos.equals("")){this.campoHorario = hora+":"+minutos;}
+        
+    }
+    
+    public boolean testeValidacaoHorario(){
+        boolean verificar = true;
+        int horas = Integer.parseInt(this.campoHoras.getText().replace(" h", ""));
+        int minutos = Integer.parseInt(this.campoMinutos.getText().replace(" min", ""));
+        
+        if((horas<0||horas>23)||(minutos<0||minutos>59)){
+            verificar=false;
+        }
+        return verificar;
+    }
+    
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
 
     public JTextField getCampoCapMax() {
         return campoCapMax;
     }
 
-    public JTextField getCampoHorario() {
+    public String getCampoHorario() {
         return campoHorario;
     }
+
 
     public JTextField getCampoNome() {
         return campoNome;
     }
+
+    public JFormattedTextField getCampoSubgrupos() {
+        return campoSubgrupos;
+    }
+
+    
+
+    public String getDiasDaSemana() {
+        return diasDaSemana;
+    }
+
+    public ArrayList<String> getDiasDaSemanaUnitarios() {        
+        return diasDaSemanaUnitarios;
+    }
+    
+    public void desmarcarCaixas(){
+        this.caixaSegunda.setSelected(false);
+        this.caixaTerca.setSelected(false);
+        this.caixaQuarta.setSelected(false);
+        this.caixaQuinta.setSelected(false);
+        this.caixaSexta.setSelected(false);
+        this.caixaSabado.setSelected(false);
+        this.caixaDomingo.setSelected(false);
+    }
+
+    public JFormattedTextField getCampoHoras() {
+        return campoHoras;
+    }
+
+    public JFormattedTextField getCampoMinutos() {
+        return campoMinutos;
+    }
+    
+    
+    
+    
 
 
 }

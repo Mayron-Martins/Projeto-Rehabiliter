@@ -17,6 +17,7 @@ public class Turmas {
     private int quantidadeMaximaAlunos;
     private String diasDaSemana;
 
+    
     public Turmas(int codBanco, String nomeTurma, String subgrupo, int quantidadeAlunos, int quantidadeMaximaAlunos, String diasDaSemana) {
         this.codBanco = codBanco;
         this.nomeTurma = nomeTurma;

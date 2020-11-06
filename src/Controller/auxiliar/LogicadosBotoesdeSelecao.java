@@ -5,7 +5,7 @@
  */
 package Controller.auxiliar;
 
-import View.Caixa;
+
 import javax.swing.JCheckBox;
 
 /**

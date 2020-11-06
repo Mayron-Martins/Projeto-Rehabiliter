@@ -23,6 +23,9 @@ public class Horarios {
     private int codCliente;
     private int codTurma;
 
+    public Horarios() {
+    }
+
     public Horarios(int codBanco, String diaDaSemana, String horario, int codCliente, int codTurma) {
         this.codBanco = codBanco;
         this.diaDaSemana = diaDaSemana;

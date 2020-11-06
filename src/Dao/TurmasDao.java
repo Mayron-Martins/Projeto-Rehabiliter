@@ -31,12 +31,12 @@ public class TurmasDao extends Conexao{
                 + "VALUES("
                 + "?,?,?,?,?,?);");
         PreparedStatement statement = gerarStatement(inTurmas);
-        statement.setInt(0, turma.getCodBanco());
-        statement.setString(1, turma.getNomeTurma());
-        statement.setString(2, turma.getSubgrupo());
-        statement.setInt(3, 0);
-        statement.setInt(4, turma.getQuantidadeMaximaAlunos());
-        statement.setString(5, turma.getDiasDaSemana());
+        statement.setInt(1, turma.getCodBanco());
+        statement.setString(2, turma.getNomeTurma());
+        statement.setString(3, turma.getSubgrupo());
+        statement.setInt(4, 0);
+        statement.setInt(5, turma.getQuantidadeMaximaAlunos());
+        statement.setString(6, turma.getDiasDaSemana());
         statement.execute();
         statement.close();
         
@@ -51,12 +51,13 @@ public class TurmasDao extends Conexao{
         statement = gerarStatement(inHorarios);
         while(quantidadeDias>0){
             diferenca = contador-quantidadeDias;
-            statement.setInt(0, horario.get(diferenca).getCodBanco());
-            statement.setString(1,horario.get(diferenca).getDiaDaSemana());
-            statement.setTime(2, horario.get(diferenca).getHorario());
-            statement.setInt(3, horario.get(diferenca).getCodCliente());
-            statement.setInt(4, horario.get(diferenca).getCodTurma());
-            statement.execute();    
+            statement.setInt(1, horario.get(diferenca).getCodBanco());
+            statement.setString(2,horario.get(diferenca).getDiaDaSemana());
+            statement.setTime(3, horario.get(diferenca).getHorario());
+            statement.setInt(4, horario.get(diferenca).getCodCliente());
+            statement.setInt(5, horario.get(diferenca).getCodTurma());
+            statement.execute(); 
+            quantidadeDias--;
         }
         statement.close(); 
     }
