@@ -6,6 +6,7 @@
 package View;
 
 import Controller.adicionais.AdicionarTurmasController;
+import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.GerenciamentoDeJCheckBox;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -60,7 +61,7 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         campoHoras = new javax.swing.JFormattedTextField();
         campoMinutos = new javax.swing.JFormattedTextField();
         campoSubgrupos = new javax.swing.JFormattedTextField();
-        campoCapMax = new javax.swing.JTextField();
+        campoCapMax = new FormatacaodeCamposRestritos();
         campoNome = new javax.swing.JTextField();
         botaoConfirmar = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
