@@ -167,7 +167,7 @@ public class Menu extends javax.swing.JFrame {
     private void botaoTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTurmasActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Turmas abrir=new Turmas();
+        TurmasView abrir=new TurmasView();
         abrir.setVisible(true);
     }//GEN-LAST:event_botaoTurmasActionPerformed
 
