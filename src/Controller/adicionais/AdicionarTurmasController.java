@@ -48,7 +48,7 @@ public class AdicionarTurmasController {
         Turmas turma = null;
         ArrayList <Horarios> horarios = new ArrayList <>();
         if(!view.getCampoHorario().equals("")){
-        turma = new Turmas(codBancoTurma, nomeTurma, subgrupo, 0, quantidadeMax, diasDaSemana);    
+        turma = new Turmas(codBancoTurma, nomeTurma, subgrupo, 0, quantidadeMax, diasDaSemana, horario);    
 
         
         int diferenca, contador = diasDaSemanaUnitario.size();

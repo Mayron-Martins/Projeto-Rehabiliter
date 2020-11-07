@@ -249,7 +249,8 @@ public class TableCriator {
                 + "subgrupo CHAR(2) NULL," //Caso seja turma A, B ou 1,2 etc.
                 + "quantAlunos INT NULL," //Caso queira colocar a quantidade presente de alunos.
                 + "quantLimiteDeAlunos INT NULL," //Caso queira definir um valor máximo de alunos para uma turma.
-                + "diasDaSemana VARCHAR(MAX) NOT NULL" //Dias da semana que a turma irá utilizar.
+                + "diasDaSemana VARCHAR(MAX) NOT NULL,"
+                + "horario TIME NOT NULL" //Dias da semana que a turma irá utilizar.
                 + ") ON [AlunoseClientes];");
     }
     

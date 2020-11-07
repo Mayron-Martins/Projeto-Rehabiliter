@@ -309,9 +309,7 @@ private void moverCaixasClique(){
     this.caixaQuinta.setLocation(148-positionX, 0);
     this.caixaSexta.setLocation(192-positionX, 0);
     this.caixaSabado.setLocation(238-positionX, 0);
-    this.caixaDomingo.setLocation(284-positionX, 0);
-
-    
+    this.caixaDomingo.setLocation(284-positionX, 0);  
 }
     
     private void diasDaSemana(){

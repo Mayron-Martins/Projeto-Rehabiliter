@@ -5,6 +5,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConversaodeDataParaPadraoDesignado {
     public Date parseDate(String data) throws ParseException {
@@ -39,8 +42,21 @@ public class ConversaodeDataParaPadraoDesignado {
     }
     
     public Time parseHour(String hora) throws ParseException{
+      if(hora.equals("")){
+          return null;
+      }
       DateFormat formato = new SimpleDateFormat("HH:mm");
       return new java.sql.Time(formato.parse(hora).getTime());
+    }
+    
+    public String parseHour (Time hora){
+      /*if(hora == null){
+          return "";
+      }*/
+      int tamanhoHora = hora.toString().length()-3;
+      String formato = hora.toString().substring(0, tamanhoHora);
+      
+        return formato;
     }
     
 }

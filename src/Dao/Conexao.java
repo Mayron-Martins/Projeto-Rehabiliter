@@ -7,6 +7,7 @@ package Dao;
 import View.inicio;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -45,6 +46,11 @@ public abstract class Conexao {
     public Connection getConnection() throws SQLException{
         Connection conexao = DriverManager.getConnection(url, user, pass);
         return conexao;
+    }
+    
+    public PreparedStatement gerarStatement(String comando) throws SQLException{
+        PreparedStatement statement = this.getConnection().prepareStatement(comando);
+        return statement;
     }
     
 }
