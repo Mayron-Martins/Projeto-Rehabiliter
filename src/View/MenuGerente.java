@@ -11,12 +11,12 @@ import java.awt.Color;
  *
  * @author 55989
  */
-public class Menu extends javax.swing.JFrame {
+public class MenuGerente extends javax.swing.JFrame {
 
     /**
      * Creates new form Menu
      */
-    public Menu() {
+    public MenuGerente() {
         initComponents();
         setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -172,7 +172,7 @@ public class Menu extends javax.swing.JFrame {
     private void botaoTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTurmasActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        TurmasView abrir=new TurmasView();
+        Turmas abrir=new Turmas();
         abrir.setVisible(true);
     }//GEN-LAST:event_botaoTurmasActionPerformed
 
@@ -200,7 +200,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void botaoImprimirExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoImprimirExportarActionPerformed
         // TODO add your handling code here:
-        ImprimirExportar abrir= new ImprimirExportar();
+        ImprimirExportarGerente abrir= new ImprimirExportarGerente();
         abrir.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoImprimirExportarActionPerformed
@@ -222,20 +222,21 @@ public class Menu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Menu().setVisible(true);
+                new MenuGerente().setVisible(true);
             }
         });
     }

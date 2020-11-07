@@ -145,7 +145,7 @@ public class telaInicialGerente extends javax.swing.JFrame {
 
     private void botaoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMenuActionPerformed
         // TODO add your handling code here:
-        Menu jump=new Menu();
+        MenuGerente jump=new MenuGerente();
         jump.setVisible(true);
     }//GEN-LAST:event_botaoMenuActionPerformed
 
