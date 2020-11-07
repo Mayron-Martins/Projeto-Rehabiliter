@@ -5,7 +5,6 @@
  */
 package Controller.adicionais;
 
-import Controller.auxiliar.GerenciamentoDeJCheckBox;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.TurmasDao;
 import Model.auxiliar.Horarios;

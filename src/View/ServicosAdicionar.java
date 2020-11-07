@@ -5,6 +5,7 @@
  */
 package View;
 
+import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 
 /**
@@ -31,10 +32,11 @@ public class ServicosAdicionar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        comboPeriodo = new javax.swing.JComboBox<>();
         btnFechar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        nomeServico = new javax.swing.JTextField();
+        valorDinheiro = new JMoneyField();
+        metodoPagamento = new javax.swing.JComboBox<>();
         botaoConfirmar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -42,6 +44,9 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Diária", "Semanal", "Mensal", "Trimestral", "Semestral", "Anual" }));
+        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 202, 170, 30));
 
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
         btnFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
@@ -52,27 +57,23 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         });
         getContentPane().add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 230, 60));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        nomeServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                nomeServicoActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 202, 170, 30));
+        getContentPane().add(nomeServico, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 202, 170, 30));
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 202, 170, 30));
+        valorDinheiro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        getContentPane().add(valorDinheiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 110, 40));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Cartão de Crédito", "Cartão de Débito" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        metodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Cartão de Crédito", "Cartão de Débito" }));
+        metodoPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                metodoPagamentoActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 250, 40));
+        getContentPane().add(metodoPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 250, 40));
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmar.png"))); // NOI18N
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmarhover.png"))); // NOI18N
@@ -90,17 +91,13 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void nomeServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeServicoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_nomeServicoActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void metodoPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodoPagamentoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_metodoPagamentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,9 +137,10 @@ public class ServicosAdicionar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoConfirmar;
     private javax.swing.JButton btnFechar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JComboBox<String> metodoPagamento;
+    private javax.swing.JTextField nomeServico;
+    private javax.swing.JFormattedTextField valorDinheiro;
     // End of variables declaration//GEN-END:variables
 }

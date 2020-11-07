@@ -187,7 +187,7 @@ public class MenuGerente extends javax.swing.JFrame {
     private void botaoServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoServicosActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Servicos abrir=new Servicos();
+        ServicosView abrir=new ServicosView();
         abrir.setVisible(true);
     }//GEN-LAST:event_botaoServicosActionPerformed
 
