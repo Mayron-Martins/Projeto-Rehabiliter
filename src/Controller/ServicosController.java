@@ -91,7 +91,9 @@ public class ServicosController {
             BigDecimal valorAPrazoCredito = new BigDecimal("0");
             BigDecimal valorAPrazoDebito = new BigDecimal("0");
             
+            System.out.println(view.getTabelaServicos().getValueAt(linhaSelecionada, 4).toString());
             String valorDinheiro = converterDinheiro.converterParaBigDecimal(view.getTabelaServicos().getValueAt(linhaSelecionada, 4).toString()).toString();
+            System.out.println(valorDinheiro);
             if(metodoDePagamento.equals("Dinheiro")){valorAVista = new BigDecimal(valorDinheiro);}
             if(metodoDePagamento.equals("Boleto")){valorBoleto = new BigDecimal(valorDinheiro);}
             if(metodoDePagamento.equals("Cartão de Crédito")){valorAPrazoCredito = new BigDecimal(valorDinheiro);}

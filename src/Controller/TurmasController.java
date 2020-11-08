@@ -66,9 +66,7 @@ public class TurmasController {
                     this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
                     converterHora.parseHour(turmas.get(linhas).getHorario())};
                     this.tabelaDeTurmas.addRow(dadosDaTabela);
-                }
-                
-                
+                }    
             }
         }        
     }
@@ -174,5 +172,37 @@ public class TurmasController {
             listarTurmas();
         }
         else{this.view.exibeMensagem("Erro, Nenhuma Turma Selecionada!");}
+    }
+    
+    //Buscar turmas no campo de busca
+    public void buscarTurmas() throws Exception{
+        String nomeTurma = view.getCampoDePesquisa().getText();
+        ArrayList <Turmas> turmas = turmasDao.pesquisarPorNome(nomeTurma);
+        
+        if(nomeTurma.equals("")){limparTabela();listarTurmas();}
+        else{
+            if(turmas==null){view.exibeMensagem("Turma Não Encontrada!"); limparTabela();}
+            else{
+                limparTabela();
+                for(int linhas = 0; linhas<turmas.size(); linhas++){
+                    if(turmas.get(linhas).getQuantidadeMaximaAlunos()==0){
+                        Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
+                        turmas.get(linhas).getNomeTurma(),turmas.get(linhas).getSubgrupo(),
+                        "",turmas.get(linhas).getQuantidadeAlunos(),
+                        this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
+                        converterHora.parseHour(turmas.get(linhas).getHorario())};
+                        this.tabelaDeTurmas.addRow(dadosDaTabela);
+                    }
+                    else{
+                        Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
+                        turmas.get(linhas).getNomeTurma(),turmas.get(linhas).getSubgrupo(),
+                        turmas.get(linhas).getQuantidadeMaximaAlunos(),turmas.get(linhas).getQuantidadeAlunos(),
+                        this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
+                        converterHora.parseHour(turmas.get(linhas).getHorario())};
+                        this.tabelaDeTurmas.addRow(dadosDaTabela);
+                    }
+                }
+            }
+        }
     }
 }

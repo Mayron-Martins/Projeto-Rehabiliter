@@ -27,10 +27,10 @@ public class Servicos {
         this.nome = nome;
         this.periodo = periodo;
         this.formaPagamento = formaPagamento;
-        this.valorVista = valorVista;
-        this.valorBoleto = valorBoleto;
-        this.valorPrazoCredito = valorPrazoCredito;
-        this.valorPrazoDebito = valorPrazoDebito;
+        this.valorVista = new BigDecimal (valorVista.toString());
+        this.valorBoleto = new BigDecimal (valorBoleto.toString());
+        this.valorPrazoCredito = new BigDecimal(valorPrazoCredito.toString());
+        this.valorPrazoDebito = new BigDecimal (valorPrazoDebito.toString());
     }
 
     public int getCodBanco() {

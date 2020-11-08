@@ -5,10 +5,12 @@
  */
 package Controller.auxiliar;
 
+import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import sun.swing.table.DefaultTableCellHeaderRenderer;
 
@@ -16,14 +18,23 @@ import sun.swing.table.DefaultTableCellHeaderRenderer;
  *
  * @author Mayro
  */
-public class FormatacaoDeTabelas {
+public class FormatacaoDeTabelas extends JTable{
+    private DefaultTableCellRenderer formatar = new DefaultTableCellHeaderRenderer();
+    
+
+    public FormatacaoDeTabelas(char posicao, Font font, TableModel dataModel) {
+        setFont(font);
+        setModel(dataModel);
+        formatar(this, posicao);
+    }
+    
+    
+    
     
     public void formatar(JTable tabela, char posicao){
         DefaultTableModel modelodeTabela = (DefaultTableModel)tabela.getModel();
         tabela.setRowSorter(new TableRowSorter(modelodeTabela));
         int numColunas =tabela.getColumnCount();
-        
-        DefaultTableCellRenderer formatar = new DefaultTableCellHeaderRenderer();
         switch(posicao){
             case 'E':
                 formatar.setHorizontalAlignment(SwingConstants.LEFT);
@@ -51,4 +62,6 @@ public class FormatacaoDeTabelas {
             break;
         }
     }
+    
+     
 }

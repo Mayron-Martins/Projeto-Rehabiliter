@@ -101,10 +101,10 @@ public class ServicosDao extends Conexao{
     String nome = resultset.getString("nome");
     String periodo = resultset.getString("periodo");
     String formaPagamento = resultset.getString("formaPagamento");
-    BigDecimal valorAVista = resultset.getBigDecimal("valorAVista");
-    BigDecimal valorBoleto = resultset.getBigDecimal("valorBoleto");
-    BigDecimal valorAPrazoCredito = resultset.getBigDecimal("valorCartaoDeCredito");
-    BigDecimal valorAPrazoDebito = resultset.getBigDecimal("valorCartaoDeDebito");
+    BigDecimal valorAVista = new BigDecimal(resultset.getBigDecimal("valorAVista").toString());
+    BigDecimal valorBoleto = new BigDecimal(resultset.getBigDecimal("valorBoleto").toString());
+    BigDecimal valorAPrazoCredito = new BigDecimal(resultset.getBigDecimal("valorCartaoDeCredito").toString());
+    BigDecimal valorAPrazoDebito = new BigDecimal (resultset.getBigDecimal("valorCartaoDeDebito").toString());
 
     Servicos servico = new Servicos(codBanco, nome, periodo, formaPagamento, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito);
 

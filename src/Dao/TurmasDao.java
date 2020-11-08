@@ -11,7 +11,6 @@ import Model.auxiliar.Turmas;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 
 /**
@@ -120,5 +119,20 @@ public class TurmasDao extends Conexao{
     
     statement.close();
     return turmas;
+    }
+    
+    public ArrayList<Turmas> pesquisarPorNome(String nomeTurma) throws SQLException, Exception
+    {
+           ArrayList <Turmas> turmas = selecionarTodasTurmas();
+           ArrayList<Turmas> turmasBuscadas = new ArrayList<>();
+           for(int repeticoes = 0; repeticoes<turmas.size(); repeticoes++){
+               if(turmas.get(repeticoes).getNomeTurma().toLowerCase().contains(nomeTurma)== true){
+                   turmasBuscadas.add(turmas.get(repeticoes));
+               }
+           }
+           if(turmasBuscadas.size()<1){
+               return null;
+           }
+           return turmasBuscadas;
     }
 }

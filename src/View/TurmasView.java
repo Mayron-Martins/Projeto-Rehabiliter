@@ -23,6 +23,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import static javax.swing.SwingUtilities.getRootPane;
+import javax.swing.table.DefaultTableCellRenderer;
+import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
  *
@@ -30,7 +33,6 @@ import javax.swing.JTextField;
  */
 public class TurmasView extends javax.swing.JFrame {
     private final TurmasController controller;
-    private final FormatacaoDeTabelas formatarTabelas = new FormatacaoDeTabelas();
     private String diasDaSemana=null;
     private ArrayList <String> diasDaSemanaUnitarios;
     private String campoHorario="";
@@ -50,24 +52,11 @@ public class TurmasView extends javax.swing.JFrame {
         botaoRemoverTurmas.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
         
-        formatarTabelas.formatar(tabelaAlunos, 'C');
+        
+        //formatarTabelas.formatar(tabelaAlunos, 'C');
         desabilitarVisibilidadeComponente();
         
-        int linhaSelecionada = tabelaAlunos.getSelectedRow();
-        addKeyListener(new KeyListener(){  
-                    public void keyTyped(KeyEvent e) {
-                       String texto = tabelaAlunos.getValueAt(linhaSelecionada, 2).toString();
-                       if(texto != null && texto.length() == 2) {
-                            e.consume();
-                       }
-                    }
 
-                    public void keyPressed(KeyEvent e) {
-                    }
-
-                    public void keyReleased(KeyEvent e) {
-                    }
-                });
         
     }
 
@@ -207,8 +196,19 @@ public class TurmasView extends javax.swing.JFrame {
 
         botaobuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaobuscar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
-        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 250, 50, 40));
-        getContentPane().add(campoDePesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 320, 40));
+        botaobuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaobuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 50, 40));
+
+        campoDePesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoDePesquisaKeyPressed(evt);
+            }
+        });
+        getContentPane().add(campoDePesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 320, 40));
 
         try {
             campoEdicaoHoras.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("## h")));
@@ -223,8 +223,6 @@ public class TurmasView extends javax.swing.JFrame {
             erroMinutos.printStackTrace();}
         getContentPane().add(campoEdicaoMinutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, 50, -1));
 
-        tabelaAlunos.setAutoCreateRowSorter(true);
-        tabelaAlunos.setBackground(new java.awt.Color(128, 128, 128));
         tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -251,8 +249,10 @@ public class TurmasView extends javax.swing.JFrame {
         });
         tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(campoSubgrupoFormatado));
         tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(campoMaximoAlunos));
+        tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaAlunos.setRowHeight(25);
+        tabelaAlunos.setShowVerticalLines(false);
         tabelaAlunos.getTableHeader().setReorderingAllowed(false);
         tabelaAlunos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -364,6 +364,20 @@ public class TurmasView extends javax.swing.JFrame {
             Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tabelaAlunosMouseClicked
+
+    private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
+        try {
+            controller.buscarTurmas();
+        } catch (Exception ex) {
+            Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaobuscarActionPerformed
+
+    private void campoDePesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDePesquisaKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaobuscar);
+        }
+    }//GEN-LAST:event_campoDePesquisaKeyPressed
 
     /**
      * @param args the command line arguments

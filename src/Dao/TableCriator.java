@@ -86,7 +86,7 @@ public class TableCriator {
                 + "codDiasDaSemana INT NOT NULL,"  //código dos dias da semana que irá ter aula, coincide com os dias da turma.
                 + "codServico INT NOT NULL,"  //Código do serviço e tempo para pagamento.
                 + "descricao VARCHAR(MAX) NULL,"
-                + "debito DECIMAL NULL"  //Valor incrementado ou decrementado conforme o aluno faz compras.
+                + "debito DECIMAL(16,2) NULL"  //Valor incrementado ou decrementado conforme o aluno faz compras.
                 + ") ON [AlunoseClientes];");
     }
     
@@ -120,7 +120,7 @@ public class TableCriator {
                 + "codEndereco INT NULL,"
                 + "codServico INT NULL," //Código do tipo de serviço e período de pagamento (diária).
                 + "diasAcordados INT NULL,"  //Dias que foram agendados para uso dos serviços.
-                + "debito DECIMAL NULL"
+                + "debito DECIMAL(16,2) NULL"
                 + ") ON [AlunoseClientes];");
     }
     
@@ -141,7 +141,7 @@ public class TableCriator {
                 + "usuario VARCHAR(16) NOT NULL," // Cada funcionário terá um usuário único
                 + "senha VARCHAR(10) NOT NULL,"
                 + "cargo VARCHAR(25) NOT NULL,"
-                + "salario DECIMAL NOT NULL"
+                + "salario DECIMAL(16,2) NOT NULL"
                 + ") ON [Funcionarios];");
     }
     
@@ -206,9 +206,9 @@ public class TableCriator {
                 + "unMedida VARCHAR(3) NULL," //Caso queira definir uma unidade de medida (ex.: UN, KG, PAC).
                 + "quantidade FLOAT NOT NULL,"
                 + "descricao VARCHAR(MAX) NULL,"
-                + "valorDeCompra DECIMAL NULL," //Caso queira definir por qual valor o produto foi comprado, e então definir o lucro.
+                + "valorDeCompra DECIMAL(16,2) NULL," //Caso queira definir por qual valor o produto foi comprado, e então definir o lucro.
                 + "dataDeCompra DATE NULL," //data que o produto foi comprado do fornecedor.
-                + "valorDeVenda DECIMAL NOT NULL,"
+                + "valorDeVenda DECIMAL(16,2) NOT NULL,"
                 + "chaveDeLote INT NULL" //Utiliza a chave única de um lote cadastrado no banco e em uma tabela à parte.
                 + ") ON [Produtos];");
     }
@@ -289,10 +289,10 @@ public class TableCriator {
                 + "nome VARCHAR(15) NOT NULL," //Nome do Serviço (natação, hidroginástica, etc.).
                 + "periodo VARCHAR(10) NOT NULL,"
                 + "formaPagamento VARCHAR(25) NOT NULL," //Diária, Semanal, Mensal, etc.
-                + "valorAVista DECIMAL NULL,"
-                + "valorBoleto DECIMAL NULL,"
-                + "valorCartaoDeCredito DECIMAL NULL,"
-                + "valorCartaoDeDebito DECIMAL NULL"
+                + "valorAVista DECIMAL(16,2) NULL,"
+                + "valorBoleto DECIMAL(16,2) NULL,"
+                + "valorCartaoDeCredito DECIMAL(16,2) NULL,"
+                + "valorCartaoDeDebito DECIMAL(16,2) NULL"
                 + ") ON [AlunoseClientes];");
     }
     
@@ -304,9 +304,9 @@ public class TableCriator {
                 + "codVenda INT NOT NULL," //Cada venda terá um código único.
                 + "codCliente INT NULL," //Caso a venda ocorra com um cliente.
                 + "codAluno INT NULL," //Caso a venda ocorra com um aluno.
-                + "valorVenda DECIMAL NOT NULL," //Valor total da venda.
-                + "valorPagoCliente DECIMAL NOT NULL," //Valor pago pelo cliente.
-                + "valorTroco DECIMAL NOT NULL," //Troco da venda.
+                + "valorVenda DECIMAL(16,2) NOT NULL," //Valor total da venda.
+                + "valorPagoCliente DECIMAL(16,2) NOT NULL," //Valor pago pelo cliente.
+                + "valorTroco DECIMAL(16,2) NOT NULL," //Troco da venda.
                 + "dataVenda DATE NOT NULL,"
                 + "chaveVenda INT PRIMARY KEY," //Cada venda gera uma chave única do tipo data-hora codificada, utilizada para identificação de produtos vendidos.
                 + "formaPagamento VARCHAR(10) NOT NULL" //Dinheiro ou cartão.
@@ -321,8 +321,8 @@ public class TableCriator {
                 + "chaveVenda INT NOT NULL," //Associação do item à chave gerada.
                 + "codProduto INT NOT NULL," //Código do produto vendido.
                 + "quantidade FLOAT NOT NULL,"
-                + "valor DECIMAL NOT NULL,"
-                + "subtotal DECIMAL NOT NULL"
+                + "valor DECIMAL(16,2) NOT NULL,"
+                + "subtotal DECIMAL(16,2) NOT NULL"
                 + ") ON [Transacoes];");
     }
     
@@ -333,7 +333,7 @@ public class TableCriator {
         this.gerarStatement().execute("CREATE TABLE tblGastos("
                 + "codGasto INT NOT NULL," //Cada gasto terá um código único.
                 + "motivo VARCHAR(MAX) NOT NULL,"
-                + "valorGasto DECIMAL NOT NULL,"
+                + "valorGasto DECIMAL(16,2) NOT NULL,"
                 + "dataGasto DATE NOT NULL,"
                 + "chaveTransacao INT PRIMARY KEY," //Chave gerada por meio de função data-hora codificada, utilizada para idenficação de itens comprados.
                 + "situacao VARCHAR(10) NOT NULL" //Pago ou Pendente.
@@ -348,8 +348,8 @@ public class TableCriator {
                 + "chaveTransacao INT NOT NULL," //Associação do produto ou item à chave de transação.
                 + "itemComprado VARCHAR(MAX) NOT NULL," //Item que foi comprado ou pago.
                 + "quantidade FLOAT NOT NULL,"
-                + "valor DECIMAL NOT NULL,"
-                + "subtotal DECIMAL NOT NULL,"
+                + "valor DECIMAL(16,2) NOT NULL,"
+                + "subtotal DECIMAL(16,2) NOT NULL,"
                 + "codProduto INT NULL," //O item comprado pode ser associado a um produto já cadastrado.
                 + "codLote INT NULL" //Caso o produto esteja no banco e queira cadastrar o lote correspondente.
                 + ") ON [Transacoes];");
@@ -364,10 +364,10 @@ public class TableCriator {
                 + "chaveTransacao INT NULL," //Caso trate-se de um gasto.
                 + "chavePlano INT NULL," //Caso trate-se do pagamento de um plano (se tiver sido pago na data utilizrá essa correspondência, se não tiver então será usado na data de vencimento).
                 + "data DATE NOT NULL," //
-                + "valorRecebidoPago DECIMAL NULL," //Valor recebido do pagamento da venda ou plano.
-                + "valorRecebidoPendente DECIMAL NULL," //Valor pendente de plano.
-                + "valorGastoPago DECIMAL NULL," //Valor gasto pago.
-                + "valorGastoPendente DECIMAL NULL," //Valor gasto pendente.
+                + "valorRecebidoPago DECIMAL(16,2) NULL," //Valor recebido do pagamento da venda ou plano.
+                + "valorRecebidoPendente DECIMAL(16,2) NULL," //Valor pendente de plano.
+                + "valorGastoPago DECIMAL(16,2) NULL," //Valor gasto pago.
+                + "valorGastoPendente DECIMAL(16,2) NULL," //Valor gasto pendente.
                 + "chaveOrcamentaria INT NOT NULL" //Chave gerada por meio de função data codificada. 
                 + ") ON [Orcamento];");
     }

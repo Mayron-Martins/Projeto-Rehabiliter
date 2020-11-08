@@ -14,10 +14,11 @@ import java.math.BigDecimal;
 public class ConversaoDeDinheiro {
     
     public BigDecimal converterParaBigDecimal(String valor){
-       valor = valor.replace(".", "");
-       valor = valor.replace(",", ".");
-       valor = valor.trim();
-       
+       if(valor.contains(",")){
+           valor = valor.replace(".", "");
+           valor = valor.replace(",", ".");
+           valor = valor.trim();  
+       }
        return new BigDecimal(valor);
     }
     
