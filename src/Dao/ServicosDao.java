@@ -6,9 +6,8 @@
 package Dao;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
-import Model.auxiliar.Horarios;
-import Model.auxiliar.Turmas;
-import View.Servicos;
+import Model.auxiliar.Servicos;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,17 +29,19 @@ public class ServicosDao extends Conexao{
     //Inserir dados na tabela Servicos
     public void inserirDados (Servicos servico) throws SQLException{
         //Adicionando Turma
-        String inTurmas = inserir.concat("tblServicos("
-                + "codServico, nome, periodo, valorAVista, valorBoleto, valorCartao)"
+        String inServicos = inserir.concat("tblServicos("
+                + "codServico, nome, periodo, formaPagamento, valorAVista, valorBoleto, valorCartaoDeCredito, valorCartaoDeDebito)"
                 + "VALUES("
-                + "?,?,?,?,?,?,?);");
-        PreparedStatement statement = gerarStatement(inTurmas);
-        statement.setInt(1, servico.get);
-        statement.setString(2, turma.getNomeTurma());
-        statement.setString(3, turma.getSubgrupo());
-        statement.setInt(4, 0);
-        statement.setInt(5, turma.getQuantidadeMaximaAlunos());
-        statement.setString(6, turma.getDiasDaSemana());
+                + "?,?,?,?,?,?,?,?);");
+        PreparedStatement statement = gerarStatement(inServicos);
+        statement.setInt(1, servico.getCodBanco());
+        statement.setString(2, servico.getNome());
+        statement.setString(3, servico.getPeriodo());
+        statement.setString(4, servico.getFormaPagamento());
+        statement.setBigDecimal(5, servico.getValorVista());
+        statement.setBigDecimal(6, servico.getValorBoleto());
+        statement.setBigDecimal(7, servico.getValorPrazoCredito());
+        statement.setBigDecimal(8, servico.getValorPrazoDebito());
         statement.execute();
         statement.close();
     }
@@ -48,47 +49,44 @@ public class ServicosDao extends Conexao{
     
     
     //Atualizar dados
-    public void atualizarDados(Turmas turmas, ArrayList <Horarios> horario) throws SQLException{
+    public void atualizarDados(Servicos servico) throws SQLException{
         //atualizando a tabela de turmas
-        String inTurmas = atualizar.concat("tblTurmas "
-                + "SET nome = ?, subgrupo = ?, quantLimiteDeAlunos = ?, diasDaSemana=?, horario=? where codTurma = ?");
+        String inServicos = atualizar.concat("tblServicos "
+                + "SET nome = ?, periodo = ?, formaPagamento = ?, valorAVista = ?, valorBoleto=?, valorCartaoDeCredito=?, valorCartaoDeDebito=? where codServico = ?");
         
-        PreparedStatement statement = gerarStatement(inTurmas);
-        statement.setString(1, turmas.getNomeTurma());
-        statement.setString(2, turmas.getSubgrupo());
-        statement.setInt(3, turmas.getQuantidadeMaximaAlunos());
-        statement.setString(4, turmas.getDiasDaSemana());
-        statement.setTime(5, turmas.getHorario());
-        statement.setInt(6, turmas.getCodBanco());
+        PreparedStatement statement = gerarStatement(inServicos);
+        statement.setString(1, servico.getNome());
+        statement.setString(2, servico.getPeriodo());
+        statement.setString(3, servico.getFormaPagamento());
+        statement.setBigDecimal(4, servico.getValorVista());
+        statement.setBigDecimal(5, servico.getValorBoleto());
+        statement.setBigDecimal(6, servico.getValorPrazoCredito());
+        statement.setBigDecimal(7, servico.getValorPrazoDebito());
+        statement.setInt(8, servico.getCodBanco());
         
         statement.execute();
         statement.close();
-        
-        //atualizando a tabela de horarios
-        horariosDao.atualizarDados(horario);
     }
     
     //Remover Dados
-    public void removerTurma(int codTurma) throws SQLException{
+    public void removerServico(int codServico) throws SQLException{
         //Removendo Turmas
-        String inTurmas = remover.concat("tblTurmas WHERE codTurma = ?");
+        String inServicos = remover.concat("tblServicos WHERE codServico = ?");
         
-        PreparedStatement statement = gerarStatement(inTurmas);
-        statement.setInt(1, codTurma);
+        PreparedStatement statement = gerarStatement(inServicos);
+        statement.setInt(1, codServico);
         statement.execute();
         statement.close();
         
-        //Removendo Horários da Tabela
-        horariosDao.removerHorarios(statement, codTurma);
     }
     
-    public ArrayList <Turmas> selecionarTodasTurmas() throws SQLException{
-        String inTurmas = selecionarTudo.concat("tblTurmas");
-        return pesquisarTurmas(inTurmas);
+    public ArrayList <Servicos> selecionarTodosServicos() throws SQLException{
+        String inServicos = selecionarTudo.concat("tblServicos");
+        return pesquisarServicos(inServicos);
     }
     
-    public ArrayList <Turmas> pesquisarTurmas(String comando) throws SQLException{
-     ArrayList <Turmas> turmas = new ArrayList();
+    public ArrayList <Servicos> pesquisarServicos(String comando) throws SQLException{
+     ArrayList <Servicos> servicos = new ArrayList();
      PreparedStatement statement = gerarStatement(comando);
      statement.execute();
      ResultSet resultset = statement.getResultSet();
@@ -99,24 +97,22 @@ public class ServicosDao extends Conexao{
      }
      
     do{
-    int codBanco = resultset.getInt("codTurma");
+    int codBanco = resultset.getInt("codServico");
     String nome = resultset.getString("nome");
-    String subgrupo = resultset.getString("subgrupo");
-    int quantAlunos = resultset.getInt("quantAlunos");
-    int quantLimiteDeAlunos = resultset.getInt("quantLimiteDeAlunos");
-    String diasDaSemana = resultset.getString("diasDaSemana");
-    
-    int tamanhoHora = resultset.getTime("horario").toString().length()-3;
-    String horario = resultset.getTime("horario").toString().substring(0, tamanhoHora);
+    String periodo = resultset.getString("periodo");
+    String formaPagamento = resultset.getString("formaPagamento");
+    BigDecimal valorAVista = resultset.getBigDecimal("valorAVista");
+    BigDecimal valorBoleto = resultset.getBigDecimal("valorBoleto");
+    BigDecimal valorAPrazoCredito = resultset.getBigDecimal("valorCartaoDeCredito");
+    BigDecimal valorAPrazoDebito = resultset.getBigDecimal("valorCartaoDeDebito");
 
-    Turmas turma = new Turmas(codBanco, nome, subgrupo, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario);
+    Servicos servico = new Servicos(codBanco, nome, periodo, formaPagamento, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito);
 
-    turmas.add(turma);
+    servicos.add(servico);
      }while(resultset.next());
     
     statement.close();
-    return turmas;
+    return servicos;
     }
-    
-    
+ 
 }

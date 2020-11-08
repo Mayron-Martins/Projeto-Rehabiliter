@@ -16,17 +16,21 @@ public class Servicos {
     private final int codBanco;
     private final String nome;
     private final String periodo;
+    private final String formaPagamento;
     private final BigDecimal valorVista;
     private final BigDecimal valorBoleto;
-    private final BigDecimal valorPrazo;
+    private final BigDecimal valorPrazoCredito;
+    private final BigDecimal valorPrazoDebito;
 
-    public Servicos(int codBanco, String nome, String periodo, BigDecimal valorVista, BigDecimal valorBoleto, BigDecimal valorPrazo) {
+    public Servicos(int codBanco, String nome, String periodo, String formaPagamento, BigDecimal valorVista, BigDecimal valorBoleto, BigDecimal valorPrazoCredito, BigDecimal valorPrazoDebito) {
         this.codBanco = codBanco;
         this.nome = nome;
         this.periodo = periodo;
+        this.formaPagamento = formaPagamento;
         this.valorVista = valorVista;
         this.valorBoleto = valorBoleto;
-        this.valorPrazo = valorPrazo;
+        this.valorPrazoCredito = valorPrazoCredito;
+        this.valorPrazoDebito = valorPrazoDebito;
     }
 
     public int getCodBanco() {
@@ -49,12 +53,19 @@ public class Servicos {
         return valorBoleto;
     }
 
-    public BigDecimal getValorPrazo() {
-        return valorPrazo;
+    public BigDecimal getValorPrazoCredito() {
+        return valorPrazoCredito;
     }
 
+    public BigDecimal getValorPrazoDebito() {
+        return valorPrazoDebito;
+    }
     
     
+
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
     
     
 }

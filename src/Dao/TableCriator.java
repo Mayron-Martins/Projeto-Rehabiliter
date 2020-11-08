@@ -287,10 +287,12 @@ public class TableCriator {
         this.gerarStatement().execute("CREATE TABLE tblServicos("
                 + "codServico INT PRIMARY KEY," //Cada serviço terá um código único no banco.
                 + "nome VARCHAR(15) NOT NULL," //Nome do Serviço (natação, hidroginástica, etc.).
-                + "periodo VARCHAR(10) NOT NULL," //Diária, Semanal, Mensal, etc.
+                + "periodo VARCHAR(10) NOT NULL,"
+                + "formaPagamento VARCHAR(25) NOT NULL," //Diária, Semanal, Mensal, etc.
                 + "valorAVista DECIMAL NULL,"
                 + "valorBoleto DECIMAL NULL,"
-                + "valorCartao DECIMAL NULL"
+                + "valorCartaoDeCredito DECIMAL NULL,"
+                + "valorCartaoDeDebito DECIMAL NULL"
                 + ") ON [AlunoseClientes];");
     }
     

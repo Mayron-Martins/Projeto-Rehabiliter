@@ -10,6 +10,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -27,6 +30,51 @@
     <Property name="useNullLayout" type="boolean" value="false"/>
   </Layout>
   <SubComponents>
+    <Component class="javax.swing.JComboBox" name="comboPeriodo">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="6">
+            <StringItem index="0" value="Di&#xe1;ria"/>
+            <StringItem index="1" value="Semanal"/>
+            <StringItem index="2" value="Mensal"/>
+            <StringItem index="3" value="Trimestral"/>
+            <StringItem index="4" value="Semestral"/>
+            <StringItem index="5" value="Anual"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="354" y="295" width="160" height="30"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="metodoPagamento">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Dinheiro"/>
+            <StringItem index="1" value="Boleto"/>
+            <StringItem index="2" value="Cart&#xe3;o de Cr&#xe9;dito"/>
+            <StringItem index="3" value="Cart&#xe3;o de D&#xe9;bito"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="metodoPagamentoActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="518" y="295" width="320" height="30"/>
+        </Constraint>
+      </Constraints>
+    </Component>
     <Component class="javax.swing.JButton" name="btnRemover">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -36,6 +84,9 @@
           <Image iconType="3" name="/imagens/servicos/btnRemoverHover.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoverActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="330" y="210" width="210" height="60"/>
@@ -51,6 +102,9 @@
           <Image iconType="3" name="/imagens/servicos/btnEditarHover.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="540" y="210" width="210" height="60"/>
@@ -107,18 +161,13 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="1">
-                <Column editable="true" title="asdasdas" type="java.lang.Object">
-                  <Data value="adsa"/>
-                </Column>
-                <Column editable="true" title="asdasd" type="java.lang.Object">
-                  <Data value="adsa"/>
-                </Column>
-                <Column editable="true" title="dfdafsd" type="java.lang.Object">
-                  <Data value="adsa"/>
-                </Column>
-                <Column editable="true" title="asdas" type="java.lang.Object"/>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="//tabelaServicos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(combo));&#xa;tabelaServicos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorFormatado));">
+              <Table columnCount="5" rowCount="0">
+                <Column editable="false" title="CodBanco" type="java.lang.Integer"/>
+                <Column editable="true" title="Categoria" type="java.lang.String"/>
+                <Column editable="false" title="Tipo" type="java.lang.Object"/>
+                <Column editable="false" title="Forma de Pagamento" type="java.lang.Object"/>
+                <Column editable="true" title="Valor" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
@@ -135,7 +184,8 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="componentHidden" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="tabelaServicosComponentHidden"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaServicosMouseClicked"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tabelaServicosKeyReleased"/>
           </Events>
         </Component>
       </SubComponents>

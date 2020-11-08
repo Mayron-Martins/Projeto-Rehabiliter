@@ -12,7 +12,6 @@ import Dao.TurmasDao;
 import Model.auxiliar.Horarios;
 import Model.auxiliar.Turmas;
 import View.TurmasView;
-import java.awt.List;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -35,7 +34,7 @@ public class TurmasController {
     }
     
     //Limpar tabela
-    private void limparTabela(){
+    public void limparTabela(){
         int quantLinhas = this.view.getTabelaAlunos().getRowCount();    
         for(int quant=0; quant<quantLinhas; quant++){
             this.tabelaDeTurmas.removeRow(quant);
@@ -148,7 +147,6 @@ public class TurmasController {
           ArrayList <Horarios> horarios;
           int codTurma = Integer.parseInt(this.view.getTabelaAlunos().getValueAt(linhaSelecionada, 0).toString());
           horarios = this.horariosDao.pesquisarHorarios("SELECT * FROM tblHorarios WHERE codHorario = "+codTurma);
-          System.out.println();
           for(int cont=0; cont<horarios.size();cont++){
               String dia = horarios.get(cont).getDiaDaSemana();
               if(dia.equals("Seg")){this.view.getCaixaSegunda().setSelected(true);}

@@ -7,26 +7,16 @@ package View;
 
 import Controller.adicionais.AdicionarTurmasController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
-import Controller.auxiliar.GerenciamentoDeJCheckBox;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.ScrollBar;
-import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
  *
@@ -37,6 +27,7 @@ public class TurmasAdicionar extends javax.swing.JFrame {
     private String diasDaSemana=null;
     private ArrayList <String> diasDaSemanaUnitarios;
     private String campoHorario="";
+    private int aberto=0;
 
     /**
      * Creates new form TurmasAdicionar

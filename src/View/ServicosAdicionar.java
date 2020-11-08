@@ -5,20 +5,30 @@
  */
 package View;
 
+import Controller.adicionais.AdicionarServicosController;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
  * @author 55989
  */
 public class ServicosAdicionar extends javax.swing.JFrame {
+    private final AdicionarServicosController controller;
 
     /**
      * Creates new form ServicosAdicionar
      */
     public ServicosAdicionar() {
         initComponents();
+        controller = new AdicionarServicosController(this);
         btnFechar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
     }
@@ -67,7 +77,7 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         valorDinheiro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         getContentPane().add(valorDinheiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 110, 40));
 
-        metodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Cartão de Crédito", "Cartão de Débito" }));
+        metodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
         metodoPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 metodoPagamentoActionPerformed(evt);
@@ -77,6 +87,11 @@ public class ServicosAdicionar extends javax.swing.JFrame {
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmar.png"))); // NOI18N
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmarhover.png"))); // NOI18N
+        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfirmarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 330, 50));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/telafundoadc.jpg"))); // NOI18N
@@ -98,6 +113,14 @@ public class ServicosAdicionar extends javax.swing.JFrame {
     private void metodoPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodoPagamentoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_metodoPagamentoActionPerformed
+
+    private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
+        try {
+            controller.adicionarServico();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,4 +166,26 @@ public class ServicosAdicionar extends javax.swing.JFrame {
     private javax.swing.JTextField nomeServico;
     private javax.swing.JFormattedTextField valorDinheiro;
     // End of variables declaration//GEN-END:variables
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    public JComboBox<String> getComboPeriodo() {
+        return comboPeriodo;
+    }
+
+    public JComboBox<String> getMetodoPagamento() {
+        return metodoPagamento;
+    }
+
+    public JTextField getNomeServico() {
+        return nomeServico;
+    }
+
+    public JFormattedTextField getValorDinheiro() {
+        return valorDinheiro;
+    }
+
+    
 }

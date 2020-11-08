@@ -8,11 +8,15 @@ package View;
 
 import Controller.TurmasController;
 import Controller.auxiliar.FormatacaoDeTabelas;
+import Controller.auxiliar.FormatacaodeCamposRestritos;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLayeredPane;
@@ -30,6 +34,8 @@ public class TurmasView extends javax.swing.JFrame {
     private String diasDaSemana=null;
     private ArrayList <String> diasDaSemanaUnitarios;
     private String campoHorario="";
+    private final JTextField campoSubgrupoFormatado = new FormatacaodeCamposRestritos(2,0);
+    private final JTextField campoMaximoAlunos = new FormatacaodeCamposRestritos();
 
     /**
      * Creates new form Turmas
@@ -46,6 +52,22 @@ public class TurmasView extends javax.swing.JFrame {
         
         formatarTabelas.formatar(tabelaAlunos, 'C');
         desabilitarVisibilidadeComponente();
+        
+        int linhaSelecionada = tabelaAlunos.getSelectedRow();
+        addKeyListener(new KeyListener(){  
+                    public void keyTyped(KeyEvent e) {
+                       String texto = tabelaAlunos.getValueAt(linhaSelecionada, 2).toString();
+                       if(texto != null && texto.length() == 2) {
+                            e.consume();
+                       }
+                    }
+
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
         
     }
 
@@ -227,6 +249,8 @@ public class TurmasView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(campoSubgrupoFormatado));
+        tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(campoMaximoAlunos));
         tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaAlunos.setRowHeight(25);
         tabelaAlunos.getTableHeader().setReorderingAllowed(false);
@@ -278,7 +302,6 @@ public class TurmasView extends javax.swing.JFrame {
         // TODO add your handling code here:
         TurmasAdicionar abrir=new TurmasAdicionar();
         abrir.setVisible(true);
-
     }//GEN-LAST:event_botaoAdicionarTurmasActionPerformed
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed

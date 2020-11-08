@@ -5,23 +5,41 @@
  */
 package View;
 
+import Controller.ServicosController;
+import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
  * @author 55989
  */
 public class ServicosView extends javax.swing.JFrame {
+    private final ServicosController controller;
+    private final ServicosAdicionar servicosAdicionar;
+    //private final JComboBox combo = new JComboBox();
+    private final JFormattedTextField valorFormatado = new JMoneyField();
 
     /**
      * Creates new form Servicos
      */
     public ServicosView() {
         initComponents();
+        controller = new ServicosController(this);
+        servicosAdicionar = new ServicosAdicionar();
         btnAdicionar.setBackground(new Color(0,0,0,0));
         btnEditar.setBackground(new Color(0,0,0,0));
         btnRemover.setBackground(new Color(0,0,0,0));
         btnFechar.setBackground(new Color(0,0,0,0));
+        desabilitarComponentes();
+        
     }
 
     /**
@@ -33,6 +51,8 @@ public class ServicosView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        comboPeriodo = new javax.swing.JComboBox<>();
+        metodoPagamento = new javax.swing.JComboBox<>();
         btnRemover = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
@@ -44,14 +64,40 @@ public class ServicosView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diária", "Semanal", "Mensal", "Trimestral", "Semestral", "Anual" }));
+        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(354, 295, 160, 30));
+
+        metodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
+        metodoPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                metodoPagamentoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(metodoPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 295, 320, 30));
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnRemover.png"))); // NOI18N
         btnRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnRemoverHover.png"))); // NOI18N
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 210, 60));
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnEditar.png"))); // NOI18N
         btnEditar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnEditarHover.png"))); // NOI18N
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 210, 210, 60));
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnAdicionar.png"))); // NOI18N
@@ -75,21 +121,43 @@ public class ServicosView extends javax.swing.JFrame {
         tabelaServicos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaServicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"adsa", "adsa", "adsa", null}
+
             },
             new String [] {
-                "asdasdas", "asdasd", "dfdafsd", "asdas"
+                "CodBanco", "Categoria", "Tipo", "Forma de Pagamento", "Valor"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        //tabelaServicos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(combo));
+        tabelaServicos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorFormatado));
         tabelaServicos.setFocusable(false);
         tabelaServicos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaServicos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaServicos.setRowHeight(25);
         tabelaServicos.setShowVerticalLines(false);
         tabelaServicos.getTableHeader().setReorderingAllowed(false);
-        tabelaServicos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaServicosComponentHidden(evt);
+        tabelaServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaServicosMouseClicked(evt);
+            }
+        });
+        tabelaServicos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaServicosKeyReleased(evt);
             }
         });
         painelderolagem.setViewportView(tabelaServicos);
@@ -108,15 +176,55 @@ public class ServicosView extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
 
-    private void tabelaServicosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaServicosComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaServicosComponentHidden
-
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
         ServicosAdicionar abrir=new ServicosAdicionar();
         abrir.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void metodoPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodoPagamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_metodoPagamentoActionPerformed
+
+    private void tabelaServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaServicosMouseClicked
+        try {
+            controller.selecionarTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tabelaServicosMouseClicked
+
+    private void tabelaServicosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaServicosKeyReleased
+        try {
+            controller.selecionarTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tabelaServicosKeyReleased
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        try {
+            controller.removerServico();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        try {
+            controller.editarServicos();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            controller.listarServicos();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -158,8 +266,37 @@ public class ServicosView extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnRemover;
+    private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> metodoPagamento;
     private javax.swing.JScrollPane painelderolagem;
     private javax.swing.JTable tabelaServicos;
     // End of variables declaration//GEN-END:variables
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    public JComboBox<String> getComboPeriodo() {
+        return comboPeriodo;
+    }
+
+    public JComboBox<String> getMetodoPagamento() {
+        return metodoPagamento;
+    }
+
+    public JTable getTabelaServicos() {
+        return tabelaServicos;
+    }
+    
+    public void desabilitarComponentes(){
+        this.comboPeriodo.setVisible(false);
+        this.metodoPagamento.setVisible(false);
+    }
+    
+    public void habilitarComponentes(){
+        this.comboPeriodo.setVisible(true);
+        this.metodoPagamento.setVisible(true);
+    }
+    
 }
