@@ -7,11 +7,9 @@ package View;
 
 
 import Controller.TurmasController;
-import Controller.auxiliar.FormatacaoDeTabelas;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -23,9 +21,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import static javax.swing.SwingUtilities.getRootPane;
-import javax.swing.table.DefaultTableCellRenderer;
-import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
  *
@@ -247,6 +242,8 @@ public class TurmasView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaAlunos.getTableHeader().setResizingAllowed(false);
+        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
         tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(campoSubgrupoFormatado));
         tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(campoMaximoAlunos));
         tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));

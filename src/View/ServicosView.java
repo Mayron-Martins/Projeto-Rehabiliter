@@ -147,6 +147,8 @@ public class ServicosView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaServicos.getTableHeader().setResizingAllowed(false);
+        tabelaServicos.getTableHeader().setReorderingAllowed(false);
         //tabelaServicos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(combo));
         tabelaServicos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorFormatado));
         tabelaServicos.setFocusable(false);

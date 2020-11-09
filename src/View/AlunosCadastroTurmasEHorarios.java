@@ -5,19 +5,26 @@
  */
 package View;
 
+import Controller.adicionais.AlunosETurmasController;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
 
 /**
  *
  * @author 55989
  */
 public class AlunosCadastroTurmasEHorarios extends javax.swing.JFrame {
+    private final AlunosETurmasController controller;
 
     /**
      * Creates new form AlunosCadastroTurmasEHorarios
      */
     public AlunosCadastroTurmasEHorarios() {
         initComponents();
+        controller = new AlunosETurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
     }
 
@@ -31,27 +38,48 @@ public class AlunosCadastroTurmasEHorarios extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaTurmas = new javax.swing.JTable();
         botaoFechar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaTurmas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "CodBanco", "Turma", "Horário", "Dias", "Q. Presente", "Q. Máxima"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaTurmas.getTableHeader().setResizingAllowed(false);
+        tabelaTurmas.getTableHeader().setReorderingAllowed(false);
+        tabelaTurmas.setFocusable(false);
+        tabelaTurmas.setShowVerticalLines(false);
+        jScrollPane1.setViewportView(tabelaTurmas);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 490, 150));
 
@@ -75,6 +103,15 @@ public class AlunosCadastroTurmasEHorarios extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        controller.limparTabela();
+        try {
+            controller.listarTurmas();
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunosCadastroTurmasEHorarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -115,6 +152,12 @@ public class AlunosCadastroTurmasEHorarios extends javax.swing.JFrame {
     private javax.swing.JButton botaoFechar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabelaTurmas;
     // End of variables declaration//GEN-END:variables
+
+    public JTable getTabelaTurmas() {
+        return tabelaTurmas;
+    }
+
+    
 }

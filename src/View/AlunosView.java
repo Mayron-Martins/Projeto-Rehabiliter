@@ -13,12 +13,12 @@ import java.awt.Point;
  *
  * @author 55989
  */
-public class Alunos extends javax.swing.JFrame {
+public class AlunosView extends javax.swing.JFrame {
 private Point point = new Point();
     /**
      * Creates new form Alunos
      */
-    public Alunos() {
+    public AlunosView() {
         initComponents();
         botaobuscar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -53,6 +53,9 @@ private Point point = new Point();
         botaoAdicionar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
+        botaoAlternar2 = new javax.swing.JButton();
+        botaoAlternar1 = new javax.swing.JButton();
+        botaoAlternar = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -144,6 +147,15 @@ private Point point = new Point();
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
 
+        botaoAlternar2.setText("jButton1");
+        getContentPane().add(botaoAlternar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 300, 110, -1));
+
+        botaoAlternar1.setText("jButton1");
+        getContentPane().add(botaoAlternar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, 110, -1));
+
+        botaoAlternar.setText("jButton1");
+        getContentPane().add(botaoAlternar, new org.netbeans.lib.awtextra.AbsoluteConstraints(723, 300, 110, -1));
+
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/Alunos.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -209,26 +221,29 @@ private Point point = new Point();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Alunos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Alunos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Alunos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Alunos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Alunos().setVisible(true);
+                new AlunosView().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
+    private javax.swing.JButton botaoAlternar;
+    private javax.swing.JButton botaoAlternar1;
+    private javax.swing.JButton botaoAlternar2;
     private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoListar;
