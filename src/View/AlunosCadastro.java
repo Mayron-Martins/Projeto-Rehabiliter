@@ -29,6 +29,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         initComponents();
         controller = new AdicionarAlunosController(this);
         botaofechar.setBackground(new Color (0,0,0,0));
+        btnDescricao.setBackground(new Color (0,0,0,0));
        turmasehorarios.setBackground(new Color (0,0,0,0));
        botaoConfirmar.setBackground(new Color (0,0,0,0));
     }
@@ -44,6 +45,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
 
         botaofechar = new javax.swing.JButton();
         comboTurma = new javax.swing.JComboBox<>();
+        btnDescricao = new javax.swing.JButton();
         botaoConfirmar = new javax.swing.JButton();
         campoNomeAluno = new javax.swing.JTextField();
         campoNascimentoAluno = new javax.swing.JTextField();
@@ -88,6 +90,15 @@ public class AlunosCadastro extends javax.swing.JFrame {
 
         comboTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
         getContentPane().add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 468, 190, 32));
+
+        btnDescricao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnDescricao.png"))); // NOI18N
+        btnDescricao.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnDescricaoHover.png"))); // NOI18N
+        btnDescricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescricaoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 640, 150, 30));
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
@@ -203,6 +214,12 @@ public class AlunosCadastro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescricaoActionPerformed
+        // TODO add your handling code here:
+        AlunosCadastroDescricao abrir = new AlunosCadastroDescricao();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_btnDescricaoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -241,6 +258,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoConfirmar;
     private javax.swing.JButton botaofechar;
+    private javax.swing.JButton btnDescricao;
     private javax.swing.JTextField campoBairro;
     private javax.swing.JFormattedTextField campoCEP;
     private javax.swing.JFormattedTextField campoCPFAluno;
