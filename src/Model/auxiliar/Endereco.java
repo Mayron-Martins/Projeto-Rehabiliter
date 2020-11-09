@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dao;
+package Model.auxiliar;
 
 /**
  *
  * @author Mayro
  */
-public class AlunosDao {
-    
+public class Endereco {
+    private int codBanco;
+    private int codAluno;
+    private String logradouro;
+    private String
     
 }
