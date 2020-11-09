@@ -149,17 +149,17 @@ private Point point = new Point();
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
 
-        botaoAlternar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunos.png"))); // NOI18N
-        botaoAlternar2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunosHover.png"))); // NOI18N
-        getContentPane().add(botaoAlternar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 200, -1));
+        botaoAlternar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunosh.png"))); // NOI18N
+        botaoAlternar2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunos.png"))); // NOI18N
+        getContentPane().add(botaoAlternar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 120, -1));
 
         botaoAlternar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPais.png"))); // NOI18N
         botaoAlternar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPaishover.png"))); // NOI18N
-        getContentPane().add(botaoAlternar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 200, -1));
+        getContentPane().add(botaoAlternar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 310, 120, -1));
 
         botaoAlternar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnEndereco.png"))); // NOI18N
         botaoAlternar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnEnderecohover.png"))); // NOI18N
-        getContentPane().add(botaoAlternar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 280, 190, -1));
+        getContentPane().add(botaoAlternar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/Alunos.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

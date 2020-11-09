@@ -234,15 +234,15 @@
     <Component class="javax.swing.JButton" name="botaoAlternar2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/alunos/btnAlunos.png"/>
+          <Image iconType="3" name="/imagens/alunos/btnAlunosh.png"/>
         </Property>
         <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/alunos/btnAlunosHover.png"/>
+          <Image iconType="3" name="/imagens/alunos/btnAlunos.png"/>
         </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="140" y="280" width="200" height="-1"/>
+          <AbsoluteConstraints x="480" y="310" width="120" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -257,7 +257,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="340" y="280" width="200" height="-1"/>
+          <AbsoluteConstraints x="600" y="310" width="120" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -272,7 +272,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="540" y="280" width="190" height="-1"/>
+          <AbsoluteConstraints x="720" y="310" width="120" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
