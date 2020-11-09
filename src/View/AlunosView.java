@@ -31,7 +31,9 @@ private Point point = new Point();
         tabelaAlunos.getTableHeader().setBackground(new Color(0,0,0));
         tabelaAlunos.getTableHeader().setForeground(new Color(0,0,0));
         tabelaAlunos.setRowHeight(25);
-                
+        botaoAlternar.setBackground(new Color(0,0,0,0));
+        botaoAlternar1.setBackground(new Color(0,0,0,0));
+        botaoAlternar2.setBackground(new Color(0,0,0,0));              
     }
 
     /**
@@ -97,7 +99,7 @@ private Point point = new Point();
         });
         painelderolagem.setViewportView(tabelaAlunos);
 
-        getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+        getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
         botaoRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoRemover.png"))); // NOI18N
         botaoRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverremover.png"))); // NOI18N
@@ -132,7 +134,7 @@ private Point point = new Point();
 
         botaobuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaobuscar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
-        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 50, 40));
+        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 230, 50, 40));
 
         botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
         botaoAdicionar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverAdicionar.png"))); // NOI18N
@@ -142,19 +144,22 @@ private Point point = new Point();
             }
         });
         getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 168, 205, 50));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 320, 40));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 320, 40));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
 
-        botaoAlternar2.setText("jButton1");
-        getContentPane().add(botaoAlternar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 300, 110, -1));
+        botaoAlternar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunos.png"))); // NOI18N
+        botaoAlternar2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunosHover.png"))); // NOI18N
+        getContentPane().add(botaoAlternar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 200, -1));
 
-        botaoAlternar1.setText("jButton1");
-        getContentPane().add(botaoAlternar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, 110, -1));
+        botaoAlternar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPais.png"))); // NOI18N
+        botaoAlternar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPaishover.png"))); // NOI18N
+        getContentPane().add(botaoAlternar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 200, -1));
 
-        botaoAlternar.setText("jButton1");
-        getContentPane().add(botaoAlternar, new org.netbeans.lib.awtextra.AbsoluteConstraints(723, 300, 110, -1));
+        botaoAlternar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnEndereco.png"))); // NOI18N
+        botaoAlternar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnEnderecohover.png"))); // NOI18N
+        getContentPane().add(botaoAlternar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 280, 190, -1));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/Alunos.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
