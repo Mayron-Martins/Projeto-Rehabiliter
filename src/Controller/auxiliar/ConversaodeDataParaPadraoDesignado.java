@@ -4,10 +4,9 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.GregorianCalendar;
 
 public class ConversaodeDataParaPadraoDesignado {
     public Date parseDate(String data) throws ParseException {
@@ -57,6 +56,33 @@ public class ConversaodeDataParaPadraoDesignado {
       String formato = hora.toString().substring(0, tamanhoHora);
       
         return formato;
+    }
+    
+    public int obterAnoAtual (){
+        int anoAtual;
+        Calendar calendario = GregorianCalendar.getInstance();
+        anoAtual = calendario.get(Calendar.YEAR);
+        return anoAtual;
+    }
+    
+    public int verificarMaiorIdade(Date dataAniversario){
+        long idadeAtual;
+        Calendar diaAtual = Calendar.getInstance();
+        Calendar diaAniversario = new GregorianCalendar();
+        diaAniversario.setTime(dataAniversario);
+        
+        if(diaAtual.get(Calendar.DAY_OF_YEAR)==diaAniversario.get(Calendar.DAY_OF_YEAR)
+                && diaAtual.get(Calendar.MONTH)==diaAniversario.get(Calendar.MONTH)){
+            idadeAtual = diaAtual.get(Calendar.YEAR)-diaAniversario.get(Calendar.YEAR);
+            return (int) idadeAtual;
+        }
+        
+        long quantDiasDaDataAtual =  diaAtual.getTimeInMillis();
+        long quantDiasAniversario =  dataAniversario.getTime();
+        
+        idadeAtual = (quantDiasDaDataAtual-quantDiasAniversario)/(1000*3600*24*365);
+        
+        return (int) idadeAtual;
     }
     
 }

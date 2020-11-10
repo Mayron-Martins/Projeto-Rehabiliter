@@ -31,7 +31,7 @@
     <Property name="useNullLayout" type="boolean" value="false"/>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="painelderolagem">
+    <Container class="javax.swing.JScrollPane" name="painelAlunos">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="30" y="350" width="811" height="340"/>
@@ -45,18 +45,14 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="1">
-                <Column editable="true" title="asdasdas" type="java.lang.Object">
-                  <Data value="adsa"/>
-                </Column>
-                <Column editable="true" title="asdasd" type="java.lang.Object">
-                  <Data value="adsa"/>
-                </Column>
-                <Column editable="true" title="dfdafsd" type="java.lang.Object">
-                  <Data value="adsa"/>
-                </Column>
-                <Column editable="true" title="asdas" type="java.lang.Object"/>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="tabelaAlunos.getTableHeader().setResizingAllowed(false);&#xa;tabelaAlunos.getTableHeader().setReorderingAllowed(false);&#xa;tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboServicos));&#xa;tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboTurmas));&#xa;tabelaAlunos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorContrato));&#xa;tabelaAlunos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(valorDebito));">
+              <Table columnCount="6" rowCount="1">
+                <Column editable="false" title="CodBanco" type="java.lang.Integer"/>
+                <Column editable="true" title="Nome" type="java.lang.String"/>
+                <Column editable="true" title="Turma" type="java.lang.String"/>
+                <Column editable="true" title="Forma de Pag." type="java.lang.String"/>
+                <Column editable="true" title="Valor Contrato" type="java.lang.String"/>
+                <Column editable="true" title="D&#xe9;bito" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -98,6 +94,140 @@
           </Properties>
           <Events>
             <EventHandler event="componentHidden" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="tabelaAlunosComponentHidden"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JScrollPane" name="painelPais">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="30" y="350" width="811" height="340"/>
+        </Constraint>
+      </Constraints>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="tabelaPais">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="tabelaPais.getTableHeader().setResizingAllowed(false);&#xa;tabelaPais.getTableHeader().setReorderingAllowed(false);&#xa;tabelaPais.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cpfPai));&#xa;tabelaPais.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(telefonePai));&#xa;tabelaPais.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(cpfMae));&#xa;tabelaPais.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(telefoneMae));">
+              <Table columnCount="6" rowCount="1">
+                <Column editable="true" title="Pai" type="java.lang.String"/>
+                <Column editable="true" title="CPF (P)" type="java.lang.String"/>
+                <Column editable="true" title="Contato (P)" type="java.lang.String"/>
+                <Column editable="true" title="M&#xe3;e" type="java.lang.String"/>
+                <Column editable="true" title="CPF (M)" type="java.lang.String"/>
+                <Column editable="true" title="Contato (M)" type="java.lang.String"/>
+              </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="intercellSpacing" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[0, 0]"/>
+            </Property>
+            <Property name="rowHeight" type="int" value="25"/>
+            <Property name="showVerticalLines" type="boolean" value="false"/>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="componentHidden" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="tabelaPaisComponentHidden"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JScrollPane" name="painelEnderecos">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="30" y="350" width="811" height="340"/>
+        </Constraint>
+      </Constraints>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="tabelaEnderecos">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="tabelaEnderecos.getTableHeader().setResizingAllowed(false);&#xa;tabelaEnderecos.getTableHeader().setReorderingAllowed(false);&#xa;tabelaEnderecos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cep));&#xa;tabelaEnderecos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboEstado));">
+              <Table columnCount="6" rowCount="1">
+                <Column editable="true" title="Logradouro" type="java.lang.String"/>
+                <Column editable="true" title="N&#xba;" type="java.lang.String"/>
+                <Column editable="true" title="Bairro" type="java.lang.String"/>
+                <Column editable="true" title="Cidade" type="java.lang.String"/>
+                <Column editable="true" title="Estado" type="java.lang.String"/>
+                <Column editable="true" title="CEP" type="java.lang.String"/>
+              </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="intercellSpacing" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[0, 0]"/>
+            </Property>
+            <Property name="rowHeight" type="int" value="25"/>
+            <Property name="showVerticalLines" type="boolean" value="false"/>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="componentHidden" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="tabelaEnderecosComponentHidden"/>
           </Events>
         </Component>
       </SubComponents>
@@ -204,21 +334,22 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="campoPesquisa">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="250" y="230" width="320" height="40"/>
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox1">
+    <Component class="javax.swing.JComboBox" name="comboListar">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
+          <StringArray count="5">
+            <StringItem index="0" value="Todos"/>
+            <StringItem index="1" value="Aniversariantes"/>
+            <StringItem index="2" value="Pendentes"/>
+            <StringItem index="3" value="Pagos"/>
+            <StringItem index="4" value=" "/>
           </StringArray>
         </Property>
       </Properties>
@@ -231,22 +362,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="botaoAlternar2">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/alunos/btnAlunosh.png"/>
-        </Property>
-        <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/alunos/btnAlunos.png"/>
-        </Property>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="480" y="310" width="120" height="-1"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="javax.swing.JButton" name="botaoAlternar1">
+    <Component class="javax.swing.JButton" name="botaoPais">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/alunos/btnPais.png"/>
@@ -255,13 +371,16 @@
           <Image iconType="3" name="/imagens/alunos/btnPaishover.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoPaisActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="600" y="310" width="120" height="-1"/>
+          <AbsoluteConstraints x="720" y="310" width="120" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="botaoAlternar">
+    <Component class="javax.swing.JButton" name="botaoEndereco">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/alunos/btnEndereco.png"/>
@@ -270,6 +389,27 @@
           <Image iconType="3" name="/imagens/alunos/btnEnderecohover.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoEnderecoActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="720" y="310" width="120" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JButton" name="botaoAlunos">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/imagens/alunos/btnAlunosh.png"/>
+        </Property>
+        <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/imagens/alunos/btnAlunos.png"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoAlunosActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="720" y="310" width="120" height="-1"/>

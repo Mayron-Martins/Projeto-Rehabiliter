@@ -16,6 +16,7 @@ public class ConversaoDiasDaSemana {
     public String converterDiasDaSemana(String diasDaSemana){
         String diasformatados = diasDaSemana.replaceAll("null,", "");
         diasformatados = diasformatados.replaceAll("null", "");
+        diasformatados = diasformatados.trim();
         
         return diasformatados;
     }

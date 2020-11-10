@@ -61,9 +61,9 @@ public class HorariosDao extends Conexao{
     }
     
     //Selecionar Todos os Horários
-    public ArrayList <Horarios> selecionarTodasTurmas() throws SQLException{
-        String inTurmas = selecionarTudo.concat("tblHorarios");
-        return pesquisarHorarios(inTurmas);
+    public ArrayList <Horarios> selecionarTodosHorarios() throws SQLException{
+        String inHorarios = selecionarTudo.concat("tblHorarios");
+        return pesquisarHorarios(inHorarios);
     }
     
     //Procurar por Horários no Banco

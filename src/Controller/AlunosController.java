@@ -5,11 +5,20 @@
  */
 package Controller;
 
+import View.AlunosView;
+
 /**
  *
  * @author Mayro
  */
 public class AlunosController {
+    private final AlunosView view;
+
+    public AlunosController(AlunosView view) {
+        this.view = view;
+    }
+    
+    
     
     
     

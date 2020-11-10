@@ -27,7 +27,6 @@ public class ReferencesTable {
     
     //Faz a referência das colunas com as tabelas correspondentes, evitando que um item inexistente entre na tabela.
     public void referencesTables(Statement statement) throws SQLException{
-        this.fkTblAlunos_TblEndAlunos(statement);
         this.fkTblAlunos_TblServicos(statement);
         this.fkTblLoteDeProdutos_TblProdutos(statement);
         this.fkTblMatriculas_TblTurmas(statement);
@@ -42,15 +41,6 @@ public class ReferencesTable {
     }
     
     
-    //Referência da coluna codEndereco da tabela Alunos em relação a coluna codEndAlunoseClientes na tabela de Endereços de Alunos e Clientes.
-    private void fkTblAlunos_TblEndAlunos(Statement statement) throws SQLException{
-        telaDeInicio.mudartexto("Referenciando tabela Alunos com End...");
-        telaDeInicio.mudarPercentual();
-        statement.execute(this.alterarTabela+" tblAlunos "
-                +this.regra+" FK_Alunos_Endereco " //Nome da Regra
-                +this.fk+"(codEndereco) "
-                +"REFERENCES tblEndAlunoseClientes(codEndAlunoseClientes);");
-    }
     
     //Referência da coluna codServico da tabela de Alunos em relação a coluna codServico na tabela de Serviços.
     private void fkTblAlunos_TblServicos(Statement statement) throws SQLException{

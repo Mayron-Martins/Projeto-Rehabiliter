@@ -6,6 +6,8 @@
 package View;
 
 import Controller.adicionais.AdicionarAlunosController;
+import Controller.auxiliar.JMoneyField;
+import java.awt.Button;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -29,9 +31,12 @@ public class AlunosCadastro extends javax.swing.JFrame {
         initComponents();
         controller = new AdicionarAlunosController(this);
         botaofechar.setBackground(new Color (0,0,0,0));
-        btnDescricao.setBackground(new Color (0,0,0,0));
+        botaoDescricao.setBackground(new Color (0,0,0,0));
+        botaoDescricao.setVisible(false);
        turmasehorarios.setBackground(new Color (0,0,0,0));
        botaoConfirmar.setBackground(new Color (0,0,0,0));
+       
+       
     }
 
     /**
@@ -45,14 +50,14 @@ public class AlunosCadastro extends javax.swing.JFrame {
 
         botaofechar = new javax.swing.JButton();
         comboTurma = new javax.swing.JComboBox<>();
-        btnDescricao = new javax.swing.JButton();
+        botaoDescricao = new javax.swing.JButton();
         botaoConfirmar = new javax.swing.JButton();
         campoNomeAluno = new javax.swing.JTextField();
-        campoNascimentoAluno = new javax.swing.JTextField();
+        campoNascimentoAluno = new javax.swing.JFormattedTextField();
         campoNomePai = new javax.swing.JTextField();
         campoNomeMae = new javax.swing.JTextField();
         turmasehorarios = new javax.swing.JButton();
-        campoValor = new javax.swing.JTextField();
+        campoValor = new JMoneyField();
         campoRua = new javax.swing.JTextField();
         campoCidade = new javax.swing.JTextField();
         campoBairro = new javax.swing.JTextField();
@@ -91,17 +96,22 @@ public class AlunosCadastro extends javax.swing.JFrame {
         comboTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
         getContentPane().add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 468, 190, 32));
 
-        btnDescricao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnDescricao.png"))); // NOI18N
-        btnDescricao.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnDescricaoHover.png"))); // NOI18N
-        btnDescricao.addActionListener(new java.awt.event.ActionListener() {
+        botaoDescricao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnDescricao.png"))); // NOI18N
+        botaoDescricao.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnDescricaoHover.png"))); // NOI18N
+        botaoDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDescricaoActionPerformed(evt);
+                botaoDescricaoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 640, 150, 30));
+        getContentPane().add(botaoDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 720, 150, 30));
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
+        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfirmarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 690, 330, 60));
 
         campoNomeAluno.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +120,12 @@ public class AlunosCadastro extends javax.swing.JFrame {
             }
         });
         getContentPane().add(campoNomeAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 192, 240, 32));
+
+        try {
+            campoNascimentoAluno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         getContentPane().add(campoNascimentoAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(587, 192, 165, 32));
         getContentPane().add(campoNomePai, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 267, 240, 32));
 
@@ -147,25 +163,77 @@ public class AlunosCadastro extends javax.swing.JFrame {
         });
         getContentPane().add(campoBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 582, 140, 30));
         getContentPane().add(campoNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 650, 140, 32));
+
+        try {
+            campoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         getContentPane().add(campoTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 267, 160, 32));
 
+        try {
+            campoCPFAluno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         campoCPFAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoCPFAlunoActionPerformed(evt);
             }
         });
         getContentPane().add(campoCPFAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(379, 192, 190, 32));
+
+        try {
+            campoCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         getContentPane().add(campoCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(314, 267, 160, 32));
+
+        try {
+            campoContatoPai.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         getContentPane().add(campoContatoPai, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 336, 160, 32));
+
+        try {
+            campoContatoMae.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         getContentPane().add(campoContatoMae, new org.netbeans.lib.awtextra.AbsoluteConstraints(567, 336, 160, 32));
+
+        try {
+            campoCPFPai.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         getContentPane().add(campoCPFPai, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 405, 190, 32));
+
+        try {
+            campoCPFMae.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         getContentPane().add(campoCPFMae, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 405, 190, 32));
 
         comboPlano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
+        comboPlano.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPlanoActionPerformed(evt);
+            }
+        });
         getContentPane().add(comboPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 405, 190, 32));
 
         comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RO", "RN", "RR", "RS", "SC", "SE", "SP", "TO" }));
         getContentPane().add(comboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 580, 140, 30));
+
+        try {
+            campoCEP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         getContentPane().add(campoCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 650, 130, 32));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/fundo jframecadastroalunos.png"))); // NOI18N
@@ -214,11 +282,27 @@ public class AlunosCadastro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowOpened
 
-    private void btnDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescricaoActionPerformed
+    private void botaoDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDescricaoActionPerformed
         // TODO add your handling code here:
         AlunosCadastroDescricao abrir = new AlunosCadastroDescricao();
         abrir.setVisible(true);
-    }//GEN-LAST:event_btnDescricaoActionPerformed
+    }//GEN-LAST:event_botaoDescricaoActionPerformed
+
+    private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
+        try {
+            controller.adicionarAlunos();
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaoConfirmarActionPerformed
+
+    private void comboPlanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPlanoActionPerformed
+        try {
+            controller.setarValorContrato();
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_comboPlanoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,8 +341,8 @@ public class AlunosCadastro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoConfirmar;
+    private javax.swing.JButton botaoDescricao;
     private javax.swing.JButton botaofechar;
-    private javax.swing.JButton btnDescricao;
     private javax.swing.JTextField campoBairro;
     private javax.swing.JFormattedTextField campoCEP;
     private javax.swing.JFormattedTextField campoCPFAluno;
@@ -268,14 +352,14 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JTextField campoCidade;
     private javax.swing.JFormattedTextField campoContatoMae;
     private javax.swing.JFormattedTextField campoContatoPai;
-    private javax.swing.JTextField campoNascimentoAluno;
+    private javax.swing.JFormattedTextField campoNascimentoAluno;
     private javax.swing.JTextField campoNomeAluno;
     private javax.swing.JTextField campoNomeMae;
     private javax.swing.JTextField campoNomePai;
     private javax.swing.JTextField campoNum;
     private javax.swing.JTextField campoRua;
     private javax.swing.JFormattedTextField campoTelefone;
-    private javax.swing.JTextField campoValor;
+    private javax.swing.JFormattedTextField campoValor;
     private javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JComboBox<String> comboPlano;
     private javax.swing.JComboBox<String> comboTurma;
@@ -323,7 +407,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         return campoContatoPai;
     }
 
-    public JTextField getCampoNascimentoAluno() {
+    public JFormattedTextField getCampoNascimentoAluno() {
         return campoNascimentoAluno;
     }
 
@@ -351,7 +435,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         return campoTelefone;
     }
 
-    public JTextField getCampoValor() {
+    public JFormattedTextField getCampoValor() {
         return campoValor;
     }
 

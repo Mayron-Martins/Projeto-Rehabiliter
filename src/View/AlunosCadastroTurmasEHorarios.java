@@ -81,7 +81,7 @@ public class AlunosCadastroTurmasEHorarios extends javax.swing.JFrame {
         tabelaTurmas.setShowVerticalLines(false);
         jScrollPane1.setViewportView(tabelaTurmas);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 490, 150));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 100, 510, 150));
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/turmasehora/botaoFechar.png"))); // NOI18N
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/turmasehora/botaoFecharHover.png"))); // NOI18N

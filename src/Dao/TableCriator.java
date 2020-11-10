@@ -71,8 +71,8 @@ public class TableCriator {
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cpf VARCHAR(15) NULL,"
                 + "rg VARCHAR(20) NULL,"
-                + "sexo CHAR(1) NOT NULL,"
                 + "telefone VARCHAR(20) NULL,"
+                + "celular VARCHAR(20) NULL,"
                 + "email VARCHAR(50) NULL,"
                 + "dataNascimento DATE NOT NULL,"
                 + "codEndereco INT NOT NULL,"     //O endereço de cada aluno é cadastrado numa tabela à parte.
@@ -82,11 +82,13 @@ public class TableCriator {
                 + "telefonePai VARCHAR(20) NULL,"
                 + "cpfMae VARCHAR(15) NULL,"
                 + "cpfPai VARCHAR(15) NULL,"
-                + "matriculas VARCHAR(MAX) NOT NULL,"   //Como cada aluno pode ter mais de uma matrícula, então elas são armazenadas sequencialmente num varhar.
+                + "matricula VARCHAR(MAX) NOT NULL,"
+                + "codTurma INT NOT NULL,"   //Como cada aluno pode ter mais de uma matrícula, então elas são armazenadas sequencialmente num varhar.
                 + "codDiasDaSemana INT NOT NULL,"  //código dos dias da semana que irá ter aula, coincide com os dias da turma.
                 + "codServico INT NOT NULL,"  //Código do serviço e tempo para pagamento.
                 + "descricao VARCHAR(MAX) NULL,"
-                + "debito DECIMAL(16,2) NULL"  //Valor incrementado ou decrementado conforme o aluno faz compras.
+                + "debito DECIMAL(16,2) NULL,"
+                + "valorContrato DECIMAL(16,2) NOT NULL"  //Valor incrementado ou decrementado conforme o aluno faz compras.
                 + ") ON [AlunoseClientes];");
     }
     
@@ -97,9 +99,9 @@ public class TableCriator {
         this.gerarStatement().execute("CREATE TABLE tblEndAlunoseClientes("
                 + "codEndAlunoseClientes INT PRIMARY KEY," //É gerado um endereço único para cada aluno.
                 + "codAluno INT NOT NULL," //Abstrai o código de um aluno para que exista.
-                + "logradouro VARCHAR(50) NOT NULL,"
-                + "bairro VARCHAR(25) NOT NULL,"
-                + "numero VARCHAR(10) NOT NULL,"
+                + "logradouro VARCHAR(50) NULL,"
+                + "bairro VARCHAR(25) NULL,"
+                + "numero VARCHAR(10) NULL,"
                 + "complemento VARCHAR(50) NULL,"
                 + "referencia VARCHAR(50) NULL,"
                 + "cidade VARCHAR(20) NULL,"
@@ -152,9 +154,9 @@ public class TableCriator {
         this.gerarStatement().execute("CREATE TABLE tblEndFuncionarios("
                 + "codEndFuncionarios INT PRIMARY KEY," // É gerado um código único de endereço de funcionário
                 + "codFuncionario INT NOT NULL,"  //Associação do endereço ao funcionário.
-                + "logradouro VARCHAR(50) NOT NULL,"
-                + "bairro VARCHAR(25) NOT NULL,"
-                + "numero VARCHAR(10) NOT NULL,"
+                + "logradouro VARCHAR(50) NULL,"
+                + "bairro VARCHAR(25) NULL,"
+                + "numero VARCHAR(10) NULL,"
                 + "complemento VARCHAR(50) NULL,"
                 + "referencia VARCHAR(50) NULL,"
                 + "cidade VARCHAR(20) NULL,"
@@ -184,9 +186,9 @@ public class TableCriator {
        telaDeInicio.mudarPercentual();
        this.gerarStatement().execute("CREATE TABLE tblEndEmpresa("
                 + "codEndEmpresa INT PRIMARY KEY," //Código do endereço.
-                + "logradouro VARCHAR(50) NOT NULL,"
-                + "bairro VARCHAR(25) NOT NULL,"
-                + "numero VARCHAR(10) NOT NULL,"
+                + "logradouro VARCHAR(50) NULL,"
+                + "bairro VARCHAR(25) NULL,"
+                + "numero VARCHAR(10) NULL,"
                 + "complemento VARCHAR(50) NULL,"
                 + "referencia VARCHAR(50) NULL,"
                 + "cidade VARCHAR(20) NULL,"

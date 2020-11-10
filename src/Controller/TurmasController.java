@@ -46,7 +46,7 @@ public class TurmasController {
         ArrayList <Turmas> turmas = new ArrayList<>();
         ArrayList <Horarios> horarios = new ArrayList<>();
         turmas = this.turmasDao.selecionarTodasTurmas();
-        horarios = this.horariosDao.selecionarTodasTurmas();
+        horarios = this.horariosDao.selecionarTodosHorarios();
         if(turmas==null){
             view.exibeMensagem("Sem Turmas Cadastradas");
         } else{

@@ -5,9 +5,14 @@
  */
 package View;
 
+import Controller.AlunosController;
+import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 
 /**
  *
@@ -15,11 +20,24 @@ import java.awt.Point;
  */
 public class AlunosView extends javax.swing.JFrame {
 private Point point = new Point();
+private final AlunosController controller;
+private AlunosCadastro alunosCadastro = new AlunosCadastro();
+private javax.swing.JComboBox<String> comboServicos = new JComboBox<>(alunosCadastro.getComboPlano().getModel());
+private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>(alunosCadastro.getComboTurma().getModel());
+private javax.swing.JComboBox<String> comboEstado = new JComboBox<>(alunosCadastro.getComboEstado().getModel());
+private final JFormattedTextField valorContrato = new JMoneyField();
+private final JFormattedTextField valorDebito = new JMoneyField();
+private final JFormattedTextField telefonePai = new JFormattedTextField(alunosCadastro.getCampoContatoPai().getFormatter());
+private final JFormattedTextField cpfPai = new JFormattedTextField(alunosCadastro.getCampoCPFPai().getFormatter());
+private final JFormattedTextField telefoneMae = new JFormattedTextField(alunosCadastro.getCampoContatoMae().getFormatter());
+private final JFormattedTextField cpfMae = new JFormattedTextField(alunosCadastro.getCampoCPFMae().getFormatter());
+private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.getCampoCEP().getFormatter());
     /**
      * Creates new form Alunos
      */
     public AlunosView() {
         initComponents();
+        controller = new AlunosController(this);
         botaobuscar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
@@ -31,9 +49,10 @@ private Point point = new Point();
         tabelaAlunos.getTableHeader().setBackground(new Color(0,0,0));
         tabelaAlunos.getTableHeader().setForeground(new Color(0,0,0));
         tabelaAlunos.setRowHeight(25);
-        botaoAlternar.setBackground(new Color(0,0,0,0));
-        botaoAlternar1.setBackground(new Color(0,0,0,0));
-        botaoAlternar2.setBackground(new Color(0,0,0,0));              
+        botaoEndereco.setBackground(new Color(0,0,0,0));
+        botaoPais.setBackground(new Color(0,0,0,0));
+        botaoAlunos.setBackground(new Color(0,0,0,0));   
+        this.setInicialBotoes();
     }
 
     /**
@@ -45,19 +64,23 @@ private Point point = new Point();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        painelderolagem = new javax.swing.JScrollPane();
+        painelAlunos = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
+        painelPais = new javax.swing.JScrollPane();
+        tabelaPais = new javax.swing.JTable();
+        painelEnderecos = new javax.swing.JScrollPane();
+        tabelaEnderecos = new javax.swing.JTable();
         botaoRemover = new javax.swing.JButton();
         botaoEditar = new javax.swing.JButton();
         botaoListar = new javax.swing.JButton();
         botaoFechar = new javax.swing.JButton();
         botaobuscar = new javax.swing.JButton();
         botaoAdicionar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        botaoAlternar2 = new javax.swing.JButton();
-        botaoAlternar1 = new javax.swing.JButton();
-        botaoAlternar = new javax.swing.JButton();
+        campoPesquisa = new javax.swing.JTextField();
+        comboListar = new javax.swing.JComboBox<>();
+        botaoPais = new javax.swing.JButton();
+        botaoEndereco = new javax.swing.JButton();
+        botaoAlunos = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,12 +103,33 @@ private Point point = new Point();
         tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"adsa", "adsa", "adsa", null}
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "asdasdas", "asdasd", "dfdafsd", "asdas"
+                "CodBanco", "Nome", "Turma", "Forma de Pag.", "Valor Contrato", "Débito"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaAlunos.getTableHeader().setResizingAllowed(false);
+        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
+        tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboServicos));
+        tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboTurmas));
+        tabelaAlunos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorContrato));
+        tabelaAlunos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(valorDebito));
         tabelaAlunos.setFocusable(false);
         tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -97,9 +141,83 @@ private Point point = new Point();
                 tabelaAlunosComponentHidden(evt);
             }
         });
-        painelderolagem.setViewportView(tabelaAlunos);
+        painelAlunos.setViewportView(tabelaAlunos);
 
-        getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+        getContentPane().add(painelAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+
+        tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaPais.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Pai", "CPF (P)", "Contato (P)", "Mãe", "CPF (M)", "Contato (M)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabelaPais.getTableHeader().setResizingAllowed(false);
+        tabelaPais.getTableHeader().setReorderingAllowed(false);
+        tabelaPais.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cpfPai));
+        tabelaPais.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(telefonePai));
+        tabelaPais.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(cpfMae));
+        tabelaPais.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(telefoneMae));
+        tabelaPais.setFocusable(false);
+        tabelaPais.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaPais.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaPais.setRowHeight(25);
+        tabelaPais.setShowVerticalLines(false);
+        tabelaPais.getTableHeader().setReorderingAllowed(false);
+        tabelaPais.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaPaisComponentHidden(evt);
+            }
+        });
+        painelPais.setViewportView(tabelaPais);
+
+        getContentPane().add(painelPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+
+        tabelaEnderecos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaEnderecos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Logradouro", "Nº", "Bairro", "Cidade", "Estado", "CEP"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabelaEnderecos.getTableHeader().setResizingAllowed(false);
+        tabelaEnderecos.getTableHeader().setReorderingAllowed(false);
+        tabelaEnderecos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cep));
+        tabelaEnderecos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboEstado));
+        tabelaEnderecos.setFocusable(false);
+        tabelaEnderecos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaEnderecos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaEnderecos.setRowHeight(25);
+        tabelaEnderecos.setShowVerticalLines(false);
+        tabelaEnderecos.getTableHeader().setReorderingAllowed(false);
+        tabelaEnderecos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaEnderecosComponentHidden(evt);
+            }
+        });
+        painelEnderecos.setViewportView(tabelaEnderecos);
+
+        getContentPane().add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
         botaoRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoRemover.png"))); // NOI18N
         botaoRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverremover.png"))); // NOI18N
@@ -144,22 +262,37 @@ private Point point = new Point();
             }
         });
         getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 168, 205, 50));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 320, 40));
+        getContentPane().add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 320, 40));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
+        comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Aniversariantes", "Pendentes", "Pagos", " " }));
+        getContentPane().add(comboListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
 
-        botaoAlternar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunosh.png"))); // NOI18N
-        botaoAlternar2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunos.png"))); // NOI18N
-        getContentPane().add(botaoAlternar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 120, -1));
+        botaoPais.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPais.png"))); // NOI18N
+        botaoPais.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPaishover.png"))); // NOI18N
+        botaoPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoPaisActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
 
-        botaoAlternar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPais.png"))); // NOI18N
-        botaoAlternar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPaishover.png"))); // NOI18N
-        getContentPane().add(botaoAlternar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 310, 120, -1));
+        botaoEndereco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnEndereco.png"))); // NOI18N
+        botaoEndereco.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnEnderecohover.png"))); // NOI18N
+        botaoEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEnderecoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
 
-        botaoAlternar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnEndereco.png"))); // NOI18N
-        botaoAlternar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnEnderecohover.png"))); // NOI18N
-        getContentPane().add(botaoAlternar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
+        botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunosh.png"))); // NOI18N
+        botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunos.png"))); // NOI18N
+        botaoAlunos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlunosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/Alunos.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -201,13 +334,32 @@ private Point point = new Point();
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         // TODO add your handling code here:
-        AlunosCadastro abrir= new AlunosCadastro();
-        abrir.setVisible(true);
+        alunosCadastro.setVisible(true);
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoRemoverActionPerformed
+
+    private void tabelaPaisComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaPaisComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaPaisComponentHidden
+
+    private void tabelaEnderecosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaEnderecosComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaEnderecosComponentHidden
+
+    private void botaoPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPaisActionPerformed
+        this.trocarTabelas(1);
+    }//GEN-LAST:event_botaoPaisActionPerformed
+
+    private void botaoEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEnderecoActionPerformed
+        this.trocarTabelas(2);
+    }//GEN-LAST:event_botaoEnderecoActionPerformed
+
+    private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
+        this.trocarTabelas(3);
+    }//GEN-LAST:event_botaoAlunosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,18 +398,57 @@ private Point point = new Point();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
-    private javax.swing.JButton botaoAlternar;
-    private javax.swing.JButton botaoAlternar1;
-    private javax.swing.JButton botaoAlternar2;
+    private javax.swing.JButton botaoAlunos;
     private javax.swing.JButton botaoEditar;
+    private javax.swing.JButton botaoEndereco;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoListar;
+    private javax.swing.JButton botaoPais;
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaobuscar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JScrollPane painelderolagem;
+    private javax.swing.JTextField campoPesquisa;
+    private javax.swing.JComboBox<String> comboListar;
+    private javax.swing.JScrollPane painelAlunos;
+    private javax.swing.JScrollPane painelEnderecos;
+    private javax.swing.JScrollPane painelPais;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JTable tabelaAlunos;
+    private javax.swing.JTable tabelaEnderecos;
+    private javax.swing.JTable tabelaPais;
     // End of variables declaration//GEN-END:variables
+
+    private void trocarTabelas(int opcao){
+        switch(opcao){
+            case 1:
+                this.botaoPais.setVisible(false);
+                this.painelAlunos.setVisible(false);
+                this.botaoEndereco.setVisible(true);
+                this.painelPais.setVisible(true);
+            break;
+            
+            case 2:
+                this.botaoEndereco.setVisible(false);
+                this.painelPais.setVisible(false);
+                this.botaoAlunos.setVisible(true);
+                this.painelEnderecos.setVisible(true);
+            break;
+            
+            case 3:
+                this.botaoAlunos.setVisible(false);
+                this.painelEnderecos.setVisible(false);
+                this.botaoPais.setVisible(true);
+                this.painelAlunos.setVisible(true);
+            break;
+        }
+        
+    }
+    
+    private void setInicialBotoes(){
+        this.botaoPais.setVisible(true);
+        this.painelAlunos.setVisible(true);
+        this.botaoEndereco.setVisible(false);
+        this.painelPais.setVisible(false);
+        this.botaoAlunos.setVisible(false);
+        this.painelEnderecos.setVisible(false);
+    }
 }

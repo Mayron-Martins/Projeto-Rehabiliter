@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -20,14 +21,12 @@ public class Aluno extends Pessoa {
    private String cpfdopai;
    private int turma;
    private int plano;
+   private String descricao;
+   private BigDecimal debito;
+   private BigDecimal valorContrato;
 
-   //***************************************************************************
-   //CONSTRUTORES PARA ADICIONAR
-   //___________________________________________________________________________
-   //ALUNO MENOR DE IDADE
-   //SEM CPF e RG
-    public Aluno(String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int plano, int codBanco, String nome, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
-        super(codBanco, nome, sexo, telefone, email, datadenascimento, endereco_rua, endereco_bairro, endereco_numero, endereco_complemento, endereco_cep, endereco_cidade, endereco_estado);
+    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, String datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int plano, String descricao, BigDecimal debito, BigDecimal valorContrato) {
+        super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento);
         this.nomedamae = nomedamae;
         this.nomedopai = nomedopai;
         this.telefonedamae = telefonedamae;
@@ -36,44 +35,11 @@ public class Aluno extends Pessoa {
         this.cpfdopai = cpfdopai;
         this.turma = turma;
         this.plano = plano;
+        this.descricao = descricao;
+        this.debito = new BigDecimal(debito.toString());
+        this.valorContrato = new BigDecimal(valorContrato.toString());
     }
-    
-    
-    //___________________________________________________________________________
-    //ALUNO MAIOR DE IDADE
-    //COMPLETO
-    public Aluno(int turma, int plano, int codBanco, String nome, String cpf, String rg, char sexo, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
-        super(codBanco,nome, cpf, rg, sexo, telefone, email, datadenascimento, endereco_rua, endereco_bairro, endereco_numero, endereco_complemento, endereco_cep, endereco_cidade, endereco_estado);
-        this.turma = turma;
-        this.plano = plano;
-    }
-    
-    
-    
-    //***************************************************************************
-    //CONSTRUTORES PARA EDITAR
-    //___________________________________________________________________________
-    //ALUNO MENOR DE IDADE
-    //COMPLETO
-    public Aluno(String telefonedamae, String telefonedopai, int turma, int plano, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
-        super(telefone, email, datadenascimento, endereco_rua, endereco_bairro, endereco_numero, endereco_complemento, endereco_cep, endereco_cidade, endereco_estado);
-        this.telefonedamae = telefonedamae;
-        this.telefonedopai = telefonedopai;
-        this.turma = turma;
-        this.plano = plano;
-    }
-    
-    //___________________________________________________________________________
-    //ALUNO MAIOR DE IDADE
-    //COMPLETO
-    public Aluno(int turma, int plano, String telefone, String email, Date datadenascimento, String endereco_rua, String endereco_bairro, String endereco_numero, String endereco_complemento, String endereco_cep, String endereco_cidade, String endereco_estado) {
-        super(telefone, email, datadenascimento, endereco_rua, endereco_bairro, endereco_numero, endereco_complemento, endereco_cep, endereco_cidade, endereco_estado);
-        this.turma = turma;
-        this.plano = plano;
-    }
-    
-    
-    
+   
     //___________________________________________________________________________
     //GETTERS
 
@@ -107,6 +73,18 @@ public class Aluno extends Pessoa {
 
     public int getPlano() {
         return plano;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public BigDecimal getDebito() {
+        return debito;
+    }
+
+    public BigDecimal getValorContrato() {
+        return valorContrato;
     }
 
     
