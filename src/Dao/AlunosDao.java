@@ -5,7 +5,6 @@
  */
 package Dao;
 
-import Controller.auxiliar.ConversaoDiasDaSemana;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Model.Aluno;
 import Model.auxiliar.EnderecoAlunos;

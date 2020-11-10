@@ -10,9 +10,17 @@ import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -53,6 +61,24 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         botaoPais.setBackground(new Color(0,0,0,0));
         botaoAlunos.setBackground(new Color(0,0,0,0));   
         this.setInicialBotoes();
+        
+        comboServicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboServicosActionPerformed(evt);
+            }
+            private void comboServicosActionPerformed(ActionEvent evt) {
+            int linhaSelecionada = tabelaAlunos.getSelectedRow();
+                if(tabelaAlunos.isRowSelected(linhaSelecionada)){
+                    try {
+                          controller.setarValorContrato();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+        
+    }
+        });
+        
     }
 
     /**
@@ -98,12 +124,17 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
                 formMousePressed(evt);
             }
         });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "CodBanco", "Nome", "Turma", "Forma de Pag.", "Valor Contrato", "Débito"
@@ -148,7 +179,7 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaPais.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Pai", "CPF (P)", "Contato (P)", "Mãe", "CPF (M)", "Contato (M)"
@@ -186,7 +217,7 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         tabelaEnderecos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaEnderecos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Logradouro", "Nº", "Bairro", "Cidade", "Estado", "CEP"
@@ -300,7 +331,7 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
 
@@ -361,6 +392,22 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         this.trocarTabelas(3);
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        controller.limparTabela();
+    try {
+        controller.verificacaoDeTurmaEServico();
+    } catch (SQLException ex) {
+        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    try {
+        controller.listarAlunos();
+    } catch (SQLException ex) {
+        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ParseException ex) {
+        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_formWindowOpened
+     
     /**
      * @param args the command line arguments
      */
@@ -443,6 +490,10 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         
     }
     
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
     private void setInicialBotoes(){
         this.botaoPais.setVisible(true);
         this.painelAlunos.setVisible(true);
@@ -451,4 +502,72 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         this.botaoAlunos.setVisible(false);
         this.painelEnderecos.setVisible(false);
     }
+    
+    private void selecionarLinhasUniforme(){
+        int linhaSelecionada = this.tabelaAlunos.getSelectedRow();
+            this.tabelaPais.setRowSelectionInterval(linhaSelecionada, linhaSelecionada);
+            this.tabelaEnderecos.setRowSelectionInterval(linhaSelecionada, linhaSelecionada);
+    }
+
+    public JComboBox<String> getComboServicos() {
+        return comboServicos;
+    }
+
+    public JComboBox<String> getComboTurmas() {
+        return comboTurmas;
+    }
+
+    public JComboBox<String> getComboEstado() {
+        return comboEstado;
+    }
+
+    public JFormattedTextField getValorContrato() {
+        return valorContrato;
+    }
+
+    public JFormattedTextField getValorDebito() {
+        return valorDebito;
+    }
+
+    public JFormattedTextField getTelefonePai() {
+        return telefonePai;
+    }
+
+    public JFormattedTextField getCpfPai() {
+        return cpfPai;
+    }
+
+    public JFormattedTextField getTelefoneMae() {
+        return telefoneMae;
+    }
+
+    public JFormattedTextField getCpfMae() {
+        return cpfMae;
+    }
+
+    public JFormattedTextField getCep() {
+        return cep;
+    }
+
+    public JTextField getCampoPesquisa() {
+        return campoPesquisa;
+    }
+
+    public JComboBox<String> getComboListar() {
+        return comboListar;
+    }
+
+    public JTable getTabelaAlunos() {
+        return tabelaAlunos;
+    }
+
+    public JTable getTabelaEnderecos() {
+        return tabelaEnderecos;
+    }
+
+    public JTable getTabelaPais() {
+        return tabelaPais;
+    }
+    
+    
 }

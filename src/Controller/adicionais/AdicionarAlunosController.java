@@ -140,6 +140,9 @@ public class AdicionarAlunosController {
         EnderecoAlunos endereco = new EnderecoAlunos(codEndereco, codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
         
+        //Obtem a quantidade de alunos presentes na turma
+        int quantAlunosPresentes = verificar.verificarUltimo("tblTurmas", "quantAlunos");
+        
         //Verifica se não há dados irregulares antes de colocar na tabela
         if(nome.equals("")||dataNascimento.equals("  /  /   ")||plano.equals("[Nenhum]")||turma.equals("[Nenhuma]")
                || logradouro.equals("")||bairro.equals("")||numero.equals("")||cidade.equals("")
@@ -148,7 +151,8 @@ public class AdicionarAlunosController {
         }
         
         else{
-            alunosDao.inserirDados(aluno, endereco, matricula, codTurma, codPlano);
+            alunosDao.inserirDados(aluno, endereco, matricula, codTurma, codTurma);
+            turmasDao.atualizarQuantAunos(codTurma, quantAlunosPresentes);
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             view.getCampoNomeAluno().setText("");
@@ -199,7 +203,6 @@ public class AdicionarAlunosController {
             ArrayList<Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico);
             
             String metodoDePagamento = servicos.get(0).getFormaPagamento();
-            System.out.println(metodoDePagamento);
             
             BigDecimal valorContrato = null;
             if(metodoDePagamento.equals("Dinheiro")){valorContrato = new BigDecimal(servicos.get(0).getValorVista().toString());}

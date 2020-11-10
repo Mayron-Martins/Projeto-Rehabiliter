@@ -71,6 +71,21 @@ public class TurmasDao extends Conexao{
         horariosDao.atualizarDados(horario);
     }
     
+    //Atualizar quantidadeAlunos
+        public void atualizarQuantAunos(int codBanco, int quantAlunos) throws SQLException{
+        //atualizando a tabela de turmas
+        String inTurmas = atualizar.concat("tblTurmas "
+                + "SET quantAlunos = ? where codTurma = ?");
+        
+        PreparedStatement statement = gerarStatement(inTurmas);
+        statement.setInt(1, quantAlunos);
+        statement.setInt(2, codBanco);
+        
+        statement.execute();
+        statement.close();
+        
+    }
+    
     //Remover Dados
     public void removerTurma(int codTurma) throws SQLException{
         //Removendo Turmas
