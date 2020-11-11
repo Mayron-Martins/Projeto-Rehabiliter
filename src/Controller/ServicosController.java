@@ -33,7 +33,7 @@ public class ServicosController {
     public void limparTabela(){
         int quantLinhas = this.view.getTabelaServicos().getRowCount();    
         for(int quant=0; quant<quantLinhas; quant++){
-            this.tabelaDeServicos.removeRow(quant);
+            this.tabelaDeServicos.removeRow(0);
         }
     }
     

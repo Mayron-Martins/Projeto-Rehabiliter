@@ -55,12 +55,12 @@ public class MatriculasDao extends Conexao{
     }
     
     //Remover Dados
-    public void removerMatricula(int codMatricula) throws SQLException{
+    public void removerMatricula(int codAluno) throws SQLException{
         //Removendo Matriculas
-        String inMatriculas = remover.concat("tblMatriculas WHERE codMatricula = ?");
+        String inMatriculas = remover.concat("tblMatriculas WHERE codAluno = ?");
         
         PreparedStatement statement = gerarStatement(inMatriculas);
-        statement.setInt(1, codMatricula);
+        statement.setInt(1, codAluno);
         statement.execute();
         statement.close();
     }

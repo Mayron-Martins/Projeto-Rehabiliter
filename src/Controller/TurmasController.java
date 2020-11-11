@@ -37,7 +37,7 @@ public class TurmasController {
     public void limparTabela(){
         int quantLinhas = this.view.getTabelaAlunos().getRowCount();    
         for(int quant=0; quant<quantLinhas; quant++){
-            this.tabelaDeTurmas.removeRow(quant);
+            this.tabelaDeTurmas.removeRow(0);
         }
     }
     

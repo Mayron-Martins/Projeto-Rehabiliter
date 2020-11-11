@@ -67,7 +67,7 @@ public class AlunosDao extends Conexao{
         statement.execute();
         statement.close();
         
-        //Adicionando Horário da Turma
+        //Adicionando endereco e matrícula do aluno
         enderecoDao.inserirDadosEmEnderecoAluno(endereco);
         matriculaDao.inserirDados(matricula);
     }
@@ -106,18 +106,19 @@ public class AlunosDao extends Conexao{
     }
     
     //Remover Dados
-    public void removerAluno(int codAluno, int codEndereco, int codmatricula) throws SQLException{
-        //Removendo Turmas
+    public void removerAluno(int codAluno) throws SQLException{
+        //Removendo endereço e matricula do aluno
+        enderecoDao.removerEnderecoAluno(codAluno);
+        matriculaDao.removerMatricula(codAluno);
+        
+        
+        //Removendo Alunos
         String inAlunos = remover.concat("tblAlunos WHERE codAluno = ?");
         
         PreparedStatement statement = gerarStatement(inAlunos);
         statement.setInt(1, codAluno);
         statement.execute();
-        statement.close();
-        
-        //Removendo Horários da Tabela
-        enderecoDao.removerEnderecoAluno(codEndereco);
-        matriculaDao.removerMatricula(codmatricula);
+        statement.close();  
     }
     
     public ArrayList <Aluno> selecionarTodosAlunos() throws SQLException, ParseException{

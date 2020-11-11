@@ -4,6 +4,8 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -65,24 +67,21 @@ public class ConversaodeDataParaPadraoDesignado {
         return anoAtual;
     }
     
-    public int verificarMaiorIdade(Date dataAniversario){
-        long idadeAtual;
-        Calendar diaAtual = Calendar.getInstance();
-        Calendar diaAniversario = new GregorianCalendar();
-        diaAniversario.setTime(dataAniversario);
-        
-        if(diaAtual.get(Calendar.DAY_OF_YEAR)==diaAniversario.get(Calendar.DAY_OF_YEAR)
-                && diaAtual.get(Calendar.MONTH)==diaAniversario.get(Calendar.MONTH)){
-            idadeAtual = diaAtual.get(Calendar.YEAR)-diaAniversario.get(Calendar.YEAR);
-            return (int) idadeAtual;
-        }
-        
-        long quantDiasDaDataAtual =  diaAtual.getTimeInMillis();
-        long quantDiasAniversario =  dataAniversario.getTime();
-        
-        idadeAtual = (quantDiasDaDataAtual-quantDiasAniversario)/(1000*3600*24*365);
-        
-        return (int) idadeAtual;
+    public int idade(Date dataAniversairio){
+        return this.periodoEntreDataAtual(dataAniversairio).getYears()*(-1);
     }
     
+    public boolean aniversarianteDoDia(Date dataAniversario){
+        Period aniversario = this.periodoEntreDataAtual(dataAniversario);
+        return aniversario.getDays()==0&&aniversario.getMonths()==0;
+    }
+    
+    private Period periodoEntreDataAtual(Date dataMenor){
+    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+    String format = formato.format(dataMenor);
+    LocalDate dataHoje = LocalDate.now();
+    LocalDate dataAniversario = LocalDate.parse(format);
+    Period between = Period.between(dataHoje, dataAniversario);
+    return between;
+    }
 }

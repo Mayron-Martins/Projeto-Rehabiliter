@@ -45,10 +45,10 @@ public class EnderecoAlunosDao extends Conexao{
     }
     
     //Remove o endereço
-    public void removerEnderecoAluno(int codEndereco) throws SQLException{
-        String inEndereco= remover.concat("tblEndAlunoseClientes WHERE codEndAlunoseClientes = ?");
+    public void removerEnderecoAluno(int codAluno) throws SQLException{
+        String inEndereco= remover.concat("tblEndAlunoseClientes WHERE codAluno = ?");
         PreparedStatement statement = gerarStatement(inEndereco);
-        statement.setInt(1, codEndereco);
+        statement.setInt(1, codAluno);
         statement.execute();
         statement.close();
     }

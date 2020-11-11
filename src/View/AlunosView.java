@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -270,6 +271,11 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
 
         botaoListar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoListar.png"))); // NOI18N
         botaoListar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverListar.png"))); // NOI18N
+        botaoListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoListarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 205, 50));
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -283,6 +289,11 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
 
         botaobuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaobuscar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
+        botaobuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaobuscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 230, 50, 40));
 
         botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
@@ -293,9 +304,15 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
             }
         });
         getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 168, 205, 50));
+
+        campoPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoPesquisaKeyPressed(evt);
+            }
+        });
         getContentPane().add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 320, 40));
 
-        comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Aniversariantes", "Pendentes", "Pagos", " " }));
+        comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Aniversariantes", "Pendentes", "Pagos" }));
         getContentPane().add(comboListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
 
         botaoPais.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPais.png"))); // NOI18N
@@ -351,7 +368,13 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
     }//GEN-LAST:event_formMouseDragged
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
-        // TODO add your handling code here:
+    try {
+        controller.editarAlunos();
+    } catch (ParseException ex) {
+        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (Exception ex) {
+        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void tabelaAlunosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosComponentHidden
@@ -369,7 +392,13 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
-        // TODO add your handling code here:
+    try {
+        controller.removerAluno();
+    } catch (ParseException ex) {
+        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (Exception ex) {
+        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void tabelaPaisComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaPaisComponentHidden
@@ -393,20 +422,43 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        controller.limparTabela();
     try {
         controller.verificacaoDeTurmaEServico();
     } catch (SQLException ex) {
         Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
     }
+    
     try {
         controller.listarAlunos();
-    } catch (SQLException ex) {
-        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
     } catch (ParseException ex) {
+        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (Exception ex) {
         Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
     }
     }//GEN-LAST:event_formWindowOpened
+
+    private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
+        
+    try {
+        controller.buscarAlunos();
+    } catch (Exception ex) {
+        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_botaobuscarActionPerformed
+
+    private void campoPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisaKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaobuscar);
+        }
+    }//GEN-LAST:event_campoPesquisaKeyPressed
+
+    private void botaoListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarActionPerformed
+    try {
+        controller.listar();
+    } catch (Exception ex) {
+        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_botaoListarActionPerformed
      
     /**
      * @param args the command line arguments
