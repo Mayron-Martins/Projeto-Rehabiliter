@@ -50,6 +50,8 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarios.png"))); // NOI18N
@@ -121,6 +123,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
