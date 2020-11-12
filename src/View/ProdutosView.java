@@ -5,19 +5,35 @@
  */
 package View;
 
+import Controller.ProdutosController;
+import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
  * @author 55989
  */
 public class ProdutosView extends javax.swing.JFrame {
+    private final ProdutosController controller;
+    private final JFormattedTextField campoQuantidade = new JMoneyField();
+    private final JFormattedTextField valorProduto = new JMoneyField();
 
     /**
      * Creates new form produtos
      */
     public ProdutosView() {
         initComponents();
+        controller = new ProdutosController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
         botaoEditar.setBackground(new Color(0,0,0,0));
@@ -42,16 +58,21 @@ public class ProdutosView extends javax.swing.JFrame {
         botaoRemover = new javax.swing.JButton();
         botaoEditar = new javax.swing.JButton();
         botaoListar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
+        comboListar = new javax.swing.JComboBox<>();
+        campoPesquisa = new javax.swing.JTextField();
         botaobuscar = new javax.swing.JButton();
         painelderolagem = new javax.swing.JScrollPane();
-        tabelaAlunos = new javax.swing.JTable();
+        tabelaProdutos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -92,37 +113,72 @@ public class ProdutosView extends javax.swing.JFrame {
 
         botaoListar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoListar.png"))); // NOI18N
         botaoListar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverListar.png"))); // NOI18N
+        botaoListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoListarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 205, 50));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 320, 40));
+        comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        getContentPane().add(comboListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
+
+        campoPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoPesquisaKeyPressed(evt);
+            }
+        });
+        getContentPane().add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 320, 40));
 
         botaobuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaobuscar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
-        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 50, 40));
-
-        tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"adsa", "adsa", "adsa", null}
-            },
-            new String [] {
-                "asdasdas", "asdasd", "dfdafsd", "asdas"
-            }
-        ));
-        tabelaAlunos.setFocusable(false);
-        tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaAlunos.setRowHeight(25);
-        tabelaAlunos.setShowVerticalLines(false);
-        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
-        tabelaAlunos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaAlunosComponentHidden(evt);
+        botaobuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaobuscarActionPerformed(evt);
             }
         });
-        painelderolagem.setViewportView(tabelaAlunos);
+        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 50, 40));
+
+        tabelaProdutos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CodBanco", "Produto", "Quantidade", "Valor"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaProdutos.getTableHeader().setResizingAllowed(false);
+        tabelaProdutos.getTableHeader().setReorderingAllowed(false);
+        tabelaProdutos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(campoQuantidade));
+        tabelaProdutos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(valorProduto));
+        tabelaProdutos.setFocusable(false);
+        tabelaProdutos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaProdutos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaProdutos.setRowHeight(25);
+        tabelaProdutos.setShowVerticalLines(false);
+        tabelaProdutos.getTableHeader().setReorderingAllowed(false);
+        tabelaProdutos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaProdutosComponentHidden(evt);
+            }
+        });
+        painelderolagem.setViewportView(tabelaProdutos);
 
         getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
@@ -140,23 +196,66 @@ public class ProdutosView extends javax.swing.JFrame {
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         // TODO add your handling code here:
-        this.dispose();
         ProdutosAdicionar abrir= new ProdutosAdicionar();
         abrir.setVisible(true);
 
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
-        // TODO add your handling code here:
+        try {
+            controller.removerProduto();
+        } catch (ParseException ex) {
+            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
-        // TODO add your handling code here:
+        try {
+            controller.editarProdutos();
+        } catch (ParseException ex) {
+            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoEditarActionPerformed
 
-    private void tabelaAlunosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosComponentHidden
+    private void tabelaProdutosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaProdutosComponentHidden
         // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaAlunosComponentHidden
+    }//GEN-LAST:event_tabelaProdutosComponentHidden
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            controller.listarProdutos();
+        } catch (ParseException ex) {
+            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void botaoListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarActionPerformed
+        try {
+            controller.listar();
+        } catch (Exception ex) {
+            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaoListarActionPerformed
+
+    private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
+        try {
+            controller.buscarProdutos();
+        } catch (Exception ex) {
+            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaobuscarActionPerformed
+
+    private void campoPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisaKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaobuscar);
+        }
+    }//GEN-LAST:event_campoPesquisaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -200,10 +299,32 @@ public class ProdutosView extends javax.swing.JFrame {
     private javax.swing.JButton botaoListar;
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaobuscar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTextField campoPesquisa;
+    private javax.swing.JComboBox<String> comboListar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JScrollPane painelderolagem;
-    private javax.swing.JTable tabelaAlunos;
+    private javax.swing.JTable tabelaProdutos;
     // End of variables declaration//GEN-END:variables
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    public JFormattedTextField getCampoQuantidade() {
+        return campoQuantidade;
+    }
+
+    public JTable getTabelaProdutos() {
+        return tabelaProdutos;
+    }
+
+    public JTextField getCampoPesquisa() {
+        return campoPesquisa;
+    }
+
+    public JComboBox<String> getComboListar() {
+        return comboListar;
+    }
+
+    
 }

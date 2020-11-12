@@ -116,5 +116,18 @@ public class ProdutosDao extends Conexao{
     return produtos;
     }
  
-    
+public ArrayList<Produtos> pesquisarPorNome(String nomeProduto) throws SQLException, Exception
+    {
+           ArrayList <Produtos> produtos = selecionarTodosProdutos();
+           ArrayList<Produtos> produtosBuscados = new ArrayList<>();
+           for(int repeticoes = 0; repeticoes<produtos.size(); repeticoes++){
+               if(produtos.get(repeticoes).getNomeProduto().toLowerCase().contains(nomeProduto)== true){
+                   produtosBuscados.add(produtos.get(repeticoes));
+               }
+           }
+           if(produtosBuscados.size()<1){
+               return null;
+           }
+           return produtosBuscados;
+    }
 }
