@@ -149,10 +149,20 @@ public class Caixa extends javax.swing.JFrame {
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 480, 130));
 
         btnPlanoDePagamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnPlanodePagamento.png"))); // NOI18N
+        btnPlanoDePagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlanoDePagamentoActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnPlanoDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 560, 190, -1));
 
         btnPagamentoMensal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnPagamentodeMensalidade.png"))); // NOI18N
         btnPagamentoMensal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPagamentoMensal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagamentoMensalActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnPagamentoMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 250, -1));
 
         btnFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnFinalizar.png"))); // NOI18N
@@ -168,7 +178,7 @@ public class Caixa extends javax.swing.JFrame {
         });
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 660, 150, -1));
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("R$ 50,00");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 510, -1, -1));
 
         jLabel3.setText("jLabel3");
@@ -204,6 +214,19 @@ public class Caixa extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnPagamentoMensalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagamentoMensalActionPerformed
+        // TODO add your handling code here:
+        CaixaPagamentoDeMensalidade abrir = new CaixaPagamentoDeMensalidade();
+        abrir.setVisible(true);
+                
+    }//GEN-LAST:event_btnPagamentoMensalActionPerformed
+
+    private void btnPlanoDePagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanoDePagamentoActionPerformed
+        // TODO add your handling code here:
+        CaixaPlanoDePagamento abrir=new CaixaPlanoDePagamento();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_btnPlanoDePagamentoActionPerformed
 
     /**
      * @param args the command line arguments
