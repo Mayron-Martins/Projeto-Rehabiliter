@@ -126,7 +126,7 @@ public class AlunosController {
             //Turmas 
         }
         
-        else{this.view.exibeMensagem("Erro, Nenhuma Turma Selecionada!");}
+        else{this.view.exibeMensagem("Erro, Nenhum Aluno Selecionado!");}
         
     
     }
@@ -142,7 +142,7 @@ public class AlunosController {
             this.view.exibeMensagem("Sucesso");
             listarAlunos();
         }
-        else{this.view.exibeMensagem("Erro, Nenhuma Turma Selecionada!");}
+        else{this.view.exibeMensagem("Erro, Nenhum Aluno Selecionado!");}
     }
     
     //Buscar turmas no campo de busca
@@ -289,7 +289,7 @@ public class AlunosController {
         ArrayList <Aluno> alunos = listar;
         
         removerSelecaoBox();
-        if(alunos==null){view.exibeMensagem("Aluno Não Encontrada!"); limparTabela();}
+        if(alunos==null){view.exibeMensagem("Aluno Não Encontrado!"); limparTabela();}
         else{
             limparTabela();
             for(int linhas = 0; linhas<alunos.size(); linhas++){

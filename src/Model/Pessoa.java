@@ -46,7 +46,7 @@ public abstract class Pessoa {
     }
     
     //Pessoa com Login e Senha
-    public Pessoa(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario) {
+    public Pessoa(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, String datadenascimento, String usuario) {
         this.codBanco = codBanco;
         this.nome = nome;
         this.cpf = cpf;
@@ -54,8 +54,13 @@ public abstract class Pessoa {
         this.telefone = telefone;
         this.celular = celular;
         this.email = email;
-        this.datadenascimento = datadenascimento;
         this.usuario = usuario;
+        ConversaodeDataParaPadraoDesignado converter = new ConversaodeDataParaPadraoDesignado();
+        try {
+            this.datadenascimento = converter.getSqlDate(converter.parseDate(datadenascimento));
+        } catch (ParseException ex) {
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     //___________________________________________________________________________

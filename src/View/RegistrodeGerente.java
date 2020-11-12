@@ -5,19 +5,29 @@
  */
 package View;
 
+import Controller.adicionais.AdicionarGerenteController;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
  * @author 55989
  */
 public class RegistrodeGerente extends javax.swing.JFrame {
+    private final AdicionarGerenteController controller;
 
     /**
      * Creates new form RegistrodeGerente
      */
     public RegistrodeGerente() {
         initComponents();
+        controller = new AdicionarGerenteController(this);
         btnConfirmar.setBackground(new Color(0,0,0,0));
     }
 
@@ -31,12 +41,12 @@ public class RegistrodeGerente extends javax.swing.JFrame {
     private void initComponents() {
 
         btnConfirmar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        campoNome = new javax.swing.JTextField();
+        campoNascimento = new javax.swing.JFormattedTextField();
+        campoCelular = new javax.swing.JFormattedTextField();
+        campoCPF = new javax.swing.JFormattedTextField();
+        campoSenha = new javax.swing.JPasswordField();
+        campoConfirmarSenha = new javax.swing.JPasswordField();
         fundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -52,18 +62,30 @@ public class RegistrodeGerente extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, -1, -1));
+        getContentPane().add(campoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 202, 210, 30));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 202, 210, 30));
-        getContentPane().add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 140, 30));
-        getContentPane().add(jFormattedTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 200, 140, 30));
-        getContentPane().add(jFormattedTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 150, 30));
-        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 140, 30));
-        getContentPane().add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 280, 140, 30));
+        try {
+            campoNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(campoNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 140, 30));
+
+        try {
+            campoCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(campoCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 200, 140, 30));
+
+        try {
+            campoCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(campoCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 150, 30));
+        getContentPane().add(campoSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 140, 30));
+        getContentPane().add(campoConfirmarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 280, 140, 30));
 
         fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/registrogerente/fundo.jpg"))); // NOI18N
         getContentPane().add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -73,13 +95,12 @@ public class RegistrodeGerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
+        try {
+            controller.adicionarGerente();
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistrodeGerente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnConfirmarActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,12 +139,40 @@ public class RegistrodeGerente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
+    private javax.swing.JFormattedTextField campoCPF;
+    private javax.swing.JFormattedTextField campoCelular;
+    private javax.swing.JPasswordField campoConfirmarSenha;
+    private javax.swing.JFormattedTextField campoNascimento;
+    private javax.swing.JTextField campoNome;
+    private javax.swing.JPasswordField campoSenha;
     private javax.swing.JLabel fundo;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    public JFormattedTextField getCampoCPF() {
+        return campoCPF;
+    }
+
+    public JFormattedTextField getCampoCelular() {
+        return campoCelular;
+    }
+
+    public JPasswordField getCampoConfirmarSenha() {
+        return campoConfirmarSenha;
+    }
+
+    public JFormattedTextField getCampoNascimento() {
+        return campoNascimento;
+    }
+
+    public JTextField getCampoNome() {
+        return campoNome;
+    }
+
+    public JPasswordField getCampoSenha() {
+        return campoSenha;
+    }
+
 }

@@ -134,8 +134,7 @@ public class TableCriator {
                 + "codFuncionario INT PRIMARY KEY," //Cada funcionário terá um código único.
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cpf VARCHAR(15) NOT NULL,"
-                + "rg VARCHAR(20) NOT NULL,"
-                + "sexo CHAR(1) NOT NULL,"
+                + "rg VARCHAR(20) NULL,"
                 + "telefone VARCHAR(20) NOT NULL,"
                 + "email VARCHAR(50) NULL,"
                 + "dataNascimento DATE NOT NULL,"

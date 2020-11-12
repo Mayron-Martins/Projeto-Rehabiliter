@@ -264,7 +264,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_campoBairroActionPerformed
 
     private void botaofecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaofecharActionPerformed
-        // TODO add your handling code here:
+
         this.dispose();
     }//GEN-LAST:event_botaofecharActionPerformed
 

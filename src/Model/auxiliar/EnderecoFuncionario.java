@@ -15,5 +15,9 @@ public class EnderecoFuncionario extends Endereco{
         super(codBanco, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         this.codFuncionario = codFuncionario;
     }
+
+    public int getCodFuncionario() {
+        return codFuncionario;
+    }
     
 }

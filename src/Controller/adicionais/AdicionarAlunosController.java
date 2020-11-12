@@ -51,6 +51,7 @@ public class AdicionarAlunosController {
         ArrayList <Servicos> servicos = servicosDao.selecionarTodosServicos();
         ServicosView telaServicos = new ServicosView();
         TurmasView telaTurmas = new TurmasView();
+        limparCombos();
         
         if(turmas==null){
             view.exibeMensagem("Sem Turmas Cadastradas! Adicione Alguma Para Entrar Nessa Tela!");
@@ -61,7 +62,7 @@ public class AdicionarAlunosController {
         }
         else{
             for(int linhas=0; linhas<turmas.size(); linhas++){
-            String subgrupo = "";    
+            String subgrupo = "";
             if(turmas.get(linhas).getSubgrupo()!=null){subgrupo = "-"+turmas.get(linhas).getSubgrupo();}
             view.getComboTurma().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma()+subgrupo);
             }
@@ -212,5 +213,12 @@ public class AdicionarAlunosController {
             
             view.getCampoValor().setText(valorContrato.toString());
         }
+    }
+    
+    public void limparCombos(){
+        view.getComboTurma().removeAllItems();
+        view.getComboTurma().addItem("[Nenhuma]");
+        view.getComboPlano().removeAllItems();
+        view.getComboPlano().addItem("[Nenhum]");
     }
 }

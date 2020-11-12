@@ -1,0 +1,163 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Dao;
+
+import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Model.Funcionario;
+import Model.auxiliar.EnderecoFuncionario;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Mayro
+ */
+public class FuncionarioDao extends Conexao{
+    private final String inserir = "INSERT INTO ";
+    private final String atualizar = "UPDATE ";
+    private final String remover = "DELETE FROM ";
+    private final String selecionarTudo = "SELECT * FROM ";
+    private final EnderecoFuncionarioDao enderecoDao = new EnderecoFuncionarioDao();
+    private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+    
+    
+    //Inserir dados na tabela Alunos
+    public void inserirDados (Funcionario funcionario, EnderecoFuncionario endereco) throws SQLException{
+
+        //Adicionando aluno
+        String inFuncionario = inserir.concat("tblFuncionarios("
+                + "codFuncionario, nome, cpf, rg, telefone, email, dataNascimento, "
+                + "codEndereco, usuario, senha, cargo, salario)"
+                + "VALUES("
+                + "?,?,?,?,?,?,?,?,?,?,?,?);");
+        PreparedStatement statement = gerarStatement(inFuncionario);
+        statement.setInt(1, funcionario.getCodBanco());
+        statement.setString(2, funcionario.getNome());
+        statement.setString(3, funcionario.getCpf());
+        statement.setString(4, funcionario.getRg());
+        statement.setString(5, funcionario.getTelefone());
+        statement.setString(6, "");
+        statement.setDate(7, (Date) funcionario.getDatadenascimento());
+        statement.setInt(8, endereco.getCodBanco());
+        statement.setString(9, funcionario.getUsuario());
+        statement.setString(10, funcionario.getSenha());
+        statement.setString(11, funcionario.getCargo());
+        statement.setBigDecimal(12, new BigDecimal(funcionario.getSalario().toString()));
+        statement.execute();
+        statement.close();
+        
+        //Adicionando endereco e matrícula do aluno
+        enderecoDao.inserirDadosEmEnderecoFuncionario(endereco);
+    }
+    
+    
+    
+    //Atualizar dados
+    public void atualizarDados(Funcionario funcionario, EnderecoFuncionario endereco) throws SQLException{
+        //atualizando a tabela de alunos
+        String inFuncionario = atualizar.concat("tblFuncionarios "
+                + "SET nome = ?, cpf = ?, rg = ?, telefone=?, salario=? where codFuncionario = ?");
+        
+        PreparedStatement statement = gerarStatement(inFuncionario);
+        statement.setString(1, funcionario.getNome());
+        statement.setString(2, funcionario.getCpf());
+        statement.setString(3, funcionario.getRg());
+        statement.setString(4, funcionario.getTelefone());
+        statement.setBigDecimal(5, new BigDecimal(funcionario.getSalario().toString()));
+        statement.setInt(6, funcionario.getCodBanco());
+        
+        statement.execute();
+        statement.close();
+        
+        //atualizando a tabela de horarios
+        enderecoDao.atualizarDados(endereco);
+    }
+    
+    public void atualizarSenha(Funcionario funcionario) throws SQLException{
+        String inFuncionario = atualizar.concat("tblFuncionarios "
+                + "SET senha=? where codFuncionario = ?");
+        
+        PreparedStatement statement = gerarStatement(inFuncionario);
+        statement.setString(1, funcionario.getNome());
+        statement.setString(1, funcionario.getNome());
+        statement.execute();
+        statement.close();
+    }
+    
+    //Remover Dados
+    public void removerFuncionario(int codFuncionario) throws SQLException{
+        //Removendo endereço e matricula do aluno
+        enderecoDao.removerEnderecoFuncionario(codFuncionario);
+        
+        
+        //Removendo Alunos
+        String inAlunos = remover.concat("tblFuncionarios WHERE codFuncionario = ?");
+        
+        PreparedStatement statement = gerarStatement(inAlunos);
+        statement.setInt(1, codFuncionario);
+        statement.execute();
+        statement.close();  
+    }
+    
+    public ArrayList <Funcionario> selecionarTodosFuncionarios() throws SQLException, ParseException{
+        String inFuncionario = selecionarTudo.concat("tblFuncionarios");
+        return pesquisarFuncionario(inFuncionario);
+    }
+    
+    public ArrayList <Funcionario> pesquisarFuncionario(String comando) throws SQLException, ParseException{
+     ArrayList <Funcionario> funcionarios = new ArrayList();
+     PreparedStatement statement = gerarStatement(comando);
+     statement.execute();
+     ResultSet resultset = statement.getResultSet();
+     boolean next = resultset.next();
+     
+     if(next==false){
+         return null;
+     }
+     
+    do{
+    int codBanco = resultset.getInt("codFuncionario");
+    String nome = resultset.getString("nome");
+    String cpf = resultset.getString("cpf");
+    String celular = resultset.getString("telefone");
+    String dataNascimento = converterData.parseDate(resultset.getDate("dataNascimento"));
+    String usuario = resultset.getString("usuario");
+    String senha = resultset.getString("senha");
+    BigDecimal salario= new BigDecimal(resultset.getBigDecimal("salario").toString());
+    String cargo = resultset.getString("cargo");
+    
+    Funcionario funcionario = new Funcionario(codBanco, nome, cpf, "", "", celular, "", dataNascimento, usuario, senha, salario, cargo);
+
+    funcionarios.add(funcionario);
+     }while(resultset.next());
+    
+    statement.close();
+    return funcionarios;
+    }
+    
+    public ArrayList<Funcionario> pesquisarPorNome(String nomeFuncionario) throws SQLException, Exception
+    {
+           ArrayList <Funcionario> funcionarios = selecionarTodosFuncionarios();
+           ArrayList<Funcionario> funcionariosBuscados = new ArrayList<>();
+           for(int repeticoes = 0; repeticoes<funcionarios.size(); repeticoes++){
+               if(funcionarios.get(repeticoes).getNome().toLowerCase().contains(nomeFuncionario)== true){
+                   funcionariosBuscados.add(funcionarios.get(repeticoes));
+               }
+           }
+           if(funcionariosBuscados.size()<1){
+               return null;
+           }
+           return funcionariosBuscados;
+    }
+    
+    
+    
+}

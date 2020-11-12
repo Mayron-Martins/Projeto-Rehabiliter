@@ -9,7 +9,7 @@ package Model;
  *
  * @author Mayro
  */
-public class Gerente extends Funcionário{
+public class Gerente extends Funcionario{
     public Gerente(String senha, String usuario) {
         super(senha, usuario);
     }

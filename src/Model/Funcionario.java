@@ -5,21 +5,22 @@
  */
 package Model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  *
  * @author Mayro
  */
-public class Funcionário extends Pessoa{
+public class Funcionario extends Pessoa{
     protected String senha;
-    protected String salario;
+    protected BigDecimal salario;
     protected String cargo;
 
-    public Funcionário(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario,String senha, String salario, String cargo) {
+    public Funcionario(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, String datadenascimento, String usuario,String senha, BigDecimal salario, String cargo) {
         super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento, usuario);
         this.senha = senha;
-        this.salario = salario;
+        this.salario = new BigDecimal(salario.toString());
         this.cargo = cargo;
     }
     
@@ -29,7 +30,7 @@ public class Funcionário extends Pessoa{
     
     //***************************************************************************
     //CONSTRUTORES PARA LOGAR
-    public Funcionário(String usuario, String senha) {
+    public Funcionario(String usuario, String senha) {
         super(usuario);
         this.senha = senha;
     }
@@ -44,7 +45,7 @@ public class Funcionário extends Pessoa{
         return senha;
     }
 
-    public String getSalario() {
+    public BigDecimal getSalario() {
         return salario;
     }
 

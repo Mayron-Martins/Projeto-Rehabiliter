@@ -5,28 +5,39 @@
  */
 package View;
 
+import Controller.adicionais.LoginGerenteController;
 import java.awt.Color;
 import java.awt.Point;
 import static java.lang.Thread.sleep;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 /**
  *
  * @author 55989
  */
 public class LoginGerente extends javax.swing.JFrame {
+    private final TelaInicialGerente telagerente = new TelaInicialGerente();
+    private final LoginGerenteController controller;
 
     /**
      * Creates new form LoginGerente
      */
     public LoginGerente() {
         initComponents();
+        controller = new LoginGerenteController(this);
         botaoentrarGerente.setBackground(new Color(0,0,0,0));
         botaoFuncionario.setBackground(new Color(0,0,0,0));
         botaoDesenvolvedor.setBackground(new Color(0,0,0,0));
         botaoSair.setBackground(new Color(0,0,0,0));
-        btnCadastrar.setBackground(new Color(0,0,0,0));
+        botaoCadastrar.setBackground(new Color(0,0,0,0));
+        botaoCadastrar.setVisible(false);
     }
 
     /**
@@ -38,9 +49,9 @@ public class LoginGerente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnCadastrar = new javax.swing.JButton();
-        inputCpfFuncionario = new javax.swing.JTextField();
-        inputSenha = new javax.swing.JPasswordField();
+        botaoCadastrar = new javax.swing.JButton();
+        campoCpfFuncionario = new javax.swing.JFormattedTextField();
+        campoSenha = new javax.swing.JPasswordField();
         botaoentrarGerente = new javax.swing.JButton();
         botaoFuncionario = new javax.swing.JButton();
         botaoDesenvolvedor = new javax.swing.JButton();
@@ -51,22 +62,22 @@ public class LoginGerente extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logingerente/btnCadastro.png"))); // NOI18N
-        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+        botaoCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logingerente/btnCadastro.png"))); // NOI18N
+        botaoCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarActionPerformed(evt);
+                botaoCadastrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 77, 180, 40));
+        getContentPane().add(botaoCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 77, 180, 40));
 
-        inputCpfFuncionario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputCpfFuncionarioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(inputCpfFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 206, 300, 26));
-        getContentPane().add(inputSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 248, 300, 26));
+        try {
+            campoCpfFuncionario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(campoCpfFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 206, 300, 26));
+        getContentPane().add(campoSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 248, 300, 26));
 
         botaoentrarGerente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoentrarGerente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/loginfuncionário/botaoHoverEntrar.png"))); // NOI18N
@@ -110,31 +121,14 @@ public class LoginGerente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void inputCpfFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputCpfFuncionarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inputCpfFuncionarioActionPerformed
-
     private void botaoentrarGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoentrarGerenteActionPerformed
-        //!-->TELA TREMER-->
-        Point p= this.getLocation();
-        LoginGerente login=this;
-        new Thread(){
-        @Override
-        public void run(){ 
-            try {
-                 for(int i=0; i<3; i++){
-                    login.setLocation(p.x-10, p.y);
-                    sleep(20);
-                    login.setLocation(p.x+10, p.y);
-                    sleep(20);
-                } 
-            }catch (Exception e) {}
-                         }}.start();
-     //!-->FINAL TELA TREMER-->   
-     telaInicialGerente jump = new telaInicialGerente();
-     jump.setVisible(true);
-     this.dispose();
-        
+        try {
+            controller.entrarSistema();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginGerente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(LoginGerente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoentrarGerenteActionPerformed
 
     private void botaoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionarioActionPerformed
@@ -159,11 +153,11 @@ public class LoginGerente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_botaoDesenvolvedorActionPerformed
 
-    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+    private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
         // TODO add your handling code here:
         RegistrodeGerente abrir= new RegistrodeGerente();
         abrir.setVisible(true);
-    }//GEN-LAST:event_btnCadastrarActionPerformed
+    }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,13 +195,51 @@ public class LoginGerente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoDesenvolvedor;
     private javax.swing.JButton botaoFuncionario;
     private javax.swing.JButton botaoSair;
     private javax.swing.JButton botaoentrarGerente;
-    private javax.swing.JButton btnCadastrar;
-    private javax.swing.JTextField inputCpfFuncionario;
-    private javax.swing.JPasswordField inputSenha;
+    private javax.swing.JFormattedTextField campoCpfFuncionario;
+    private javax.swing.JPasswordField campoSenha;
     private javax.swing.JLabel plano_de_fundo;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getBotaoCadastrar() {
+        return botaoCadastrar;
+    }
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+
+    public JFormattedTextField getCampoCpfFuncionario() {
+        return campoCpfFuncionario;
+    }
+
+    public JPasswordField getCampoSenha() {
+        return campoSenha;
+    }
+    public void senhaErrada(){
+        Point p= this.getLocation();
+        LoginGerente login=this;
+        new Thread(){
+        @Override
+        public void run(){ 
+            try {
+                 for(int i=0; i<3; i++){
+                    login.setLocation(p.x-10, p.y);
+                    sleep(20);
+                    login.setLocation(p.x+10, p.y);
+                    sleep(20);
+                } 
+            }catch (Exception e) {}
+                         }}.start();
+    }
+
+    public TelaInicialGerente getTelagerente() {
+        return telagerente;
+    }
+    
+    
 }
