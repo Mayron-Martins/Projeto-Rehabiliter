@@ -36,7 +36,7 @@ public class LoginGerenteController {
         else{
             String usuarioBanco = gerente.get(0).getUsuario();
             String senhaBanco = gerente.get(0).getSenha();
-            if(senha.equals("")||usuario.equals("")||!usuario.equals(usuarioBanco)||!senha.equals(senhaBanco)){
+            if(senha.equals("")||usuario.equals("   .   .   -  ")||!usuario.equals(usuarioBanco)||!senha.equals(senhaBanco)){
                 view.senhaErrada();
             }
             else{

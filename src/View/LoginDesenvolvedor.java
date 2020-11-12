@@ -127,7 +127,7 @@ public class LoginDesenvolvedor extends javax.swing.JFrame {
     private void botaoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionarioActionPerformed
         // TODO add your handling code here:
 
-        LoginFuncionário login = new LoginFuncionário();
+        LoginFuncionario login = new LoginFuncionario();
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoFuncionarioActionPerformed

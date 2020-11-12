@@ -93,7 +93,7 @@ public class inicio extends javax.swing.JFrame {
                 
                 }//!-->FECHA O WHILE-->
                 
-                new LoginFuncionário().setVisible(true);
+                new LoginFuncionario().setVisible(true);
                 inicio.this.dispose();
                 }//!-->Fecha o run-->
         }.start();//"-->Fecha o Thread-->
