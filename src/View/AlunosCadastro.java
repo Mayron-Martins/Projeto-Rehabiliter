@@ -74,6 +74,8 @@ public class AlunosCadastro extends javax.swing.JFrame {
         comboPlano = new javax.swing.JComboBox<>();
         comboEstado = new javax.swing.JComboBox<>();
         campoCEP = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -238,6 +240,12 @@ public class AlunosCadastro extends javax.swing.JFrame {
         }
         getContentPane().add(campoCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 650, 130, 32));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel1.setText("Data de Vencimento");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 510, -1, -1));
+        getContentPane().add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 530, 180, -1));
+
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/fundo jframecadastroalunos.png"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -365,6 +373,8 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JComboBox<String> comboPlano;
     private javax.swing.JComboBox<String> comboTurma;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JButton turmasehorarios;
     // End of variables declaration//GEN-END:variables
