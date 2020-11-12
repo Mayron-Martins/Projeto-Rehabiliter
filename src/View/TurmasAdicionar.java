@@ -6,6 +6,7 @@
 package View;
 
 import Controller.adicionais.AdicionarTurmasController;
+import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -53,7 +54,7 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         campoMinutos = new javax.swing.JFormattedTextField();
         campoSubgrupos = new javax.swing.JFormattedTextField();
         campoCapMax = new FormatacaodeCamposRestritos();
-        campoNome = new javax.swing.JTextField();
+        campoNome = new FormatacaoCamposRestritosLetras(15);
         botaoConfirmar = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         barraDeRolagemDiasdaSemana = new javax.swing.JScrollBar();

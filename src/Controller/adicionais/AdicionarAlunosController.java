@@ -77,7 +77,10 @@ public class AdicionarAlunosController {
         }
         else{
             for(int linhas=0; linhas<servicos.size(); linhas++){ 
-            view.getComboPlano().addItem(servicos.get(linhas).getCodBanco()+"."+servicos.get(linhas).getNome()+"-"+servicos.get(linhas).getFormaPagamento());
+            String periodo = servicos.get(linhas).getPeriodo();
+            String abreviatura = periodo.substring(0, 3);
+            if(periodo.equals("Semestral")){abreviatura = abreviatura.toUpperCase();}
+            view.getComboPlano().addItem(servicos.get(linhas).getCodBanco()+"."+servicos.get(linhas).getNome()+" |"+abreviatura+"| "+servicos.get(linhas).getFormaPagamento());
             }
         }
     }

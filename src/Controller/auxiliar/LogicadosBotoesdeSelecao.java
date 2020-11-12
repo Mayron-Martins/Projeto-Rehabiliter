@@ -30,7 +30,7 @@ public class LogicadosBotoesdeSelecao {
             break;
             }
     }
-    public void RestrincaodeCampodePesquisaAlternados(JCheckBox a, JCheckBox b, int escolha, Caixa caixa){
+    /*public void RestrincaodeCampodePesquisaAlternados(JCheckBox a, JCheckBox b, int escolha, Caixa caixa){
         switch(escolha){
             case 1:
             if(a.getSelectedObjects() != null){
@@ -55,7 +55,7 @@ public class LogicadosBotoesdeSelecao {
             break;
             }
 
-    }
+    }*/
     
  
 }

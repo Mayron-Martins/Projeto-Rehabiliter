@@ -6,6 +6,7 @@
 package Controller.adicionais;
 
 import Controller.auxiliar.VerificarCodigoNoBanco;
+import Dao.TableCriatorPosInput;
 import Dao.TurmasDao;
 import Model.auxiliar.Horarios;
 import Model.auxiliar.Turmas;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 public class AdicionarTurmasController {
     private final TurmasAdicionar view;
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
+    private final TableCriatorPosInput criarTabela = new TableCriatorPosInput();
 
 
     public AdicionarTurmasController(TurmasAdicionar view) {
@@ -65,6 +67,7 @@ public class AdicionarTurmasController {
         } else{
             TurmasDao turmaDao = new TurmasDao();
             turmaDao.inserirDados(turma, horarios);
+            criarTabela.tableFreqTurmas();
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             view.getCampoNome().setText("");
@@ -76,7 +79,6 @@ public class AdicionarTurmasController {
         }
         
     }
-    
     
     
 }

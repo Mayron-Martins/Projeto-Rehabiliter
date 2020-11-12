@@ -413,58 +413,5 @@ public class TableCriator {
                 + "situacao CHAR(1) NOT NULL" //P-presente (quando loga) ou A-ausente (quando deixa de logar o dia todo)
                 + ")ON [Funcionarios];");
     }
-    
-    
-    //Usadas quando se cria uma turma ou um funcionário
-    //_________________________________________________________________________________________
-    //Criação da tabela de frequencia turmas.
-    public void tableFreqTurmas() throws SQLException{
-        telaDeInicio.mudartexto("Criando tabela de Frequência T....");
-        telaDeInicio.mudarPercentual();
-            this.gerarStatement().execute("CREATE TABLE tblFreqTurma"+this.quantTurmas()+"("
-                + "codTurma INT NOT NULL," //Associa a turma à frequência.
-                + "codAluno INT NOT NULL," //Associa o código do aluno à frequência.
-                + "data DATE NOT NULL," //Data em que ocorre a chamada.
-                + "situacao CHAR(1) NOT NULL" //P-presente ou A-ausente.
-                + ")ON [AlunoseClientes];");
-
-    }
-    
-    
-    //Criação da tabela de Log das ações do funcionário.
-    public void tableLogdeAcoesdoFunc() throws SQLException{
-        telaDeInicio.mudartexto("Criando tabela de Log de Ações F...");
-        telaDeInicio.mudarPercentual();
-
-            this.gerarStatement().execute("CREATE TABLE tblLogdeAcoesdoFun"+this.quantFuncionarios()+"("
-                + "codFuncionario INT NOT NULL," //Associa o log ao código do funcionário
-                + "data DATE NOT NULL," //data e hora do acontecimento.
-                + "acao VARCHAR(MAX) NOT NULL,"
-                + "descricao VARCHAR(MAX) NULL"
-                + ")ON [Funcionarios];");
-
-    }
-    
-    //Função para identificar a quantidade de turmas dentro do banco.
-    public int quantTurmas() throws SQLException{
-        ResultSet count = this.gerarStatement().executeQuery("SELECT COUNT(codTurma) AS quant FROM tblTurmas;"); //Conta a quantidade de itens na coluna quant do count.
-        int contador = 0;
-        while(count.next()){
-            contador = count.getInt("quant"); //Como o count possui apenas uma linha então é igualado apenas uma vez.
-        }
-        
-        return contador;
-    }
-    
-    //Função para identificar a quantidade de funcionários dentro do banco.
-    public int quantFuncionarios() throws SQLException{
-        ResultSet count = this.gerarStatement().executeQuery("SELECT COUNT(codFuncionario) AS quant FROM tblFuncionarios;"); //Conta a quantidade de itens na coluna quant do count.
-        int contador = 0;
-        while(count.next()){
-            contador = count.getInt("quant"); //Como o count possui apenas uma linha então é igualado apenas uma vez.
-        }
-        
-        return contador;
-    }
 
 }

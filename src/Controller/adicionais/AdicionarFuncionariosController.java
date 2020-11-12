@@ -10,6 +10,7 @@ import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.EnderecoFuncionarioDao;
 import Dao.FuncionarioDao;
+import Dao.TableCriatorPosInput;
 import Model.Funcionario;
 import Model.auxiliar.EnderecoFuncionario;
 import View.FuncionariosAdicionar;
@@ -28,6 +29,7 @@ public class AdicionarFuncionariosController {
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
+    private final TableCriatorPosInput criarTabelas = new TableCriatorPosInput();
 
     public AdicionarFuncionariosController(FuncionariosAdicionar view) {
         this.view = view;
@@ -72,6 +74,7 @@ public class AdicionarFuncionariosController {
         
         else{
             funcionarioDao.inserirDados(funcionario, endereco);
+            criarTabelas.tableLogdeAcoesdoFunc();
             view.exibeMensagem("Sucesso!");
             view.getCampoNome().setText("");
             view.getCampoCPF().setText("");

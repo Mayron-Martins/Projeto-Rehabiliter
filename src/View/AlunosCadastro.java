@@ -6,6 +6,8 @@
 package View;
 
 import Controller.adicionais.AdicionarAlunosController;
+import Controller.auxiliar.FormatacaoCamposRestritosLetras;
+import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Button;
 import java.awt.Color;
@@ -52,16 +54,16 @@ public class AlunosCadastro extends javax.swing.JFrame {
         comboTurma = new javax.swing.JComboBox<>();
         botaoDescricao = new javax.swing.JButton();
         botaoConfirmar = new javax.swing.JButton();
-        campoNomeAluno = new javax.swing.JTextField();
+        campoNomeAluno = new FormatacaoCamposRestritosLetras(50);
         campoNascimentoAluno = new javax.swing.JFormattedTextField();
-        campoNomePai = new javax.swing.JTextField();
-        campoNomeMae = new javax.swing.JTextField();
+        campoNomePai = new FormatacaoCamposRestritosLetras(50);
+        campoNomeMae = new FormatacaoCamposRestritosLetras(50);
         turmasehorarios = new javax.swing.JButton();
         campoValor = new JMoneyField();
-        campoRua = new javax.swing.JTextField();
-        campoCidade = new javax.swing.JTextField();
-        campoBairro = new javax.swing.JTextField();
-        campoNum = new javax.swing.JTextField();
+        campoRua = new FormatacaodeCamposRestritos(50, 0);
+        campoCidade = new FormatacaodeCamposRestritos(20);
+        campoBairro = new FormatacaodeCamposRestritos(25, 0);
+        campoNum = new FormatacaodeCamposRestritos(10, 0);
         campoTelefone = new javax.swing.JFormattedTextField();
         campoCPFAluno = new javax.swing.JFormattedTextField();
         campoCelular = new javax.swing.JFormattedTextField();

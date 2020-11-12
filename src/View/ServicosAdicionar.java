@@ -6,6 +6,7 @@
 package View;
 
 import Controller.adicionais.AdicionarServicosController;
+import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -44,7 +45,7 @@ public class ServicosAdicionar extends javax.swing.JFrame {
 
         comboPeriodo = new javax.swing.JComboBox<>();
         btnFechar = new javax.swing.JButton();
-        nomeServico = new javax.swing.JTextField();
+        nomeServico = new FormatacaoCamposRestritosLetras(15);
         valorDinheiro = new JMoneyField();
         metodoPagamento = new javax.swing.JComboBox<>();
         botaoConfirmar = new javax.swing.JButton();

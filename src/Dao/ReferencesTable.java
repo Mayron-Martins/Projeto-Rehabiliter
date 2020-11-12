@@ -152,47 +152,4 @@ public class ReferencesTable {
                 +"REFERENCES tblFuncionarios(codFuncionario);");
     }
     
-    
-    //Usadas quando se cria um funcionário ou uma turma
-    //_____________________________________________________________________________________________________________
-    //Referência da coluna codTurma da tabela de Frequência de Turmas em relação a coluna codTurma na tabela de Turmas.
-    private void fkTblFreqTurmas_TblTurmas(Statement statement, int numeroDaTurma) throws SQLException{
-        telaDeInicio.mudartexto("Referenciando tabela Frequência T com Tur...");
-        telaDeInicio.mudarPercentual();
-        statement.execute(this.alterarTabela+" tblFreqTurma"+numeroDaTurma+" "
-                +this.regra+" FK_FreqTurmas_Turmas"
-                +this.fk+"(codTurma)"
-                +"REFERENCES tblTurmas(codTurma);");
-    }
-    
-    //Referência da coluna codAluno da tabela de Frequência de Turmas em relação a coluna codAuno na tabela de Alunos.
-    private void fkTblFreqTurmas_TblAlunos(Statement statement, int numeroDaTurma) throws SQLException{
-        telaDeInicio.mudartexto("Referenciando tabela Frequência T com Al...");
-        telaDeInicio.mudarPercentual();
-        statement.execute(this.alterarTabela+" tblFreqTurma"+numeroDaTurma+" "
-                +this.regra+" FK_FreqTurmas_Alunos"
-                +this.fk+"(codAluno)"
-                +"REFERENCES tblAlunos(codAluno);");
-    }
-    
-    //Faz referência com os itens correspondentes na tabela de Frequência de Turmas, deve ser executada quando for criada uma turma.
-    public void referencesFreqTurmas(Statement statement) throws SQLException{
-        telaDeInicio.mudartexto("Referenciando tabela Frequência T");
-        telaDeInicio.mudarPercentual();
-        TableCriator turmas = new TableCriator(this.telaDeInicio);
-        this.fkTblFreqTurmas_TblAlunos(statement, turmas.quantTurmas());
-        this.fkTblFreqTurmas_TblTurmas(statement, turmas.quantTurmas());
-    }
-    
-    //Referência da coluna codFuncionario da tabela de Log de Ações do Funcionário em relação a coluna codFuncionario na tabela de Funcionários, deve ser executada quando for criado um novo funcionário.
-    public void fkTblLogDeAcoesDoFunc_TblFuncionarios(Statement statement) throws SQLException{
-        telaDeInicio.mudartexto("Referenciando tabela Log F com Fun...");
-        telaDeInicio.mudarPercentual();
-        TableCriator funcionarios = new TableCriator(this.telaDeInicio);
-        statement.execute(this.alterarTabela+" tblLogdeAcoesdoFun"+funcionarios.quantFuncionarios()+" "
-                +this.regra+" FK_LogDeAcoesDoFunc_Funcionarios"
-                +this.fk+"(codFuncionario)"
-                +"REFERENCES tblFuncionarios(codFuncionario);");
-    }
-    
 }
