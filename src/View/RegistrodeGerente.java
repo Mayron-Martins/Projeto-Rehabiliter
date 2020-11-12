@@ -47,6 +47,7 @@ public class RegistrodeGerente extends javax.swing.JFrame {
         campoCPF = new javax.swing.JFormattedTextField();
         campoSenha = new javax.swing.JPasswordField();
         campoConfirmarSenha = new javax.swing.JPasswordField();
+        jPanel1 = new javax.swing.JPanel();
         fundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -86,6 +87,9 @@ public class RegistrodeGerente extends javax.swing.JFrame {
         getContentPane().add(campoCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 150, 30));
         getContentPane().add(campoSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 140, 30));
         getContentPane().add(campoConfirmarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 280, 140, 30));
+
+        jPanel1.setBackground(new java.awt.Color(157, 197, 187));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 130, 50));
 
         fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/registrogerente/fundo.jpg"))); // NOI18N
         getContentPane().add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -146,6 +150,7 @@ public class RegistrodeGerente extends javax.swing.JFrame {
     private javax.swing.JTextField campoNome;
     private javax.swing.JPasswordField campoSenha;
     private javax.swing.JLabel fundo;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
     public void exibeMensagem(String mensagem) {
       JOptionPane.showMessageDialog(null, mensagem);

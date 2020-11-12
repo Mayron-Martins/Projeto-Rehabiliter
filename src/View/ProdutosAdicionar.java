@@ -5,19 +5,32 @@
  */
 package View;
 
+import Controller.adicionais.AdicionarProdutosController;
+import Controller.auxiliar.FormatacaodeCamposRestritos;
+import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
  * @author 55989
  */
 public class ProdutosAdicionar extends javax.swing.JFrame {
+    private final AdicionarProdutosController controller;
 
     /**
      * Creates new form ProdutosAdicionar
      */
     public ProdutosAdicionar() {
         initComponents();
+        controller = new AdicionarProdutosController(this);
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
     }
@@ -34,11 +47,11 @@ public class ProdutosAdicionar extends javax.swing.JFrame {
         botaoFechar = new javax.swing.JButton();
         botaoConfirmar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jTextField1 = new javax.swing.JTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        campoDescricao = new javax.swing.JTextArea();
+        campoCodigo = new FormatacaodeCamposRestritos();
+        campoNome = new javax.swing.JTextField();
+        campoQuantidade = new JMoneyField();
+        campoValor = new JMoneyField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -57,23 +70,30 @@ public class ProdutosAdicionar extends javax.swing.JFrame {
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmar.png"))); // NOI18N
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmarhover.png"))); // NOI18N
-        getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 330, 50));
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 276, 220, 70));
-        getContentPane().add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 80, 32));
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                botaoConfirmarActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 230, 32));
-        getContentPane().add(jFormattedTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 70, 32));
-        getContentPane().add(jFormattedTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 80, 32));
+        getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 330, 50));
+
+        campoDescricao.setColumns(20);
+        campoDescricao.setRows(5);
+        jScrollPane1.setViewportView(campoDescricao);
+        campoDescricao.setLineWrap(true);
+        campoDescricao.setWrapStyleWord(true);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 276, 330, 70));
+        getContentPane().add(campoCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 80, 32));
+
+        campoNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNomeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(campoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 230, 32));
+        getContentPane().add(campoQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 70, 32));
+        getContentPane().add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 80, 32));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/produtos/adicionarproduto/fundo.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -87,9 +107,19 @@ public class ProdutosAdicionar extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_campoNomeActionPerformed
+
+    private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
+        try {
+            controller.adicionarProduto();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(ProdutosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,12 +159,38 @@ public class ProdutosAdicionar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoConfirmar;
     private javax.swing.JButton botaoFechar;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
+    private javax.swing.JTextField campoCodigo;
+    private javax.swing.JTextArea campoDescricao;
+    private javax.swing.JTextField campoNome;
+    private javax.swing.JFormattedTextField campoQuantidade;
+    private javax.swing.JFormattedTextField campoValor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    public JTextField getCampoCodigo() {
+        return campoCodigo;
+    }
+
+    public JTextArea getCampoDescricao() {
+        return campoDescricao;
+    }
+
+    public JFormattedTextField getCampoQuantidade() {
+        return campoQuantidade;
+    }
+
+    public JFormattedTextField getCampoValor() {
+        return campoValor;
+    }
+
+    public JTextField getCampoNome() {
+        return campoNome;
+    }
+    
+    
 }

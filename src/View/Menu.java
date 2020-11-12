@@ -179,7 +179,7 @@ public class Menu extends javax.swing.JFrame {
     private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        produtos abrir=new produtos();
+        ProdutosView abrir=new ProdutosView();
         abrir.setVisible(true);
         
     }//GEN-LAST:event_botaoProdutosActionPerformed

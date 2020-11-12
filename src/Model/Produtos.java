@@ -24,7 +24,6 @@ public class Produtos {
     private BigDecimal valorDeCompra;
     private Date dataDeCompra;
     private BigDecimal valorDeVenda;
-    private Date dataDeVenda;
     private int chaveDeLote;
 
     //Construtor básico
@@ -35,7 +34,8 @@ public class Produtos {
     }
     
     //Construtor completo
-    public Produtos(String nomeProduto, String tipo, String unMedida, float quantidade, String descricao, BigDecimal valorDeCompra, String dataDeCompra, BigDecimal valorDeVenda, String dataDeVenda, int chaveDeLote) {
+    public Produtos(int codProduto, String nomeProduto, String tipo, String unMedida, float quantidade, String descricao, BigDecimal valorDeCompra, String dataDeCompra, BigDecimal valorDeVenda, int chaveDeLote) {
+        this.codBanco = codProduto;
         this.nomeProduto = nomeProduto;
         this.tipo = tipo;
         this.unMedida = unMedida;
@@ -49,12 +49,6 @@ public class Produtos {
             System.err.println("Erro em converter data de compra");
         }
         this.valorDeVenda = valorDeVenda;
-        try{
-            ConversaodeDataParaPadraoDesignado converter_data = new ConversaodeDataParaPadraoDesignado();
-            this.dataDeCompra = converter_data.getSqlDate(converter_data.parseDate(dataDeVenda));
-        }catch (ParseException erro){
-            System.err.println("Erro em converter data de venda");
-        }
         this.chaveDeLote = chaveDeLote;
     }
 
@@ -94,9 +88,6 @@ public class Produtos {
         return valorDeVenda;
     }
 
-    public Date getDataDeVenda() {
-        return dataDeVenda;
-    }
 
     public int getChaveDeLote() {
         return chaveDeLote;
