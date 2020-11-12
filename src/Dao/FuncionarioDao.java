@@ -34,23 +34,24 @@ public class FuncionarioDao extends Conexao{
 
         //Adicionando aluno
         String inFuncionario = inserir.concat("tblFuncionarios("
-                + "codFuncionario, nome, cpf, rg, telefone, email, dataNascimento, "
+                + "codFuncionario, nome, cpf, rg, telefone, celular, email, dataNascimento, "
                 + "codEndereco, usuario, senha, cargo, salario)"
                 + "VALUES("
-                + "?,?,?,?,?,?,?,?,?,?,?,?);");
+                + "?,?,?,?,?,?,?,?,?,?,?,?,?);");
         PreparedStatement statement = gerarStatement(inFuncionario);
         statement.setInt(1, funcionario.getCodBanco());
         statement.setString(2, funcionario.getNome());
         statement.setString(3, funcionario.getCpf());
         statement.setString(4, funcionario.getRg());
         statement.setString(5, funcionario.getTelefone());
-        statement.setString(6, "");
-        statement.setDate(7, (Date) funcionario.getDatadenascimento());
-        statement.setInt(8, endereco.getCodBanco());
-        statement.setString(9, funcionario.getUsuario());
-        statement.setString(10, funcionario.getSenha());
-        statement.setString(11, funcionario.getCargo());
-        statement.setBigDecimal(12, new BigDecimal(funcionario.getSalario().toString()));
+        statement.setString(6, funcionario.getCelular());
+        statement.setString(7, "");
+        statement.setDate(8, (Date) funcionario.getDatadenascimento());
+        statement.setInt(9, endereco.getCodBanco());
+        statement.setString(10, funcionario.getUsuario());
+        statement.setString(11, funcionario.getSenha());
+        statement.setString(12, funcionario.getCargo());
+        statement.setBigDecimal(13, new BigDecimal(funcionario.getSalario().toString()));
         statement.execute();
         statement.close();
         
@@ -61,33 +62,33 @@ public class FuncionarioDao extends Conexao{
     
     
     //Atualizar dados
-    public void atualizarDados(Funcionario funcionario, EnderecoFuncionario endereco) throws SQLException{
+    public void atualizarDados(Funcionario funcionario) throws SQLException{
         //atualizando a tabela de alunos
         String inFuncionario = atualizar.concat("tblFuncionarios "
-                + "SET nome = ?, cpf = ?, rg = ?, telefone=?, salario=? where codFuncionario = ?");
+                + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, salario=? where codFuncionario = ?");
         
         PreparedStatement statement = gerarStatement(inFuncionario);
         statement.setString(1, funcionario.getNome());
         statement.setString(2, funcionario.getCpf());
         statement.setString(3, funcionario.getRg());
         statement.setString(4, funcionario.getTelefone());
-        statement.setBigDecimal(5, new BigDecimal(funcionario.getSalario().toString()));
-        statement.setInt(6, funcionario.getCodBanco());
+        statement.setString(5, funcionario.getCelular());
+        statement.setBigDecimal(6, new BigDecimal(funcionario.getSalario().toString()));
+        statement.setInt(7, funcionario.getCodBanco());
         
         statement.execute();
         statement.close();
         
         //atualizando a tabela de horarios
-        enderecoDao.atualizarDados(endereco);
     }
     
     public void atualizarSenha(Funcionario funcionario) throws SQLException{
         String inFuncionario = atualizar.concat("tblFuncionarios "
-                + "SET senha=? where codFuncionario = ?");
+                + "SET senha=? where usuario = ?");
         
         PreparedStatement statement = gerarStatement(inFuncionario);
         statement.setString(1, funcionario.getNome());
-        statement.setString(1, funcionario.getNome());
+        statement.setString(2, funcionario.getUsuario());
         statement.execute();
         statement.close();
     }
@@ -127,14 +128,15 @@ public class FuncionarioDao extends Conexao{
     int codBanco = resultset.getInt("codFuncionario");
     String nome = resultset.getString("nome");
     String cpf = resultset.getString("cpf");
-    String celular = resultset.getString("telefone");
+    String telefone = resultset.getString("telefone");
+    String celular = resultset.getString("celular");
     String dataNascimento = converterData.parseDate(resultset.getDate("dataNascimento"));
     String usuario = resultset.getString("usuario");
     String senha = resultset.getString("senha");
     BigDecimal salario= new BigDecimal(resultset.getBigDecimal("salario").toString());
     String cargo = resultset.getString("cargo");
     
-    Funcionario funcionario = new Funcionario(codBanco, nome, cpf, "", "", celular, "", dataNascimento, usuario, senha, salario, cargo);
+    Funcionario funcionario = new Funcionario(codBanco, nome, cpf, "", telefone,celular , "", dataNascimento, usuario, senha, salario, cargo);
 
     funcionarios.add(funcionario);
      }while(resultset.next());

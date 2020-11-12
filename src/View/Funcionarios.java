@@ -5,31 +5,51 @@
  */
 package View;
 
+import Controller.FuncionariosController;
+import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
  * @author 55989
  */
 public class Funcionarios extends javax.swing.JFrame {
+    private final FuncionariosController controller;
+    private final FuncionariosAdicionar telaAdicionarFuncionarios = new FuncionariosAdicionar();
+    private final JFormattedTextField cpf = new JFormattedTextField(telaAdicionarFuncionarios.getCampoCPF().getFormatter());
+    private final JFormattedTextField telefone = new JFormattedTextField(telaAdicionarFuncionarios.getCampoTelefone().getFormatter());
+    private final JFormattedTextField celular = new JFormattedTextField(telaAdicionarFuncionarios.getCampoCelular().getFormatter());
+    private final JFormattedTextField salario = new JMoneyField();
+    
 
     /**
      * Creates new form Funcionarios
      */
     public Funcionarios() {
         initComponents();
+        controller = new FuncionariosController(this);
         botaobuscar1.setBackground(new Color(0,0,0,0));
         botaoFechar1.setBackground(new Color(0,0,0,0));
         botaoAdicionar1.setBackground(new Color(0,0,0,0));
         botaoRemover1.setBackground(new Color(0,0,0,0));
         botaoEditar1.setBackground(new Color(0,0,0,0));
         botaoListar1.setBackground(new Color(0,0,0,0));
-        tabelaAlunos1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
-        tabelaAlunos1.getTableHeader().setOpaque(false);
-        tabelaAlunos1.getTableHeader().setBackground(new Color(0,0,0));
-        tabelaAlunos1.getTableHeader().setForeground(new Color(0,0,0));
-        tabelaAlunos1.setRowHeight(25);
+        tabelaFuncionarios.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        tabelaFuncionarios.getTableHeader().setOpaque(false);
+        tabelaFuncionarios.getTableHeader().setBackground(new Color(0,0,0));
+        tabelaFuncionarios.getTableHeader().setForeground(new Color(0,0,0));
+        tabelaFuncionarios.setRowHeight(25);
         btnRelatorios.setBackground(new Color(0,0,0,0));
     }
 
@@ -47,17 +67,22 @@ public class Funcionarios extends javax.swing.JFrame {
         botaoRemover1 = new javax.swing.JButton();
         botaoEditar1 = new javax.swing.JButton();
         botaoListar1 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField2 = new javax.swing.JTextField();
+        comboListar = new javax.swing.JComboBox<>();
+        campoBuscar = new javax.swing.JTextField();
         botaobuscar1 = new javax.swing.JButton();
         painelderolagem1 = new javax.swing.JScrollPane();
-        tabelaAlunos1 = new javax.swing.JTable();
+        tabelaFuncionarios = new javax.swing.JTable();
         btnRelatorios = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -98,42 +123,84 @@ public class Funcionarios extends javax.swing.JFrame {
 
         botaoListar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoListar.png"))); // NOI18N
         botaoListar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverListar.png"))); // NOI18N
+        botaoListar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoListar1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoListar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 205, 50));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 320, 40));
+        comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Aniversariantes" }));
+        getContentPane().add(comboListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
+
+        campoBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoBuscarKeyPressed(evt);
+            }
+        });
+        getContentPane().add(campoBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 320, 40));
 
         botaobuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaobuscar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
-        getContentPane().add(botaobuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 50, 40));
-
-        tabelaAlunos1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaAlunos1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"adsa", "adsa", "adsa", null}
-            },
-            new String [] {
-                "asdasdas", "asdasd", "dfdafsd", "asdas"
-            }
-        ));
-        tabelaAlunos1.setFocusable(false);
-        tabelaAlunos1.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaAlunos1.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaAlunos1.setRowHeight(25);
-        tabelaAlunos1.setShowVerticalLines(false);
-        tabelaAlunos1.getTableHeader().setReorderingAllowed(false);
-        tabelaAlunos1.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaAlunos1ComponentHidden(evt);
+        botaobuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaobuscar1ActionPerformed(evt);
             }
         });
-        painelderolagem1.setViewportView(tabelaAlunos1);
+        getContentPane().add(botaobuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 50, 40));
+
+        tabelaFuncionarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CodBanco", "Nome", "CPF", "Telefone", "Celular", "Cargo", "Remuneração"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaFuncionarios.getTableHeader().setResizingAllowed(false);
+        tabelaFuncionarios.getTableHeader().setReorderingAllowed(false);
+        tabelaFuncionarios.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(cpf));
+        tabelaFuncionarios.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(telefone));
+        tabelaFuncionarios.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(celular));
+        tabelaFuncionarios.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(salario));
+        tabelaFuncionarios.setFocusable(false);
+        tabelaFuncionarios.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaFuncionarios.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaFuncionarios.setRowHeight(25);
+        tabelaFuncionarios.setShowVerticalLines(false);
+        tabelaFuncionarios.getTableHeader().setReorderingAllowed(false);
+        tabelaFuncionarios.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaFuncionariosComponentHidden(evt);
+            }
+        });
+        painelderolagem1.setViewportView(tabelaFuncionarios);
 
         getContentPane().add(painelderolagem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios/btnrelatorios.png"))); // NOI18N
         btnRelatorios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios/btnrelatoriosHover.png"))); // NOI18N
+        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatoriosActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRelatorios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 210, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios/Sem título-1.jpg"))); // NOI18N
@@ -155,16 +222,64 @@ public class Funcionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAdicionar1ActionPerformed
 
     private void botaoRemover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemover1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            controller.removerFuncionario();
+        } catch (ParseException ex) {
+            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoRemover1ActionPerformed
 
     private void botaoEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditar1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            controller.editarFuncionarios();
+        } catch (ParseException ex) {
+            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoEditar1ActionPerformed
 
-    private void tabelaAlunos1ComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunos1ComponentHidden
+    private void tabelaFuncionariosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaFuncionariosComponentHidden
         // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaAlunos1ComponentHidden
+    }//GEN-LAST:event_tabelaFuncionariosComponentHidden
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            controller.listarFuncionarios();
+        } catch (ParseException ex) {
+            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void botaoListar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListar1ActionPerformed
+        try {
+            controller.listar();
+        } catch (Exception ex) {
+            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaoListar1ActionPerformed
+
+    private void botaobuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscar1ActionPerformed
+        try {
+            controller.buscarFuncionarios();
+        } catch (Exception ex) {
+            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaobuscar1ActionPerformed
+
+    private void campoBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBuscarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaobuscar1);
+        }
+    }//GEN-LAST:event_campoBuscarKeyPressed
+
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,10 +324,28 @@ public class Funcionarios extends javax.swing.JFrame {
     private javax.swing.JButton botaoRemover1;
     private javax.swing.JButton botaobuscar1;
     private javax.swing.JButton btnRelatorios;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JTextField campoBuscar;
+    private javax.swing.JComboBox<String> comboListar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JScrollPane painelderolagem1;
-    private javax.swing.JTable tabelaAlunos1;
+    private javax.swing.JTable tabelaFuncionarios;
     // End of variables declaration//GEN-END:variables
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    public JTable getTabelaFuncionarios() {
+        return tabelaFuncionarios;
+    }
+
+    public JTextField getCampoBuscar() {
+        return campoBuscar;
+    }
+
+    public JComboBox<String> getComboListar() {
+        return comboListar;
+    }
+
+    
 }

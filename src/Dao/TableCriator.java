@@ -135,7 +135,8 @@ public class TableCriator {
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cpf VARCHAR(15) NOT NULL,"
                 + "rg VARCHAR(20) NULL,"
-                + "telefone VARCHAR(20) NOT NULL,"
+                + "telefone VARCHAR(20) NULL,"
+                + "celular VARCHAR(20) NULL,"
                 + "email VARCHAR(50) NULL,"
                 + "dataNascimento DATE NOT NULL,"
                 + "codEndereco INT NULL,"     //Código do endereço do funcionário, cadastrado numa tabela à parte
