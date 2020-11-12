@@ -23,7 +23,7 @@ import javax.swing.JPasswordField;
  * @author 55989
  */
 public class LoginGerente extends javax.swing.JFrame {
-    private final TelaInicialGerente telagerente = new TelaInicialGerente();
+    private final TelaInicialGerenteView telagerente = new TelaInicialGerenteView();
     private final LoginGerenteController controller;
 
     /**
@@ -237,7 +237,7 @@ public class LoginGerente extends javax.swing.JFrame {
                          }}.start();
     }
 
-    public TelaInicialGerente getTelagerente() {
+    public TelaInicialGerenteView getTelagerente() {
         return telagerente;
     }
     

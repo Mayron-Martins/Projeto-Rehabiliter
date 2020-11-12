@@ -12,12 +12,12 @@ import static java.awt.Frame.MAXIMIZED_BOTH;
  *
  * @author 55989
  */
-public class telaInicialGerente extends javax.swing.JFrame {
+public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     /**
      * Creates new form telaInicialGerente
      */
-    public telaInicialGerente() {
+    public TelaInicialGerenteView() {
         initComponents();
         botaoSair.setBackground(new Color(0,0,0,0));
         botaoCaixa.setBackground(new Color(0,0,0,0));
@@ -54,6 +54,11 @@ public class telaInicialGerente extends javax.swing.JFrame {
 
         botaoFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarios.png"))); // NOI18N
         botaoFuncionarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarioshover.png"))); // NOI18N
+        botaoFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFuncionariosActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoFuncionarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 168, 203));
 
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -149,6 +154,11 @@ public class telaInicialGerente extends javax.swing.JFrame {
         jump.setVisible(true);
     }//GEN-LAST:event_botaoMenuActionPerformed
 
+    private void botaoFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionariosActionPerformed
+        Funcionarios telaFuncionarios = new Funcionarios();
+        telaFuncionarios.setVisible(true);
+    }//GEN-LAST:event_botaoFuncionariosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -166,20 +176,20 @@ public class telaInicialGerente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(telaInicialGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaInicialGerenteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(telaInicialGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaInicialGerenteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(telaInicialGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaInicialGerenteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(telaInicialGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaInicialGerenteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new telaInicialGerente().setVisible(true);
+                new TelaInicialGerenteView().setVisible(true);
             }
         });
     }
