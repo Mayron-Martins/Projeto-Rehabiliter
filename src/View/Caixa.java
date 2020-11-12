@@ -149,6 +149,7 @@ public class Caixa extends javax.swing.JFrame {
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 480, 130));
 
         btnPlanoDePagamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnPlanodePagamento.png"))); // NOI18N
+        btnPlanoDePagamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPlanoDePagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlanoDePagamentoActionPerformed(evt);

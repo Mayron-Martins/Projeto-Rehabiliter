@@ -160,6 +160,8 @@ public class MenuGerente extends javax.swing.JFrame {
 
     private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed
         // TODO add your handling code here:
+        Caixa abrir= new Caixa();
+        abrir.setVisible(true);
     }//GEN-LAST:event_botaoCaixaActionPerformed
 
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed

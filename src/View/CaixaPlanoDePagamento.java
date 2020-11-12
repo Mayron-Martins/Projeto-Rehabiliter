@@ -56,19 +56,19 @@ public class CaixaPlanoDePagamento extends javax.swing.JFrame {
                 botaoConfirmarActionPerformed(evt);
             }
         });
-        jPanel1.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 330, 60));
+        jPanel1.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 330, 60));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Dinheiro:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 110, 40));
-        jPanel1.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 110, 40));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, 110, 40));
+        jPanel1.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, 110, 40));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Cartão, parcelamento:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 190, 40));
-        jPanel1.add(jFormattedTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 110, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 190, 40));
+        jPanel1.add(jFormattedTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 110, 40));
 
         radioCred.setText("Crédito");
         radioCred.addActionListener(new java.awt.event.ActionListener() {
@@ -76,10 +76,10 @@ public class CaixaPlanoDePagamento extends javax.swing.JFrame {
                 radioCredActionPerformed(evt);
             }
         });
-        jPanel1.add(radioCred, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
+        jPanel1.add(radioCred, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, -1, -1));
 
         radioDeb.setText("Débito");
-        jPanel1.add(radioDeb, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, -1, -1));
+        jPanel1.add(radioDeb, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 360));
 
@@ -88,7 +88,7 @@ public class CaixaPlanoDePagamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
-
+        this.dispose();
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     private void radioCredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCredActionPerformed
