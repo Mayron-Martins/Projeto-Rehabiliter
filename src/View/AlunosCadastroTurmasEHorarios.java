@@ -24,6 +24,7 @@ public class AlunosCadastroTurmasEHorarios extends javax.swing.JFrame {
      */
     public AlunosCadastroTurmasEHorarios() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new AlunosETurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
     }

@@ -32,6 +32,7 @@ public class FuncionariosAdicionar extends javax.swing.JFrame {
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         botaofechar.setBackground(new Color(0,0,0,0));
         comboFuncionarios.setVisible(false);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

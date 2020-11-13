@@ -21,6 +21,7 @@ public class CaixaPlanoDePagamento extends javax.swing.JFrame {
         radioCred.setBackground(new Color(0,0,0,0));
         radioDeb.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

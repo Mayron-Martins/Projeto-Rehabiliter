@@ -62,6 +62,7 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         botaoPais.setBackground(new Color(0,0,0,0));
         botaoAlunos.setBackground(new Color(0,0,0,0));   
         this.setInicialBotoes();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
         comboServicos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

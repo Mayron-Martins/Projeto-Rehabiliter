@@ -18,6 +18,7 @@ public class AlunosCadastroDescricao extends javax.swing.JFrame {
      */
     public AlunosCadastroDescricao() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         btnConfirma.setBackground(new Color (0,0,0,0));
     }
 

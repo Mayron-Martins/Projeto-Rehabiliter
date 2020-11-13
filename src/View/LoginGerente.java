@@ -38,6 +38,7 @@ public class LoginGerente extends javax.swing.JFrame {
         botaoSair.setBackground(new Color(0,0,0,0));
         botaoCadastrar.setBackground(new Color(0,0,0,0));
         botaoCadastrar.setVisible(false);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

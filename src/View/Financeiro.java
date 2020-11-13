@@ -22,6 +22,7 @@ public class Financeiro extends javax.swing.JFrame {
         btnPlanodeContraServicos.setBackground(new Color(0,0,0,0));
         btnAnaliseFinanceira.setBackground(new Color(0,0,0,0));
         btnPlanodeEntradas.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

@@ -39,6 +39,7 @@ public class ServicosView extends javax.swing.JFrame {
         btnRemover.setBackground(new Color(0,0,0,0));
         btnFechar.setBackground(new Color(0,0,0,0));
         desabilitarComponentes();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
     }
 

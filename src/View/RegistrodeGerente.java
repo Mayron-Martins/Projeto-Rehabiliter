@@ -29,6 +29,7 @@ public class RegistrodeGerente extends javax.swing.JFrame {
         initComponents();
         controller = new AdicionarGerenteController(this);
         btnConfirmar.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

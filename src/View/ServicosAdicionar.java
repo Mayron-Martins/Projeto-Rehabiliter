@@ -32,6 +32,7 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         controller = new AdicionarServicosController(this);
         btnFechar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

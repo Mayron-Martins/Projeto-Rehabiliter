@@ -21,6 +21,7 @@ public class ImprimirExportar extends javax.swing.JFrame {
         botaoFechar.setBackground(new Color(0,0,0,0));
         btnFrequencia.setBackground(new Color(0,0,0,0));
         btnRelatoriosOrca.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**
