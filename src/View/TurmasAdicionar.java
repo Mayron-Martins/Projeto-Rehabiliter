@@ -35,6 +35,7 @@ public class TurmasAdicionar extends javax.swing.JFrame {
      */
     public TurmasAdicionar() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new AdicionarTurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));

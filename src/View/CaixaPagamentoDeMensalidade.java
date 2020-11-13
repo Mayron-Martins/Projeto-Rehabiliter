@@ -21,6 +21,7 @@ public class CaixaPagamentoDeMensalidade extends javax.swing.JFrame {
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
         botaofechar.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

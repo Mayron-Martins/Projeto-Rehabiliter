@@ -27,6 +27,7 @@ public class inicio extends javax.swing.JFrame {
      */
     public inicio() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new InicioController(this);
           Dimension tamTela = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension tamJan = getSize();

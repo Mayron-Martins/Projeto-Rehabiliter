@@ -27,6 +27,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         botaoMenu.setBackground(new Color(0,0,0,0));
         botaoFuncionarios.setBackground(new Color(0,0,0,0));
         setExtendedState(MAXIMIZED_BOTH);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

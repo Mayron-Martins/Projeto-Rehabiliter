@@ -51,6 +51,7 @@ public class Funcionarios extends javax.swing.JFrame {
         tabelaFuncionarios.getTableHeader().setForeground(new Color(0,0,0));
         tabelaFuncionarios.setRowHeight(25);
         btnRelatorios.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

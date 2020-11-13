@@ -36,6 +36,7 @@ public class LoginFuncionario extends javax.swing.JFrame {
         botaoentrarFuncionario.setBackground(new Color(0,0,0,0));
         botaoDesenvolvedor.setBackground(new Color(0,0,0,0));
         botaoGerente.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
        
     }
 

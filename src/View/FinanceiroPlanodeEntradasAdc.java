@@ -20,6 +20,7 @@ public class FinanceiroPlanodeEntradasAdc extends javax.swing.JFrame {
         initComponents();
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

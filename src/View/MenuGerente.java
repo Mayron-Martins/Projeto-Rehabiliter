@@ -30,6 +30,7 @@ public class MenuGerente extends javax.swing.JFrame {
         botaoImprimirExportar.setBackground(new Color(0,0,0,0));
         botaoCaixa.setBackground(new Color(0,0,0,0));
         this.setLocation(0, 1);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

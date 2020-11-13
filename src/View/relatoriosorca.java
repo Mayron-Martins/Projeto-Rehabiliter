@@ -15,6 +15,7 @@ public class relatoriosorca extends javax.swing.JFrame {
     /** Creates new form relatoriosorca */
     public relatoriosorca() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /** This method is called from within the constructor to

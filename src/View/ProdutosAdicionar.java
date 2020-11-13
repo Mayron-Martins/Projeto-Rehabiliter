@@ -33,6 +33,7 @@ public class ProdutosAdicionar extends javax.swing.JFrame {
         controller = new AdicionarProdutosController(this);
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

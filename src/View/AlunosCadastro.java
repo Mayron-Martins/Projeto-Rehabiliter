@@ -31,6 +31,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
      */
     public AlunosCadastro() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new AdicionarAlunosController(this);
         botaofechar.setBackground(new Color (0,0,0,0));
         botaoDescricao.setBackground(new Color (0,0,0,0));

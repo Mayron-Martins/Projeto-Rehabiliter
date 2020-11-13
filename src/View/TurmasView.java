@@ -46,6 +46,7 @@ public class TurmasView extends javax.swing.JFrame {
         botaoListarTurmas.setBackground(new Color(0,0,0,0));
         botaoRemoverTurmas.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
         
         //formatarTabelas.formatar(tabelaAlunos, 'C');

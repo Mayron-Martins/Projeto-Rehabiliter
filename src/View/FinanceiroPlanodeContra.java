@@ -25,6 +25,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
         btnEditar.setBackground(new Color(0,0,0,0));
         btnRemover.setBackground(new Color(0,0,0,0));
         btnResumida.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**

@@ -41,6 +41,7 @@ public class ProdutosView extends javax.swing.JFrame {
         botaoListar.setBackground(new Color(0,0,0,0));
         botaoRemover.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
     }
 

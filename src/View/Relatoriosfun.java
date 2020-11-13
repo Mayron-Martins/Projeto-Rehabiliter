@@ -16,6 +16,7 @@ public class Relatoriosfun extends javax.swing.JFrame {
      */
     public Relatoriosfun() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
     /**
