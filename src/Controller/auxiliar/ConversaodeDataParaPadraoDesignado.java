@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -83,5 +84,15 @@ public class ConversaodeDataParaPadraoDesignado {
     LocalDate dataAniversario = LocalDate.parse(format);
     Period between = Period.between(dataHoje, dataAniversario);
     return between;
+    }
+    
+    public Date conversaoLocalforDate(LocalDate data){
+        Date dataRetorno = Date.from(data.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        return dataRetorno;
+    }
+    
+    public LocalDate conversaoLocalforDate(Date data){
+        LocalDate dataRetorno = data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return dataRetorno;
     }
 }
