@@ -28,6 +28,7 @@ import javax.swing.JToggleButton;
 public class turmasFrequencia extends javax.swing.JFrame {
     private final FrequenciaTurmasController controller;
     private final JComboBox comboPresenca = new JComboBox();
+    private boolean addictionConfirmation;
 
     /**
      * Creates new form turmasFrequencia
@@ -44,6 +45,7 @@ public class turmasFrequencia extends javax.swing.JFrame {
         scrollPaneAviso.setVisible(false);
         comboPeriodo.setEnabled(false);
         comboIntervalo.setEnabled(false);
+        this.addictionConfirmation =false;
         
         
         comboPresenca.addActionListener(new java.awt.event.ActionListener() {

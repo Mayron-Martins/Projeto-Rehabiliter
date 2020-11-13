@@ -107,8 +107,7 @@ public class FrequenciaTurmasController {
         for(int linhas=0; linhas<this.tabelaDeAlunos.getRowCount(); linhas++){
             int codTurma = this.retornarCodTurma();
             int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhas, 0).toString());
-            LocalDate dataAtual = LocalDate.now();
-            String dataInput = converterData.parseDate(converterData.conversaoLocalforDate(dataAtual));
+            String dataInput = converterData.parseDate(BuscarFrequenciasNaData().get(0).getDataInsert());
             String situacao = tabelaDeAlunos.getValueAt(linhas, 3).toString().substring(0, 2);
 
             FrequenciaTurmas frequenciaAtual = new FrequenciaTurmas(codTurma, codAluno, dataInput, situacao);
@@ -311,17 +310,22 @@ public class FrequenciaTurmasController {
     
     private void setarDadosDoBanco() throws ParseException, SQLException{
         limparTabela();
-            int codTurma = this.retornarCodTurma();
-            String dataCombo = view.getComboIntervalo().getSelectedItem().toString();
-            Date data = converterData.getSqlDate(converterData.parseDate(dataCombo.split("Dia ")[1]));
-           ArrayList <FrequenciaTurmas> frequencias = this.frequencia.pesquisarFrequencias("SELECT * FROM tblFreqTurma"+this.retornarCodTurma()+" WHERE data = '"+data+"'");
+           ArrayList <FrequenciaTurmas> frequencias = this.BuscarFrequenciasNaData();
            
            for(int linhas=0; linhas<frequencias.size(); linhas++){
            Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+frequencias.get(linhas).getCodAluno()).get(0);
-           this.selecionarComboPresenca(dataCombo);
+           this.selecionarComboPresenca(frequencias.get(linhas).getSituacao());
            Object[] dadosDaTabela = {aluno.getCodBanco(), aluno.getNome(), "", view.getComboPresenca().getSelectedItem()};
                   this.tabelaDeAlunos.addRow(dadosDaTabela); 
                }
+    }
+    
+    private ArrayList <FrequenciaTurmas> BuscarFrequenciasNaData() throws ParseException, SQLException{
+        int codTurma = this.retornarCodTurma();
+            String dataCombo = view.getComboIntervalo().getSelectedItem().toString();
+            Date data = converterData.getSqlDate(converterData.parseDate(dataCombo.split("Dia ")[1]));
+           ArrayList <FrequenciaTurmas> frequencias = this.frequencia.pesquisarFrequencias("SELECT * FROM tblFreqTurma"+this.retornarCodTurma()+" WHERE data = '"+data+"'");
+    return frequencias;
     }
     
     private void selecionarComboPresenca(String situacao){
