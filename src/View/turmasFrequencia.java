@@ -5,22 +5,51 @@
  */
 package View;
 
+import Controller.adicionais.FrequenciaTurmasController;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JToggleButton;
 
 /**
  *
  * @author 55989
  */
 public class turmasFrequencia extends javax.swing.JFrame {
+    private final FrequenciaTurmasController controller;
+    private final JComboBox comboPresenca = new JComboBox();
 
     /**
      * Creates new form turmasFrequencia
      */
     public turmasFrequencia() {
         initComponents();
+        controller = new FrequenciaTurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoSalvar.setBackground(new Color(0,0,0,0));
+        comboPresenca.addItem("[Pendente]");
+        comboPresenca.addItem("Presente");
+        comboPresenca.addItem("Ausente");
         
+        comboPresenca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboServicosActionPerformed(evt);
+            }
+            private void comboServicosActionPerformed(ActionEvent evt) {
+            int linhaSelecionada = tabelaAlunos.getSelectedRow();
+                if(tabelaAlunos.isRowSelected(linhaSelecionada)){
+                    controller.setarComboPresenca();
+                }
+        
+    }
+        });
     }
 
     /**
@@ -35,15 +64,23 @@ public class turmasFrequencia extends javax.swing.JFrame {
         botaoFechar = new javax.swing.JButton();
         painelderolagem = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        comboPeriodo = new javax.swing.JComboBox<>();
+        comboIntervalo = new javax.swing.JComboBox<>();
+        comboTurmas = new javax.swing.JComboBox<>();
+        botaoAdicionar = new javax.swing.JButton();
         botaoSalvar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        campoAviso = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -58,12 +95,30 @@ public class turmasFrequencia extends javax.swing.JFrame {
         tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"adsa", "adsa", "adsa", null}
+
             },
             new String [] {
-                "asdasdas", "asdasd", "dfdafsd", "asdas"
+                "CodAluno", "Nome", "Confirmação", "Situação"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaAlunos.getTableHeader().setResizingAllowed(false);
+        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
+        tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboPresenca));
         tabelaAlunos.setFocusable(false);
         tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -79,19 +134,33 @@ public class turmasFrequencia extends javax.swing.JFrame {
 
         getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Última Semana", "Último Mês", "Último Semestre", "Último Ano" }));
+        comboPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                comboPeriodoActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 200, 40));
+        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 200, 40));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 200, 40));
+        comboIntervalo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
+        getContentPane().add(comboIntervalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 200, 40));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
-        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 200, 40));
+        comboTurmas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
+        comboTurmas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTurmasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(comboTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 200, 40));
+
+        botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/salvar.png"))); // NOI18N
+        botaoAdicionar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/salvarHover.png"))); // NOI18N
+        botaoAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAdicionarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 230, 40));
 
         botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/salvar.png"))); // NOI18N
         botaoSalvar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/salvarHover.png"))); // NOI18N
@@ -100,7 +169,15 @@ public class turmasFrequencia extends javax.swing.JFrame {
                 botaoSalvarActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, 230, 40));
+        getContentPane().add(botaoSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 230, 40));
+
+        campoAviso.setEditable(false);
+        campoAviso.setColumns(20);
+        campoAviso.setRows(5);
+        campoAviso.setAutoscrolls(false);
+        jScrollPane1.setViewportView(campoAviso);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 250, 190, 70));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/fundo.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -118,13 +195,35 @@ public class turmasFrequencia extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tabelaAlunosComponentHidden
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_comboPeriodoActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoSalvarActionPerformed
+
+    private void comboTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmasActionPerformed
+        try {
+            controller.setarTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_comboTurmasActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            controller.setarTurmas();
+        } catch (SQLException ex) {
+            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,13 +261,42 @@ public class turmasFrequencia extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoSalvar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JTextArea campoAviso;
+    private javax.swing.JComboBox<String> comboIntervalo;
+    private javax.swing.JComboBox<String> comboPeriodo;
+    private javax.swing.JComboBox<String> comboTurmas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane painelderolagem;
     private javax.swing.JTable tabelaAlunos;
     // End of variables declaration//GEN-END:variables
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    public JComboBox<String> getComboIntervalo() {
+        return comboIntervalo;
+    }
+
+    public JComboBox<String> getComboPeriodo() {
+        return comboPeriodo;
+    }
+
+    public JComboBox<String> getComboTurmas() {
+        return comboTurmas;
+    }
+
+    public JTable getTabelaAlunos() {
+        return tabelaAlunos;
+    }
+
+    public JComboBox getComboPresenca() {
+        return comboPresenca;
+    }
+
+    
 }
