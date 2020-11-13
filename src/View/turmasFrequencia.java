@@ -158,8 +158,8 @@ public class turmasFrequencia extends javax.swing.JFrame {
         });
         getContentPane().add(comboTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 200, 40));
 
-        botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/salvar.png"))); // NOI18N
-        botaoAdicionar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/salvarHover.png"))); // NOI18N
+        botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
+        botaoAdicionar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverAdicionar.png"))); // NOI18N
         botaoAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAdicionarActionPerformed(evt);

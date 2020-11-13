@@ -153,10 +153,10 @@
     <Component class="javax.swing.JButton" name="botaoAdicionar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/turmas/frequencia/salvar.png"/>
+          <Image iconType="3" name="/imagens/alunos/botaoAdicionar.png"/>
         </Property>
         <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/turmas/frequencia/salvarHover.png"/>
+          <Image iconType="3" name="/imagens/alunos/botaoHoverAdicionar.png"/>
         </Property>
       </Properties>
       <Events>
