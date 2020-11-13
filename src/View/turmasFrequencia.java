@@ -28,6 +28,7 @@ import javax.swing.JToggleButton;
 public class turmasFrequencia extends javax.swing.JFrame {
     private final FrequenciaTurmasController controller;
     private final JComboBox comboPresenca = new JComboBox();
+    private final JComboBox comboPresencaBanco = new JComboBox();
     private boolean addictionConfirmation;
 
     /**
@@ -38,10 +39,14 @@ public class turmasFrequencia extends javax.swing.JFrame {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new FrequenciaTurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
+        botaoAdicionar.setBackground(new Color(0,0,0,0));
         botaoSalvar.setBackground(new Color(0,0,0,0));
         comboPresenca.addItem("[Pendente]");
         comboPresenca.addItem("Presente");
         comboPresenca.addItem("Ausente");
+        comboPresencaBanco.addItem("[Pendente]");
+        comboPresencaBanco.addItem("Presente");
+        comboPresencaBanco.addItem("Ausente");
         scrollPaneAviso.setVisible(false);
         comboPeriodo.setEnabled(false);
         comboIntervalo.setEnabled(false);
@@ -60,6 +65,19 @@ public class turmasFrequencia extends javax.swing.JFrame {
         
     }
         });
+        
+        comboPresencaBanco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboServicosActionPerformed(evt);
+            }
+            private void comboServicosActionPerformed(ActionEvent evt) {
+            int linhaSelecionada = tabelaAlunosBanco.getSelectedRow();
+                if(tabelaAlunosBanco.isRowSelected(linhaSelecionada)){
+                    controller.setarComboPresencaBanco();
+                }
+        
+    }
+        });
     }
 
     /**
@@ -74,6 +92,8 @@ public class turmasFrequencia extends javax.swing.JFrame {
         botaoFechar = new javax.swing.JButton();
         painelderolagem = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
+        painelderolagem1 = new javax.swing.JScrollPane();
+        tabelaAlunosBanco = new javax.swing.JTable();
         comboPeriodo = new javax.swing.JComboBox<>();
         comboIntervalo = new javax.swing.JComboBox<>();
         comboTurmas = new javax.swing.JComboBox<>();
@@ -143,6 +163,48 @@ public class turmasFrequencia extends javax.swing.JFrame {
         painelderolagem.setViewportView(tabelaAlunos);
 
         getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+
+        tabelaAlunosBanco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaAlunosBanco.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CodAluno", "Nome", "Confirmação", "Situação"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaAlunosBanco.getTableHeader().setResizingAllowed(false);
+        tabelaAlunosBanco.getTableHeader().setReorderingAllowed(false);
+        tabelaAlunosBanco.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboPresencaBanco));
+        tabelaAlunosBanco.setFocusable(false);
+        tabelaAlunosBanco.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaAlunosBanco.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaAlunosBanco.setRowHeight(25);
+        tabelaAlunosBanco.setShowVerticalLines(false);
+        tabelaAlunosBanco.getTableHeader().setReorderingAllowed(false);
+        tabelaAlunosBanco.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaAlunosBancoComponentHidden(evt);
+            }
+        });
+        painelderolagem1.setViewportView(tabelaAlunosBanco);
+
+        getContentPane().add(painelderolagem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Última Semana", "Último Mês", "Último Semestre", "Último Ano" }));
         comboPeriodo.addActionListener(new java.awt.event.ActionListener() {
@@ -224,12 +286,23 @@ public class turmasFrequencia extends javax.swing.JFrame {
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        try {
+        if(painelderolagem.isVisible()){
+            try {
             controller.adicionarFrequenciaoBanco();
         } catch (ParseException ex) {
             Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        else{
+            try {
+                controller.atualizarFrequenciaoBanco();
+            } catch (ParseException ex) {
+                Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
@@ -262,6 +335,10 @@ public class turmasFrequencia extends javax.swing.JFrame {
             Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_comboIntervaloActionPerformed
+
+    private void tabelaAlunosBancoComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosBancoComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaAlunosBancoComponentHidden
 
     /**
      * @param args the command line arguments
@@ -308,8 +385,10 @@ public class turmasFrequencia extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboTurmas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane painelderolagem;
+    private javax.swing.JScrollPane painelderolagem1;
     private javax.swing.JScrollPane scrollPaneAviso;
     private javax.swing.JTable tabelaAlunos;
+    private javax.swing.JTable tabelaAlunosBanco;
     // End of variables declaration//GEN-END:variables
 
     public void exibeMensagem(String mensagem) {
@@ -352,5 +431,21 @@ public class turmasFrequencia extends javax.swing.JFrame {
         return botaoSalvar;
     }
 
+    public JScrollPane getPainelderolagem() {
+        return painelderolagem;
+    }
+
+    public JScrollPane getPainelderolagem1() {
+        return painelderolagem1;
+    }
+
+    public JTable getTabelaAlunosBanco() {
+        return tabelaAlunosBanco;
+    }
+
+    public JComboBox getComboPresencaBanco() {
+        return comboPresencaBanco;
+    }
+    
     
 }

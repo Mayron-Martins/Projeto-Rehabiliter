@@ -32,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
 public class FrequenciaTurmasController {
     private final turmasFrequencia view;
     private final DefaultTableModel tabelaDeAlunos;
+    private final DefaultTableModel tabelaDeAlunosBanco;
     private final TurmasDao turmasDao = new TurmasDao();
     private final TurmasView telaDeTurmas = new TurmasView();
     private final AlunosDao alunosDao = new AlunosDao();
@@ -43,6 +44,7 @@ public class FrequenciaTurmasController {
     public FrequenciaTurmasController(turmasFrequencia view) {
         this.view = view;
         this.tabelaDeAlunos = (DefaultTableModel) view.getTabelaAlunos().getModel();
+        this.tabelaDeAlunosBanco = (DefaultTableModel) view.getTabelaAlunosBanco().getModel();
     }
     
     public void limparTabela(){
@@ -51,9 +53,17 @@ public class FrequenciaTurmasController {
             this.tabelaDeAlunos.removeRow(0);
         }
     }
+    public void limparTabelaBanco(){
+        int quantLinhas = this.view.getTabelaAlunosBanco().getRowCount();
+        for(int quant=0; quant<quantLinhas; quant++){
+            this.tabelaDeAlunosBanco.removeRow(0);
+        }
+    }
     
     //Adicionar linhas à tabela se for a data correta
     public void adicionarLinhasATabela() throws SQLException, ParseException{
+        view.getPainelderolagem().setVisible(true);
+        view.getPainelderolagem1().setVisible(false);
         limparTabela();
         if(view.getComboTurmas().getSelectedIndex()>0){
             if(this.verificarSeHaDadosNoSistema()){
@@ -78,6 +88,9 @@ public class FrequenciaTurmasController {
     
     //Seta os novos dados conforme correspondente no Banco
     public void setarNovosDadosTabela() throws ParseException, SQLException{
+    view.getPainelderolagem().setVisible(false);
+    view.getPainelderolagem1().setVisible(true);
+    limparTabelaBanco();
         if(view.getComboPeriodo().isEnabled()){
             if(view.getComboIntervalo().getSelectedIndex()>0){
                 this.setarDadosDoBanco();
@@ -104,18 +117,18 @@ public class FrequenciaTurmasController {
     
     //Atualiza a frequência no banco de dados
     public void atualizarFrequenciaoBanco() throws ParseException, SQLException{
-        for(int linhas=0; linhas<this.tabelaDeAlunos.getRowCount(); linhas++){
+        for(int linhas=0; linhas<this.tabelaDeAlunosBanco.getRowCount(); linhas++){
             int codTurma = this.retornarCodTurma();
-            int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhas, 0).toString());
+            int codAluno = Integer.parseInt(tabelaDeAlunosBanco.getValueAt(linhas, 0).toString());
             String dataInput = converterData.parseDate(BuscarFrequenciasNaData().get(0).getDataInsert());
-            String situacao = tabelaDeAlunos.getValueAt(linhas, 3).toString().substring(0, 2);
+            String situacao = tabelaDeAlunosBanco.getValueAt(linhas, 3).toString().substring(0, 2);
 
             FrequenciaTurmas frequenciaAtual = new FrequenciaTurmas(codTurma, codAluno, dataInput, situacao);
 
             frequencia.atualizarDados(frequenciaAtual);
         }
         view.exibeMensagem("Dados Atualizados Com Sucesso!");
-        limparTabela();
+        limparTabelaBanco();
     }
     
     //Seta as turmas no combobox de turmas
@@ -159,14 +172,29 @@ public class FrequenciaTurmasController {
     
     //Setar o combo presença na tabela
     public void setarComboPresenca(){
-        if(view.getTabelaAlunos().getSelectedRow()>-1){
-          int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
-          String situacao = view.getComboPresenca().getSelectedItem().toString();
-          
-          if(situacao.equals("[Pendente]")){this.tabelaDeAlunos.setValueAt("[Pendente]", linhaSelecionada, 3);}
-          if(situacao.equals("Presente")){this.tabelaDeAlunos.setValueAt("Presente", linhaSelecionada, 3);}
-          if(situacao.equals("Ausente")){this.tabelaDeAlunos.setValueAt("Ausente", linhaSelecionada, 3);}
-        }
+
+      if(view.getTabelaAlunos().getSelectedRow()>-1){
+      int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
+      String situacao = view.getComboPresenca().getSelectedItem().toString();
+
+      if(situacao.equals("[Pendente]")){this.tabelaDeAlunos.setValueAt("[Pendente]", linhaSelecionada, 3);}
+      if(situacao.equals("Presente")){this.tabelaDeAlunos.setValueAt("Presente", linhaSelecionada, 3);}
+      if(situacao.equals("Ausente")){this.tabelaDeAlunos.setValueAt("Ausente", linhaSelecionada, 3);}
+    }
+        
+    }
+    
+    public void setarComboPresencaBanco(){
+
+      if(view.getTabelaAlunosBanco().getSelectedRow()>-1){
+      int linhaSelecionada = view.getTabelaAlunosBanco().getSelectedRow();
+      String situacao = view.getComboPresencaBanco().getSelectedItem().toString();
+
+      if(situacao.equals("[Pendente]")){this.tabelaDeAlunosBanco.setValueAt("[Pendente]", linhaSelecionada, 3);}
+      if(situacao.equals("Presente")){this.tabelaDeAlunosBanco.setValueAt("Presente", linhaSelecionada, 3);}
+      if(situacao.equals("Ausente")){this.tabelaDeAlunosBanco.setValueAt("Ausente", linhaSelecionada, 3);}
+    }
+        
     }
     
     //Setar campo Intervalo
@@ -309,14 +337,14 @@ public class FrequenciaTurmasController {
     }
     
     private void setarDadosDoBanco() throws ParseException, SQLException{
-        limparTabela();
+            limparTabelaBanco();
            ArrayList <FrequenciaTurmas> frequencias = this.BuscarFrequenciasNaData();
            
            for(int linhas=0; linhas<frequencias.size(); linhas++){
            Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+frequencias.get(linhas).getCodAluno()).get(0);
-           this.selecionarComboPresenca(frequencias.get(linhas).getSituacao());
-           Object[] dadosDaTabela = {aluno.getCodBanco(), aluno.getNome(), "", view.getComboPresenca().getSelectedItem()};
-                  this.tabelaDeAlunos.addRow(dadosDaTabela); 
+           this.selecionarComboPresencaBanco(frequencias.get(linhas).getSituacao());
+           Object[] dadosDaTabela = {aluno.getCodBanco(), aluno.getNome(), "", view.getComboPresencaBanco().getSelectedItem()};
+                  this.tabelaDeAlunosBanco.addRow(dadosDaTabela); 
                }
     }
     
@@ -328,18 +356,18 @@ public class FrequenciaTurmasController {
     return frequencias;
     }
     
-    private void selecionarComboPresenca(String situacao){
+    private void selecionarComboPresencaBanco(String situacao){
         switch(situacao){
             case "[P":
-                view.getComboPresenca().setSelectedIndex(0);
+                view.getComboPresencaBanco().setSelectedIndex(0);
             break;
             
             case "Pr":
-                view.getComboPresenca().setSelectedIndex(1);
+                view.getComboPresencaBanco().setSelectedIndex(1);
             break;
             
             case "Au":
-                view.getComboPresenca().setSelectedIndex(2);
+                view.getComboPresencaBanco().setSelectedIndex(2);
             break;
         }
     }
