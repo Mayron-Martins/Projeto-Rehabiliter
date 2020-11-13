@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -41,6 +42,8 @@ public class turmasFrequencia extends javax.swing.JFrame {
         comboPresenca.addItem("Presente");
         comboPresenca.addItem("Ausente");
         scrollPaneAviso.setVisible(false);
+        comboPeriodo.setEnabled(false);
+        comboIntervalo.setEnabled(false);
         
         
         comboPresenca.addActionListener(new java.awt.event.ActionListener() {
@@ -148,6 +151,11 @@ public class turmasFrequencia extends javax.swing.JFrame {
         getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 200, 40));
 
         comboIntervalo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
+        comboIntervalo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboIntervaloActionPerformed(evt);
+            }
+        });
         getContentPane().add(comboIntervalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 200, 40));
 
         comboTurmas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
@@ -203,15 +211,28 @@ public class turmasFrequencia extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaAlunosComponentHidden
 
     private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
-        // TODO add your handling code here:
+        controller.ativarComboIntervalo();
+        try {
+            controller.setarCampoIntervalo();
+        } catch (SQLException ex) {
+            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        // TODO add your handling code here:
+        try {
+            controller.adicionarFrequenciaoBanco();
+        } catch (ParseException ex) {
+            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void comboTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmasActionPerformed
-
+    controller.ativarComboPeriodo();
     }//GEN-LAST:event_comboTurmasActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -229,6 +250,16 @@ public class turmasFrequencia extends javax.swing.JFrame {
             Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoAdicionarActionPerformed
+
+    private void comboIntervaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervaloActionPerformed
+        try {
+            controller.setarNovosDadosTabela();
+        } catch (ParseException ex) {
+            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_comboIntervaloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,6 +340,14 @@ public class turmasFrequencia extends javax.swing.JFrame {
 
     public JScrollPane getScrollPaneAviso() {
         return scrollPaneAviso;
+    }
+
+    public JButton getBotaoAdicionar() {
+        return botaoAdicionar;
+    }
+
+    public JButton getBotaoSalvar() {
+        return botaoSalvar;
     }
 
     
