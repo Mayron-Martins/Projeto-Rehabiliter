@@ -13,6 +13,7 @@ import Model.auxiliar.Horarios;
 import Model.auxiliar.Turmas;
 import View.TurmasView;
 import View.turmasFrequencia;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.DayOfWeek;
@@ -45,6 +46,26 @@ public class FrequenciaTurmasController {
         }
     }
     
+    //Adicionar linhas à tabela se for a data correta
+    public void adicionarLinhasATabela() throws SQLException, ParseException{
+    if(view.getComboTurmas().getSelectedIndex()>0){
+    
+        if(this.verificarNovoDado()){
+            this.setarTabela();
+        }
+        else{
+            String turma = view.getComboTurmas().getSelectedItem().toString();
+            view.getCampoAviso().setForeground(Color.RED);
+            view.getCampoAviso().append("A turma "+turma.split("\\.")[1]+" não possui horários para o dia de hoje.");
+            view.getScrollPaneAviso().setVisible(true);
+        }
+    }
+    else{
+        view.exibeMensagem("Selecione Uma Turma Nas Opções Para Continuar!");
+    }
+    }
+    
+    //Seta as turmas no combobox de turmas
     public void setarTurmas() throws SQLException{
         ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
         
@@ -68,8 +89,8 @@ public class FrequenciaTurmasController {
         }
     }
     
-    public void setarTabela() throws SQLException, ParseException{
-        if(view.getComboTurmas().getSelectedIndex()>0){
+    //seta a tabela para data de hoje
+    private void setarTabela() throws SQLException, ParseException{
             limparTabela();
             int codTurma = this.retornarCodTurma();
            ArrayList <Aluno> alunos = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codTurma = "+codTurma);
@@ -80,9 +101,10 @@ public class FrequenciaTurmasController {
                   this.tabelaDeAlunos.addRow(dadosDaTabela); 
                }
            }
-        }
     }
     
+    
+    //Setar o combo presença na tabela
     public void setarComboPresenca(){
         if(view.getTabelaAlunos().getSelectedRow()>-1){
           int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
@@ -94,9 +116,11 @@ public class FrequenciaTurmasController {
         }
     }
     
+    
+    //Verificar se o dia da semana é o mesmo da turma
     private boolean verificarNovoDado() throws SQLException{
         ArrayList <Horarios> horarios = horariosDao.pesquisarHorarios("SELECT * FROM tblHorarios WHERE codTurma = "+this.retornarCodTurma());
-        ArrayList <DayOfWeek> diasDaSemana = null;
+        ArrayList <DayOfWeek> diasDaSemana = new ArrayList<>();
         
         for(int linhas=0; linhas<horarios.size(); linhas++){
             switch(horarios.get(linhas).getDiaDaSemana()){

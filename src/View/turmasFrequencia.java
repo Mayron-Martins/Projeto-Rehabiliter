@@ -15,7 +15,9 @@ import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 
 /**
@@ -38,6 +40,8 @@ public class turmasFrequencia extends javax.swing.JFrame {
         comboPresenca.addItem("[Pendente]");
         comboPresenca.addItem("Presente");
         comboPresenca.addItem("Ausente");
+        scrollPaneAviso.setVisible(false);
+        
         
         comboPresenca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,7 +74,7 @@ public class turmasFrequencia extends javax.swing.JFrame {
         comboTurmas = new javax.swing.JComboBox<>();
         botaoAdicionar = new javax.swing.JButton();
         botaoSalvar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollPaneAviso = new javax.swing.JScrollPane();
         campoAviso = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
 
@@ -176,9 +180,11 @@ public class turmasFrequencia extends javax.swing.JFrame {
         campoAviso.setColumns(20);
         campoAviso.setRows(5);
         campoAviso.setAutoscrolls(false);
-        jScrollPane1.setViewportView(campoAviso);
+        scrollPaneAviso.setViewportView(campoAviso);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 250, 190, 70));
+        getContentPane().add(scrollPaneAviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 250, 190, 70));
+        campoAviso.setLineWrap(true);
+        campoAviso.setWrapStyleWord(true);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/fundo.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -205,13 +211,7 @@ public class turmasFrequencia extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void comboTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmasActionPerformed
-        try {
-            controller.setarTabela();
-        } catch (SQLException ex) {
-            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_comboTurmasActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -223,7 +223,11 @@ public class turmasFrequencia extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
-        // TODO add your handling code here:
+        try {
+            controller.adicionarLinhasATabela();
+        } catch (SQLException | ParseException ex) {
+            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     /**
@@ -270,8 +274,8 @@ public class turmasFrequencia extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JComboBox<String> comboTurmas;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane painelderolagem;
+    private javax.swing.JScrollPane scrollPaneAviso;
     private javax.swing.JTable tabelaAlunos;
     // End of variables declaration//GEN-END:variables
 
@@ -297,6 +301,14 @@ public class turmasFrequencia extends javax.swing.JFrame {
 
     public JComboBox getComboPresenca() {
         return comboPresenca;
+    }
+
+    public JTextArea getCampoAviso() {
+        return campoAviso;
+    }
+
+    public JScrollPane getScrollPaneAviso() {
+        return scrollPaneAviso;
     }
 
     
