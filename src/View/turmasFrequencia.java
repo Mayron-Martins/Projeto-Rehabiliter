@@ -31,6 +31,7 @@ public class turmasFrequencia extends javax.swing.JFrame {
      */
     public turmasFrequencia() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new FrequenciaTurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoSalvar.setBackground(new Color(0,0,0,0));
