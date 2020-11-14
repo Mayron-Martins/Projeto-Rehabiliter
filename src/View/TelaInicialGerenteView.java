@@ -5,20 +5,35 @@
  */
 package View;
 
+import Controller.adicionais.TelaInicioGerenteController;
 import java.awt.Color;
+import java.awt.Dimension;
 import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
+import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
  *
  * @author 55989
  */
 public class TelaInicialGerenteView extends javax.swing.JFrame {
+    private final TelaInicioGerenteController controller;
 
     /**
      * Creates new form telaInicialGerente
      */
     public TelaInicialGerenteView() {
         initComponents();
+        controller = new TelaInicioGerenteController(this);
         botaoSair.setBackground(new Color(0,0,0,0));
         botaoCaixa.setBackground(new Color(0,0,0,0));
         botaoAlunos.setBackground(new Color(0,0,0,0));
@@ -26,6 +41,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         botaoFrequencia.setBackground(new Color(0,0,0,0));
         botaoMenu.setBackground(new Color(0,0,0,0));
         botaoFuncionarios.setBackground(new Color(0,0,0,0));
+        jScrollPane1.setVisible(false);
         setExtendedState(MAXIMIZED_BOTH);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
@@ -48,11 +64,18 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         botaoFinanceiro = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         botaoMenu = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaAniversariantes = new javax.swing.JTable();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarios.png"))); // NOI18N
@@ -125,6 +148,45 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         });
         getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 40, 110, 70));
 
+        tabelaAniversariantes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Aniversariante do Mês", "Turma", "Dia"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaAniversariantes.setAutoscrolls(false);
+        tabelaAniversariantes.setRowSelectionAllowed(false);
+        tabelaAniversariantes.getTableHeader().setResizingAllowed(false);
+        this.defineRenderers();
+        tabelaAniversariantes.getTableHeader().setReorderingAllowed(false);
+        tabelaAniversariantes.setBackground(new Color(0,134, 190));
+        tabelaAniversariantes.setForeground(Color.WHITE);
+        tabelaAniversariantes.setShowGrid(false);
+        jScrollPane1.setViewportView(tabelaAniversariantes);
+
+        jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0,0), 1, true));
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 350, 316, 180));
+
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/tela-inicial-funcionário.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -174,6 +236,16 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         abrir.setVisible(true);
     }//GEN-LAST:event_botaoCaixaActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            controller.inicializarTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -219,6 +291,44 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private javax.swing.JButton botaoMenu;
     private javax.swing.JButton botaoSair;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel planodefundo;
+    private javax.swing.JTable tabelaAniversariantes;
     // End of variables declaration//GEN-END:variables
+    
+    private void defineRenderers() {
+    DefaultTableCellRenderer rendererCentro = new DefaultTableCellRenderer();
+    rendererCentro.setHorizontalAlignment(SwingConstants.CENTER);
+    DefaultTableCellHeaderRenderer headerCentro = new DefaultTableCellHeaderRenderer();
+    headerCentro.setHorizontalAlignment(SwingConstants.CENTER);
+    DefaultTableCellRenderer rendererDireita = new DefaultTableCellRenderer();
+    rendererDireita.setHorizontalAlignment(SwingConstants.RIGHT);
+    DefaultTableCellRenderer rendererEsquerda = new DefaultTableCellRenderer();
+    rendererEsquerda.setHorizontalAlignment(SwingConstants.LEFT);
+
+    JTableHeader header = tabelaAniversariantes.getTableHeader(); 
+    header.setPreferredSize(new Dimension(0, 35)); 
+    TableColumnModel modeloDaColuna = tabelaAniversariantes.getColumnModel();
+
+    modeloDaColuna.getColumn(0).setCellRenderer(rendererCentro);
+    modeloDaColuna.getColumn(1).setCellRenderer(rendererCentro);
+    modeloDaColuna.getColumn(2).setCellRenderer(rendererCentro);
+
+    DefaultTableCellRenderer defaultheader = (DefaultTableCellRenderer) tabelaAniversariantes.getTableHeader().getDefaultRenderer();
+    defaultheader.setHorizontalAlignment(SwingConstants.CENTER);
+
+    modeloDaColuna.getColumn(0).setMaxWidth(145);
+    modeloDaColuna.getColumn(1).setMaxWidth(90);
+    modeloDaColuna.getColumn(2).setMaxWidth(95);
+
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public JTable getTabelaAniversariantes() {
+        return tabelaAniversariantes;
+    }
+    
 }

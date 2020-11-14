@@ -5,20 +5,35 @@
  */
 package View;
 
+import Controller.adicionais.TelaInicioFuncionariosController;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
+import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
  *
  * @author 55989
  */
 public class telainicialFuncionario extends javax.swing.JFrame {
+    private final TelaInicioFuncionariosController controller;
 
     /**
      * Creates new form telainicialFuncionario
      */
     public telainicialFuncionario() {
         initComponents();
+        controller = new TelaInicioFuncionariosController(this);
         botaoSair.setBackground(new Color(0,0,0,0));
         botaoCaixa.setBackground(new Color(0,0,0,0));
         botaoAlunos.setBackground(new Color(0,0,0,0));
@@ -27,14 +42,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoMenu.setBackground(new Color(0,0,0,0));
         setExtendedState(MAXIMIZED_BOTH);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
-        jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0,0), 2, true));
-        jScrollPane1.setOpaque(false);
-        jScrollPane1.getViewport().setOpaque(false);
-        tabelaAniversariantes.setBackground(new Color(0,0,0,0));
-        tabelaAniversariantes.setForeground(Color.WHITE);
-        tabelaAniversariantes.setShowGrid(false);
-        tabelaAniversariantes.getTableHeader().setOpaque(false);
-        //jScrollPane1.setVisible(false);
+        jScrollPane1.setVisible(false);
         
         
         
@@ -63,6 +71,11 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -126,7 +139,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Aniversariante do Mês", "Turma", "Data Aniversário"
+                "Aniversariante do Mês", "Turma", "Dia"
             }
         ) {
             Class[] types = new Class [] {
@@ -147,8 +160,16 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         tabelaAniversariantes.setAutoscrolls(false);
         tabelaAniversariantes.setRowSelectionAllowed(false);
         tabelaAniversariantes.getTableHeader().setResizingAllowed(false);
+        this.defineRenderers();
         tabelaAniversariantes.getTableHeader().setReorderingAllowed(false);
+        tabelaAniversariantes.setBackground(new Color(0,134, 190));
+        tabelaAniversariantes.setForeground(Color.WHITE);
+        tabelaAniversariantes.setShowGrid(false);
         jScrollPane1.setViewportView(tabelaAniversariantes);
+
+        jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0,0), 1, true));
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 350, 316, 180));
 
@@ -195,6 +216,16 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         Caixa abrir= new Caixa();
         abrir.setVisible(true);
     }//GEN-LAST:event_botaoCaixaActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            controller.inicializarTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -243,4 +274,41 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     private javax.swing.JLabel planodefundo;
     private javax.swing.JTable tabelaAniversariantes;
     // End of variables declaration//GEN-END:variables
+
+    private void defineRenderers() {
+	DefaultTableCellRenderer rendererCentro = new DefaultTableCellRenderer();
+	rendererCentro.setHorizontalAlignment(SwingConstants.CENTER);
+        DefaultTableCellHeaderRenderer headerCentro = new DefaultTableCellHeaderRenderer();
+        headerCentro.setHorizontalAlignment(SwingConstants.CENTER);
+	DefaultTableCellRenderer rendererDireita = new DefaultTableCellRenderer();
+	rendererDireita.setHorizontalAlignment(SwingConstants.RIGHT);
+	DefaultTableCellRenderer rendererEsquerda = new DefaultTableCellRenderer();
+	rendererEsquerda.setHorizontalAlignment(SwingConstants.LEFT);
+
+	JTableHeader header = tabelaAniversariantes.getTableHeader(); 
+	header.setPreferredSize(new Dimension(0, 35)); 
+	TableColumnModel modeloDaColuna = tabelaAniversariantes.getColumnModel();
+	
+	modeloDaColuna.getColumn(0).setCellRenderer(rendererCentro);
+	modeloDaColuna.getColumn(1).setCellRenderer(rendererCentro);
+	modeloDaColuna.getColumn(2).setCellRenderer(rendererCentro);
+        
+        DefaultTableCellRenderer defaultheader = (DefaultTableCellRenderer) tabelaAniversariantes.getTableHeader().getDefaultRenderer();
+        defaultheader.setHorizontalAlignment(SwingConstants.CENTER);
+
+	modeloDaColuna.getColumn(0).setMaxWidth(145);
+	modeloDaColuna.getColumn(1).setMaxWidth(90);
+	modeloDaColuna.getColumn(2).setMaxWidth(95);
+
+}
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public JTable getTabelaAniversariantes() {
+        return tabelaAniversariantes;
+    }
+    
+    
 }

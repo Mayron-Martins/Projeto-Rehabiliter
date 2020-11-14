@@ -77,6 +77,14 @@ public class ConversaodeDataParaPadraoDesignado {
         return aniversario.getDays()==0&&aniversario.getMonths()==0;
     }
     
+    public boolean anviversarianteMes(Date dataMenor){
+    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+    String format = formato.format(dataMenor);
+    LocalDate dataHoje = LocalDate.now();
+    LocalDate dataAniversario = LocalDate.parse(format);
+    return dataHoje.getMonthValue()==dataAniversario.getMonthValue();
+    }
+    
     private Period periodoEntreDataAtual(Date dataMenor){
     SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
     String format = formato.format(dataMenor);
@@ -85,6 +93,7 @@ public class ConversaodeDataParaPadraoDesignado {
     Period between = Period.between(dataHoje, dataAniversario);
     return between;
     }
+    
     
     public Date conversaoLocalforDate(LocalDate data){
         Date dataRetorno = Date.from(data.atStartOfDay(ZoneId.systemDefault()).toInstant());
