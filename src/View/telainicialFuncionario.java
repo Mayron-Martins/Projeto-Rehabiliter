@@ -6,6 +6,7 @@
 package View;
 
 import java.awt.Color;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -26,6 +27,17 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoMenu.setBackground(new Color(0,0,0,0));
         setExtendedState(MAXIMIZED_BOTH);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
+        jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0,0), 2, true));
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+        tabelaAniversariantes.setBackground(new Color(0,0,0,0));
+        tabelaAniversariantes.setForeground(Color.WHITE);
+        tabelaAniversariantes.setShowGrid(false);
+        tabelaAniversariantes.getTableHeader().setOpaque(false);
+        //jScrollPane1.setVisible(false);
+        
+        
+        
     }
 
     /**
@@ -44,6 +56,8 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoFrequencia = new javax.swing.JButton();
         botaoFinanceiro = new javax.swing.JButton();
         botaoMenu = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaAniversariantes = new javax.swing.JTable();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,6 +120,37 @@ public class telainicialFuncionario extends javax.swing.JFrame {
             }
         });
         getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 40, 110, 70));
+
+        tabelaAniversariantes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Aniversariante do Mês", "Turma", "Data Aniversário"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaAniversariantes.setAutoscrolls(false);
+        tabelaAniversariantes.setRowSelectionAllowed(false);
+        tabelaAniversariantes.getTableHeader().setResizingAllowed(false);
+        tabelaAniversariantes.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tabelaAniversariantes);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 350, 316, 180));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/tela-inicial-funcionário.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -194,6 +239,8 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton botaoFrequencia;
     private javax.swing.JButton botaoMenu;
     private javax.swing.JButton botaoSair;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel planodefundo;
+    private javax.swing.JTable tabelaAniversariantes;
     // End of variables declaration//GEN-END:variables
 }
