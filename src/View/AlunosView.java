@@ -106,6 +106,7 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         botaoAdicionar = new javax.swing.JButton();
         campoPesquisa = new javax.swing.JTextField();
         comboListar = new javax.swing.JComboBox<>();
+        botaoPlanos = new javax.swing.JButton();
         botaoPais = new javax.swing.JButton();
         botaoEndereco = new javax.swing.JButton();
         botaoAlunos = new javax.swing.JButton();
@@ -316,6 +317,15 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Aniversariantes", "Pendentes", "Pagos" }));
         getContentPane().add(comboListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
 
+        botaoPlanos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPais.png"))); // NOI18N
+        botaoPlanos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPaishover.png"))); // NOI18N
+        botaoPlanos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoPlanosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 310, 120, -1));
+
         botaoPais.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPais.png"))); // NOI18N
         botaoPais.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPaishover.png"))); // NOI18N
         botaoPais.addActionListener(new java.awt.event.ActionListener() {
@@ -460,6 +470,10 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
     }
     }//GEN-LAST:event_botaoListarActionPerformed
+
+    private void botaoPlanosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlanosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoPlanosActionPerformed
      
     /**
      * @param args the command line arguments
@@ -504,6 +518,7 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoListar;
     private javax.swing.JButton botaoPais;
+    private javax.swing.JButton botaoPlanos;
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaobuscar;
     private javax.swing.JTextField campoPesquisa;
