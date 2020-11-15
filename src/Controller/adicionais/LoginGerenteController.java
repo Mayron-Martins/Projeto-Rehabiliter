@@ -5,11 +5,15 @@
  */
 package Controller.adicionais;
 
+import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Dao.FrequenciaFuncionariosDao;
 import Dao.FuncionarioDao;
 import Model.Funcionario;
+import Model.auxiliar.FrequenciaFuncionarios;
 import View.LoginGerente;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +23,8 @@ import java.util.ArrayList;
 public class LoginGerenteController {
     private final LoginGerente view;
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final FrequenciaFuncionariosDao frequencia = new FrequenciaFuncionariosDao();
+    private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
     public LoginGerenteController(LoginGerente view) {
         this.view = view;
@@ -41,6 +47,7 @@ public class LoginGerenteController {
             }
             else{
                 view.getTelagerente().setVisible(true);
+                this.setarPresencaFuncionario(usuario);
                 view.dispose();
             }
         }
@@ -50,5 +57,16 @@ public class LoginGerenteController {
     private ArrayList<Funcionario> gerenteDoBanco() throws SQLException, ParseException{
         String cargo = "Gerente"; 
         return funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE cargo = 'Gerente'");
+    }
+    
+    private void setarPresencaFuncionario(String usuario) throws SQLException, ParseException{
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE usuario = '"+usuario+"'");
+        
+        LocalDate dataAtual = LocalDate.now();
+        String dataInput = converterData.parseDate(converterData.conversaoLocalforDate(dataAtual));
+        for(int linhas=0; linhas <funcionarios.size(); linhas++){
+            FrequenciaFuncionarios frequenciaFuncionarios = new FrequenciaFuncionarios(funcionarios.get(linhas).getCodBanco(), dataInput, "P");
+            frequencia.atualizarDados(frequenciaFuncionarios);
+        }
     }
 }
