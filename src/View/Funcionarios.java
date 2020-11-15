@@ -279,7 +279,8 @@ public class Funcionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_campoBuscarKeyPressed
 
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        // TODO add your handling code here:
+        FrequenciaFuncionariosView telaFrequencia = new FrequenciaFuncionariosView();
+        telaFrequencia.setVisible(true);
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     /**

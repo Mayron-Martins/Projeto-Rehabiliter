@@ -6,6 +6,7 @@
 package Dao;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Model.auxiliar.FrequenciaFuncionarios;
 import Model.auxiliar.FrequenciaTurmas;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  *
  * @author Mayro
  */
-public class FrequenciaTurmasDao extends Conexao{
+public class FrequenciaFuncionariosDao extends Conexao{
     private final String inserir = "INSERT INTO ";
     private final String atualizar = "UPDATE ";
     private final String remover = "DELETE FROM ";
@@ -27,17 +28,16 @@ public class FrequenciaTurmasDao extends Conexao{
     
     
     //Inserir dados na tabela de Frequeência de turma X
-    public void inserirDados (FrequenciaTurmas frequencia) throws SQLException{
+    public void inserirDados (FrequenciaFuncionarios frequencia) throws SQLException{
         //Adicionando Turma
-        String inFrequencia = inserir.concat("tblFreqTurma"+frequencia.getCodTurma()+"("
-                + "codTurma, codAluno, data, situacao)"
+        String inFrequencia = inserir.concat("tblFreqFuncionarios("
+                + "data, codFuncionario, situacao)"
                 + "VALUES("
-                + "?,?,?,?);");
+                + "?,?,?);");
         PreparedStatement statement = gerarStatement(inFrequencia);
-        statement.setInt(1, frequencia.getCodTurma());
-        statement.setInt(2, frequencia.getCodAluno());
-        statement.setDate(3, (Date) frequencia.getDataInsert());
-        statement.setString(4, frequencia.getSituacao());
+        statement.setDate(1, (Date) frequencia.getDataInsert());
+        statement.setInt(2, frequencia.getCodFuncinario());
+        statement.setString(3, frequencia.getSituacao());
         statement.execute();
         statement.close();
     }
@@ -45,28 +45,27 @@ public class FrequenciaTurmasDao extends Conexao{
     
     
     //Atualizar dados
-    public void atualizarDados(FrequenciaTurmas frequencia) throws SQLException{
+    public void atualizarDados(FrequenciaFuncionarios frequencia) throws SQLException{
         //atualizando a tabela de turmas
-        String inFrequencia = atualizar.concat("tblFreqTurma"+frequencia.getCodTurma()
-                + " SET situacao=? where codAluno = ? AND data = ?");
+        String inFrequencia = atualizar.concat("tblFreqFuncionarios "
+                + "SET situacao=? where codFuncionario = ? AND data = ?");
         
         PreparedStatement statement = gerarStatement(inFrequencia);
         statement.setString(1, frequencia.getSituacao());
-        statement.setInt(2, frequencia.getCodAluno());
+        statement.setInt(2, frequencia.getCodFuncinario());
         statement.setDate(3, (Date) frequencia.getDataInsert());
         
         statement.execute();
         statement.close();
-    }
+    }    
     
-    
-    public ArrayList <FrequenciaTurmas> selecionarTodasFrequenciasTurmas(int codBanco) throws SQLException, ParseException{
-        String inFrequencia = selecionarTudo.concat("tblFreqTurma"+codBanco);
+    public ArrayList <FrequenciaFuncionarios> selecionarTodasFrequenciasFuncionarias() throws SQLException, ParseException{
+        String inFrequencia = selecionarTudo.concat("tblFreqFuncionarios");
         return pesquisarFrequencias(inFrequencia);
     }
     
-    public ArrayList <FrequenciaTurmas> pesquisarFrequencias(String comando) throws SQLException, ParseException{
-     ArrayList <FrequenciaTurmas> frequencias = new ArrayList();
+    public ArrayList <FrequenciaFuncionarios> pesquisarFrequencias(String comando) throws SQLException, ParseException{
+     ArrayList <FrequenciaFuncionarios> frequencias = new ArrayList();
      PreparedStatement statement = gerarStatement(comando);
      statement.execute();
      ResultSet resultset = statement.getResultSet();
@@ -77,12 +76,11 @@ public class FrequenciaTurmasDao extends Conexao{
      }
      
     do{
-    int codTurma = resultset.getInt("codTurma");
-    int codAluno = resultset.getInt("codAluno");
+    int codFuncionario = resultset.getInt("codFuncionario");
     String dataInpult = converterData.parseDate(resultset.getDate("data"));
     String situacao = resultset.getString("situacao");
     
-    FrequenciaTurmas frequencia = new FrequenciaTurmas(codTurma, codAluno, dataInpult, situacao);
+    FrequenciaFuncionarios frequencia = new FrequenciaFuncionarios(codFuncionario, dataInpult, situacao);
 
     frequencias.add(frequencia);
      }while(resultset.next());
