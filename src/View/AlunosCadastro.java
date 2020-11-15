@@ -38,6 +38,14 @@ public class AlunosCadastro extends javax.swing.JFrame {
         botaoDescricao.setVisible(false);
        turmasehorarios.setBackground(new Color (0,0,0,0));
        botaoConfirmar.setBackground(new Color (0,0,0,0));
+       btnAnterior.setBackground(new Color (0,0,0,0));
+       btnAnt.setBackground(new Color (0,0,0,0));
+       btnProxi.setBackground(new Color (0,0,0,0));
+       btnProx.setBackground(new Color (0,0,0,0));
+       jPanelCadastroFinal.setVisible(false);
+       jPanelPais.setVisible(false);
+       
+      
        
        
     }
@@ -52,32 +60,64 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private void initComponents() {
 
         botaofechar = new javax.swing.JButton();
-        comboTurma = new javax.swing.JComboBox<>();
-        botaoDescricao = new javax.swing.JButton();
-        botaoConfirmar = new javax.swing.JButton();
+        jpanelDados = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         campoNomeAluno = new FormatacaoCamposRestritosLetras(50);
-        campoNascimentoAluno = new javax.swing.JFormattedTextField();
-        campoNomePai = new FormatacaoCamposRestritosLetras(50);
-        campoNomeMae = new FormatacaoCamposRestritosLetras(50);
-        turmasehorarios = new javax.swing.JButton();
-        campoValor = new JMoneyField();
-        campoRua = new FormatacaodeCamposRestritos(50, 0);
-        campoCidade = new FormatacaodeCamposRestritos(20);
-        campoBairro = new FormatacaodeCamposRestritos(25, 0);
-        campoNum = new FormatacaodeCamposRestritos(10, 0);
-        campoTelefone = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         campoCPFAluno = new javax.swing.JFormattedTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        campoNascimentoAluno = new javax.swing.JFormattedTextField();
+        campoTelefone = new javax.swing.JFormattedTextField();
+        jLabel7 = new javax.swing.JLabel();
         campoCelular = new javax.swing.JFormattedTextField();
-        campoContatoPai = new javax.swing.JFormattedTextField();
-        campoContatoMae = new javax.swing.JFormattedTextField();
-        campoCPFPai = new javax.swing.JFormattedTextField();
-        campoCPFMae = new javax.swing.JFormattedTextField();
-        comboPlano = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        campoRua = new FormatacaodeCamposRestritos(50, 0);
+        jLabel10 = new javax.swing.JLabel();
+        campoCidade = new FormatacaodeCamposRestritos(20);
+        jLabel11 = new javax.swing.JLabel();
+        campoBairro = new FormatacaodeCamposRestritos(25, 0);
+        jLabel12 = new javax.swing.JLabel();
         comboEstado = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
         campoCEP = new javax.swing.JFormattedTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        campoNum = new FormatacaodeCamposRestritos(10, 0);
+        botaoDescricao = new javax.swing.JButton();
+        btnProx = new javax.swing.JButton();
+        jPanelCadastroFinal = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        turmasehorarios = new javax.swing.JButton();
+        comboPlano = new javax.swing.JComboBox<>();
+        jLabel24 = new javax.swing.JLabel();
+        campoValor = new JMoneyField();
+        jLabel25 = new javax.swing.JLabel();
+        comboTurma = new javax.swing.JComboBox<>();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel26 = new javax.swing.JLabel();
+        botaoConfirmar = new javax.swing.JButton();
+        btnAnterior = new javax.swing.JButton();
+        jPanelPais = new javax.swing.JPanel();
+        campoNomeMae = new FormatacaoCamposRestritosLetras(50);
+        jLabel17 = new javax.swing.JLabel();
+        campoContatoMae = new javax.swing.JFormattedTextField();
+        jLabel18 = new javax.swing.JLabel();
+        campoCPFMae = new javax.swing.JFormattedTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        campoNomePai = new FormatacaoCamposRestritosLetras(50);
+        campoContatoPai = new javax.swing.JFormattedTextField();
+        campoCPFPai = new javax.swing.JFormattedTextField();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        btnAnt = new javax.swing.JButton();
+        btnProxi = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
+        Cor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -98,83 +138,28 @@ public class AlunosCadastro extends javax.swing.JFrame {
         });
         getContentPane().add(botaofechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 50));
 
-        comboTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
-        getContentPane().add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 468, 190, 32));
+        jpanelDados.setBackground(new java.awt.Color(157, 197, 187));
+        jpanelDados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        botaoDescricao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnDescricao.png"))); // NOI18N
-        botaoDescricao.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnDescricaoHover.png"))); // NOI18N
-        botaoDescricao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoDescricaoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 720, 150, 30));
-
-        botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
-        botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
-        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoConfirmarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 690, 330, 60));
+        jLabel2.setFont(new java.awt.Font("Futura Md BT", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel2.setText("Endereço");
+        jpanelDados.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 90, 30));
 
         campoNomeAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoNomeAlunoActionPerformed(evt);
             }
         });
-        getContentPane().add(campoNomeAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 192, 240, 32));
+        jpanelDados.add(campoNomeAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 240, 32));
 
-        try {
-            campoNascimentoAluno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(campoNascimentoAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(587, 192, 165, 32));
-        getContentPane().add(campoNomePai, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 267, 240, 32));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Nome");
+        jpanelDados.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
-        campoNomeMae.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoNomeMaeActionPerformed(evt);
-            }
-        });
-        getContentPane().add(campoNomeMae, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 336, 240, 32));
-
-        turmasehorarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHora.png"))); // NOI18N
-        turmasehorarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHoraHover.png"))); // NOI18N
-        turmasehorarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                turmasehorariosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(turmasehorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 468, 230, 32));
-        getContentPane().add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 468, 170, 32));
-
-        campoRua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoRuaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(campoRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 581, 240, 32));
-
-        campoCidade.setText("Santa Inês");
-        getContentPane().add(campoCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 582, 140, 30));
-
-        campoBairro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoBairroActionPerformed(evt);
-            }
-        });
-        getContentPane().add(campoBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 582, 140, 30));
-        getContentPane().add(campoNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 650, 140, 32));
-
-        try {
-            campoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(campoTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 267, 160, 32));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("CPF");
+        jpanelDados.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
 
         try {
             campoCPFAluno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -186,42 +171,147 @@ public class AlunosCadastro extends javax.swing.JFrame {
                 campoCPFAlunoActionPerformed(evt);
             }
         });
-        getContentPane().add(campoCPFAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(379, 192, 190, 32));
+        jpanelDados.add(campoCPFAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 190, 32));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setText("Data de Nascimento");
+        jpanelDados.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Contato (fixo)");
+        jpanelDados.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+
+        try {
+            campoNascimentoAluno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        campoNascimentoAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNascimentoAlunoActionPerformed(evt);
+            }
+        });
+        jpanelDados.add(campoNascimentoAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, 165, 32));
+
+        try {
+            campoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        campoTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoTelefoneActionPerformed(evt);
+            }
+        });
+        jpanelDados.add(campoTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 160, 32));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("Contato (Celular)");
+        jpanelDados.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, -1, -1));
 
         try {
             campoCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        getContentPane().add(campoCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(314, 267, 160, 32));
+        jpanelDados.add(campoCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 160, 32));
+
+        jLabel8.setFont(new java.awt.Font("Futura Md BT", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel8.setText("DADOS DO ALUNO");
+        jpanelDados.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setText("Rua");
+        jpanelDados.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
+
+        campoRua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoRuaActionPerformed(evt);
+            }
+        });
+        jpanelDados.add(campoRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 240, 32));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setText("Cidade");
+        jpanelDados.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, -1, -1));
+
+        campoCidade.setText("Santa Inês");
+        jpanelDados.add(campoCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 260, 140, 30));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setText("Bairro");
+        jpanelDados.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, -1, -1));
+
+        campoBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoBairroActionPerformed(evt);
+            }
+        });
+        jpanelDados.add(campoBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 140, 30));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setText("Estado");
+        jpanelDados.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, -1, -1));
+
+        comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RO", "RN", "RR", "RS", "SC", "SE", "SP", "TO" }));
+        jpanelDados.add(comboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 140, 30));
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setText("CEP");
+        jpanelDados.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
 
         try {
-            campoContatoPai.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+            campoCEP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###-###")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        getContentPane().add(campoContatoPai, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 336, 160, 32));
+        jpanelDados.add(campoCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 130, 30));
 
-        try {
-            campoContatoMae.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(campoContatoMae, new org.netbeans.lib.awtextra.AbsoluteConstraints(567, 336, 160, 32));
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setText("Número");
+        jpanelDados.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 310, -1, -1));
+        jpanelDados.add(campoNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 140, 32));
 
-        try {
-            campoCPFPai.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(campoCPFPai, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 405, 190, 32));
+        botaoDescricao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnDescricao.png"))); // NOI18N
+        botaoDescricao.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnDescricaoHover.png"))); // NOI18N
+        botaoDescricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDescricaoActionPerformed(evt);
+            }
+        });
+        jpanelDados.add(botaoDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 130, 150, 30));
 
-        try {
-            campoCPFMae.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(campoCPFMae, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 405, 190, 32));
+        btnProx.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnProximo.png"))); // NOI18N
+        btnProx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProxActionPerformed(evt);
+            }
+        });
+        jpanelDados.add(btnProx, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, -1));
+
+        getContentPane().add(jpanelDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 760, 490));
+
+        jPanelCadastroFinal.setBackground(new java.awt.Color(157, 197, 187));
+        jPanelCadastroFinal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel15.setFont(new java.awt.Font("Futura Md BT", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel15.setText("DADOS CADASTRAIS DO ALUNO");
+        jPanelCadastroFinal.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setText("Turma");
+        jPanelCadastroFinal.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
+
+        turmasehorarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHora.png"))); // NOI18N
+        turmasehorarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHoraHover.png"))); // NOI18N
+        turmasehorarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turmasehorariosActionPerformed(evt);
+            }
+        });
+        jPanelCadastroFinal.add(turmasehorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 230, 32));
 
         comboPlano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
         comboPlano.addActionListener(new java.awt.event.ActionListener() {
@@ -229,26 +319,135 @@ public class AlunosCadastro extends javax.swing.JFrame {
                 comboPlanoActionPerformed(evt);
             }
         });
-        getContentPane().add(comboPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 405, 190, 32));
+        jPanelCadastroFinal.add(comboPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 190, 32));
 
-        comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RO", "RN", "RR", "RS", "SC", "SE", "SP", "TO" }));
-        getContentPane().add(comboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 580, 140, 30));
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel24.setText("Plano");
+        jPanelCadastroFinal.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+        jPanelCadastroFinal.add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 170, 32));
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel25.setText("Data de Vencimento");
+        jPanelCadastroFinal.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
+
+        comboTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
+        jPanelCadastroFinal.add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 190, 32));
+        jPanelCadastroFinal.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 180, -1));
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel26.setText("Valor");
+        jPanelCadastroFinal.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, -1, -1));
+
+        botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
+        botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
+        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfirmarActionPerformed(evt);
+            }
+        });
+        jPanelCadastroFinal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 330, 60));
+
+        btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnAnterior.png"))); // NOI18N
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
+        jPanelCadastroFinal.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, -1, -1));
+
+        getContentPane().add(jPanelCadastroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 710, 490));
+
+        jPanelPais.setBackground(new java.awt.Color(157, 197, 187));
+        jPanelPais.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        campoNomeMae.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNomeMaeActionPerformed(evt);
+            }
+        });
+        jPanelPais.add(campoNomeMae, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 240, 32));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel17.setText("Contato Mãe");
+        jPanelPais.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
 
         try {
-            campoCEP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###-###")));
+            campoContatoMae.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        getContentPane().add(campoCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 650, 130, 32));
+        jPanelPais.add(campoContatoMae, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 160, 32));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(11, 13, 138));
-        jLabel1.setText("Data de Vencimento");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 510, -1, -1));
-        getContentPane().add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 530, 180, -1));
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel18.setText("CPF Mãe");
+        jPanelPais.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, -1, -1));
 
-        planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/fundo jframecadastroalunos.png"))); // NOI18N
-        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        try {
+            campoCPFMae.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanelPais.add(campoCPFMae, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, 190, 32));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setText("Nome Pai");
+        jPanelPais.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel20.setText("Contato Pai");
+        jPanelPais.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, -1, -1));
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel21.setText("CPF Pai");
+        jPanelPais.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, -1, -1));
+        jPanelPais.add(campoNomePai, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 240, 32));
+
+        try {
+            campoContatoPai.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanelPais.add(campoContatoPai, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 160, 32));
+
+        try {
+            campoCPFPai.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanelPais.add(campoCPFPai, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, 190, 32));
+
+        jLabel22.setFont(new java.awt.Font("Futura Md BT", 1, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel22.setText("DADOS DOS PAIS");
+        jPanelPais.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel23.setText("Nome Mãe");
+        jPanelPais.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
+
+        btnAnt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnAnterior.png"))); // NOI18N
+        btnAnt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAntActionPerformed(evt);
+            }
+        });
+        jPanelPais.add(btnAnt, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
+
+        btnProxi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnProximo.png"))); // NOI18N
+        btnProxi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProxiActionPerformed(evt);
+            }
+        });
+        jPanelPais.add(btnProxi, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, -1, -1));
+
+        getContentPane().add(jPanelPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 670, 350));
+
+        planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/cadastrar-alunofundo.jpg"))); // NOI18N
+        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, 420));
+
+        Cor.setBackground(new java.awt.Color(157, 197, 187));
+        getContentPane().add(Cor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 870, 350));
 
         pack();
         setLocationRelativeTo(null);
@@ -315,6 +514,43 @@ public class AlunosCadastro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboPlanoActionPerformed
 
+    private void campoNascimentoAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNascimentoAlunoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoNascimentoAlunoActionPerformed
+
+    private void campoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTelefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoTelefoneActionPerformed
+
+    private void btnAntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAntActionPerformed
+        // TODO add your handling code here:
+        jpanelDados.setVisible(true);
+        jPanelPais.setVisible(false);
+    }//GEN-LAST:event_btnAntActionPerformed
+
+    private void btnProxiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProxiActionPerformed
+        // TODO add your handling code here:
+        jPanelPais.setVisible(false);
+        jPanelCadastroFinal.setVisible(true);
+    }//GEN-LAST:event_btnProxiActionPerformed
+
+    private void btnProxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProxActionPerformed
+        // TODO add your handling code here:
+        jpanelDados.setVisible(false);
+        jPanelPais.setVisible(true);
+    }//GEN-LAST:event_btnProxActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        // TODO add your handling code here:
+        jPanelCadastroFinal.setVisible(false);
+        jPanelPais.setVisible(true);
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+    private void jpanelDadosActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }  
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -351,9 +587,14 @@ public class AlunosCadastro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Cor;
     private javax.swing.JButton botaoConfirmar;
     private javax.swing.JButton botaoDescricao;
     private javax.swing.JButton botaofechar;
+    private javax.swing.JButton btnAnt;
+    private javax.swing.JButton btnAnterior;
+    private javax.swing.JButton btnProx;
+    private javax.swing.JButton btnProxi;
     private javax.swing.JTextField campoBairro;
     private javax.swing.JFormattedTextField campoCEP;
     private javax.swing.JFormattedTextField campoCPFAluno;
@@ -375,7 +616,34 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboPlano;
     private javax.swing.JComboBox<String> comboTurma;
     private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanelCadastroFinal;
+    private javax.swing.JPanel jPanelPais;
+    private javax.swing.JPanel jpanelDados;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JButton turmasehorarios;
     // End of variables declaration//GEN-END:variables
