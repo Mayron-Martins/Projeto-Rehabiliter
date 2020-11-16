@@ -28,7 +28,7 @@ public abstract class Pessoa {
     
     
     //Pessoa Normal
-    public Pessoa(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, String datadenascimento) {
+    public Pessoa(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento) {
         this.codBanco = codBanco;
         this.nome = nome;
         this.cpf = cpf;
@@ -38,15 +38,11 @@ public abstract class Pessoa {
         this.email = email;
         
         ConversaodeDataParaPadraoDesignado converter = new ConversaodeDataParaPadraoDesignado();
-        try {
-            this.datadenascimento = converter.getSqlDate(converter.parseDate(datadenascimento));
-        } catch (ParseException ex) {
-            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.datadenascimento = converter.getSqlDate(datadenascimento);
     }
     
     //Pessoa com Login e Senha
-    public Pessoa(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, String datadenascimento, String usuario) {
+    public Pessoa(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario) {
         this.codBanco = codBanco;
         this.nome = nome;
         this.cpf = cpf;
@@ -56,11 +52,7 @@ public abstract class Pessoa {
         this.email = email;
         this.usuario = usuario;
         ConversaodeDataParaPadraoDesignado converter = new ConversaodeDataParaPadraoDesignado();
-        try {
-            this.datadenascimento = converter.getSqlDate(converter.parseDate(datadenascimento));
-        } catch (ParseException ex) {
-            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.datadenascimento = converter.getSqlDate(datadenascimento);
     }
     
     //___________________________________________________________________________

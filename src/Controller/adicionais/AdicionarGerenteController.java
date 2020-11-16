@@ -15,6 +15,7 @@ import View.LoginGerente;
 import View.RegistrodeGerente;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.Date;
 
 /**
  *
@@ -37,9 +38,7 @@ public class AdicionarGerenteController {
         int codGerente = 1;
         String nome = view.getCampoNome().getText();
         String cpf = view.getCampoCPF().getText();
-        String dataNascimento;
-        if(view.getCampoNascimento().getText().equals("  /  /    ")){dataNascimento=null;}
-        else{dataNascimento = view.getCampoNascimento().getText();}
+        Date dataNascimento = view.getCampoNascimento().getDate();
         
         String celular = view.getCampoCelular().getText();
         String usuario = cpf;

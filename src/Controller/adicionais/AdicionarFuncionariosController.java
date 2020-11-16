@@ -17,6 +17,7 @@ import View.FuncionariosAdicionar;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -40,9 +41,7 @@ public class AdicionarFuncionariosController {
         int codFuncionario = verificar.verificarUltimo("tblFuncionarios", "codFuncionario")+1;
         String nome = view.getCampoNome().getText();
         String cpf = view.getCampoCPF().getText();
-        String dataNascimento;
-        if(view.getCampoNascimento().getText().equals("  /  /    ")){dataNascimento=null;}
-        else{dataNascimento = view.getCampoNascimento().getText();}
+        Date dataNascimento = view.getCampoNascimento().getDate();
         
         String celular = view.getCampoCelular().getText();
         String telefone = view.getCampoTelefone().getText();
@@ -80,7 +79,6 @@ public class AdicionarFuncionariosController {
             view.getCampoCPF().setText("");
             view.getCampoCelular().setText("");
             view.getCampoCelular().setText("");
-            view.getCampoNascimento().setText("");
             view.getCampoCargo().setText("");
             view.getCampoSalario().setText("");
             view.getCampoSenha().setText("");

@@ -6,6 +6,7 @@
 package View;
 
 import Controller.adicionais.AdicionarGerenteController;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -43,7 +44,7 @@ public class RegistrodeGerente extends javax.swing.JFrame {
 
         btnConfirmar = new javax.swing.JButton();
         campoNome = new javax.swing.JTextField();
-        campoNascimento = new javax.swing.JFormattedTextField();
+        campoNascimento = new com.toedter.calendar.JDateChooser();
         campoCelular = new javax.swing.JFormattedTextField();
         campoCPF = new javax.swing.JFormattedTextField();
         campoSenha = new javax.swing.JPasswordField();
@@ -65,12 +66,6 @@ public class RegistrodeGerente extends javax.swing.JFrame {
         });
         getContentPane().add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, -1, -1));
         getContentPane().add(campoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 202, 210, 30));
-
-        try {
-            campoNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
         getContentPane().add(campoNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 140, 30));
 
         try {
@@ -147,7 +142,7 @@ public class RegistrodeGerente extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField campoCPF;
     private javax.swing.JFormattedTextField campoCelular;
     private javax.swing.JPasswordField campoConfirmarSenha;
-    private javax.swing.JFormattedTextField campoNascimento;
+    private com.toedter.calendar.JDateChooser campoNascimento;
     private javax.swing.JTextField campoNome;
     private javax.swing.JPasswordField campoSenha;
     private javax.swing.JLabel fundo;
@@ -169,7 +164,7 @@ public class RegistrodeGerente extends javax.swing.JFrame {
         return campoConfirmarSenha;
     }
 
-    public JFormattedTextField getCampoNascimento() {
+    public JDateChooser getCampoNascimento() {
         return campoNascimento;
     }
 

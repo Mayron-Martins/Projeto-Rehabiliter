@@ -9,6 +9,7 @@ import Controller.adicionais.AdicionarAlunosController;
 import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Button;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -60,6 +61,19 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private void initComponents() {
 
         botaofechar = new javax.swing.JButton();
+        jPanelCadastroFinal = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        turmasehorarios = new javax.swing.JButton();
+        comboPlano = new javax.swing.JComboBox<>();
+        jLabel24 = new javax.swing.JLabel();
+        campoValor = new JMoneyField();
+        jLabel25 = new javax.swing.JLabel();
+        comboTurma = new javax.swing.JComboBox<>();
+        jLabel26 = new javax.swing.JLabel();
+        botaoConfirmar = new javax.swing.JButton();
+        btnAnterior = new javax.swing.JButton();
+        jDayChooser2 = new com.toedter.calendar.JDayChooser();
         jpanelDados = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         campoNomeAluno = new FormatacaoCamposRestritosLetras(50);
@@ -68,7 +82,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         campoCPFAluno = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        campoNascimentoAluno = new javax.swing.JFormattedTextField();
+        campoNascimentoAluno = new com.toedter.calendar.JDateChooser();
         campoTelefone = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         campoCelular = new javax.swing.JFormattedTextField();
@@ -87,20 +101,6 @@ public class AlunosCadastro extends javax.swing.JFrame {
         campoNum = new FormatacaodeCamposRestritos(10, 0);
         botaoDescricao = new javax.swing.JButton();
         btnProx = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jPanelCadastroFinal = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        turmasehorarios = new javax.swing.JButton();
-        comboPlano = new javax.swing.JComboBox<>();
-        jLabel24 = new javax.swing.JLabel();
-        campoValor = new JMoneyField();
-        jLabel25 = new javax.swing.JLabel();
-        comboTurma = new javax.swing.JComboBox<>();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jLabel26 = new javax.swing.JLabel();
-        botaoConfirmar = new javax.swing.JButton();
-        btnAnterior = new javax.swing.JButton();
         jPanelPais = new javax.swing.JPanel();
         campoNomeMae = new FormatacaoCamposRestritosLetras(50);
         jLabel17 = new javax.swing.JLabel();
@@ -138,6 +138,71 @@ public class AlunosCadastro extends javax.swing.JFrame {
             }
         });
         getContentPane().add(botaofechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 50));
+
+        jPanelCadastroFinal.setBackground(new java.awt.Color(157, 197, 187));
+        jPanelCadastroFinal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel15.setFont(new java.awt.Font("Futura Md BT", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel15.setText("DADOS CADASTRAIS DO ALUNO");
+        jPanelCadastroFinal.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setText("Turma");
+        jPanelCadastroFinal.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
+
+        turmasehorarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHora.png"))); // NOI18N
+        turmasehorarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHoraHover.png"))); // NOI18N
+        turmasehorarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turmasehorariosActionPerformed(evt);
+            }
+        });
+        jPanelCadastroFinal.add(turmasehorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 230, 32));
+
+        comboPlano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
+        comboPlano.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPlanoActionPerformed(evt);
+            }
+        });
+        jPanelCadastroFinal.add(comboPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 190, 32));
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel24.setText("Plano");
+        jPanelCadastroFinal.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+        jPanelCadastroFinal.add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 170, 32));
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel25.setText("Data de Vencimento");
+        jPanelCadastroFinal.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
+
+        comboTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
+        jPanelCadastroFinal.add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 190, 32));
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel26.setText("Valor");
+        jPanelCadastroFinal.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, -1, -1));
+
+        botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
+        botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
+        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfirmarActionPerformed(evt);
+            }
+        });
+        jPanelCadastroFinal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 330, 60));
+
+        btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnAnterior.png"))); // NOI18N
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
+        jPanelCadastroFinal.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, -1, -1));
+        jPanelCadastroFinal.add(jDayChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+
+        getContentPane().add(jPanelCadastroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 710, 490));
 
         jpanelDados.setBackground(new java.awt.Color(157, 197, 187));
         jpanelDados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -181,17 +246,6 @@ public class AlunosCadastro extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Contato (fixo)");
         jpanelDados.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
-
-        try {
-            campoNascimentoAluno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        campoNascimentoAluno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoNascimentoAlunoActionPerformed(evt);
-            }
-        });
         jpanelDados.add(campoNascimentoAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, 165, 32));
 
         try {
@@ -290,74 +344,8 @@ public class AlunosCadastro extends javax.swing.JFrame {
             }
         });
         jpanelDados.add(btnProx, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, -1));
-        jpanelDados.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, -1, -1));
 
         getContentPane().add(jpanelDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 760, 490));
-
-        jPanelCadastroFinal.setBackground(new java.awt.Color(157, 197, 187));
-        jPanelCadastroFinal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel15.setFont(new java.awt.Font("Futura Md BT", 1, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(11, 13, 138));
-        jLabel15.setText("DADOS CADASTRAIS DO ALUNO");
-        jPanelCadastroFinal.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel16.setText("Turma");
-        jPanelCadastroFinal.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
-
-        turmasehorarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHora.png"))); // NOI18N
-        turmasehorarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHoraHover.png"))); // NOI18N
-        turmasehorarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                turmasehorariosActionPerformed(evt);
-            }
-        });
-        jPanelCadastroFinal.add(turmasehorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 230, 32));
-
-        comboPlano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
-        comboPlano.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboPlanoActionPerformed(evt);
-            }
-        });
-        jPanelCadastroFinal.add(comboPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 190, 32));
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel24.setText("Plano");
-        jPanelCadastroFinal.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
-        jPanelCadastroFinal.add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 170, 32));
-
-        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel25.setText("Data de Vencimento");
-        jPanelCadastroFinal.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
-
-        comboTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
-        jPanelCadastroFinal.add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 190, 32));
-        jPanelCadastroFinal.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 180, -1));
-
-        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel26.setText("Valor");
-        jPanelCadastroFinal.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, -1, -1));
-
-        botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
-        botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
-        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoConfirmarActionPerformed(evt);
-            }
-        });
-        jPanelCadastroFinal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 330, 60));
-
-        btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnAnterior.png"))); // NOI18N
-        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnteriorActionPerformed(evt);
-            }
-        });
-        jPanelCadastroFinal.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, -1, -1));
-
-        getContentPane().add(jPanelCadastroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 710, 490));
 
         jPanelPais.setBackground(new java.awt.Color(157, 197, 187));
         jPanelPais.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -516,10 +504,6 @@ public class AlunosCadastro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboPlanoActionPerformed
 
-    private void campoNascimentoAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNascimentoAlunoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoNascimentoAlunoActionPerformed
-
     private void campoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTelefoneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTelefoneActionPerformed
@@ -606,7 +590,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JTextField campoCidade;
     private javax.swing.JFormattedTextField campoContatoMae;
     private javax.swing.JFormattedTextField campoContatoPai;
-    private javax.swing.JFormattedTextField campoNascimentoAluno;
+    private com.toedter.calendar.JDateChooser campoNascimentoAluno;
     private javax.swing.JTextField campoNomeAluno;
     private javax.swing.JTextField campoNomeMae;
     private javax.swing.JTextField campoNomePai;
@@ -617,8 +601,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JComboBox<String> comboPlano;
     private javax.swing.JComboBox<String> comboTurma;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private com.toedter.calendar.JDayChooser jDayChooser2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -691,7 +674,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         return campoContatoPai;
     }
 
-    public JFormattedTextField getCampoNascimentoAluno() {
+    public JDateChooser getCampoNascimentoAluno() {
         return campoNascimentoAluno;
     }
 

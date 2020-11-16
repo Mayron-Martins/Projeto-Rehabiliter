@@ -130,7 +130,7 @@ public class FuncionarioDao extends Conexao{
     String cpf = resultset.getString("cpf");
     String telefone = resultset.getString("telefone");
     String celular = resultset.getString("celular");
-    String dataNascimento = converterData.parseDate(resultset.getDate("dataNascimento"));
+    Date dataNascimento = resultset.getDate("dataNascimento");
     String usuario = resultset.getString("usuario");
     String senha = resultset.getString("senha");
     BigDecimal salario= new BigDecimal(resultset.getBigDecimal("salario").toString());

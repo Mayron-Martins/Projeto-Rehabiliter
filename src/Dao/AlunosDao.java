@@ -145,7 +145,7 @@ public class AlunosDao extends Conexao{
     String telefone = resultset.getString("telefone");
     String celular = resultset.getString("celular");
     String email = "";
-    String dataNascimento = converterData.parseDate(resultset.getDate("dataNascimento"));
+    Date dataNascimento = resultset.getDate("dataNascimento");
     String nomeMae = resultset.getString("nomeMae");
     String nomePai = resultset.getString("nomePai");
     String telefoneMae = resultset.getString("telefoneMae");

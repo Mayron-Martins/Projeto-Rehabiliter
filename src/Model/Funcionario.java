@@ -17,7 +17,7 @@ public class Funcionario extends Pessoa{
     protected BigDecimal salario;
     protected String cargo;
 
-    public Funcionario(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, String datadenascimento, String usuario,String senha, BigDecimal salario, String cargo) {
+    public Funcionario(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario,String senha, BigDecimal salario, String cargo) {
         super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento, usuario);
         this.senha = senha;
         this.salario = new BigDecimal(salario.toString());

@@ -106,7 +106,7 @@ public class AlunosController {
             Aluno alunoAnterior = this.alunoAnterior(codAluno);
             
             Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
-                    alunoAnterior.getCelular(), alunoAnterior.getEmail(), converterData.parseDate(alunoAnterior.getDatadenascimento()), 
+                    alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
                     nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurma, codServico, alunoAnterior.getDescricao(), 
                     valorDebito, valorContrato);
             

@@ -7,6 +7,7 @@ package View;
 
 import Controller.adicionais.AdicionarFuncionariosController;
 import Controller.auxiliar.JMoneyField;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -49,7 +50,7 @@ public class FuncionariosAdicionar extends javax.swing.JFrame {
         campoTelefone = new javax.swing.JFormattedTextField();
         campoCelular = new javax.swing.JFormattedTextField();
         campoSalario = new JMoneyField();
-        campoNascimento = new javax.swing.JFormattedTextField();
+        campoNascimento = new com.toedter.calendar.JDateChooser();
         campoCPF = new javax.swing.JFormattedTextField();
         campoSenha = new javax.swing.JPasswordField();
         campoNome = new javax.swing.JTextField();
@@ -95,12 +96,6 @@ public class FuncionariosAdicionar extends javax.swing.JFrame {
         }
         getContentPane().add(campoCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 160, 30));
         getContentPane().add(campoSalario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 160, 30));
-
-        try {
-            campoNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
         getContentPane().add(campoNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 200, 160, 30));
 
         try {
@@ -179,7 +174,7 @@ public class FuncionariosAdicionar extends javax.swing.JFrame {
     private javax.swing.JTextField campoCargo;
     private javax.swing.JFormattedTextField campoCelular;
     private javax.swing.JTextField campoEmail;
-    private javax.swing.JFormattedTextField campoNascimento;
+    private com.toedter.calendar.JDateChooser campoNascimento;
     private javax.swing.JTextField campoNome;
     private javax.swing.JFormattedTextField campoSalario;
     private javax.swing.JPasswordField campoSenha;
@@ -204,7 +199,7 @@ public class FuncionariosAdicionar extends javax.swing.JFrame {
         return campoEmail;
     }
 
-    public JFormattedTextField getCampoNascimento() {
+    public JDateChooser getCampoNascimento() {
         return campoNascimento;
     }
 

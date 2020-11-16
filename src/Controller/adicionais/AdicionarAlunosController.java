@@ -25,6 +25,7 @@ import View.TurmasView;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -92,9 +93,8 @@ public class AdicionarAlunosController {
         String cpf = view.getCampoCPFAluno().getText();
         String rg = ""; //Como não está na tabela é nula
         
-        String dataNascimento;
-        if(view.getCampoNascimentoAluno().getText().equals("  /  /    ")){dataNascimento=null;}
-        else{dataNascimento = view.getCampoNascimentoAluno().getText();}
+        Date dataNascimento = view.getCampoNascimentoAluno().getDate();
+        System.out.println(dataNascimento);
         
         String telefone = view.getCampoTelefone().getText();
         String celular = view.getCampoCelular().getText();
@@ -148,7 +148,7 @@ public class AdicionarAlunosController {
         int quantAlunosPresentes = verificar.verificarUltimo("tblTurmas", "quantAlunos");
         
         //Verifica se não há dados irregulares antes de colocar na tabela
-        if(nome.equals("")||dataNascimento.equals("  /  /   ")||plano.equals("[Nenhum]")||turma.equals("[Nenhuma]")
+        if(nome.equals("")||dataNascimento == null||plano.equals("[Nenhum]")||turma.equals("[Nenhuma]")
                || logradouro.equals("")||bairro.equals("")||numero.equals("")||cidade.equals("")
                 ||estado.equals("[Nenhum]")||cep.equals("  .   -   ")){
         view.exibeMensagem("Valores Preenchidos Incorretamente!");
@@ -161,7 +161,6 @@ public class AdicionarAlunosController {
             //Limpando Campos
             view.getCampoNomeAluno().setText("");
             view.getCampoCPFAluno().setText("");
-            view.getCampoNascimentoAluno().setText("");
             view.getCampoTelefone().setText("");
             view.getCampoCelular().setText("");
             view.getCampoNomePai().setText("");

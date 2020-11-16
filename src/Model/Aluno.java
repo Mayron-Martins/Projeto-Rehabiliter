@@ -25,7 +25,7 @@ public class Aluno extends Pessoa {
    private BigDecimal debito;
    private BigDecimal valorContrato;
 
-    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, String datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int plano, String descricao, BigDecimal debito, BigDecimal valorContrato) {
+    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int plano, String descricao, BigDecimal debito, BigDecimal valorContrato) {
         super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento);
         this.nomedamae = nomedamae;
         this.nomedopai = nomedopai;

@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Cliente extends Pessoa{
     
-    public Cliente(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, String datadenascimento) {
+    public Cliente(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento) {
         super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento);
     }
     

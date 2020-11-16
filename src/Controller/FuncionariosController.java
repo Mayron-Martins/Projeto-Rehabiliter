@@ -64,7 +64,7 @@ public class FuncionariosController {
             
             Funcionario funcionarioAnterior = this.funcionarioAnterior(codAluno);
             
-            Funcionario funcionario = new Funcionario(codAluno, nome, cpf, "", telefone, celular, funcionarioAnterior.getEmail(), converterData.parseDate(funcionarioAnterior.getDatadenascimento()),
+            Funcionario funcionario = new Funcionario(codAluno, nome, cpf, "", telefone, celular, funcionarioAnterior.getEmail(), funcionarioAnterior.getDatadenascimento(),
                     usuario, funcionarioAnterior.getSenha(), valorSalario, cargo);
         
 //Inserindo Dados
