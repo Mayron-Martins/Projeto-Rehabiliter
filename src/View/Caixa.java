@@ -38,11 +38,14 @@ public class Caixa extends javax.swing.JFrame {
         btnPlanoDePagamento.setBackground(new Color(0,0,0,0));
         btnFinalizar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
+         botaoConfirmar1.setBackground(new Color(0,0,0,0));
         btnCancelar.setBackground(new Color(0,0,0,0));
         setExtendedState(MAXIMIZED_BOTH);
         this.setarComponentes();
+        btnFechar.setBackground(new Color(0,0,0,0));
         painelTabelaProdutos.setVisible(true);
         painelPagamentoMensal.setVisible(false);
+        jPanelFormaDePagamento.setVisible(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
@@ -61,6 +64,15 @@ public class Caixa extends javax.swing.JFrame {
         alternarProdCodigo = new javax.swing.JRadioButton();
         alternarProdNome = new javax.swing.JRadioButton();
         campoCliente = new FormatacaoCamposRestritosLetras();
+        jPanelFormaDePagamento = new javax.swing.JPanel();
+        botaoConfirmar1 = new javax.swing.JButton();
+        radioDeb = new javax.swing.JRadioButton();
+        radioCred = new javax.swing.JRadioButton();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
+        btnFechar = new javax.swing.JButton();
         botaoBuscarCliente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaDeClientes = new javax.swing.JTable();
@@ -134,6 +146,52 @@ public class Caixa extends javax.swing.JFrame {
             }
         });
         getContentPane().add(campoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 190, 40));
+
+        jPanelFormaDePagamento.setBackground(new java.awt.Color(0, 122, 185));
+        jPanelFormaDePagamento.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        botaoConfirmar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
+        botaoConfirmar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
+        botaoConfirmar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfirmar1ActionPerformed(evt);
+            }
+        });
+        jPanelFormaDePagamento.add(botaoConfirmar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 330, 60));
+
+        radioDeb.setText("Débito");
+        jPanelFormaDePagamento.add(radioDeb, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, -1, -1));
+
+        radioCred.setText("Crédito");
+        radioCred.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioCredActionPerformed(evt);
+            }
+        });
+        jPanelFormaDePagamento.add(radioCred, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        jPanelFormaDePagamento.add(jFormattedTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 110, 40));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Cartão, parcelamento:");
+        jPanelFormaDePagamento.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 190, 40));
+        jPanelFormaDePagamento.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 110, 40));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Dinheiro:");
+        jPanelFormaDePagamento.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 110, 40));
+
+        btnFechar.setForeground(new java.awt.Color(255, 255, 255));
+        btnFechar.setText("X");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
+        jPanelFormaDePagamento.add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        getContentPane().add(jPanelFormaDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 450, 410, 300));
 
         botaoBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaoBuscarCliente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
@@ -312,7 +370,7 @@ public class Caixa extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 480, 130));
 
-        btnPlanoDePagamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnPlanodePagamento.png"))); // NOI18N
+        btnPlanoDePagamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnFormaDePagamento.png"))); // NOI18N
         btnPlanoDePagamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPlanoDePagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -415,8 +473,9 @@ public class Caixa extends javax.swing.JFrame {
 
     private void btnPlanoDePagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanoDePagamentoActionPerformed
         // TODO add your handling code here:
-        CaixaPlanoDePagamento abrir=new CaixaPlanoDePagamento();
-        abrir.setVisible(true);
+        //CaixaPlanoDePagamento abrir=new CaixaPlanoDePagamento();
+       // abrir.setVisible(true);
+       jPanelFormaDePagamento.setVisible(true);
     }//GEN-LAST:event_btnPlanoDePagamentoActionPerformed
 
     private void campoPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisaKeyPressed
@@ -476,6 +535,19 @@ public class Caixa extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_campoProdutoNomeKeyPressed
 
+    private void botaoConfirmar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmar1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_botaoConfirmar1ActionPerformed
+
+    private void radioCredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCredActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radioCredActionPerformed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        // TODO add your handling code here:
+        jPanelFormaDePagamento.setVisible(false);
+    }//GEN-LAST:event_btnFecharActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -520,10 +592,12 @@ public class Caixa extends javax.swing.JFrame {
     private javax.swing.JButton botaoBuscarCliente;
     private javax.swing.JButton botaoBuscarProdutos;
     private javax.swing.JButton botaoConfirmar;
+    private javax.swing.JButton botaoConfirmar1;
     private javax.swing.JButton botaoPagamentoMensalidade;
     private javax.swing.JButton botaobuscar2;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnPlanoDePagamento;
     private javax.swing.JTextField campoCliente;
@@ -535,16 +609,23 @@ public class Caixa extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField campoVPago;
     private javax.swing.JFormattedTextField campoVTotal;
     private javax.swing.JFormattedTextField campoVTroco;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelFormaDePagamento;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel painelPagamentoMensal;
     private javax.swing.JScrollPane painelTabelaProdutos;
+    private javax.swing.JRadioButton radioCred;
+    private javax.swing.JRadioButton radioDeb;
     private javax.swing.JTable tabelaDeCarrinho;
     private javax.swing.JTable tabelaDeClientes;
     private javax.swing.JTable tabelaDeProdutos;
