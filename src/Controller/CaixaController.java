@@ -32,28 +32,28 @@ public class CaixaController {
 
     public CaixaController(Caixa view) {
         this.view = view;
-        this.tabelaDeClientes = (DefaultTableModel) view.getTabelaCliente().getModel();
-        this.tabelaDeProdutos = (DefaultTableModel) view.getTabelaProdutos().getModel();
-        this.tabelaDeCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
+        this.tabelaDeClientes = (DefaultTableModel) view.getTabelaDeClientes().getModel();
+        this.tabelaDeProdutos = (DefaultTableModel) view.getTabelaDeProdutos().getModel();
+        this.tabelaDeCarrinho = (DefaultTableModel) view.getTabelaDeCarrinho().getModel();
     }
     
         //Limpar tabela
     public void limparTabelaClientes(){
-        int quantLinhas = this.view.getTabelaCliente().getRowCount();
+        int quantLinhas = this.view.getTabelaDeClientes().getRowCount();
         for(int quant=0; quant<quantLinhas; quant++){
             this.tabelaDeClientes.removeRow(0);
         }
     }
     
     public void limparTabelaProdutos(){
-        int quantLinhas = this.view.getTabelaProdutos().getRowCount();
+        int quantLinhas = this.view.getTabelaDeProdutos().getRowCount();
         for(int quant=0; quant<quantLinhas; quant++){
             this.tabelaDeProdutos.removeRow(0);
         }
     }
        
     public void limparTabelaCarrinho(){
-        int quantLinhas = this.view.getTabelaCarrinho().getRowCount();
+        int quantLinhas = this.view.getTabelaDeCarrinho().getRowCount();
         for(int quant=0; quant<quantLinhas; quant++){
             this.tabelaDeCarrinho.removeRow(0);
         }
@@ -100,7 +100,7 @@ public class CaixaController {
     
     //Funções para Tratamento de Produtos
     //Buscar Produtos no campo de busca
-    public void buscarProdutos() throws Exception{
+    public void setarTabelaProdutos() throws Exception{
         if(view.getCampoProdutoNome().isVisible()){
             String produtoPesquisa = view.getCampoProdutoNome().getText();
             if(produtoPesquisa.equals("")){listarProdutos();}

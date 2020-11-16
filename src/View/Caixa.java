@@ -5,30 +5,44 @@
  */
 package View;
 
+import Controller.CaixaController;
+import Controller.auxiliar.FormatacaoCamposRestritosLetras;
+import Controller.auxiliar.FormatacaodeCamposRestritos;
+import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
  * @author 55989
  */
 public class Caixa extends javax.swing.JFrame {
+    private final CaixaController controller;
 
     /**
      * Creates new form Caixa
      */
     public Caixa() {
         initComponents();
-        botaobuscar.setBackground(new Color(0,0,0,0));
-        botaobuscar1.setBackground(new Color(0,0,0,0));
+        controller = new CaixaController(this);
+        botaoBuscarCliente.setBackground(new Color(0,0,0,0));
+        botaoBuscarProdutos.setBackground(new Color(0,0,0,0));
         btnAdicionar.setBackground(new Color(0,0,0,0));
-        btnPagamentoMensal.setBackground(new Color(0,0,0,0));
+        botaoPagamentoMensalidade.setBackground(new Color(0,0,0,0));
         btnPlanoDePagamento.setBackground(new Color(0,0,0,0));
         btnFinalizar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         btnCancelar.setBackground(new Color(0,0,0,0));
         setExtendedState(MAXIMIZED_BOTH);
-        tabelaProdutosAdicionados.setVisible(true);
-        pagamentoMensal.setVisible(false);
+        this.setarComponentes();
+        painelTabelaProdutos.setVisible(true);
+        painelPagamentoMensal.setVisible(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
@@ -42,87 +56,132 @@ public class Caixa extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jTextField1 = new javax.swing.JTextField();
-        botaobuscar = new javax.swing.JButton();
+        alternarClienteCadastrado = new javax.swing.JRadioButton();
+        alternarClienteSemCadastro = new javax.swing.JRadioButton();
+        alternarProdCodigo = new javax.swing.JRadioButton();
+        alternarProdNome = new javax.swing.JRadioButton();
+        campoCliente = new FormatacaoCamposRestritosLetras();
+        botaoBuscarCliente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        pagamentoMensal = new javax.swing.JPanel();
+        tabelaDeClientes = new javax.swing.JTable();
+        painelPagamentoMensal = new javax.swing.JPanel();
         campoPesquisa = new javax.swing.JTextField();
         botaobuscar2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        tabelaMensalidade = new javax.swing.JTable();
         botaoConfirmar = new javax.swing.JButton();
-        tabelaProdutosAdicionados = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jTextField2 = new javax.swing.JTextField();
-        botaobuscar1 = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        painelTabelaProdutos = new javax.swing.JScrollPane();
+        tabelaDeCarrinho = new javax.swing.JTable();
+        campoProdutoNome = new FormatacaoCamposRestritosLetras();
+        campoProdutoCodigo = new FormatacaodeCamposRestritos();
+        botaoBuscarProdutos = new javax.swing.JButton();
+        campoQuantidade = new JMoneyField();
         btnAdicionar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tabelaDeProdutos = new javax.swing.JTable();
         btnPlanoDePagamento = new javax.swing.JButton();
-        btnPagamentoMensal = new javax.swing.JButton();
+        botaoPagamentoMensalidade = new javax.swing.JButton();
         btnFinalizar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        campoVPago = new JMoneyField();
+        jLabel8 = new javax.swing.JLabel();
+        campoVDesconto = new JMoneyField();
+        jLabel7 = new javax.swing.JLabel();
+        campoVTroco = new JMoneyField();
+        jLabel6 = new javax.swing.JLabel();
+        campoVTotal = new JMoneyField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         Fundo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 25, 20));
-        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 25, 20));
-        getContentPane().add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 312, -1, -1));
 
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+        alternarClienteCadastrado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
+                alternarClienteCadastradoActionPerformed(evt);
             }
         });
-        getContentPane().add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 345, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 190, 40));
+        getContentPane().add(alternarClienteCadastrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 25, 20));
 
-        botaobuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
-        botaobuscar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
-        botaobuscar.addActionListener(new java.awt.event.ActionListener() {
+        alternarClienteSemCadastro.setSelected(true);
+        alternarClienteSemCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaobuscarActionPerformed(evt);
+                alternarClienteSemCadastroActionPerformed(evt);
             }
         });
-        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 50, 40));
+        getContentPane().add(alternarClienteSemCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 25, 20));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        alternarProdCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alternarProdCodigoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(alternarProdCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 312, -1, -1));
+
+        alternarProdNome.setSelected(true);
+        alternarProdNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alternarProdNomeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(alternarProdNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 345, -1, -1));
+
+        campoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoClienteKeyPressed(evt);
+            }
+        });
+        getContentPane().add(campoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 190, 40));
+
+        botaoBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
+        botaoBuscarCliente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
+        botaoBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoBuscarClienteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 50, 40));
+
+        tabelaDeClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "CodBanco", "Cliente", "Turma"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaDeClientes.getTableHeader().setResizingAllowed(false);
+        tabelaDeClientes.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tabelaDeClientes);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, 480, 150));
 
-        pagamentoMensal.setBackground(new java.awt.Color(0, 134, 191));
-        pagamentoMensal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        painelPagamentoMensal.setBackground(new java.awt.Color(0, 134, 191));
+        painelPagamentoMensal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         campoPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 campoPesquisaKeyPressed(evt);
             }
         });
-        pagamentoMensal.add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 320, 40));
+        painelPagamentoMensal.add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 320, 40));
 
         botaobuscar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaobuscar2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
@@ -131,22 +190,36 @@ public class Caixa extends javax.swing.JFrame {
                 botaobuscar2ActionPerformed(evt);
             }
         });
-        pagamentoMensal.add(botaobuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 50, 40));
+        painelPagamentoMensal.add(botaobuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 50, 40));
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaMensalidade.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "CodBanco", "Aluno", "Serviço", "Vencimento", "Situação"
             }
-        ));
-        jScrollPane2.setViewportView(jTable4);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        pagamentoMensal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 850, 170));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaMensalidade.getTableHeader().setResizingAllowed(false);
+        tabelaMensalidade.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tabelaMensalidade);
+
+        painelPagamentoMensal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 850, 170));
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
@@ -155,52 +228,87 @@ public class Caixa extends javax.swing.JFrame {
                 botaoConfirmarActionPerformed(evt);
             }
         });
-        pagamentoMensal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 330, 60));
+        painelPagamentoMensal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 330, 60));
 
-        getContentPane().add(pagamentoMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 450, 870, 310));
+        getContentPane().add(painelPagamentoMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 450, 870, 310));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaDeCarrinho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "CodBanco", "Produto", "Valor", "Quant.", "Subtotal"
             }
-        ));
-        tabelaProdutosAdicionados.setViewportView(jTable2);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        getContentPane().add(tabelaProdutosAdicionados, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 510, 860, 200));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 190, 40));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        botaobuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
-        botaobuscar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
-        botaobuscar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaobuscar1ActionPerformed(evt);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        getContentPane().add(botaobuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 280, 50, 40));
-        getContentPane().add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 362, 70, 40));
+        tabelaDeCarrinho.getTableHeader().setResizingAllowed(false);
+        tabelaDeCarrinho.getTableHeader().setReorderingAllowed(false);
+        painelTabelaProdutos.setViewportView(tabelaDeCarrinho);
+
+        getContentPane().add(painelTabelaProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 510, 860, 200));
+
+        campoProdutoNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoProdutoNomeKeyPressed(evt);
+            }
+        });
+        getContentPane().add(campoProdutoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 190, 40));
+        getContentPane().add(campoProdutoCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 190, 40));
+
+        botaoBuscarProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
+        botaoBuscarProdutos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
+        botaoBuscarProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoBuscarProdutosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoBuscarProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 280, 50, 40));
+        getContentPane().add(campoQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 362, 70, 40));
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnAdicionar.png"))); // NOI18N
         btnAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 360, 160, -1));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaDeProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "CodBanco", "Produto", "Valor", "Estoque"
             }
-        ));
-        jScrollPane3.setViewportView(jTable3);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaDeProdutos.getTableHeader().setResizingAllowed(false);
+        tabelaDeProdutos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(tabelaDeProdutos);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 480, 130));
 
@@ -213,14 +321,14 @@ public class Caixa extends javax.swing.JFrame {
         });
         getContentPane().add(btnPlanoDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 560, 190, -1));
 
-        btnPagamentoMensal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnPagamentodeMensalidade.png"))); // NOI18N
-        btnPagamentoMensal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPagamentoMensal.addActionListener(new java.awt.event.ActionListener() {
+        botaoPagamentoMensalidade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnPagamentodeMensalidade.png"))); // NOI18N
+        botaoPagamentoMensalidade.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoPagamentoMensalidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPagamentoMensalActionPerformed(evt);
+                botaoPagamentoMensalidadeActionPerformed(evt);
             }
         });
-        getContentPane().add(btnPagamentoMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 250, -1));
+        getContentPane().add(botaoPagamentoMensalidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 250, -1));
 
         btnFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnFinalizar.png"))); // NOI18N
         btnFinalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -235,17 +343,33 @@ public class Caixa extends javax.swing.JFrame {
         });
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 660, 150, -1));
 
-        jLabel2.setText("R$ 50,00");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 510, -1, -1));
+        campoVPago.setEditable(false);
+        getContentPane().add(campoVPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(1028, 662, 95, 40));
 
-        jLabel3.setText("jLabel3");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 600, -1, -1));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        jLabel8.setText("R$");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(992, 662, 38, 40));
 
-        jLabel4.setText("jLabel4");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 670, -1, -1));
+        campoVDesconto.setEditable(false);
+        getContentPane().add(campoVDesconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(1028, 583, 95, 40));
 
-        jLabel5.setText("jLabel5");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 510, -1, -1));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        jLabel7.setText("R$");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(992, 583, 38, 40));
+
+        campoVTroco.setEditable(false);
+        getContentPane().add(campoVTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1188, 497, 95, 40));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        jLabel6.setText("R$");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1152, 497, 38, 40));
+
+        campoVTotal.setEditable(false);
+        getContentPane().add(campoVTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1028, 497, 95, 40));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        jLabel2.setText("R$");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(992, 497, 38, 40));
 
         Fundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/fundo.jpg"))); // NOI18N
         getContentPane().add(Fundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, -1, 810));
@@ -254,40 +378,40 @@ public class Caixa extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
+    private void botaoBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarClienteActionPerformed
+        try {
+            controller.setarTabelaClientes();
+        } catch (Exception ex) {
+            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaoBuscarClienteActionPerformed
 
-    private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
-
-    }//GEN-LAST:event_botaobuscarActionPerformed
-
-    private void botaobuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaobuscar1ActionPerformed
+    private void botaoBuscarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarProdutosActionPerformed
+        try {
+            controller.setarTabelaProdutos();
+        } catch (Exception ex) {
+            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaoBuscarProdutosActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnPagamentoMensalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagamentoMensalActionPerformed
-        // TODO add your handling code here:
-       // CaixaPagamentoDeMensalidade abrir = new CaixaPagamentoDeMensalidade();
-        //abrir.setVisible(true);
-        if(pagamentoMensal.isVisible()){
-        pagamentoMensal.setVisible(false);
-        tabelaProdutosAdicionados.setVisible(true);
+    private void botaoPagamentoMensalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPagamentoMensalidadeActionPerformed
+        if(painelPagamentoMensal.isVisible()){
+        painelPagamentoMensal.setVisible(false);
+        painelTabelaProdutos.setVisible(true);
         
         }else{
-        pagamentoMensal.setVisible(true);
-        tabelaProdutosAdicionados.setVisible(false);
+        painelPagamentoMensal.setVisible(true);
+        painelTabelaProdutos.setVisible(false);
         }
         
       
                 
-    }//GEN-LAST:event_btnPagamentoMensalActionPerformed
+    }//GEN-LAST:event_botaoPagamentoMensalidadeActionPerformed
 
     private void btnPlanoDePagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanoDePagamentoActionPerformed
         // TODO add your handling code here:
@@ -306,6 +430,51 @@ public class Caixa extends javax.swing.JFrame {
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
 
     }//GEN-LAST:event_botaoConfirmarActionPerformed
+
+    private void alternarClienteCadastradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alternarClienteCadastradoActionPerformed
+        alternarClienteSemCadastro.setSelected(false);
+        campoCliente.setEnabled(true);
+        botaoBuscarCliente.setEnabled(true);
+        botaoPagamentoMensalidade.setVisible(true);
+        painelPagamentoMensal.setVisible(false);
+        painelTabelaProdutos.setVisible(true);
+    }//GEN-LAST:event_alternarClienteCadastradoActionPerformed
+
+    private void alternarClienteSemCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alternarClienteSemCadastroActionPerformed
+        alternarClienteCadastrado.setSelected(false);
+        campoCliente.setText("");
+        campoCliente.setEnabled(false);
+        botaoBuscarCliente.setEnabled(false);
+        botaoPagamentoMensalidade.setVisible(false);
+        painelPagamentoMensal.setVisible(false);
+        painelTabelaProdutos.setVisible(true);
+    }//GEN-LAST:event_alternarClienteSemCadastroActionPerformed
+
+    private void alternarProdCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alternarProdCodigoActionPerformed
+        alternarProdNome.setSelected(false);
+        campoProdutoNome.setText("");
+        campoProdutoNome.setVisible(false);
+        campoProdutoCodigo.setVisible(true);
+    }//GEN-LAST:event_alternarProdCodigoActionPerformed
+
+    private void alternarProdNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alternarProdNomeActionPerformed
+        alternarProdCodigo.setSelected(false);
+        campoProdutoCodigo.setText("");
+        campoProdutoCodigo.setVisible(false);
+        campoProdutoNome.setVisible(true);
+    }//GEN-LAST:event_alternarProdNomeActionPerformed
+
+    private void campoClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoClienteKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaoBuscarCliente);
+        }
+    }//GEN-LAST:event_campoClienteKeyPressed
+
+    private void campoProdutoNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoProdutoNomeKeyPressed
+       if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaoBuscarProdutos);
+        }
+    }//GEN-LAST:event_campoProdutoNomeKeyPressed
 
     /**
      * @param args the command line arguments
@@ -344,36 +513,107 @@ public class Caixa extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fundo1;
+    private javax.swing.JRadioButton alternarClienteCadastrado;
+    private javax.swing.JRadioButton alternarClienteSemCadastro;
+    private javax.swing.JRadioButton alternarProdCodigo;
+    private javax.swing.JRadioButton alternarProdNome;
+    private javax.swing.JButton botaoBuscarCliente;
+    private javax.swing.JButton botaoBuscarProdutos;
     private javax.swing.JButton botaoConfirmar;
-    private javax.swing.JButton botaobuscar;
-    private javax.swing.JButton botaobuscar1;
+    private javax.swing.JButton botaoPagamentoMensalidade;
     private javax.swing.JButton botaobuscar2;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFinalizar;
-    private javax.swing.JButton btnPagamentoMensal;
     private javax.swing.JButton btnPlanoDePagamento;
+    private javax.swing.JTextField campoCliente;
     private javax.swing.JTextField campoPesquisa;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JTextField campoProdutoCodigo;
+    private javax.swing.JTextField campoProdutoNome;
+    private javax.swing.JFormattedTextField campoQuantidade;
+    private javax.swing.JFormattedTextField campoVDesconto;
+    private javax.swing.JFormattedTextField campoVPago;
+    private javax.swing.JFormattedTextField campoVTotal;
+    private javax.swing.JFormattedTextField campoVTroco;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JPanel pagamentoMensal;
-    private javax.swing.JScrollPane tabelaProdutosAdicionados;
+    private javax.swing.JPanel painelPagamentoMensal;
+    private javax.swing.JScrollPane painelTabelaProdutos;
+    private javax.swing.JTable tabelaDeCarrinho;
+    private javax.swing.JTable tabelaDeClientes;
+    private javax.swing.JTable tabelaDeProdutos;
+    private javax.swing.JTable tabelaMensalidade;
     // End of variables declaration//GEN-END:variables
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    private void setarComponentes(){
+        campoCliente.setEnabled(false);
+        botaoBuscarCliente.setEnabled(false);
+        botaoPagamentoMensalidade.setVisible(false);
+        
+        campoProdutoCodigo.setVisible(false);
+        campoProdutoNome.setVisible(true);
+    }
+
+    public JTextField getCampoCliente() {
+        return campoCliente;
+    }
+
+    public JTextField getCampoPesquisa() {
+        return campoPesquisa;
+    }
+
+    public JTextField getCampoProdutoCodigo() {
+        return campoProdutoCodigo;
+    }
+
+    public JTextField getCampoProdutoNome() {
+        return campoProdutoNome;
+    }
+
+    public JFormattedTextField getCampoQuantidade() {
+        return campoQuantidade;
+    }
+
+    public JFormattedTextField getCampoVDesconto() {
+        return campoVDesconto;
+    }
+
+    public JFormattedTextField getCampoVPago() {
+        return campoVPago;
+    }
+
+    public JFormattedTextField getCampoVTotal() {
+        return campoVTotal;
+    }
+
+    public JFormattedTextField getCampoVTroco() {
+        return campoVTroco;
+    }
+
+    public JTable getTabelaDeCarrinho() {
+        return tabelaDeCarrinho;
+    }
+
+    public JTable getTabelaDeClientes() {
+        return tabelaDeClientes;
+    }
+
+    public JTable getTabelaDeProdutos() {
+        return tabelaDeProdutos;
+    }
+
+    public JTable getTabelaMensalidade() {
+        return tabelaMensalidade;
+    }
+    
 }
