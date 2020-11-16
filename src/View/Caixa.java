@@ -24,8 +24,11 @@ public class Caixa extends javax.swing.JFrame {
         btnPagamentoMensal.setBackground(new Color(0,0,0,0));
         btnPlanoDePagamento.setBackground(new Color(0,0,0,0));
         btnFinalizar.setBackground(new Color(0,0,0,0));
+        botaoConfirmar.setBackground(new Color(0,0,0,0));
         btnCancelar.setBackground(new Color(0,0,0,0));
         setExtendedState(MAXIMIZED_BOTH);
+        tabelaProdutosAdicionados.setVisible(true);
+        pagamentoMensal.setVisible(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
@@ -38,6 +41,7 @@ public class Caixa extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -46,7 +50,13 @@ public class Caixa extends javax.swing.JFrame {
         botaobuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        pagamentoMensal = new javax.swing.JPanel();
+        campoPesquisa = new javax.swing.JTextField();
+        botaobuscar2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
+        botaoConfirmar = new javax.swing.JButton();
+        tabelaProdutosAdicionados = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jTextField2 = new javax.swing.JTextField();
         botaobuscar1 = new javax.swing.JButton();
@@ -62,7 +72,7 @@ public class Caixa extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        Fundo = new javax.swing.JLabel();
+        Fundo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -104,6 +114,51 @@ public class Caixa extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, 480, 150));
 
+        pagamentoMensal.setBackground(new java.awt.Color(0, 134, 191));
+        pagamentoMensal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        campoPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoPesquisaKeyPressed(evt);
+            }
+        });
+        pagamentoMensal.add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 320, 40));
+
+        botaobuscar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
+        botaobuscar2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
+        botaobuscar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaobuscar2ActionPerformed(evt);
+            }
+        });
+        pagamentoMensal.add(botaobuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 50, 40));
+
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable4);
+
+        pagamentoMensal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 850, 170));
+
+        botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
+        botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
+        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfirmarActionPerformed(evt);
+            }
+        });
+        pagamentoMensal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 330, 60));
+
+        getContentPane().add(pagamentoMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 450, 870, 310));
+
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -115,9 +170,9 @@ public class Caixa extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        tabelaProdutosAdicionados.setViewportView(jTable2);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 510, 860, 200));
+        getContentPane().add(tabelaProdutosAdicionados, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 510, 860, 200));
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 190, 40));
 
         botaobuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
@@ -192,8 +247,8 @@ public class Caixa extends javax.swing.JFrame {
         jLabel5.setText("jLabel5");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 510, -1, -1));
 
-        Fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/fundo.jpg"))); // NOI18N
-        getContentPane().add(Fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        Fundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/fundo.jpg"))); // NOI18N
+        getContentPane().add(Fundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, -1, 810));
 
         pack();
         setLocationRelativeTo(null);
@@ -219,8 +274,18 @@ public class Caixa extends javax.swing.JFrame {
 
     private void btnPagamentoMensalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagamentoMensalActionPerformed
         // TODO add your handling code here:
-        CaixaPagamentoDeMensalidade abrir = new CaixaPagamentoDeMensalidade();
-        abrir.setVisible(true);
+       // CaixaPagamentoDeMensalidade abrir = new CaixaPagamentoDeMensalidade();
+        //abrir.setVisible(true);
+        if(pagamentoMensal.isVisible()){
+        pagamentoMensal.setVisible(false);
+        tabelaProdutosAdicionados.setVisible(true);
+        
+        }else{
+        pagamentoMensal.setVisible(true);
+        tabelaProdutosAdicionados.setVisible(false);
+        }
+        
+      
                 
     }//GEN-LAST:event_btnPagamentoMensalActionPerformed
 
@@ -229,6 +294,18 @@ public class Caixa extends javax.swing.JFrame {
         CaixaPlanoDePagamento abrir=new CaixaPlanoDePagamento();
         abrir.setVisible(true);
     }//GEN-LAST:event_btnPlanoDePagamentoActionPerformed
+
+    private void campoPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisaKeyPressed
+
+    }//GEN-LAST:event_campoPesquisaKeyPressed
+
+    private void botaobuscar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscar2ActionPerformed
+
+    }//GEN-LAST:event_botaobuscar2ActionPerformed
+
+    private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
+
+    }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,19 +343,23 @@ public class Caixa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Fundo;
+    private javax.swing.JLabel Fundo1;
+    private javax.swing.JButton botaoConfirmar;
     private javax.swing.JButton botaobuscar;
     private javax.swing.JButton botaobuscar1;
+    private javax.swing.JButton botaobuscar2;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnPagamentoMensal;
     private javax.swing.JButton btnPlanoDePagamento;
+    private javax.swing.JTextField campoPesquisa;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
@@ -289,7 +370,10 @@ public class Caixa extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JPanel pagamentoMensal;
+    private javax.swing.JScrollPane tabelaProdutosAdicionados;
     // End of variables declaration//GEN-END:variables
 }

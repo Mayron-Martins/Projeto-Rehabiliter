@@ -374,10 +374,10 @@
     <Component class="javax.swing.JButton" name="botaoPlanos">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/alunos/btnPais.png"/>
+          <Image iconType="3" name="/imagens/alunos/btnPlanos.png"/>
         </Property>
         <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/alunos/btnPaishover.png"/>
+          <Image iconType="3" name="/imagens/alunos/btnPlanosHover.png"/>
         </Property>
       </Properties>
       <Events>
