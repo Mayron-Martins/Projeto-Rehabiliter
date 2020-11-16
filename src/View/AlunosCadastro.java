@@ -87,6 +87,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         campoNum = new FormatacaodeCamposRestritos(10, 0);
         botaoDescricao = new javax.swing.JButton();
         btnProx = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jPanelCadastroFinal = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -289,6 +290,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
             }
         });
         jpanelDados.add(btnProx, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, -1));
+        jpanelDados.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, -1, -1));
 
         getContentPane().add(jpanelDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 760, 490));
 
@@ -615,6 +617,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JComboBox<String> comboPlano;
     private javax.swing.JComboBox<String> comboTurma;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
