@@ -121,7 +121,23 @@ public ArrayList<Produtos> pesquisarPorNome(String nomeProduto) throws SQLExcept
            ArrayList <Produtos> produtos = selecionarTodosProdutos();
            ArrayList<Produtos> produtosBuscados = new ArrayList<>();
            for(int repeticoes = 0; repeticoes<produtos.size(); repeticoes++){
-               if(produtos.get(repeticoes).getNomeProduto().toLowerCase().contains(nomeProduto)== true){
+               if(produtos.get(repeticoes).getNomeProduto().toLowerCase().contains(nomeProduto.toLowerCase())== true){
+                   produtosBuscados.add(produtos.get(repeticoes));
+               }
+           }
+           if(produtosBuscados.size()<1){
+               return null;
+           }
+           return produtosBuscados;
+    }
+
+public ArrayList<Produtos> pesquisarPorID(String codBuscado) throws SQLException, Exception
+    {
+           ArrayList <Produtos> produtos = selecionarTodosProdutos();
+           ArrayList<Produtos> produtosBuscados = new ArrayList<>();
+           for(int repeticoes = 0; repeticoes<produtos.size(); repeticoes++){
+               String codBanco = String.valueOf(produtos.get(repeticoes).getCodBanco());
+               if(codBanco.contains(codBuscado)== true){
                    produtosBuscados.add(produtos.get(repeticoes));
                }
            }

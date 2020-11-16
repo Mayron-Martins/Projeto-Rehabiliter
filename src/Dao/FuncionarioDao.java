@@ -150,7 +150,7 @@ public class FuncionarioDao extends Conexao{
            ArrayList <Funcionario> funcionarios = selecionarTodosFuncionarios();
            ArrayList<Funcionario> funcionariosBuscados = new ArrayList<>();
            for(int repeticoes = 0; repeticoes<funcionarios.size(); repeticoes++){
-               if(funcionarios.get(repeticoes).getNome().toLowerCase().contains(nomeFuncionario)== true){
+               if(funcionarios.get(repeticoes).getNome().toLowerCase().contains(nomeFuncionario.toLowerCase())== true){
                    funcionariosBuscados.add(funcionarios.get(repeticoes));
                }
            }

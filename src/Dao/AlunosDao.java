@@ -172,7 +172,7 @@ public class AlunosDao extends Conexao{
            ArrayList <Aluno> alunos = selecionarTodosAlunos();
            ArrayList<Aluno> alunosBuscados = new ArrayList<>();
            for(int repeticoes = 0; repeticoes<alunos.size(); repeticoes++){
-               if(alunos.get(repeticoes).getNome().toLowerCase().contains(nomeAluno)== true){
+               if(alunos.get(repeticoes).getNome().toLowerCase().contains(nomeAluno.toLowerCase())== true){
                    alunosBuscados.add(alunos.get(repeticoes));
                }
            }

@@ -91,10 +91,9 @@ public class ProdutosController {
         else{this.view.exibeMensagem("Erro, Nenhum Produto Selecionado!");}
     }
     
-    //Buscar Funcionários no campo de busca
+    //Buscar Produtos no campo de busca
     public void buscarProdutos() throws Exception{
         String produtoPesquisa = view.getCampoPesquisa().getText();
-        System.out.println(produtoPesquisa);
         ArrayList <Produtos> produtos = produtosDao.pesquisarPorNome(produtoPesquisa);
         if(produtoPesquisa.equals("")){listarProdutos();}
         else{this.buscas(produtos);}        

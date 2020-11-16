@@ -141,7 +141,7 @@ public class TurmasDao extends Conexao{
            ArrayList <Turmas> turmas = selecionarTodasTurmas();
            ArrayList<Turmas> turmasBuscadas = new ArrayList<>();
            for(int repeticoes = 0; repeticoes<turmas.size(); repeticoes++){
-               if(turmas.get(repeticoes).getNomeTurma().toLowerCase().contains(nomeTurma)== true){
+               if(turmas.get(repeticoes).getNomeTurma().toLowerCase().contains(nomeTurma.toLowerCase())== true){
                    turmasBuscadas.add(turmas.get(repeticoes));
                }
            }
