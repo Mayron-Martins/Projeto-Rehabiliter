@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Controller.auxiliar.ConversaoDeDinheiro;
 import Dao.AlunosDao;
 import Dao.ProdutosDao;
 import Dao.TurmasDao;
@@ -12,6 +13,8 @@ import Model.Aluno;
 import Model.Produtos;
 import Model.auxiliar.Turmas;
 import View.Caixa;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ public class CaixaController {
     private final AlunosDao alunosDao = new AlunosDao();
     private final TurmasDao turmasDao = new TurmasDao();
     private final ProdutosDao produtosDao = new ProdutosDao();
+    private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
 
     public CaixaController(Caixa view) {
         this.view = view;
@@ -139,4 +143,77 @@ public class CaixaController {
     }
     
     //Fim das Funções para Clientes
+    
+    //Setar Tabela de Carrinho
+    public void setarCarrinho(){
+    BigDecimal quantidade = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
+    int linhaSelecionada = view.getTabelaDeProdutos().getSelectedRow();
+        if(linhaSelecionada != -1 && quantidade.compareTo(BigDecimal.ZERO)>=1){
+            BigDecimal quantBanco = new BigDecimal(converterDinheiro.converterParaBigDecimal(tabelaDeProdutos.getValueAt(linhaSelecionada, 3).toString()).toString());
+            if(quantidade.compareTo(quantBanco)!=1){
+                int codBanco = Integer.parseInt(tabelaDeProdutos.getValueAt(linhaSelecionada, 0).toString());
+                String produto = tabelaDeProdutos.getValueAt(linhaSelecionada, 1).toString();
+                BigDecimal valor = new BigDecimal(converterDinheiro.converterParaBigDecimal(tabelaDeProdutos.getValueAt(linhaSelecionada, 2).toString()).toString());
+                BigDecimal subtotal = quantidade.multiply(valor);
+                subtotal = subtotal.setScale(2, RoundingMode.UP);
+
+                Object[] dadosDoCarrinho = {codBanco, produto, valor, quantidade, subtotal};
+                tabelaDeCarrinho.addRow(dadosDoCarrinho);
+                this.adicionarTotal();
+            }
+            else{
+                view.exibeMensagem("Quantidade Solicitada Maior Que Em Estoque!");
+            }
+            
+        }
+    }
+    //Remover produto Carrinho
+    public void removerProduto(){
+        int linhaSelecionada = view.getTabelaDeCarrinho().getSelectedRow();
+        if(linhaSelecionada!=-1){
+          tabelaDeCarrinho.removeRow(linhaSelecionada);
+          this.adicionarTotal();
+        }
+    }
+    
+    private void adicionarTotal(){
+        int totalLinhas = view.getTabelaDeCarrinho().getRowCount();
+        if(totalLinhas>0){
+            BigDecimal valorTotal = new BigDecimal("0");
+            BigDecimal valorTabela;
+            for(int linhas=0; linhas<totalLinhas; linhas++){
+                valorTabela = new BigDecimal(converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 4).toString()).toString());
+                valorTotal = valorTotal.add(valorTabela);
+            }
+            valorTotal = valorTotal.setScale(2, RoundingMode.UP);
+            view.getCampoVTotal().setText(valorTotal.toString());
+        }
+        else{
+            view.getCampoVTotal().setText("");
+        }
+    }
+    
+    public void adicionarDesconto(){
+        BigDecimal valorDesconto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVDesconto().getText()).toString());
+        BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
+        
+        if(valorDesconto.compareTo(valorTotal)!=1){
+        BigDecimal novoValor = valorTotal.subtract(valorDesconto);
+        novoValor = novoValor.setScale(2, RoundingMode.UP);
+            view.getCampoVTotal().setText(novoValor.toString());
+        }
+        else{
+            view.exibeMensagem("Desconto Maior do Que o Valor Total!");
+        }
+       
+    }
+    
+    private void adicionarTroco(){
+        BigDecimal valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVPago().getText()).toString());
+        BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
+        
+        BigDecimal novoValor = valorPago.subtract(valorTotal);
+        novoValor = novoValor.setScale(2, RoundingMode.UP);
+            view.getCampoVTroco().setText(novoValor.toString());
+    }
 }
