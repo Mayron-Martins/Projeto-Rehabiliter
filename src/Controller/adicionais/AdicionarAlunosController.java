@@ -183,6 +183,8 @@ public class AdicionarAlunosController {
             view.getCampoCidade().setText("Santa Inês");
             view.getCampoCEP().setText("");
             view.getComboEstado().setSelectedIndex(0);
+            view.getjPanelCadastroFinal().setVisible(false);
+            view.getJpanelDados().setVisible(true);
         }
         
     }

@@ -380,6 +380,8 @@ public class CaixaController {
             view.getCampoVPago().setText("");
             view.getCampoVTroco().setText("");
             view.getCampoVDesconto().setText("");
+            view.getCampoDinheiro().setText("");
+            view.getCampoParcelamento().setText("");
         }
         else{
             view.exibeMensagem("Adicione uma Forma de Pagamento!");
