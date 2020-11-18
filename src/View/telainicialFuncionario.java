@@ -220,6 +220,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             controller.inicializarTabela();
+            controller.setarPlanos();
         } catch (SQLException ex) {
             Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {

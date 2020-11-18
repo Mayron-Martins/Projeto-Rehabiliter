@@ -233,6 +233,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             controller.inicializarTabela();
+            controller.setarPlanos();
         } catch (SQLException ex) {
             Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
