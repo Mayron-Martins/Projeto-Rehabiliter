@@ -6,17 +6,23 @@
 package Controller;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
+import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.AlunosDao;
+import Dao.PlanosDao;
 import Dao.ProdutosDao;
+import Dao.ServicosDao;
 import Dao.TurmasDao;
 import Model.Aluno;
 import Model.Produtos;
+import Model.auxiliar.Planos;
+import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.Caixa;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,16 +35,21 @@ public class CaixaController {
     private final DefaultTableModel tabelaDeClientes;
     private final DefaultTableModel tabelaDeProdutos;
     private final DefaultTableModel tabelaDeCarrinho;
+    private final DefaultTableModel tabelaDeMensalidade;
     private final AlunosDao alunosDao = new AlunosDao();
     private final TurmasDao turmasDao = new TurmasDao();
     private final ProdutosDao produtosDao = new ProdutosDao();
+    private final PlanosDao planosDao = new PlanosDao();
+    private final ServicosDao servicos = new ServicosDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
+    private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
     public CaixaController(Caixa view) {
         this.view = view;
         this.tabelaDeClientes = (DefaultTableModel) view.getTabelaDeClientes().getModel();
         this.tabelaDeProdutos = (DefaultTableModel) view.getTabelaDeProdutos().getModel();
         this.tabelaDeCarrinho = (DefaultTableModel) view.getTabelaDeCarrinho().getModel();
+        this.tabelaDeMensalidade = (DefaultTableModel) view.getTabelaMensalidade().getModel();
     }
     
         //Limpar tabela
@@ -60,6 +71,13 @@ public class CaixaController {
         int quantLinhas = this.view.getTabelaDeCarrinho().getRowCount();
         for(int quant=0; quant<quantLinhas; quant++){
             this.tabelaDeCarrinho.removeRow(0);
+        }
+    }
+    
+    public void limparTabelaMensalidade(){
+        int quantLinhas = this.view.getTabelaMensalidade().getRowCount();
+        for(int quant=0; quant<quantLinhas; quant++){
+            this.tabelaDeMensalidade.removeRow(0);
         }
     }
     
@@ -176,6 +194,7 @@ public class CaixaController {
         }
     }
     
+    //Adicionar Total
     private void adicionarTotal(){
         int totalLinhas = view.getTabelaDeCarrinho().getRowCount();
         if(totalLinhas>0){
@@ -193,6 +212,7 @@ public class CaixaController {
         }
     }
     
+    //Adicionar Desconto
     public void adicionarDesconto(){
         BigDecimal valorDesconto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVDesconto().getText()).toString());
         BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
@@ -208,6 +228,28 @@ public class CaixaController {
        
     }
     
+    //Adicionar valor Pago
+    public void adicionarValorPago(){
+         BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
+         BigDecimal valorPago;
+         if(view.getCampoDinheiro().isEnabled()){
+             valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoDinheiro().getText()).toString());
+         }
+         else{
+             valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoParcelamento().getText()).toString());
+         }
+         
+         if(valorPago.compareTo(valorTotal)==1){
+             view.getCampoVPago().setText(valorPago.toString());
+             this.adicionarTroco();
+             view.getjPanelFormaDePagamento().setVisible(false);
+         }
+         else{
+             view.exibeMensagem("Valor Pago Insuficiente!");
+         }
+    }
+    
+    //Adicionar Troco
     private void adicionarTroco(){
         BigDecimal valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVPago().getText()).toString());
         BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
@@ -215,5 +257,43 @@ public class CaixaController {
         BigDecimal novoValor = valorPago.subtract(valorTotal);
         novoValor = novoValor.setScale(2, RoundingMode.UP);
             view.getCampoVTroco().setText(novoValor.toString());
+    }
+    
+    //Setar Tabela de Mensalidade
+    public void setarTabelaMensalidade() throws SQLException{
+        limparTabelaMensalidade();
+        int linhaSelecionada = view.getTabelaDeClientes().getSelectedRow();
+        int codBanco = Integer.parseInt(tabelaDeClientes.getValueAt(linhaSelecionada, 0).toString());
+        String nome = tabelaDeClientes.getValueAt(linhaSelecionada, 1).toString();
+        
+        Planos plano = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codBanco).get(0);
+        Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
+        
+        String nomeServico = plano.getCodServico()+"."+servico.getNome()+"-"+servico.getFormaPagamento();
+        String situacao = plano.getSituacao();
+        String dataVencimento;
+        LocalDate dataBanco = converterData.conversaoLocalforDate(plano.getDataPagamento());
+        LocalDate dataAtual = LocalDate.now();
+        if(dataBanco == null){
+            dataVencimento = plano.getDiaVencimento()+"/"+ dataAtual.getMonthValue()+"/"+dataAtual.getYear();
+        }
+        else{
+            dataVencimento = plano.getDiaVencimento()+"/"+(dataBanco.getMonthValue()+1)+"/"+dataBanco.getYear();
+        }
+        
+        Object[] dadosTabela = {codBanco, nome, nomeServico, dataVencimento, situacao};
+        tabelaDeMensalidade.addRow(dadosTabela);
+        
+    }
+    
+    public void setarTotalMensalidade() throws SQLException, ParseException{
+        int linhaSelecionada = view.getTabelaMensalidade().getSelectedRow();
+        
+        if(linhaSelecionada!=-1){
+            int codBanco = Integer.parseInt(tabelaDeMensalidade.getValueAt(linhaSelecionada, 0).toString());
+            Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codBanco).get(0);
+            
+            view.getCampoVTotal().setText(aluno.getValorContrato().toString());
+        }
     }
 }

@@ -101,6 +101,7 @@ public class ConversaodeDataParaPadraoDesignado {
     }
     
     public LocalDate conversaoLocalforDate(Date data){
+        if(data==null){return null;}
         LocalDate dataRetorno = data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return dataRetorno;
     }
