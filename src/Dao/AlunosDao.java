@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -35,14 +36,15 @@ public class AlunosDao extends Conexao{
     
     //Inserir dados na tabela Alunos
     public void inserirDados (Aluno aluno, EnderecoAlunos endereco, Matriculas matricula, Planos plano, int diasDaSemana, int codServico) throws SQLException{
-
+        LocalDate dataAtual = LocalDate.now();
+        Date data = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
         //Adicionando aluno
         String inAluno = inserir.concat("tblAlunos("
                 + "codAluno, nome, cpf, rg, telefone, celular, email, dataNascimento, "
                 + "codEndereco, nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, "
-                + "matricula, codTurma, codDiasDaSemana, codServico, descricao, debito, valorContrato)"
+                + "matricula, codTurma, codDiasDaSemana, codServico, descricao, debito, valorContrato, dataCadastro)"
                 + "VALUES("
-                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
         PreparedStatement statement = gerarStatement(inAluno);
         statement.setInt(1, aluno.getCodBanco());
         statement.setString(2, aluno.getNome());
@@ -64,8 +66,9 @@ public class AlunosDao extends Conexao{
         statement.setInt(18, diasDaSemana);
         statement.setInt(19, codServico);
         statement.setString(20, aluno.getDescricao());
-        statement.setBigDecimal(21, new BigDecimal("0"));
+        statement.setBigDecimal(21, new BigDecimal(aluno.getDebito().toString()));
         statement.setBigDecimal(22, new BigDecimal(aluno.getValorContrato().toString()));
+        statement.setDate(8, (Date) data);
         statement.execute();
         statement.close();
         
@@ -107,6 +110,20 @@ public class AlunosDao extends Conexao{
         enderecoDao.atualizarDados(endereco);
         matriculaDao.atualizarDados(matricula);
         planosDao.atualizarDados(plano);
+    }
+    
+        //Atualizar débitos
+    public void atualizarDebitos(int codAluno, BigDecimal debito) throws SQLException{
+        //atualizando a tabela de alunos
+        String inAlunos = atualizar.concat("tblAlunos "
+                + "SET debito=? where codAluno = ?");
+        
+        PreparedStatement statement = gerarStatement(inAlunos);
+        statement.setBigDecimal(1, new BigDecimal(debito.toString()));
+        statement.setInt(2,codAluno);
+        
+        statement.execute();
+        statement.close();
     }
     
     //Remover Dados
@@ -162,8 +179,9 @@ public class AlunosDao extends Conexao{
     String descricao = resultset.getString("descricao");
     BigDecimal debito= new BigDecimal(resultset.getBigDecimal("debito").toString());
     BigDecimal valorContrato= new BigDecimal(resultset.getBigDecimal("valorContrato").toString());
+    Date dataCadastro = resultset.getDate("dataCadastro");
     
-    Aluno aluno = new Aluno(codBanco, nome, cpf, rg, telefone, celular, email, dataNascimento, nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato);
+    Aluno aluno = new Aluno(codBanco, nome, cpf, rg, telefone, celular, email, dataNascimento, nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato, dataCadastro);
 
     alunos.add(aluno);
      }while(resultset.next());

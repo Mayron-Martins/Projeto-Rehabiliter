@@ -234,9 +234,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         try {
             controller.inicializarTabela();
             controller.setarPlanos();
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened

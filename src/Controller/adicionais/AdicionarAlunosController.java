@@ -110,7 +110,7 @@ public class AdicionarAlunosController {
         String turma = view.getComboTurma().getSelectedItem().toString();
         String descricao = ""; //Nula por enquanto
         BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
-        BigDecimal debito = new BigDecimal("0"); //Seta a dívida em 0 reais
+        BigDecimal debito = valorContrato;
         
         //Dados de Matrícula e Serviços
         int codMatricula = verificar.verificarUltimo("tblMatriculas", "codMatricula")+1;

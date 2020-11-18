@@ -273,18 +273,21 @@ public class CaixaController {
         int codBanco = Integer.parseInt(tabelaDeClientes.getValueAt(linhaSelecionada, 0).toString());
         String nome = tabelaDeClientes.getValueAt(linhaSelecionada, 1).toString();
         
+        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codBanco).get(0);
         Planos plano = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codBanco).get(0);
         Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
+        
         
         String nomeServico = plano.getCodServico()+"."+servico.getNome()+"-"+servico.getFormaPagamento();
         String situacao = plano.getSituacao();
         String dataVencimento;
         
         Date dataPag = converterData.parseDate(converterData.parseDate(plano.getDataPagamento()));
+        Date dataCadastro = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
         LocalDate dataBanco = converterData.conversaoLocalforDate(dataPag);
-        LocalDate dataAtual = LocalDate.now();
+        LocalDate dataCad = converterData.conversaoLocalforDate(dataCadastro);
         if(dataBanco == null){
-            dataVencimento = plano.getDiaVencimento()+"/"+ dataAtual.getMonthValue()+"/"+dataAtual.getYear();
+            dataVencimento = plano.getDiaVencimento()+"/"+ (dataCad.getMonthValue()+1)+"/"+dataCad.getYear();
         }
         else{
             dataVencimento = plano.getDiaVencimento()+"/"+(dataBanco.getMonthValue()+1)+"/"+dataBanco.getYear();
@@ -357,6 +360,8 @@ public class CaixaController {
             
             else{
                 int linhaSelecionada = view.getTabelaMensalidade().getSelectedRow();
+                Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
+                BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
                 
                 codProduto = 0;
                 quantidade = 1;
@@ -369,6 +374,15 @@ public class CaixaController {
                 
                 Planos plano = new Planos(codAluno, 0, 0, 0, dataVenda, null, "Pago");
                 planosDao.atualizarSituacao(plano);
+                if(debitos.compareTo(BigDecimal.ZERO)!=0){
+                    if(debitos.subtract(valor).compareTo(BigDecimal.ZERO)>=0){
+                        alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
+                    }
+                    else{
+                        view.exibeMensagem("Erro, verifique se o Valor Total corresponde ao Contrato!");
+                    }
+                }
+                
             }
             
             

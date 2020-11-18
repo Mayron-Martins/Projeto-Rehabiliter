@@ -838,7 +838,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDayChooser" name="campoDiaVencimento">
           <Properties>
-            <Property name="day" type="int" value="30"/>
+            <Property name="day" type="int" value="28"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

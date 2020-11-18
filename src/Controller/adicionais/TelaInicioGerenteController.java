@@ -13,9 +13,11 @@ import Model.Aluno;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Turmas;
 import View.TelaInicialGerenteView;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
@@ -92,7 +94,7 @@ public class TelaInicioGerenteController {
         }
     }
     
-    private void setarPendenciaPlanos() throws SQLException{
+    private void setarPendenciaPlanos() throws SQLException, ParseException{
         LocalDate dataAtual = LocalDate.now();
         
         if(dataAtual.getDayOfMonth()==1){
@@ -105,22 +107,51 @@ public class TelaInicioGerenteController {
                 if(planos.get(linhas).getSituacao().equals("Pago")){
                     planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), "Pendente");
                     planosDao.atualizarSituacao(planoAtual);
+                    this.setarDebitos(planos.get(linhas).getCodAluno());
                  }
          }
      }
   }
     
-    private void setarVencimentoPlanos() throws SQLException{
+    private void setarVencimentoPlanos() throws SQLException, ParseException{
         LocalDate dataAtual = LocalDate.now();
-        ArrayList <Planos> planos = new ArrayList<>();
+        LocalDate dataVencimento;
+        Period periodo;
+        ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
+        ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
+        Planos planoAtual;
             
-        planos = planosDao.selecionarTodosPlanos();
+        
             for(int linhas=0; linhas<planos.size(); linhas++){
-                Planos planoAtual;
-                if(dataAtual.getDayOfMonth()>planos.get(linhas).getDiaVencimento()){
+                if(planos.get(linhas).getDataPagamento()==null){
+                    Date dataCadastro = alunos.get(linhas).getDataCadastro();
+                    Date dataAux = converterData.parseDate(converterData.parseDate(dataCadastro));
+                    dataVencimento = converterData.conversaoLocalforDate(dataAux).plusMonths(1);
+                    periodo = Period.between(dataVencimento, dataAtual);
+                    if(periodo.getDays()>=1){
                     planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), "Vencido");
                     planosDao.atualizarSituacao(planoAtual);
+                    }  
+                }
+                
+                else{
+                    Date dataAux = converterData.parseDate(converterData.parseDate(planos.get(linhas).getDataPagamento()));
+                    dataVencimento = converterData.conversaoLocalforDate(dataAux).plusMonths(1);
+                    periodo = Period.between(dataVencimento, dataAtual);
+                   if(periodo.getDays()>=1){
+                    planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), "Vencido");
+                    planosDao.atualizarSituacao(planoAtual);
+                   } 
                  }
          }
+    }
+    
+    private void setarDebitos(int codAluno) throws SQLException, ParseException{
+        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
+        
+        BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
+        BigDecimal contrato = new BigDecimal(aluno.getValorContrato().toString());
+        alunosDao.atualizarDebitos(codAluno, debitos.add(contrato));
+        
     }
 }

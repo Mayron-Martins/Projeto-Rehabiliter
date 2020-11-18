@@ -294,7 +294,7 @@ public class AlunosController {
         ArrayList<Turmas> turmas = new ArrayList<>();
         ArrayList<Servicos> servicos = new ArrayList<>();
         ArrayList <EnderecoAlunos> enderecos = new ArrayList<>();
-        ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
+        ArrayList <Planos> planos;
         ArrayList <Aluno> alunos = listar;
         
         removerSelecaoBox();
@@ -308,8 +308,7 @@ public class AlunosController {
                     alunos.get(linhas).getTurma());
             servicos = this.servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+
                     alunos.get(linhas).getPlano());
-            //planos = this.planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+
-                    //alunos.get(linhas).getCodBanco());
+            planos = this.planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+alunos.get(linhas).getCodBanco());
             
             
             //Inserindo dados na tabela de alunos
@@ -327,14 +326,12 @@ public class AlunosController {
             
             
             //Inserindo dados na tabela de Planos
-            int chavePlano = 0;
-            int diaVencimento = 0;
-            String situacao = null;
-            if(planos.get(linhas).getCodAluno()==alunos.get(linhas).getCodBanco()){
-            chavePlano = planos.get(linhas).getChavePlano();
-            diaVencimento = planos.get(linhas).getDiaVencimento();
-            situacao = planos.get(linhas).getSituacao();
-            }
+            int chavePlano = planos.get(0).getChavePlano();
+            int diaVencimento = planos.get(0).getDiaVencimento();
+            String situacao = planos.get(0).getSituacao();
+            
+            
+            
             
             
             Object[] dadosDaTabelaPlanos = {chavePlano, diaVencimento, situacao};

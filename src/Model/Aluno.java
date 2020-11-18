@@ -24,6 +24,7 @@ public class Aluno extends Pessoa {
    private String descricao;
    private BigDecimal debito;
    private BigDecimal valorContrato;
+   private Date dataCadastro;
 
     public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int plano, String descricao, BigDecimal debito, BigDecimal valorContrato) {
         super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento);
@@ -38,6 +39,22 @@ public class Aluno extends Pessoa {
         this.descricao = descricao;
         this.debito = new BigDecimal(debito.toString());
         this.valorContrato = new BigDecimal(valorContrato.toString());
+    }
+    
+    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int plano, String descricao, BigDecimal debito, BigDecimal valorContrato, Date dataCadastro) {
+        super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento);
+        this.nomedamae = nomedamae;
+        this.nomedopai = nomedopai;
+        this.telefonedamae = telefonedamae;
+        this.telefonedopai = telefonedopai;
+        this.cpfdamae = cpfdamae;
+        this.cpfdopai = cpfdopai;
+        this.turma = turma;
+        this.plano = plano;
+        this.descricao = descricao;
+        this.debito = new BigDecimal(debito.toString());
+        this.valorContrato = new BigDecimal(valorContrato.toString());
+        this.dataCadastro = dataCadastro;
     }
    
     //___________________________________________________________________________
@@ -87,6 +104,7 @@ public class Aluno extends Pessoa {
         return valorContrato;
     }
 
-    
-   
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
 }

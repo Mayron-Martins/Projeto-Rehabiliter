@@ -88,7 +88,8 @@ public class TableCriator {
                 + "codServico INT NOT NULL,"  //Código do serviço e tempo para pagamento.
                 + "descricao VARCHAR(MAX) NULL,"
                 + "debito DECIMAL(16,2) NULL,"
-                + "valorContrato DECIMAL(16,2) NOT NULL"  //Valor incrementado ou decrementado conforme o aluno faz compras.
+                + "valorContrato DECIMAL(16,2) NOT NULL,"
+                + "dataCadastro Date NULL"  //Valor incrementado ou decrementado conforme o aluno faz compras.
                 + ") ON [AlunoseClientes];");
     }
     

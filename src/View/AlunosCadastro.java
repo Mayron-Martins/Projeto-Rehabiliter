@@ -432,7 +432,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         });
         jPanelCadastroFinal.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, -1, -1));
 
-        campoDiaVencimento.setDay(30);
+        campoDiaVencimento.setDay(28);
         jPanelCadastroFinal.add(campoDiaVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
         getContentPane().add(jPanelCadastroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 710, 490));

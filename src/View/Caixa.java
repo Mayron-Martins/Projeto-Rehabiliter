@@ -669,6 +669,8 @@ public class Caixa extends javax.swing.JFrame {
             controller.finalizarVenda();
         } catch (SQLException ex) {
             Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
