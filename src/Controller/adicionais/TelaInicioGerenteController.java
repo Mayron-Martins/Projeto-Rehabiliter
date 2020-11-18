@@ -46,16 +46,17 @@ public class TelaInicioGerenteController {
         ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
         ArrayList <Aluno> alunosAniversariantes = new ArrayList<>();
         Date aniversario;
-        for(int linhas = 0; linhas<alunos.size(); linhas++){
+        if(alunos!=null){
+            for(int linhas = 0; linhas<alunos.size(); linhas++){
             aniversario = alunos.get(linhas).getDatadenascimento();
             if(converterData.anviversarianteMes(aniversario)){
                 alunosAniversariantes.add(alunos.get(linhas));
             }
-        }
-        if(alunosAniversariantes!=null){
-            this.buscas(alunosAniversariantes);
-        }
-        
+            }
+            if(alunosAniversariantes!=null){
+               this.buscas(alunosAniversariantes);
+            }
+        } 
     }
     
     private void buscas(ArrayList <Aluno> listar) throws SQLException, ParseException{

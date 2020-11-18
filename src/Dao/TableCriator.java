@@ -382,7 +382,7 @@ public class TableCriator {
                 + "codTurma INT NOT NULL," //Código da turma ao qual o plano será associado.
                 + "codServico INT NOT NULL," //Código do serviço ao qual o plano será associado.
                 + "dataPagamento DATE NULL," //Caso o plano tenha sido pago.
-                + "dataVencimento DATE NULL," //Data escolhida para vencimento do plano.
+                + "diaVencimento INT NULL," //Data escolhida para vencimento do plano.
                 + "dataCancelamento DATE NULL," //Caso tenha sido cancelado, então a data em que ocorreu.
                 + "situacao VARCHAR(10) NOT NULL," //Pago, pendente, vencido, cancelado.
                 + "chavePlano INT PRIMARY KEY" //Cada plano terá uma chave única gerada por meio de função codificada aluno-turma-serviço.

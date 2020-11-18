@@ -9,6 +9,7 @@ import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Model.Aluno;
 import Model.auxiliar.EnderecoAlunos;
 import Model.auxiliar.Matriculas;
+import Model.auxiliar.Planos;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -28,11 +29,12 @@ public class AlunosDao extends Conexao{
     private final String selecionarTudo = "SELECT * FROM ";
     private final EnderecoAlunosDao enderecoDao = new EnderecoAlunosDao();
     private final MatriculasDao matriculaDao = new MatriculasDao();
+    private final PlanosDao planosDao = new PlanosDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     
     
     //Inserir dados na tabela Alunos
-    public void inserirDados (Aluno aluno, EnderecoAlunos endereco, Matriculas matricula, int diasDaSemana, int codServico) throws SQLException{
+    public void inserirDados (Aluno aluno, EnderecoAlunos endereco, Matriculas matricula, Planos plano, int diasDaSemana, int codServico) throws SQLException{
 
         //Adicionando aluno
         String inAluno = inserir.concat("tblAlunos("
@@ -70,12 +72,13 @@ public class AlunosDao extends Conexao{
         //Adicionando endereco e matrícula do aluno
         enderecoDao.inserirDadosEmEnderecoAluno(endereco);
         matriculaDao.inserirDados(matricula);
+        planosDao.inserirDados(plano);
     }
     
     
     
     //Atualizar dados
-    public void atualizarDados(Aluno aluno, EnderecoAlunos endereco, Matriculas matricula, int diasDaSemana) throws SQLException{
+    public void atualizarDados(Aluno aluno, EnderecoAlunos endereco, Matriculas matricula, Planos plano, int diasDaSemana) throws SQLException{
         //atualizando a tabela de alunos
         String inAlunos = atualizar.concat("tblAlunos "
                 + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, telefoneMae=?, telefonePai=?, matricula=?, codTurma=?, codDiasDaSemana=?, codServico=?, descricao=?, debito=?, valorContrato=? where codAluno = ?");
@@ -103,6 +106,7 @@ public class AlunosDao extends Conexao{
         //atualizando a tabela de horarios
         enderecoDao.atualizarDados(endereco);
         matriculaDao.atualizarDados(matricula);
+        planosDao.atualizarDados(plano);
     }
     
     //Remover Dados
@@ -110,6 +114,7 @@ public class AlunosDao extends Conexao{
         //Removendo endereço e matricula do aluno
         enderecoDao.removerEnderecoAluno(codAluno);
         matriculaDao.removerMatricula(codAluno);
+        planosDao.removerPlano(codAluno);
         
         
         //Removendo Alunos

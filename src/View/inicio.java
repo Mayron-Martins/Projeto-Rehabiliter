@@ -58,8 +58,8 @@ public class inicio extends javax.swing.JFrame {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -104,7 +104,7 @@ public class inicio extends javax.swing.JFrame {
         }.start();//"-->Fecha o Thread-->
     }//GEN-LAST:event_formWindowActivated
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         try {
             controller.setarFrequenciaFuncionarios();
         } catch (SQLException ex) {
@@ -112,7 +112,7 @@ public class inicio extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_formWindowOpened
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

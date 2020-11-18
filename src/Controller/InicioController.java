@@ -38,7 +38,8 @@ public class InicioController {
     }
     
     public void setarFrequenciaFuncionarios() throws SQLException, ParseException{
-        if(this.verificarSeHaDadosNoSistema()){
+        if(!this.verificarFuncionarios()){
+            if(this.verificarSeHaDadosNoSistema()){
             ArrayList <Funcionario> funcionarios = funcionariosDao.selecionarTodosFuncionarios();
 
             LocalDate dataAtual = LocalDate.now();
@@ -49,11 +50,17 @@ public class InicioController {
                 frequencia.inserirDados(frequenciaFuncionarios);
             }
         }
+        }
     }
     private boolean verificarSeHaDadosNoSistema() throws SQLException, ParseException{
         LocalDate dataAtual = LocalDate.now();
         Date dataInpult = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
         ArrayList <FrequenciaFuncionarios> frequencias = frequencia.pesquisarFrequencias("SELECT * FROM tblFreqFuncionarios WHERE data = '"+dataInpult+"'");
         return frequencias==null;
+    }
+    
+    private boolean verificarFuncionarios() throws SQLException, ParseException{
+        ArrayList <Funcionario> funcionarios = funcionariosDao.selecionarTodosFuncionarios();
+        return funcionarios == null;
     }
 }

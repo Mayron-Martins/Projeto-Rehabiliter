@@ -17,6 +17,7 @@ import Dao.TurmasDao;
 import Model.Aluno;
 import Model.auxiliar.EnderecoAlunos;
 import Model.auxiliar.Matriculas;
+import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.AlunosCadastro;
@@ -139,10 +140,14 @@ public class AdicionarAlunosController {
         String referencia = "";
 
         
+        //Dados do Plano
+        int diaVencimento = view.getCampoDiaVencimento().getDay();
+        
         //Cria os tipos Aluno, Endereco e Matricula com os dados
         Aluno aluno = new Aluno(codAluno, nome, cpf, rg, telefone, celular, email, dataNascimento, nomeMae, nomePai, contatoMae, contatoPai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato);
         EnderecoAlunos endereco = new EnderecoAlunos(codEndereco, codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
+        Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, null, null, "Pendente");
         
         //Obtem a quantidade de alunos presentes na turma
         int quantAlunosPresentes = verificar.verificarUltimo("tblTurmas", "quantAlunos");
@@ -150,12 +155,12 @@ public class AdicionarAlunosController {
         //Verifica se não há dados irregulares antes de colocar na tabela
         if(nome.equals("")||dataNascimento == null||plano.equals("[Nenhum]")||turma.equals("[Nenhuma]")
                || logradouro.equals("")||bairro.equals("")||numero.equals("")||cidade.equals("")
-                ||estado.equals("[Nenhum]")||cep.equals("  .   -   ")){
+                ||estado.equals("[Nenhum]")||cep.equals("  .   -   ") || view.getCampoDiaVencimento()==null){
         view.exibeMensagem("Valores Preenchidos Incorretamente!");
         }
         
         else{
-            alunosDao.inserirDados(aluno, endereco, matricula, codTurma, codTurma);
+            alunosDao.inserirDados(aluno, endereco, matricula, planoAluno, codTurma, codTurma);
             turmasDao.atualizarQuantAunos(codTurma, quantAlunosPresentes);
             view.exibeMensagem("Sucesso!");
             //Limpando Campos

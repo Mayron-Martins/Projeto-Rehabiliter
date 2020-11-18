@@ -10,11 +10,13 @@ import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.AlunosDao;
 import Dao.EnderecoAlunosDao;
 import Dao.MatriculasDao;
+import Dao.PlanosDao;
 import Dao.ServicosDao;
 import Dao.TurmasDao;
 import Model.Aluno;
 import Model.auxiliar.EnderecoAlunos;
 import Model.auxiliar.Matriculas;
+import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.AlunosView;
@@ -36,11 +38,13 @@ public class AlunosController {
     private final DefaultTableModel tabelaDeAlunos;
     private final DefaultTableModel tabelaDePais;
     private final DefaultTableModel tabelaDeEnderecos;
+    private final DefaultTableModel tabelaDePlanos;
     private final AlunosDao alunosDao = new AlunosDao();
     private final MatriculasDao matriculasDao = new MatriculasDao();
     private final TurmasDao turmasDao = new TurmasDao();
     private final ServicosDao servicosDao = new ServicosDao();
     private final EnderecoAlunosDao enderecoDao = new EnderecoAlunosDao();
+    private final PlanosDao planosDao = new PlanosDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
@@ -49,6 +53,7 @@ public class AlunosController {
         this.tabelaDeAlunos = (DefaultTableModel)view.getTabelaAlunos().getModel();
         this.tabelaDePais = (DefaultTableModel)view.getTabelaPais().getModel();
         this.tabelaDeEnderecos = (DefaultTableModel)view.getTabelaEnderecos().getModel();
+        this.tabelaDePlanos = (DefaultTableModel) view.getTabelaPlanos().getModel();
     }
     
     //Limpar tabela
@@ -56,6 +61,7 @@ public class AlunosController {
         int quantLinhas = this.view.getTabelaAlunos().getRowCount();
         for(int quant=0; quant<quantLinhas; quant++){
             this.tabelaDeAlunos.removeRow(0);
+            this.tabelaDePlanos.removeRow(0);
             this.tabelaDePais.removeRow(0);
             this.tabelaDeEnderecos.removeRow(0);
         }
@@ -84,6 +90,11 @@ public class AlunosController {
             BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString()).toString());
             BigDecimal valorDebito = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 5).toString()).toString());
 
+            //Dados Planos
+            int chavePlano = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
+            int diaVencimento = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 1).toString());
+            String situacao = this.tabelaDePlanos.getValueAt(linhaSelecionada, 2).toString();
+            
             //Dados Pais
             String nomePai = this.tabelaDePais.getValueAt(linhaSelecionada, 0).toString();
             String cpfPai = this.tabelaDePais.getValueAt(linhaSelecionada, 1).toString();
@@ -112,13 +123,14 @@ public class AlunosController {
             
             Matriculas matricula = new Matriculas(codAluno, codTurma, codAluno, anoAtual, nomeMatricula);
             EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);
+            Planos planoAluno = new Planos(codAluno, codTurma, codServico, diaVencimento, null, null, situacao);
         
         //Inserindo Dados
         if(nome.equals("")|| logradouro.equals("") || numero.equals("")|| bairro.equals("")|| cidade.equals("")||
         estado.equals("[Nenhum]")|| cep.equals("  .   -   ")){
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
-            alunosDao.atualizarDados(aluno, endereco, matricula, anoAtual);
+            alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno, anoAtual);
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             listarAlunos();
@@ -286,6 +298,7 @@ public class AlunosController {
         ArrayList<Turmas> turmas = new ArrayList<>();
         ArrayList<Servicos> servicos = new ArrayList<>();
         ArrayList <EnderecoAlunos> enderecos = new ArrayList<>();
+        ArrayList <Planos> planos = new ArrayList<>();
         ArrayList <Aluno> alunos = listar;
         
         removerSelecaoBox();
@@ -299,6 +312,8 @@ public class AlunosController {
                     alunos.get(linhas).getTurma());
             servicos = this.servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+
                     alunos.get(linhas).getPlano());
+            planos = this.planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+
+                    alunos.get(linhas).getCodBanco());
 
             //Inserindo dados na tabela de alunos
             String subgrupo="";
@@ -313,7 +328,15 @@ public class AlunosController {
             this.view.getComboTurmas().setSelectedItem(turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma()+subgrupo);
             this.view.getComboServicos().setSelectedItem(servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getFormaPagamento());
             
-
+            //Inserindo dados na tabela de Planos
+            int chavePlano = planos.get(linhas).getChavePlano();
+            int diaVencimento = planos.get(linhas).getDiaVencimento();
+            String situacao = planos.get(linhas).getSituacao();
+            
+            Object[] dadosDaTabelaPlanos = {chavePlano, diaVencimento, situacao};
+            this.tabelaDePlanos.addRow(dadosDaTabelaPlanos);
+            
+            
             //Inserino dados na tabela de Pais
             String telefonePai = alunos.get(linhas).getTelefonedopai();
             String telefoneMae = alunos.get(linhas).getTelefonedamae();

@@ -6,6 +6,7 @@
 package View;
 
 import Controller.AlunosController;
+import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.awt.Font;
@@ -41,6 +42,7 @@ private final JFormattedTextField cpfPai = new JFormattedTextField(alunosCadastr
 private final JFormattedTextField telefoneMae = new JFormattedTextField(alunosCadastro.getCampoContatoMae().getFormatter());
 private final JFormattedTextField cpfMae = new JFormattedTextField(alunosCadastro.getCampoCPFMae().getFormatter());
 private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.getCampoCEP().getFormatter());
+private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
     /**
      * Creates new form Alunos
      */
@@ -60,7 +62,8 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         tabelaAlunos.setRowHeight(25);
         botaoEndereco.setBackground(new Color(0,0,0,0));
         botaoPais.setBackground(new Color(0,0,0,0));
-        botaoAlunos.setBackground(new Color(0,0,0,0));   
+        botaoAlunos.setBackground(new Color(0,0,0,0));
+        botaoPlanos.setBackground(new Color(0,0,0,0));
         this.setInicialBotoes();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
@@ -94,6 +97,8 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
 
         painelAlunos = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
+        painelPlanos = new javax.swing.JScrollPane();
+        tabelaPlanos = new javax.swing.JTable();
         painelPais = new javax.swing.JScrollPane();
         tabelaPais = new javax.swing.JTable();
         painelEnderecos = new javax.swing.JScrollPane();
@@ -178,6 +183,48 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
         painelAlunos.setViewportView(tabelaAlunos);
 
         getContentPane().add(painelAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+
+        tabelaPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaPlanos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ChavePlano", "Dia Vencimento", "Situacao"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaPlanos.getTableHeader().setResizingAllowed(false);
+        tabelaPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelaPlanos.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(diaVencimento));
+        tabelaPlanos.setFocusable(false);
+        tabelaPlanos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaPlanos.setRowHeight(25);
+        tabelaPlanos.setShowVerticalLines(false);
+        tabelaPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelaPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaPlanosComponentHidden(evt);
+            }
+        });
+        painelPlanos.setViewportView(tabelaPlanos);
+
+        getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
         tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaPais.setModel(new javax.swing.table.DefaultTableModel(
@@ -324,7 +371,7 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
                 botaoPlanosActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 310, 120, -1));
+        getContentPane().add(botaoPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
 
         botaoPais.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPais.png"))); // NOI18N
         botaoPais.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPaishover.png"))); // NOI18N
@@ -421,15 +468,18 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
     }//GEN-LAST:event_tabelaEnderecosComponentHidden
 
     private void botaoPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPaisActionPerformed
-        this.trocarTabelas(1);
+        this.trocarTabelas(2);
+        this.selecionarTabelas(2);
     }//GEN-LAST:event_botaoPaisActionPerformed
 
     private void botaoEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEnderecoActionPerformed
-        this.trocarTabelas(2);
+        this.trocarTabelas(3);
+        this.selecionarTabelas(3);
     }//GEN-LAST:event_botaoEnderecoActionPerformed
 
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
-        this.trocarTabelas(3);
+        this.trocarTabelas(4);
+        this.selecionarTabelas(4);
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -472,8 +522,13 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
     }//GEN-LAST:event_botaoListarActionPerformed
 
     private void botaoPlanosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlanosActionPerformed
-        // TODO add your handling code here:
+        this.trocarTabelas(1);
+        this.selecionarTabelas(1);
     }//GEN-LAST:event_botaoPlanosActionPerformed
+
+    private void tabelaPlanosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaPlanosComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaPlanosComponentHidden
      
     /**
      * @param args the command line arguments
@@ -526,32 +581,41 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
     private javax.swing.JScrollPane painelAlunos;
     private javax.swing.JScrollPane painelEnderecos;
     private javax.swing.JScrollPane painelPais;
+    private javax.swing.JScrollPane painelPlanos;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JTable tabelaAlunos;
     private javax.swing.JTable tabelaEnderecos;
     private javax.swing.JTable tabelaPais;
+    private javax.swing.JTable tabelaPlanos;
     // End of variables declaration//GEN-END:variables
 
     private void trocarTabelas(int opcao){
         switch(opcao){
             case 1:
-                this.botaoPais.setVisible(false);
+                this.botaoPlanos.setVisible(false);
                 this.painelAlunos.setVisible(false);
+                this.botaoPais.setVisible(true);
+                this.painelPlanos.setVisible(true);
+            break;
+            
+            case 2:
+                this.botaoPais.setVisible(false);
+                this.painelPlanos.setVisible(false);
                 this.botaoEndereco.setVisible(true);
                 this.painelPais.setVisible(true);
             break;
             
-            case 2:
+            case 3:
                 this.botaoEndereco.setVisible(false);
                 this.painelPais.setVisible(false);
                 this.botaoAlunos.setVisible(true);
                 this.painelEnderecos.setVisible(true);
             break;
             
-            case 3:
+            case 4:
                 this.botaoAlunos.setVisible(false);
                 this.painelEnderecos.setVisible(false);
-                this.botaoPais.setVisible(true);
+                this.botaoPlanos.setVisible(true);
                 this.painelAlunos.setVisible(true);
             break;
         }
@@ -636,6 +700,45 @@ private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.g
     public JTable getTabelaPais() {
         return tabelaPais;
     }
+
+    public JTable getTabelaPlanos() {
+        return tabelaPlanos;
+    }
     
+    private void selecionarTabelas(int opcao){
+        switch(opcao){
+            case 1:
+            if(tabelaAlunos.getSelectedRow()>-1){
+            tabelaPlanos.addRowSelectionInterval(tabelaAlunos.getSelectedRow(), tabelaAlunos.getSelectedRow());
+            tabelaPais.addRowSelectionInterval(tabelaAlunos.getSelectedRow(), tabelaAlunos.getSelectedRow());
+            tabelaEnderecos.addRowSelectionInterval(tabelaAlunos.getSelectedRow(), tabelaAlunos.getSelectedRow());
+            }
+            break;
+            
+            case 2:
+            if(tabelaPlanos.getSelectedRow()>-1){
+            tabelaPais.addRowSelectionInterval(tabelaPlanos.getSelectedRow(), tabelaPlanos.getSelectedRow());
+            tabelaEnderecos.addRowSelectionInterval(tabelaPlanos.getSelectedRow(), tabelaPlanos.getSelectedRow());
+            tabelaAlunos.addRowSelectionInterval(tabelaPlanos.getSelectedRow(), tabelaPlanos.getSelectedRow());
+            }
+            break;
+            
+            case 3:
+            if(tabelaPais.getSelectedRow()>-1){
+            tabelaEnderecos.addRowSelectionInterval(tabelaPais.getSelectedRow(), tabelaPais.getSelectedRow());
+            tabelaAlunos.addRowSelectionInterval(tabelaPais.getSelectedRow(), tabelaPais.getSelectedRow());
+            tabelaPlanos.addRowSelectionInterval(tabelaPais.getSelectedRow(), tabelaPais.getSelectedRow());
+            }
+            break;
+            
+            case 4:
+            if(tabelaEnderecos.getSelectedRow()>-1){
+            tabelaAlunos.addRowSelectionInterval(tabelaEnderecos.getSelectedRow(), tabelaEnderecos.getSelectedRow());
+            tabelaPlanos.addRowSelectionInterval(tabelaEnderecos.getSelectedRow(), tabelaEnderecos.getSelectedRow());
+            tabelaPais.addRowSelectionInterval(tabelaEnderecos.getSelectedRow(), tabelaEnderecos.getSelectedRow());
+            }
+            break;
+        }
+    }
     
 }
