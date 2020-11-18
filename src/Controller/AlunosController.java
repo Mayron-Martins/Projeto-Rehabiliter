@@ -70,10 +70,6 @@ public class AlunosController {
     //Lista todas as turmas 
     public void listarAlunos() throws SQLException, ParseException, Exception {
         ArrayList <Aluno> alunos = this.alunosDao.selecionarTodosAlunos();
-        ArrayList<Turmas> turmas = new ArrayList<>();
-        ArrayList<Servicos> servicos = new ArrayList<>();
-        ArrayList <EnderecoAlunos> enderecos = new ArrayList<>();
-        
         this.buscas(alunos);
     }
     
@@ -298,7 +294,7 @@ public class AlunosController {
         ArrayList<Turmas> turmas = new ArrayList<>();
         ArrayList<Servicos> servicos = new ArrayList<>();
         ArrayList <EnderecoAlunos> enderecos = new ArrayList<>();
-        ArrayList <Planos> planos = new ArrayList<>();
+        ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
         ArrayList <Aluno> alunos = listar;
         
         removerSelecaoBox();
@@ -312,9 +308,10 @@ public class AlunosController {
                     alunos.get(linhas).getTurma());
             servicos = this.servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+
                     alunos.get(linhas).getPlano());
-            planos = this.planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+
-                    alunos.get(linhas).getCodBanco());
-
+            //planos = this.planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+
+                    //alunos.get(linhas).getCodBanco());
+            
+            
             //Inserindo dados na tabela de alunos
             String subgrupo="";
             if(turmas.get(0).getSubgrupo()!=null){subgrupo = "-"+turmas.get(0).getSubgrupo();}
@@ -328,10 +325,17 @@ public class AlunosController {
             this.view.getComboTurmas().setSelectedItem(turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma()+subgrupo);
             this.view.getComboServicos().setSelectedItem(servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getFormaPagamento());
             
+            
             //Inserindo dados na tabela de Planos
-            int chavePlano = planos.get(linhas).getChavePlano();
-            int diaVencimento = planos.get(linhas).getDiaVencimento();
-            String situacao = planos.get(linhas).getSituacao();
+            int chavePlano = 0;
+            int diaVencimento = 0;
+            String situacao = null;
+            if(planos.get(linhas).getCodAluno()==alunos.get(linhas).getCodBanco()){
+            chavePlano = planos.get(linhas).getChavePlano();
+            diaVencimento = planos.get(linhas).getDiaVencimento();
+            situacao = planos.get(linhas).getSituacao();
+            }
+            
             
             Object[] dadosDaTabelaPlanos = {chavePlano, diaVencimento, situacao};
             this.tabelaDePlanos.addRow(dadosDaTabelaPlanos);

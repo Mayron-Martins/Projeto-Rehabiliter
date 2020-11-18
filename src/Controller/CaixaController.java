@@ -312,7 +312,7 @@ public class CaixaController {
         }
     }
     
-    public void finalizarVenda() throws SQLException{
+    public void finalizarVenda() throws SQLException, Exception{
         BigDecimal valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVPago().getText()).toString());
         if(valorPago.compareTo(BigDecimal.ZERO)!=0 && this.retornarCliente()!=-1){
             int codVenda = verificador.verificarUltimo("tblVendas", "codVenda")+1;
@@ -344,9 +344,12 @@ public class CaixaController {
                     valor = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 2).toString());
                     subtotal = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 4).toString());
                     
+                    Produtos produto = produtosDao.pesquisarPorID(String.valueOf(codProduto)).get(0);
+                    
+                    
                     ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
                     itens.add(itemVendido);
-                    produtosDao.atualizarEstoque(codProduto, quantidade);
+                    produtosDao.atualizarEstoque(codProduto, produto.getQuantidade()-quantidade);
                 }
                 
                 vendasDao.inserirDados(venda, itens);
