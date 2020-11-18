@@ -118,7 +118,7 @@ public class Caixa extends javax.swing.JFrame {
                 alternarClienteCadastradoActionPerformed(evt);
             }
         });
-        getContentPane().add(alternarClienteCadastrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 25, 20));
+        getContentPane().add(alternarClienteCadastrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 25, 20));
 
         alternarClienteSemCadastro.setSelected(true);
         alternarClienteSemCadastro.addActionListener(new java.awt.event.ActionListener() {
@@ -126,7 +126,7 @@ public class Caixa extends javax.swing.JFrame {
                 alternarClienteSemCadastroActionPerformed(evt);
             }
         });
-        getContentPane().add(alternarClienteSemCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 25, 20));
+        getContentPane().add(alternarClienteSemCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 25, 20));
 
         alternarProdCodigo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -138,7 +138,7 @@ public class Caixa extends javax.swing.JFrame {
                 alternarProdCodigoActionPerformed(evt);
             }
         });
-        getContentPane().add(alternarProdCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 312, -1, -1));
+        getContentPane().add(alternarProdCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, -1, -1));
 
         alternarProdNome.setSelected(true);
         alternarProdNome.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -151,7 +151,7 @@ public class Caixa extends javax.swing.JFrame {
                 alternarProdNomeActionPerformed(evt);
             }
         });
-        getContentPane().add(alternarProdNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 345, -1, -1));
+        getContentPane().add(alternarProdNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
 
         jPanelFormaDePagamento.setBackground(new java.awt.Color(0, 122, 185));
         jPanelFormaDePagamento.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -215,14 +215,14 @@ public class Caixa extends javax.swing.JFrame {
         });
         jPanelFormaDePagamento.add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        getContentPane().add(jPanelFormaDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 450, 410, 300));
+        getContentPane().add(jPanelFormaDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 870, 410, 300));
 
         campoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 campoClienteKeyPressed(evt);
             }
         });
-        getContentPane().add(campoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 190, 40));
+        getContentPane().add(campoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 190, 40));
 
         botaoBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaoBuscarCliente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
@@ -231,7 +231,7 @@ public class Caixa extends javax.swing.JFrame {
                 botaoBuscarClienteActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 50, 40));
+        getContentPane().add(botaoBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, 50, 40));
 
         tabelaDeClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -260,7 +260,7 @@ public class Caixa extends javax.swing.JFrame {
         tabelaDeClientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabelaDeClientes);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, 480, 150));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 480, 150));
 
         painelPagamentoMensal.setBackground(new java.awt.Color(0, 134, 191));
         painelPagamentoMensal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -303,7 +303,7 @@ public class Caixa extends javax.swing.JFrame {
         });
         painelPagamentoMensal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 330, 60));
 
-        getContentPane().add(painelPagamentoMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 450, 870, 310));
+        getContentPane().add(painelPagamentoMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 630, 870, 340));
 
         tabelaDeCarrinho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -337,15 +337,15 @@ public class Caixa extends javax.swing.JFrame {
         });
         painelTabelaProdutos.setViewportView(tabelaDeCarrinho);
 
-        getContentPane().add(painelTabelaProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 510, 860, 200));
+        getContentPane().add(painelTabelaProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 670, 860, 200));
 
         campoProdutoNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 campoProdutoNomeKeyPressed(evt);
             }
         });
-        getContentPane().add(campoProdutoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 190, 40));
-        getContentPane().add(campoProdutoCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 190, 40));
+        getContentPane().add(campoProdutoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, 190, 40));
+        getContentPane().add(campoProdutoCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 190, 40));
 
         botaoBuscarProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaoBuscarProdutos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
@@ -354,15 +354,20 @@ public class Caixa extends javax.swing.JFrame {
                 botaoBuscarProdutosActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoBuscarProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 280, 50, 40));
+        getContentPane().add(botaoBuscarProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, 50, 40));
 
         campoQuantidade.setText("0");
+        campoQuantidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoQuantidadeActionPerformed(evt);
+            }
+        });
         campoQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 campoQuantidadeKeyPressed(evt);
             }
         });
-        getContentPane().add(campoQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 362, 70, 40));
+        getContentPane().add(campoQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 400, 70, 40));
 
         botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnAdicionar.png"))); // NOI18N
         botaoAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -371,7 +376,7 @@ public class Caixa extends javax.swing.JFrame {
                 botaoAdicionarActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 360, 160, -1));
+        getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 460, 160, -1));
 
         tabelaDeProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -400,7 +405,7 @@ public class Caixa extends javax.swing.JFrame {
         tabelaDeProdutos.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tabelaDeProdutos);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 480, 130));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 280, 480, 130));
 
         btnPlanoDePagamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnFormaDePagamento.png"))); // NOI18N
         btnPlanoDePagamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -409,7 +414,7 @@ public class Caixa extends javax.swing.JFrame {
                 btnPlanoDePagamentoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnPlanoDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 560, 190, -1));
+        getContentPane().add(btnPlanoDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 700, 190, -1));
 
         botaoPagamentoMensalidade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnPagamentodeMensalidade.png"))); // NOI18N
         botaoPagamentoMensalidade.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -418,7 +423,7 @@ public class Caixa extends javax.swing.JFrame {
                 botaoPagamentoMensalidadeActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoPagamentoMensalidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 250, -1));
+        getContentPane().add(botaoPagamentoMensalidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 250, -1));
 
         btnFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnFinalizar.png"))); // NOI18N
         btnFinalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -427,7 +432,7 @@ public class Caixa extends javax.swing.JFrame {
                 btnFinalizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1165, 610, 160, -1));
+        getContentPane().add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 750, 160, -1));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnCancelar.png"))); // NOI18N
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -436,15 +441,15 @@ public class Caixa extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 660, 150, -1));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 800, 150, -1));
 
         campoVPago.setEditable(false);
         campoVPago.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(campoVPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(1028, 662, 95, 40));
+        getContentPane().add(campoVPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(983, 790, 95, 40));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel8.setText("R$");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(992, 662, 38, 40));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 790, 38, 40));
 
         campoVDesconto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         campoVDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -452,30 +457,30 @@ public class Caixa extends javax.swing.JFrame {
                 campoVDescontoKeyPressed(evt);
             }
         });
-        getContentPane().add(campoVDesconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(1028, 583, 95, 40));
+        getContentPane().add(campoVDesconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(983, 710, 95, 40));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel7.setText("R$");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(992, 583, 38, 40));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 710, 38, 40));
 
         campoVTroco.setEditable(false);
         campoVTroco.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(campoVTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1188, 497, 95, 40));
+        getContentPane().add(campoVTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 620, 95, 40));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel6.setText("R$");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1152, 497, 38, 40));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 620, 38, 40));
 
         campoVTotal.setEditable(false);
         campoVTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(campoVTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1028, 497, 95, 40));
+        getContentPane().add(campoVTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(983, 620, 95, 40));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel2.setText("R$");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(992, 497, 38, 40));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 620, 38, 40));
 
-        Fundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/fundo.jpg"))); // NOI18N
-        getContentPane().add(Fundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, -1, 810));
+        Fundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/fundoCaixa.jpg"))); // NOI18N
+        getContentPane().add(Fundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -35, -1, 1090));
 
         pack();
         setLocationRelativeTo(null);
@@ -666,6 +671,10 @@ public class Caixa extends javax.swing.JFrame {
             Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void campoQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoQuantidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoQuantidadeActionPerformed
 
     /**
      * @param args the command line arguments
