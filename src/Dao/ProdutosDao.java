@@ -67,6 +67,19 @@ public class ProdutosDao extends Conexao{
         statement.close();
     }
     
+    public void atualizarEstoque(int codProduto, float estoque) throws SQLException{
+        //atualizando a tabela de Produtos
+        String inProdutos = atualizar.concat("tblProdutos "
+                + "SET quantidade = ? where codProduto = ?");
+        
+        PreparedStatement statement = gerarStatement(inProdutos);
+        statement.setFloat(1, estoque);
+        statement.setInt(2, codProduto);
+        
+        statement.execute();
+        statement.close();
+    }
+    
     //Remover Dados
     public void removerProduto(int codProduto) throws SQLException{
         //Removendo Turmas

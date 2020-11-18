@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -420,6 +422,11 @@ public class Caixa extends javax.swing.JFrame {
 
         btnFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnFinalizar.png"))); // NOI18N
         btnFinalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1165, 610, 160, -1));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnCancelar.png"))); // NOI18N
@@ -513,6 +520,8 @@ public class Caixa extends javax.swing.JFrame {
             try {
                 controller.setarTabelaMensalidade();
             } catch (SQLException ex) {
+                Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
                 Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -649,6 +658,14 @@ public class Caixa extends javax.swing.JFrame {
         campoProdutoNome.setEnabled(true);
         botaoBuscarProdutos.setEnabled(true);
     }//GEN-LAST:event_alternarProdNomeMouseClicked
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        try {
+            controller.finalizarVenda();
+        } catch (SQLException ex) {
+            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnFinalizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -811,5 +828,18 @@ public class Caixa extends javax.swing.JFrame {
     public JPanel getjPanelFormaDePagamento() {
         return jPanelFormaDePagamento;
     }
+
+    public JScrollPane getPainelTabelaProdutos() {
+        return painelTabelaProdutos;
+    }
+
+    public JRadioButton getAlternarCredito() {
+        return alternarCredito;
+    }
+
+    public JRadioButton getAlternarClienteCadastrado() {
+        return alternarClienteCadastrado;
+    }
+    
     
 }

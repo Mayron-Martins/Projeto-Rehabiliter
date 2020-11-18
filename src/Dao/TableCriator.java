@@ -55,10 +55,11 @@ public class TableCriator {
         this.tableBackups();
         this.tableFreqFuncionarios();
         
+        /*
         //Referenciação das tabelas.
         ReferencesTable referencestable = new ReferencesTable(this.telaDeInicio);
         referencestable.referencesTables(this.gerarStatement());
-        gerarStatement().close();
+        gerarStatement().close();*/
     }
     
     //Criação da tabela de alunos.
@@ -219,7 +220,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Lotes...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblLoteDeProdutos("
-                + "chaveDeLote INT PRIMARY KEY," //Código único gerado a partir de uma função data-tipo-codProduto.
+                + "chaveDeLote BIGINT PRIMARY KEY," //Código único gerado a partir de uma função data-tipo-codProduto.
                 + "codLote VARCHAR(50) NOT NULL," //Código físico do lote, apresentado no rótulo das caixas.
                 + "dataAdicionamento DATE NOT NULL,"
                 + "validadeMeses VARCHAR(8) NULL," //Caso o produto possua validade e essa seja em meses.
@@ -309,7 +310,7 @@ public class TableCriator {
                 + "valorPagoCliente DECIMAL(16,2) NOT NULL," //Valor pago pelo cliente.
                 + "valorTroco DECIMAL(16,2) NOT NULL," //Troco da venda.
                 + "dataVenda DATE NOT NULL,"
-                + "chaveVenda INT PRIMARY KEY," //Cada venda gera uma chave única do tipo data-hora codificada, utilizada para identificação de produtos vendidos.
+                + "chaveVenda BIGINT PRIMARY KEY," //Cada venda gera uma chave única do tipo data-hora codificada, utilizada para identificação de produtos vendidos.
                 + "formaPagamento VARCHAR(10) NOT NULL" //Dinheiro ou cartão.
                 + ") ON [Transacoes];");
     }
@@ -319,7 +320,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Itens V...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblItensVendidos("
-                + "chaveVenda INT NOT NULL," //Associação do item à chave gerada.
+                + "chaveVenda BIGINT NOT NULL," //Associação do item à chave gerada.
                 + "codProduto INT NOT NULL," //Código do produto vendido.
                 + "quantidade FLOAT NOT NULL,"
                 + "valor DECIMAL(16,2) NOT NULL,"
@@ -336,7 +337,7 @@ public class TableCriator {
                 + "motivo VARCHAR(MAX) NOT NULL,"
                 + "valorGasto DECIMAL(16,2) NOT NULL,"
                 + "dataGasto DATE NOT NULL,"
-                + "chaveTransacao INT PRIMARY KEY," //Chave gerada por meio de função data-hora codificada, utilizada para idenficação de itens comprados.
+                + "chaveTransacao BIGINT PRIMARY KEY," //Chave gerada por meio de função data-hora codificada, utilizada para idenficação de itens comprados.
                 + "situacao VARCHAR(10) NOT NULL" //Pago ou Pendente.
                 + ") ON [Transacoes];");
     }
@@ -346,7 +347,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Itens C...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblItensComprados("
-                + "chaveTransacao INT NOT NULL," //Associação do produto ou item à chave de transação.
+                + "chaveTransacao BIGINT NOT NULL," //Associação do produto ou item à chave de transação.
                 + "itemComprado VARCHAR(MAX) NOT NULL," //Item que foi comprado ou pago.
                 + "quantidade FLOAT NOT NULL,"
                 + "valor DECIMAL(16,2) NOT NULL,"
@@ -361,9 +362,9 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Orçamento...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblDetOrcamentario("
-                + "chaveVenda INT NULL," //Caso trate-se de uma venda.
-                + "chaveTransacao INT NULL," //Caso trate-se de um gasto.
-                + "chavePlano INT NULL," //Caso trate-se do pagamento de um plano (se tiver sido pago na data utilizrá essa correspondência, se não tiver então será usado na data de vencimento).
+                + "chaveVenda BIGINT NULL," //Caso trate-se de uma venda.
+                + "chaveTransacao BIGINT NULL," //Caso trate-se de um gasto.
+                + "chavePlano BIGINT NULL," //Caso trate-se do pagamento de um plano (se tiver sido pago na data utilizrá essa correspondência, se não tiver então será usado na data de vencimento).
                 + "data DATE NOT NULL," //
                 + "valorRecebidoPago DECIMAL(16,2) NULL," //Valor recebido do pagamento da venda ou plano.
                 + "valorRecebidoPendente DECIMAL(16,2) NULL," //Valor pendente de plano.

@@ -62,12 +62,13 @@ public class PlanosDao extends Conexao{
     
     public void atualizarSituacao(Planos plano) throws SQLException{
         String inPlanos = atualizar.concat("tblPlanos "
-                + "SET dataPagamento = '?', dataCancelamento = '?', situacao = ? codAluno = ?");
+                + "SET dataPagamento = ?, dataCancelamento = ?, situacao = ?  WHERE codAluno = ?");
         
         PreparedStatement statement = gerarStatement(inPlanos);
         statement.setDate(1, (Date) plano.getDataPagamento());
         statement.setDate(2, (Date) plano.getDataCancelamento());
         statement.setString(3, plano.getSituacao());
+        statement.setInt(4, plano.getCodAluno());
         
         statement.execute();
         statement.close();     

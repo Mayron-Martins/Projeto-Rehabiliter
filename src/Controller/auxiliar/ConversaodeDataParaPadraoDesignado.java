@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -104,5 +105,17 @@ public class ConversaodeDataParaPadraoDesignado {
         if(data==null){return null;}
         LocalDate dataRetorno = data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return dataRetorno;
+    }
+    
+    public Long dataEHoraCodificada(){
+        LocalDateTime dataAtual = LocalDateTime.now();
+    Date data = Date.from(dataAtual.atZone(ZoneId.systemDefault()).toInstant());
+    
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    String dataFormatada = format.format(data);
+    dataFormatada = dataFormatada.replaceAll("/", "");
+    dataFormatada = dataFormatada.replaceAll(":", "");
+    dataFormatada = dataFormatada.replaceAll(" ", "");
+    return Long.valueOf(dataFormatada);
     }
 }

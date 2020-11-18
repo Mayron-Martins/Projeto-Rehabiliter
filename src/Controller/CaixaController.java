@@ -7,13 +7,17 @@ package Controller;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
 import Dao.PlanosDao;
 import Dao.ProdutosDao;
 import Dao.ServicosDao;
 import Dao.TurmasDao;
+import Dao.VendasDao;
 import Model.Aluno;
 import Model.Produtos;
+import Model.Vendas;
+import Model.auxiliar.ItemVendido;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
@@ -24,6 +28,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -41,8 +46,10 @@ public class CaixaController {
     private final ProdutosDao produtosDao = new ProdutosDao();
     private final PlanosDao planosDao = new PlanosDao();
     private final ServicosDao servicos = new ServicosDao();
+    private final VendasDao vendasDao = new VendasDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+    private final VerificarCodigoNoBanco verificador = new VerificarCodigoNoBanco();
 
     public CaixaController(Caixa view) {
         this.view = view;
@@ -239,7 +246,7 @@ public class CaixaController {
              valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoParcelamento().getText()).toString());
          }
          
-         if(valorPago.compareTo(valorTotal)==1){
+         if(valorPago.compareTo(valorTotal)>=0){
              view.getCampoVPago().setText(valorPago.toString());
              this.adicionarTroco();
              view.getjPanelFormaDePagamento().setVisible(false);
@@ -260,7 +267,7 @@ public class CaixaController {
     }
     
     //Setar Tabela de Mensalidade
-    public void setarTabelaMensalidade() throws SQLException{
+    public void setarTabelaMensalidade() throws SQLException, ParseException{
         limparTabelaMensalidade();
         int linhaSelecionada = view.getTabelaDeClientes().getSelectedRow();
         int codBanco = Integer.parseInt(tabelaDeClientes.getValueAt(linhaSelecionada, 0).toString());
@@ -272,7 +279,9 @@ public class CaixaController {
         String nomeServico = plano.getCodServico()+"."+servico.getNome()+"-"+servico.getFormaPagamento();
         String situacao = plano.getSituacao();
         String dataVencimento;
-        LocalDate dataBanco = converterData.conversaoLocalforDate(plano.getDataPagamento());
+        
+        Date dataPag = converterData.parseDate(converterData.parseDate(plano.getDataPagamento()));
+        LocalDate dataBanco = converterData.conversaoLocalforDate(dataPag);
         LocalDate dataAtual = LocalDate.now();
         if(dataBanco == null){
             dataVencimento = plano.getDiaVencimento()+"/"+ dataAtual.getMonthValue()+"/"+dataAtual.getYear();
@@ -290,10 +299,120 @@ public class CaixaController {
         int linhaSelecionada = view.getTabelaMensalidade().getSelectedRow();
         
         if(linhaSelecionada!=-1){
+            String situacao = tabelaDeMensalidade.getValueAt(linhaSelecionada, 4).toString();
+            if(!situacao.equals("Pago")){
             int codBanco = Integer.parseInt(tabelaDeMensalidade.getValueAt(linhaSelecionada, 0).toString());
             Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codBanco).get(0);
             
             view.getCampoVTotal().setText(aluno.getValorContrato().toString());
+            }
+            else{
+                view.exibeMensagem("Fatura já foi Paga!");
+            }
         }
+    }
+    
+    public void finalizarVenda() throws SQLException{
+        BigDecimal valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVPago().getText()).toString());
+        if(valorPago.compareTo(BigDecimal.ZERO)!=0 && this.retornarCliente()!=-1){
+            int codVenda = verificador.verificarUltimo("tblVendas", "codVenda")+1;
+            int codCliente = 0;
+            BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
+            BigDecimal valorTroco = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTroco().getText()).toString());
+            
+            LocalDate dataAtual = LocalDate.now();
+            Date dataVenda = converterData.conversaoLocalforDate(dataAtual);
+            
+            String formaDePagamento = this.retornarFormaPagamento();
+            int codAluno = this.retornarCliente();
+            
+            Vendas venda = new Vendas(codVenda, codCliente, codAluno, valorTroco, valorPago, valorTroco, dataVenda, formaDePagamento);
+            ArrayList<ItemVendido> itens = new ArrayList<>();
+            
+            long chaveVenda = venda.getChaveVenda();
+            int codProduto;
+            float quantidade;
+            BigDecimal valor;
+            BigDecimal subtotal;
+            
+            if(view.getPainelTabelaProdutos().isVisible()){
+                int quantLinhas = view.getTabelaDeCarrinho().getRowCount();
+                
+                for(int linhas=0; linhas<quantLinhas;linhas++){
+                    codProduto = Integer.parseInt(tabelaDeCarrinho.getValueAt(linhas, 0).toString());
+                    quantidade = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 3).toString()).floatValue();
+                    valor = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 2).toString());
+                    subtotal = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 4).toString());
+                    
+                    ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
+                    itens.add(itemVendido);
+                    produtosDao.atualizarEstoque(codProduto, quantidade);
+                }
+                
+                vendasDao.inserirDados(venda, itens);
+            }
+            
+            else{
+                int linhaSelecionada = view.getTabelaMensalidade().getSelectedRow();
+                
+                codProduto = 0;
+                quantidade = 1;
+                valor = valorTotal;
+                subtotal = valor;
+                    
+                ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
+                itens.add(itemVendido);
+                vendasDao.inserirDados(venda, itens);
+                
+                Planos plano = new Planos(codAluno, 0, 0, 0, dataVenda, null, "Pago");
+                planosDao.atualizarSituacao(plano);
+            }
+            
+            
+            
+            view.exibeMensagem("Venda Concluída!");
+            limparTabelaClientes();
+            limparTabelaProdutos();
+            limparTabelaCarrinho();
+            limparTabelaMensalidade();
+            view.getCampoQuantidade().setText("");
+            view.getCampoVTotal().setText("");
+            view.getCampoVPago().setText("");
+            view.getCampoVTroco().setText("");
+            view.getCampoVDesconto().setText("");
+        }
+        else{
+            view.exibeMensagem("Adicione uma Forma de Pagamento!");
+        }
+    }
+    
+    private String retornarFormaPagamento(){
+        if(view.getCampoDinheiro().isEnabled()){
+            return "Dinheiro";
+        }
+        else{
+            if(view.getAlternarCredito().isSelected()){
+                return "Crédito";
+            }
+            else{
+                return "Débito";
+            }
+        }
+    }
+    
+    private int retornarCliente(){
+        if(view.getAlternarClienteCadastrado().isSelected()){
+            int linhaSelecionada = view.getTabelaDeClientes().getSelectedRow();
+            if(linhaSelecionada!=-1){
+                String codCliente = tabelaDeClientes.getValueAt(linhaSelecionada, 0).toString();
+                return Integer.parseInt(codCliente);
+            }
+            else{
+                return -1;
+            }
+        }
+        else{
+            return 0;
+        }    
     }
 }
