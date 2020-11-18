@@ -62,7 +62,6 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         botaoAlunos = new javax.swing.JButton();
         botaoFrequencia = new javax.swing.JButton();
         botaoFinanceiro = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         botaoMenu = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaAniversariantes = new javax.swing.JTable();
@@ -93,7 +92,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
                 botaoSairActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 688, 90, 25));
+        getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 937, 90, 25));
 
         botaoCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaprincipal.png"))); // NOI18N
         botaoCaixa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaHoverPrincipal.png"))); // NOI18N
@@ -105,7 +104,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         getContentPane().add(botaoCaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(544, 90, 168, 203));
 
         animaçãoRehabiliter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
-        getContentPane().add(animaçãoRehabiliter, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 570, 420, 190));
+        getContentPane().add(animaçãoRehabiliter, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 800, 420, 190));
 
         botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosprincipal.png"))); // NOI18N
         botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosHoverprincipal.png"))); // NOI18N
@@ -134,11 +133,6 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         });
         getContentPane().add(botaoFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 90, 168, 203));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 0, 51));
-        jLabel1.setText("GERENTE");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 665, -1, -1));
-
         botaoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuprincipal.png"))); // NOI18N
         botaoMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuHoverPrincipal.png"))); // NOI18N
         botaoMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +140,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
                 botaoMenuActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 40, 110, 70));
+        getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 40, 110, 70));
 
         tabelaAniversariantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -187,8 +181,8 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 350, 316, 180));
 
-        planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/tela-inicial-funcionário.jpg"))); // NOI18N
-        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-gerentefundo.jpg"))); // NOI18N
+        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1370, 1030));
 
         pack();
         setLocationRelativeTo(null);
@@ -290,7 +284,6 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private javax.swing.JButton botaoFuncionarios;
     private javax.swing.JButton botaoMenu;
     private javax.swing.JButton botaoSair;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JTable tabelaAniversariantes;
