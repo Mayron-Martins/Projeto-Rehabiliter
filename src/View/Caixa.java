@@ -345,6 +345,12 @@ public class Caixa extends javax.swing.JFrame {
             }
         });
         getContentPane().add(campoProdutoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 190, 40));
+
+        campoProdutoCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoProdutoCodigoKeyPressed(evt);
+            }
+        });
         getContentPane().add(campoProdutoCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 190, 40));
 
         botaoBuscarProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
@@ -677,6 +683,12 @@ public class Caixa extends javax.swing.JFrame {
     private void campoQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoQuantidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoQuantidadeActionPerformed
+
+    private void campoProdutoCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoProdutoCodigoKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaoBuscarProdutos);
+        }
+    }//GEN-LAST:event_campoProdutoCodigoKeyPressed
 
     /**
      * @param args the command line arguments

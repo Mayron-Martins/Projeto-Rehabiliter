@@ -7,9 +7,7 @@ package Dao;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Model.Vendas;
-import Model.auxiliar.Horarios;
 import Model.auxiliar.ItemVendido;
-import Model.auxiliar.Turmas;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;

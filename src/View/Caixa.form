@@ -381,6 +381,9 @@
       </Constraints>
     </Component>
     <Component class="javax.swing.JTextField" name="campoProdutoCodigo">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoProdutoCodigoKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new FormatacaodeCamposRestritos()"/>
       </AuxValues>

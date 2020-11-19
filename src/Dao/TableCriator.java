@@ -48,6 +48,7 @@ public class TableCriator {
         this.tableServicos();
         this.tableVendas();
         this.tableItensVendidos();
+        this.tableEntradas();
         this.tableGastos();
         this.tableItensComprados();
         this.tableDetOrcamentario();
@@ -326,6 +327,20 @@ public class TableCriator {
                 + "quantidade FLOAT NOT NULL,"
                 + "valor DECIMAL(16,2) NOT NULL,"
                 + "subtotal DECIMAL(16,2) NOT NULL"
+                + ") ON [Transacoes];");
+    }
+    
+    //Criação da tabela de Entradas
+    private void tableEntradas() throws SQLException{
+        telaDeInicio.mudartexto("Criando tabela de Entradas...");
+        telaDeInicio.mudarPercentual();
+        this.gerarStatement().execute("CREATE TABLE tblEntradas("
+                + "codEntrada INT NOT NULL," //Cada Entrada terá um código único.
+                + "referencia VARCHAR(MAX) NOT NULL,"
+                + "quantidade FLOAT NOT NULL,"
+                + "formaPagamento VARCHAR(10) NOT NULL,"
+                + "valorEntrada DECIMAL(16,2) NOT NULL,"
+                + "dataCadastro DATE NOT NULL" 
                 + ") ON [Transacoes];");
     }
     
