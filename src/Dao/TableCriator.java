@@ -313,7 +313,8 @@ public class TableCriator {
                 + "valorTroco DECIMAL(16,2) NOT NULL," //Troco da venda.
                 + "dataVenda DATE NOT NULL,"
                 + "chaveVenda BIGINT PRIMARY KEY," //Cada venda gera uma chave única do tipo data-hora codificada, utilizada para identificação de produtos vendidos.
-                + "formaPagamento VARCHAR(10) NOT NULL" //Dinheiro ou cartão.
+                + "formaPagamento VARCHAR(10) NOT NULL,"
+                + "plano VARCHAR(2) NULL" //Dinheiro ou cartão.
                 + ") ON [Transacoes];");
     }
     

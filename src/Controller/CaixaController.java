@@ -329,7 +329,7 @@ public class CaixaController {
             String formaDePagamento = this.retornarFormaPagamento();
             int codAluno = this.retornarCliente();
             
-            Vendas venda = new Vendas(codVenda, codCliente, codAluno, valorTroco, valorPago, valorTroco, dataVenda, formaDePagamento);
+            Vendas venda = new Vendas(codVenda, codCliente, codAluno, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda());
             ArrayList<ItemVendido> itens = new ArrayList<>();
             
             long chaveVenda = venda.getChaveVenda();
@@ -433,5 +433,14 @@ public class CaixaController {
         else{
             return 0;
         }    
+    }
+    
+    private String tipoVenda(){
+        if(view.getPainelTabelaProdutos().isVisible()){
+            return "N";
+        }
+        else{
+            return "S";
+        }
     }
 }

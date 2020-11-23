@@ -5,28 +5,40 @@
  */
 package View;
 
+import Controller.PlanoEntradasController;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  *
  * @author 55989
  */
 public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
+    private final PlanoEntradasController controller;
 
     /**
      * Creates new form FinanceiroPlanodeEntradas
      */
     public FinanceiroPlanodeEntradas() {
         initComponents();
+        controller = new PlanoEntradasController(this);
         btnAdicionar.setBackground(new Color(0,0,0,0));
         btnAplicar.setBackground(new Color(0,0,0,0));
         btnContasRecebidas.setBackground(new Color(0,0,0,0));
-        btnDetalhada.setBackground(new Color(0,0,0,0));
-        btnEditar.setBackground(new Color(0,0,0,0));
+        botaoVDetalhada.setBackground(new Color(0,0,0,0));
         btnMensalidadesAReceber.setBackground(new Color(0,0,0,0));
+        btnEditar.setBackground(new Color(0,0,0,0));
         btnRemover.setBackground(new Color(0,0,0,0));
-        btnResumida.setBackground(new Color(0,0,0,0));
+        botaoVResumida.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
+        this.setarComponentes();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
@@ -43,14 +55,18 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
         btnAdicionar = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnResumida = new javax.swing.JButton();
-        btnDetalhada = new javax.swing.JButton();
+        botaoVResumida = new javax.swing.JButton();
+        botaoVDetalhada = new javax.swing.JButton();
         btnAplicar = new javax.swing.JButton();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        painelderolagem = new javax.swing.JScrollPane();
-        tabelaServicos = new javax.swing.JTable();
+        comboPagamento = new javax.swing.JComboBox<>();
+        comboTipos = new javax.swing.JComboBox<>();
+        comboPeriodo = new javax.swing.JComboBox<>();
+        painelPlanos = new javax.swing.JScrollPane();
+        tabelasPlanos = new javax.swing.JTable();
+        painelVendas = new javax.swing.JScrollPane();
+        tabelaVendas = new javax.swing.JTable();
+        painelEntradas = new javax.swing.JScrollPane();
+        tabelaEntradas = new javax.swing.JTable();
         btnMensalidadesAReceber = new javax.swing.JButton();
         btnContasRecebidas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -86,65 +102,174 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
         btnEditar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnEditarHover.png"))); // NOI18N
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 146, 34));
 
-        btnResumida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumido.png"))); // NOI18N
-        btnResumida.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumidoHover.png"))); // NOI18N
-        getContentPane().add(btnResumida, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 146, 34));
+        botaoVResumida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumido.png"))); // NOI18N
+        botaoVResumida.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumidoHover.png"))); // NOI18N
+        botaoVResumida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoVResumidaMouseClicked(evt);
+            }
+        });
+        getContentPane().add(botaoVResumida, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 146, 34));
 
-        btnDetalhada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnDetalhada.png"))); // NOI18N
-        btnDetalhada.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnDetalhadaHover.png"))); // NOI18N
-        getContentPane().add(btnDetalhada, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, 146, 34));
+        botaoVDetalhada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnDetalhada.png"))); // NOI18N
+        botaoVDetalhada.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnDetalhadaHover.png"))); // NOI18N
+        botaoVDetalhada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoVDetalhadaMouseClicked(evt);
+            }
+        });
+        getContentPane().add(botaoVDetalhada, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, 146, 34));
 
         btnAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicar.png"))); // NOI18N
         btnAplicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicarHover.png"))); // NOI18N
+        btnAplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAplicarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 240, 146, 35));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        comboPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
+        getContentPane().add(comboPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 250, 130, -1));
+
+        comboTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vendas", "Planos", "Entradas" }));
+        comboTipos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
+                comboTiposActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 250, 130, -1));
+        getContentPane().add(comboTipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 120, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vendas", "Planos", "Entradas" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Diário", "Semanal", "Mensal", "Semestral", "Anual" }));
+        comboPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                comboPeriodoActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 120, -1));
+        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 140, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Diário", "Semanal", "Mensal", "Semestral", "Anual" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 140, -1));
-
-        tabelaServicos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaServicos.setModel(new javax.swing.table.DefaultTableModel(
+        tabelasPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelasPlanos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"adsa", "adsa", "adsa", null}
+
             },
             new String [] {
-                "asdasdas", "asdasd", "dfdafsd", "asdas"
+                "chavePlano", "Aluno", "Turma", "Valor", "Situação", "Último Pagamento"
             }
-        ));
-        tabelaServicos.setFocusable(false);
-        tabelaServicos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaServicos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaServicos.setRowHeight(25);
-        tabelaServicos.setShowVerticalLines(false);
-        tabelaServicos.getTableHeader().setReorderingAllowed(false);
-        tabelaServicos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaServicosComponentHidden(evt);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        painelderolagem.setViewportView(tabelaServicos);
+        tabelasPlanos.getTableHeader().setResizingAllowed(false);
+        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelasPlanos.setFocusable(false);
+        tabelasPlanos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelasPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelasPlanos.setRowHeight(25);
+        tabelasPlanos.setShowVerticalLines(false);
+        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelasPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelasPlanosComponentHidden(evt);
+            }
+        });
+        painelPlanos.setViewportView(tabelasPlanos);
 
-        getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+        getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+
+        tabelaVendas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaVendas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CodBanco", "CodCliente", "Produtos", "Quantidade", "Total", "Forma Pagamento", "Data"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaVendas.getTableHeader().setResizingAllowed(false);
+        tabelaVendas.getTableHeader().setReorderingAllowed(false);
+        tabelaVendas.setFocusable(false);
+        tabelaVendas.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaVendas.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaVendas.setRowHeight(25);
+        tabelaVendas.setShowVerticalLines(false);
+        tabelaVendas.getTableHeader().setReorderingAllowed(false);
+        tabelaVendas.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaVendasComponentHidden(evt);
+            }
+        });
+        painelVendas.setViewportView(tabelaVendas);
+
+        getContentPane().add(painelVendas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+
+        tabelaEntradas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaEntradas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CodBanco", "Referência", "Quantidade", "Forma de Pagamento", "Valor", "Data"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaEntradas.getTableHeader().setResizingAllowed(false);
+        tabelaEntradas.getTableHeader().setReorderingAllowed(false);
+        tabelaEntradas.setFocusable(false);
+        tabelaEntradas.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaEntradas.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaEntradas.setRowHeight(25);
+        tabelaEntradas.setShowVerticalLines(false);
+        tabelaEntradas.getTableHeader().setReorderingAllowed(false);
+        tabelaEntradas.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaEntradasComponentHidden(evt);
+            }
+        });
+        painelEntradas.setViewportView(tabelaEntradas);
+
+        getContentPane().add(painelEntradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         btnMensalidadesAReceber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnMensalidadesAReceber.png"))); // NOI18N
         btnMensalidadesAReceber.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnMensalidadesAReceberHover.png"))); // NOI18N
@@ -166,9 +291,9 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
 
-    private void tabelaServicosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaServicosComponentHidden
+    private void tabelaVendasComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaVendasComponentHidden
         // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaServicosComponentHidden
+    }//GEN-LAST:event_tabelaVendasComponentHidden
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
@@ -176,17 +301,69 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
         abrir.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
+        if(comboPeriodo.getSelectedIndex()>0){
+            comboTipos.setSelectedIndex(0);
+            comboTipos.setEnabled(true);
+        }
+        else{
+            comboTipos.setSelectedIndex(0);
+            comboTipos.setEnabled(false);
+            comboPagamento.setSelectedIndex(0);
+            comboPagamento.setEnabled(false);
+        }
+    }//GEN-LAST:event_comboPeriodoActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    private void comboTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTiposActionPerformed
+        comboPagamento.setSelectedIndex(0);
+        comboPagamento.setEnabled(true);
+    }//GEN-LAST:event_comboTiposActionPerformed
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+    private void botaoVResumidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVResumidaMouseClicked
+        botaoVResumida.setEnabled(true);
+        botaoVDetalhada.setEnabled(false);
+        getRootPane().setDefaultButton(btnAplicar);
+    }//GEN-LAST:event_botaoVResumidaMouseClicked
+
+    private void botaoVDetalhadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVDetalhadaMouseClicked
+        botaoVDetalhada.setEnabled(true);
+        botaoVResumida.setEnabled(false);
+        getRootPane().setDefaultButton(btnAplicar);
+    }//GEN-LAST:event_botaoVDetalhadaMouseClicked
+
+    private void tabelasPlanosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelasPlanosComponentHidden
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+    }//GEN-LAST:event_tabelasPlanosComponentHidden
+
+    private void tabelaEntradasComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaEntradasComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaEntradasComponentHidden
+
+    private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
+        if(comboPagamento.isEnabled()){
+            if(botaoVDetalhada.isEnabled()){
+                if(comboTipos.getSelectedIndex()==0||comboTipos.getSelectedIndex()==1){
+                    try {
+                        controller.setarTabelasVendasePlanos();
+                    } catch (SQLException | ParseException ex) {
+                        Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else{
+                    //controller.setarTabelaEntradas();
+                } 
+            }
+            else{
+
+            }
+        }
+        else{
+            this.exibeMensagem("Selecione um Período!");
+            controller.limparTabelaVendas();
+            controller.limparTabelaPlanos();
+            controller.limparTabelaEntradas();
+        }
+    }//GEN-LAST:event_btnAplicarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,19 +402,82 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoFechar;
+    private javax.swing.JButton botaoVDetalhada;
+    private javax.swing.JButton botaoVResumida;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnAplicar;
     private javax.swing.JButton btnContasRecebidas;
-    private javax.swing.JButton btnDetalhada;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnMensalidadesAReceber;
     private javax.swing.JButton btnRemover;
-    private javax.swing.JButton btnResumida;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> comboPagamento;
+    private javax.swing.JComboBox<String> comboPeriodo;
+    private javax.swing.JComboBox<String> comboTipos;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane painelderolagem;
-    private javax.swing.JTable tabelaServicos;
+    private javax.swing.JScrollPane painelEntradas;
+    private javax.swing.JScrollPane painelPlanos;
+    private javax.swing.JScrollPane painelVendas;
+    private javax.swing.JTable tabelaEntradas;
+    private javax.swing.JTable tabelaVendas;
+    private javax.swing.JTable tabelasPlanos;
     // End of variables declaration//GEN-END:variables
+    
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    private void setarComponentes(){
+        //combos
+        comboTipos.setSelectedIndex(0);
+        comboTipos.setEnabled(false);
+        comboPagamento.setSelectedIndex(0);
+        comboPagamento.setEnabled(false);
+        
+        //botões
+        botaoVResumida.setEnabled(true);
+        botaoVDetalhada.setEnabled(false);
+        
+        //tabelas
+        painelVendas.setVisible(true);
+        painelPlanos.setVisible(false);
+        painelEntradas.setVisible(false);
+    }
+
+    public JScrollPane getPainelEntradas() {
+        return painelEntradas;
+    }
+
+    public JScrollPane getPainelPlanos() {
+        return painelPlanos;
+    }
+
+    public JScrollPane getPainelVendas() {
+        return painelVendas;
+    }
+
+    public JTable getTabelaEntradas() {
+        return tabelaEntradas;
+    }
+
+    public JTable getTabelaVendas() {
+        return tabelaVendas;
+    }
+
+    public JTable getTabelasPlanos() {
+        return tabelasPlanos;
+    }
+
+    public JComboBox<String> getComboPagamento() {
+        return comboPagamento;
+    }
+
+    public JComboBox<String> getComboPeriodo() {
+        return comboPeriodo;
+    }
+
+    public JComboBox<String> getComboTipos() {
+        return comboTipos;
+    }
+    
+    
 }
