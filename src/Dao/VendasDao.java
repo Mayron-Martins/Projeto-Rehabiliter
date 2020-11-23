@@ -78,11 +78,11 @@ public class VendasDao extends Conexao{
     BigDecimal valorPago = new BigDecimal(resultset.getBigDecimal("valorPagoCliente").toString());
     BigDecimal valorTroco = new BigDecimal(resultset.getBigDecimal("valorTroco").toString());
     Date dataVenda = resultset.getDate("dataVenda");
-    String formaPagamento = resultset.getString("formaPagamento ");
-    int chaveVenda = resultset.getInt("chaveVenda");
+    String formaPagamento = resultset.getString("formaPagamento");
+    long chaveVenda = resultset.getLong("chaveVenda");
     String plano = resultset.getString("plano");
 
-    Vendas venda = new Vendas(codVenda, codCliente, codAluno, valorVenda, valorPago, valorTroco, dataVenda, formaPagamento, plano);
+    Vendas venda = new Vendas(codVenda, codCliente, codAluno, valorVenda, valorPago, valorTroco, dataVenda, formaPagamento, plano, chaveVenda);
 
     vendas.add(venda);
      }while(resultset.next());

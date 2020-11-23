@@ -24,7 +24,7 @@ public class Vendas {
     private String formaPagamento;
     private long chaveVenda;
     private String plano;
-
+    
     public Vendas(int codVenda, int codCliente, int codAluno, BigDecimal valorVenda, BigDecimal valorPago, BigDecimal valorTroco, Date dataVenda, String formaPagamento, String plano) {
         this.codVenda = codVenda;
         this.codCliente = codCliente;
@@ -37,6 +37,21 @@ public class Vendas {
         ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado(); 
         this.dataVenda = converterData.getSqlDate(dataVenda);
         this.chaveVenda = converterData.dataEHoraCodificada();
+        this.plano = plano;
+    }
+    
+    public Vendas(int codVenda, int codCliente, int codAluno, BigDecimal valorVenda, BigDecimal valorPago, BigDecimal valorTroco, Date dataVenda, String formaPagamento, String plano, long chaveVenda) {
+        this.codVenda = codVenda;
+        this.codCliente = codCliente;
+        this.codAluno = codAluno;
+        this.valorVenda = new BigDecimal(valorVenda.toString());
+        this.valorPago = new BigDecimal(valorPago.toString());
+        this.valorTroco = new BigDecimal(valorTroco.toString());
+        this.formaPagamento = formaPagamento;
+       
+        ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado(); 
+        this.dataVenda = converterData.getSqlDate(dataVenda);
+        this.chaveVenda = chaveVenda;
         this.plano = plano;
     }
 

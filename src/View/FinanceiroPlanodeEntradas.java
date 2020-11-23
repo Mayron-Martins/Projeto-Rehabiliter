@@ -11,7 +11,10 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,6 +25,10 @@ import javax.swing.JTable;
  */
 public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
     private final PlanoEntradasController controller;
+    private final FinanceiroPlanodeEntradasAdc telaAdAEntradas= new FinanceiroPlanodeEntradasAdc();
+    private final JFormattedTextField valorEntrada = new JFormattedTextField(telaAdAEntradas.getCampoValor().getFormatter());
+    private final JFormattedTextField quantidadeEntrada = new JFormattedTextField(telaAdAEntradas.getCampoQuantidade().getFormatter());
+    private final JComboBox comboPagamentoEntrada = new JComboBox(telaAdAEntradas.getCampoFormaPagamento().getModel());
 
     /**
      * Creates new form FinanceiroPlanodeEntradas
@@ -61,12 +68,12 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
         comboPagamento = new javax.swing.JComboBox<>();
         comboTipos = new javax.swing.JComboBox<>();
         comboPeriodo = new javax.swing.JComboBox<>();
-        painelPlanos = new javax.swing.JScrollPane();
-        tabelasPlanos = new javax.swing.JTable();
-        painelVendas = new javax.swing.JScrollPane();
-        tabelaVendas = new javax.swing.JTable();
         painelEntradas = new javax.swing.JScrollPane();
         tabelaEntradas = new javax.swing.JTable();
+        painelVendas = new javax.swing.JScrollPane();
+        tabelaVendas = new javax.swing.JTable();
+        painelPlanos = new javax.swing.JScrollPane();
+        tabelasPlanos = new javax.swing.JTable();
         btnMensalidadesAReceber = new javax.swing.JButton();
         btnContasRecebidas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -148,20 +155,20 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
         });
         getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 140, -1));
 
-        tabelasPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelasPlanos.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaEntradas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaEntradas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "chavePlano", "Aluno", "Turma", "Valor", "Situação", "Último Pagamento"
+                "CodBanco", "Referência", "Quantidade", "Forma de Pagamento", "Valor", "Data"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -172,22 +179,25 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelasPlanos.getTableHeader().setResizingAllowed(false);
-        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
-        tabelasPlanos.setFocusable(false);
-        tabelasPlanos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelasPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelasPlanos.setRowHeight(25);
-        tabelasPlanos.setShowVerticalLines(false);
-        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
-        tabelasPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
+        tabelaEntradas.getTableHeader().setResizingAllowed(false);
+        tabelaEntradas.getTableHeader().setReorderingAllowed(false);
+        tabelaEntradas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(quantidadeEntrada));
+        tabelaEntradas.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoEntrada));
+        tabelaEntradas.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorEntrada));
+        tabelaEntradas.setFocusable(false);
+        tabelaEntradas.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaEntradas.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaEntradas.setRowHeight(25);
+        tabelaEntradas.setShowVerticalLines(false);
+        tabelaEntradas.getTableHeader().setReorderingAllowed(false);
+        tabelaEntradas.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelasPlanosComponentHidden(evt);
+                tabelaEntradasComponentHidden(evt);
             }
         });
-        painelPlanos.setViewportView(tabelasPlanos);
+        painelEntradas.setViewportView(tabelaEntradas);
 
-        getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+        getContentPane().add(painelEntradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         tabelaVendas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaVendas.setModel(new javax.swing.table.DefaultTableModel(
@@ -199,7 +209,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
@@ -230,20 +240,20 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
 
         getContentPane().add(painelVendas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
-        tabelaEntradas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaEntradas.setModel(new javax.swing.table.DefaultTableModel(
+        tabelasPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelasPlanos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "CodBanco", "Referência", "Quantidade", "Forma de Pagamento", "Valor", "Data"
+                "chavePlano", "Aluno", "Turma", "Valor", "Situação", "Último Pagamento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -254,22 +264,22 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaEntradas.getTableHeader().setResizingAllowed(false);
-        tabelaEntradas.getTableHeader().setReorderingAllowed(false);
-        tabelaEntradas.setFocusable(false);
-        tabelaEntradas.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaEntradas.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaEntradas.setRowHeight(25);
-        tabelaEntradas.setShowVerticalLines(false);
-        tabelaEntradas.getTableHeader().setReorderingAllowed(false);
-        tabelaEntradas.addComponentListener(new java.awt.event.ComponentAdapter() {
+        tabelasPlanos.getTableHeader().setResizingAllowed(false);
+        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelasPlanos.setFocusable(false);
+        tabelasPlanos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelasPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelasPlanos.setRowHeight(25);
+        tabelasPlanos.setShowVerticalLines(false);
+        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelasPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaEntradasComponentHidden(evt);
+                tabelasPlanosComponentHidden(evt);
             }
         });
-        painelEntradas.setViewportView(tabelaEntradas);
+        painelPlanos.setViewportView(tabelasPlanos);
 
-        getContentPane().add(painelEntradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+        getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         btnMensalidadesAReceber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnMensalidadesAReceber.png"))); // NOI18N
         btnMensalidadesAReceber.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnMensalidadesAReceberHover.png"))); // NOI18N
@@ -297,8 +307,8 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
-        FinanceiroPlanodeEntradasAdc abrir= new FinanceiroPlanodeEntradasAdc();
-        abrir.setVisible(true);
+        
+        telaAdAEntradas.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
@@ -322,13 +332,11 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
     private void botaoVResumidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVResumidaMouseClicked
         botaoVResumida.setEnabled(true);
         botaoVDetalhada.setEnabled(false);
-        getRootPane().setDefaultButton(btnAplicar);
     }//GEN-LAST:event_botaoVResumidaMouseClicked
 
     private void botaoVDetalhadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVDetalhadaMouseClicked
         botaoVDetalhada.setEnabled(true);
         botaoVResumida.setEnabled(false);
-        getRootPane().setDefaultButton(btnAplicar);
     }//GEN-LAST:event_botaoVDetalhadaMouseClicked
 
     private void tabelasPlanosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelasPlanosComponentHidden
@@ -340,28 +348,12 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaEntradasComponentHidden
 
     private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
-        if(comboPagamento.isEnabled()){
-            if(botaoVDetalhada.isEnabled()){
-                if(comboTipos.getSelectedIndex()==0||comboTipos.getSelectedIndex()==1){
-                    try {
-                        controller.setarTabelasVendasePlanos();
-                    } catch (SQLException | ParseException ex) {
-                        Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                else{
-                    //controller.setarTabelaEntradas();
-                } 
-            }
-            else{
-
-            }
-        }
-        else{
-            this.exibeMensagem("Selecione um Período!");
-            controller.limparTabelaVendas();
-            controller.limparTabelaPlanos();
-            controller.limparTabelaEntradas();
+        try {
+            controller.setarTabelas();
+        } catch (SQLException ex) {
+            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAplicarActionPerformed
 
@@ -477,6 +469,18 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
 
     public JComboBox<String> getComboTipos() {
         return comboTipos;
+    }
+
+    public JComboBox getComboPagamentoEntrada() {
+        return comboPagamentoEntrada;
+    }
+
+    public JButton getBotaoVDetalhada() {
+        return botaoVDetalhada;
+    }
+
+    public JButton getBotaoVResumida() {
+        return botaoVResumida;
     }
     
     
