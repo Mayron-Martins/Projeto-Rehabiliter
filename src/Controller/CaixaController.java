@@ -9,6 +9,7 @@ import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
+import Dao.DetOrcamentarioDao;
 import Dao.PlanosDao;
 import Dao.ProdutosDao;
 import Dao.ServicosDao;
@@ -17,6 +18,7 @@ import Dao.VendasDao;
 import Model.Aluno;
 import Model.Produtos;
 import Model.Vendas;
+import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.ItemVendido;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
@@ -47,6 +49,7 @@ public class CaixaController {
     private final PlanosDao planosDao = new PlanosDao();
     private final ServicosDao servicos = new ServicosDao();
     private final VendasDao vendasDao = new VendasDao();
+    private final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final VerificarCodigoNoBanco verificador = new VerificarCodigoNoBanco();
@@ -340,7 +343,8 @@ public class CaixaController {
             
             if(view.getPainelTabelaProdutos().isVisible()){
                 int quantLinhas = view.getTabelaDeCarrinho().getRowCount();
-                
+                int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
+                DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Vendas", formaDePagamento, valorTotal, dataVenda, chaveVenda);
                 for(int linhas=0; linhas<quantLinhas;linhas++){
                     codProduto = Integer.parseInt(tabelaDeCarrinho.getValueAt(linhas, 0).toString());
                     quantidade = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 3).toString()).floatValue();
@@ -356,10 +360,14 @@ public class CaixaController {
                 }
                 
                 vendasDao.inserirDados(venda, itens);
+                orcamentarioDao.inserirDados(orcamentario);
             }
             
             else{
                 int linhaSelecionada = view.getTabelaMensalidade().getSelectedRow();
+                int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
+                DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Planos", formaDePagamento, valorTotal, dataVenda, chaveVenda);
+                
                 Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
                 BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
                 
@@ -370,17 +378,22 @@ public class CaixaController {
                     
                 ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
                 itens.add(itemVendido);
-                vendasDao.inserirDados(venda, itens);
+                
                 
                 Planos plano = new Planos(codAluno, 0, 0, 0, dataVenda, null, "Pago");
-                planosDao.atualizarSituacao(plano);
                 if(debitos.compareTo(BigDecimal.ZERO)!=0){
                     if(debitos.subtract(valor).compareTo(BigDecimal.ZERO)>=0){
+                        vendasDao.inserirDados(venda, itens);
+                        orcamentarioDao.inserirDados(orcamentario);
+                        planosDao.atualizarSituacao(plano);
                         alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
                     }
                     else{
                         view.exibeMensagem("Erro, verifique se o Valor Total corresponde ao Contrato!");
                     }
+                }
+                else{
+                    view.exibeMensagem("Aluno Sem Débitos!");
                 }
                 
             }

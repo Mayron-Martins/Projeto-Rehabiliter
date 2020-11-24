@@ -23,7 +23,6 @@ public class EntradasDao extends Conexao{
     private final String atualizar = "UPDATE ";
     private final String remover = "DELETE FROM ";
     private final String selecionarTudo = "SELECT * FROM ";
-    private final ItensVendidosDao itensVendidosDao = new ItensVendidosDao();
     private ConversaodeDataParaPadraoDesignado converterData;
     
     

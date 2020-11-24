@@ -352,10 +352,11 @@ public class TableCriator {
         this.gerarStatement().execute("CREATE TABLE tblGastos("
                 + "codGasto INT NOT NULL," //Cada gasto terá um código único.
                 + "motivo VARCHAR(MAX) NOT NULL,"
+                + "quantidade FLOAT NOT NULL,"
+                + "formaPagamento VARCHAR(10) NOT NULL,"
                 + "valorGasto DECIMAL(16,2) NOT NULL,"
                 + "dataGasto DATE NOT NULL,"
-                + "chaveTransacao BIGINT PRIMARY KEY," //Chave gerada por meio de função data-hora codificada, utilizada para idenficação de itens comprados.
-                + "situacao VARCHAR(10) NOT NULL" //Pago ou Pendente.
+                + "chaveTransacao BIGINT PRIMARY KEY" //Chave gerada por meio de função data-hora codificada, utilizada para idenficação de itens comprados.
                 + ") ON [Transacoes];");
     }
      
@@ -373,22 +374,19 @@ public class TableCriator {
                 + "codLote INT NULL" //Caso o produto esteja no banco e queira cadastrar o lote correspondente.
                 + ") ON [Transacoes];");
     }
-
-    //Criação da tabela de Detalhamento Orçamentário.
+    
+    //Criação da tabela Detalhamento Orçamentario
     private void tableDetOrcamentario() throws SQLException{
-        telaDeInicio.mudartexto("Criando tabela de Orçamento...");
+        telaDeInicio.mudartexto("Criando tabela de Orçamentário...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblDetOrcamentario("
-                + "chaveVenda BIGINT NULL," //Caso trate-se de uma venda.
-                + "chaveTransacao BIGINT NULL," //Caso trate-se de um gasto.
-                + "chavePlano BIGINT NULL," //Caso trate-se do pagamento de um plano (se tiver sido pago na data utilizrá essa correspondência, se não tiver então será usado na data de vencimento).
-                + "data DATE NOT NULL," //
-                + "valorRecebidoPago DECIMAL(16,2) NULL," //Valor recebido do pagamento da venda ou plano.
-                + "valorRecebidoPendente DECIMAL(16,2) NULL," //Valor pendente de plano.
-                + "valorGastoPago DECIMAL(16,2) NULL," //Valor gasto pago.
-                + "valorGastoPendente DECIMAL(16,2) NULL," //Valor gasto pendente.
-                + "chaveOrcamentaria INT NOT NULL" //Chave gerada por meio de função data codificada. 
-                + ") ON [Orcamento];");
+                + "codBanco INT PRIMARY KEY,"
+                + "tipo VARCHAR(10) NOT NULL," //Item que foi comprado ou pago.
+                + "formaPagamento VARCHAR(10) NOT NULL,"
+                + "valor DECIMAL(16,2) NOT NULL,"
+                + "dataCadastro DATE NOT NULL,"
+                + "chave BIGINT NOT NULL"
+                + ") ON [Transacoes];");
     }
     
     //Criação da tabela de Planos (cada aluno terá um plano específico)

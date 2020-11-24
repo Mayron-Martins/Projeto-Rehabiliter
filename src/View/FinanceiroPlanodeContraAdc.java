@@ -5,19 +5,31 @@
  */
 package View;
 
+import Controller.adicionais.AdicionarGastosController;
+import Controller.auxiliar.JMoneyField;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
  * @author 55989
  */
 public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
+    private final AdicionarGastosController controller;
 
     /**
      * Creates new form FinanceiroPlanodeContraAdc
      */
     public FinanceiroPlanodeContraAdc() {
         initComponents();
+        controller = new AdicionarGastosController(this);
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
@@ -34,11 +46,11 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
 
         botaoFechar = new javax.swing.JButton();
         botaoConfirmar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        campoReferencia = new javax.swing.JTextField();
+        campoQuantidade = new JMoneyField();
+        campoFormaPagamento = new javax.swing.JComboBox<>();
+        campoValor = new JMoneyField();
+        campoData = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -57,12 +69,19 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmar.png"))); // NOI18N
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmarhover.png"))); // NOI18N
+        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfirmarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 330, 50));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 200, 150, 30));
-        getContentPane().add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(473, 200, 60, 30));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 130, 30));
-        getContentPane().add(jFormattedTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 280, 90, 30));
-        getContentPane().add(jFormattedTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 280, 70, 30));
+        getContentPane().add(campoReferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 200, 150, 30));
+        getContentPane().add(campoQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(473, 200, 60, 30));
+
+        campoFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
+        getContentPane().add(campoFormaPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 130, 30));
+        getContentPane().add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 280, 90, 30));
+        getContentPane().add(campoData, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 280, 130, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodecontradc.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -75,6 +94,14 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
+
+    private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
+        try {
+            controller.adicionarEntrada();
+        } catch (SQLException ex) {
+            Logger.getLogger(FinanceiroPlanodeContraAdc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -114,11 +141,36 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoConfirmar;
     private javax.swing.JButton botaoFechar;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
+    private com.toedter.calendar.JDateChooser campoData;
+    private javax.swing.JComboBox<String> campoFormaPagamento;
+    private javax.swing.JFormattedTextField campoQuantidade;
+    private javax.swing.JTextField campoReferencia;
+    private javax.swing.JFormattedTextField campoValor;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+
+    public JDateChooser getCampoData() {
+        return campoData;
+    }
+
+    public JComboBox<String> getCampoFormaPagamento() {
+        return campoFormaPagamento;
+    }
+
+    public JFormattedTextField getCampoQuantidade() {
+        return campoQuantidade;
+    }
+
+    public JTextField getCampoReferencia() {
+        return campoReferencia;
+    }
+
+    public JFormattedTextField getCampoValor() {
+        return campoValor;
+    }
+    
+    
 }

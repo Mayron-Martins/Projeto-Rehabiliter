@@ -8,6 +8,7 @@ package Controller;
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.AlunosDao;
+import Dao.DetOrcamentarioDao;
 import Dao.EntradasDao;
 import Dao.ItensVendidosDao;
 import Dao.PlanosDao;
@@ -15,6 +16,7 @@ import Dao.TurmasDao;
 import Dao.VendasDao;
 import Model.Aluno;
 import Model.Vendas;
+import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.Entradas;
 import Model.auxiliar.ItemVendido;
 import Model.auxiliar.Planos;
@@ -43,6 +45,7 @@ public class PlanoEntradasController {
     private final PlanosDao planosDao = new PlanosDao();
     private final TurmasDao turmasDao = new TurmasDao();
     private final EntradasDao entradasDao = new EntradasDao();
+    private final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
 
@@ -196,6 +199,7 @@ public class PlanoEntradasController {
             
             Object[] dadosDaTabela = {codEntrada, referencia, quantidade, formaPagamento, valor, dataEntrada};
             tabelaEntradas.addRow(dadosDaTabela);
+            view.getComboPagamentoEntrada().setEnabled(true); 
             view.getComboPagamentoEntrada().setSelectedItem(formaPagamento);
         }
     }
@@ -349,7 +353,7 @@ public class PlanoEntradasController {
         BigDecimal valor = new BigDecimal("0");
         String formaPagamento = this.pegarFormaPagamento();
         if(view.getComboPagamento().getSelectedIndex()==0){
-            formaPagamento = "[Nenhum]";
+            formaPagamento = "Diversas";
         }
         
         for(int linhas=0; linhas<entradas.size(); linhas++){
@@ -381,10 +385,8 @@ public class PlanoEntradasController {
             String dataEntradaFormatada = converterData.parseDate(dataEntrada);
             Object[] dadosDaTabela = {codEntrada, referencia, quantidade, formaPagamento, valor, dataEntradaFormatada};
             tabelaEntradas.addRow(dadosDaTabela);
-            view.getComboPagamentoEntrada().setSelectedItem(formaPagamento);  
+            view.getComboPagamentoEntrada().setEnabled(false);  
             }
-            
-            dataAnterior = dataEntrada;
         }
     }
     
@@ -510,15 +512,9 @@ public class PlanoEntradasController {
             return "Dinheiro";
             
             case 3:
-            if(view.getComboTipos().getSelectedIndex()==2){
-                return "Cartão de Crédito";
-            }
             return "Crédito";
 
             case 4:
-            if(view.getComboTipos().getSelectedIndex()==2){
-                return "Cartão de Débito";
-            }
             return "Débito";
         }
         return "nenhuma";
@@ -640,11 +636,13 @@ public class PlanoEntradasController {
                     BigDecimal valorEntrada = converterDinheiro.converterParaBigDecimal(view.getTabelaEntradas().getValueAt(linhaSelecionada, 4).toString());
                     
                     Entradas entrada = new Entradas(codEntrada, referencia, quantidade, formaPagamento, valorEntrada, null);
+                    DetOrcamentario orcamentario = new DetOrcamentario(0, "Entradas", formaPagamento, valorEntrada, null, codEntrada);
                     if(referencia==null||quantidade==0||formaPagamento.equals("[Nenhum]")||valorEntrada.compareTo(BigDecimal.ZERO)==0){
                         view.exibeMensagem("Valores Inválidos!");
                     }
                     else{
                         entradasDao.atualizarDados(entrada);
+                        orcamentarioDao.atualizarDados(orcamentario);
                         view.exibeMensagem("Sucesso!");
                         setarTabelas();
                     }                   
@@ -663,6 +661,7 @@ public class PlanoEntradasController {
                     int codEntrada = Integer.parseInt(tabelaEntradas.getValueAt(linhaSelecionada, 0).toString());
                     
                     entradasDao.removerEntrada(codEntrada);
+                    orcamentarioDao.removerOrcamentario("Entradas", codEntrada);
                     view.exibeMensagem("Sucesso!");
                     setarTabelas();
                                     

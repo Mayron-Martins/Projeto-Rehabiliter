@@ -9,10 +9,10 @@ import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.DetOrcamentarioDao;
-import Dao.EntradasDao;
+import Dao.GastosDao;
 import Model.auxiliar.DetOrcamentario;
-import Model.auxiliar.Entradas;
-import View.FinanceiroPlanodeEntradasAdc;
+import Model.auxiliar.Gastos;
+import View.FinanceiroPlanodeContraAdc;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Date;
@@ -21,41 +21,41 @@ import java.util.Date;
  *
  * @author Mayro
  */
-public class AdicionarEntradasController {
-    private final FinanceiroPlanodeEntradasAdc view;
-    private final EntradasDao entradasDao = new EntradasDao();
+public class AdicionarGastosController {
+    private final FinanceiroPlanodeContraAdc view;
+    private final GastosDao gastosDao = new GastosDao();
     private final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
-    public AdicionarEntradasController(FinanceiroPlanodeEntradasAdc view) {
+    public AdicionarGastosController(FinanceiroPlanodeContraAdc view) {
         this.view = view;
     }
     
     public void adicionarEntrada() throws SQLException{
         //Dados Entrada
-        int codEntrada = verificar.verificarUltimo("tblEntradas", "codEntrada") +1;
+        int codGasto = verificar.verificarUltimo("tblGastos", "codGasto") +1;
         int codOrcamentario = verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
-        String referencia = view.getCampoReferencia().getText();
+        String motivo = view.getCampoReferencia().getText();
         
         BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
         float quantidade = quantidadeGrande.floatValue();
         
         String formaPagamento = this.retornarFormaPagamento();
-        BigDecimal valorEntrada = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
+        BigDecimal valorGasto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
         Date dataCadastro = view.getCampoData().getDate();
         
-        Entradas entrada = new Entradas(codEntrada, referencia, quantidade, formaPagamento, valorEntrada, dataCadastro);
-        DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Entradas", formaPagamento, valorEntrada, dataCadastro, entrada.getCodBanco());
+        Gastos gasto = new Gastos(codGasto, motivo, quantidade, formaPagamento, valorGasto, dataCadastro);
+        DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Gastos", formaPagamento, valorGasto, dataCadastro, gasto.getChaveTransacao());
         
-        if(referencia.equals("")||quantidade==0||formaPagamento.equals("[Nenhum]")||valorEntrada.compareTo(BigDecimal.ZERO)==0
+        if(motivo.equals("")||quantidade==0||formaPagamento.equals("[Nenhum]")||valorGasto.compareTo(BigDecimal.ZERO)==0
                 || dataCadastro == null){
             view.exibeMensagem("Dados Preenchidos Incorretamente!");
         }
         else{
           //Adicionando no Banco
-          entradasDao.inserirDados(entrada);
+          gastosDao.inserirDados(gasto);
           orcamentarioDao.inserirDados(orcamentario);
           view.exibeMensagem("Sucesso!");
           view.getCampoFormaPagamento().setSelectedIndex(0);
@@ -80,4 +80,5 @@ public class AdicionarEntradasController {
         }
         return "[Nenhum]";
     }
+    
 }
