@@ -45,6 +45,32 @@ public class EntradasDao extends Conexao{
         statement.close();
     }
     
+    //Atualizar dados
+    public void atualizarDados(Entradas entrada) throws SQLException{
+        //atualizando a tabela de turmas
+        String inEntradas = atualizar.concat("tblEntradas "
+                + "SET referencia = ?, quantidade = ?, formaPagamento = ?, valorEntrada=? where codEntrada = ?");
+        
+        PreparedStatement statement = gerarStatement(inEntradas);
+        statement.setString(1, entrada.getReferencia());
+        statement.setFloat(2, entrada.getQuantidade());
+        statement.setString(3, entrada.getFormaPagamento());
+        statement.setBigDecimal(4, new BigDecimal(entrada.getValorEntrada().toString()));
+        statement.setInt(5, entrada.getCodBanco());
+        
+        statement.execute();
+        statement.close();
+    }
+    
+    //Remover Dados
+    public void removerEntrada(int codEntrada) throws SQLException{
+        String inEntradas = remover.concat("tblEntradas WHERE codEntrada = ?");
+        
+        PreparedStatement statement = gerarStatement(inEntradas);
+        statement.setInt(1, codEntrada);
+        statement.execute();
+        statement.close();
+    }
     
     public ArrayList <Entradas> selecionarTodasEntradas() throws SQLException{
         String inEntradas = selecionarTudo.concat("tblEntradas");

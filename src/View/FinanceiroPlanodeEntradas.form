@@ -72,6 +72,9 @@
           <Image iconType="3" name="/imagens/financeiro/btnRemoverHover.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoverActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="210" y="180" width="146" height="34"/>
@@ -87,6 +90,9 @@
           <Image iconType="3" name="/imagens/financeiro/btnEditarHover.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="360" y="180" width="146" height="34"/>
@@ -215,7 +221,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="painelEntradas">
+    <Container class="javax.swing.JScrollPane" name="painelPlanos">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="30" y="330" width="811" height="340"/>
@@ -224,19 +230,19 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tabelaEntradas">
+        <Component class="javax.swing.JTable" name="tabelasPlanos">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="tabelaEntradas.getTableHeader().setResizingAllowed(false);&#xa;tabelaEntradas.getTableHeader().setReorderingAllowed(false);&#xa;tabelaEntradas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(quantidadeEntrada));&#xa;tabelaEntradas.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoEntrada));&#xa;tabelaEntradas.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorEntrada));">
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="tabelasPlanos.getTableHeader().setResizingAllowed(false);&#xa;tabelasPlanos.getTableHeader().setReorderingAllowed(false);">
               <Table columnCount="6" rowCount="0">
-                <Column editable="false" title="CodBanco" type="java.lang.String"/>
-                <Column editable="true" title="Refer&#xea;ncia" type="java.lang.String"/>
-                <Column editable="true" title="Quantidade" type="java.lang.String"/>
-                <Column editable="true" title="Forma de Pagamento" type="java.lang.String"/>
-                <Column editable="true" title="Valor" type="java.lang.String"/>
-                <Column editable="false" title="Data" type="java.lang.String"/>
+                <Column editable="false" title="chavePlano" type="java.lang.String"/>
+                <Column editable="false" title="Aluno" type="java.lang.String"/>
+                <Column editable="false" title="Turma" type="java.lang.String"/>
+                <Column editable="false" title="Valor" type="java.lang.String"/>
+                <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
+                <Column editable="false" title="&#xda;ltimo Pagamento" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
@@ -253,7 +259,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="componentHidden" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="tabelaEntradasComponentHidden"/>
+            <EventHandler event="componentHidden" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="tabelasPlanosComponentHidden"/>
           </Events>
         </Component>
       </SubComponents>
@@ -302,7 +308,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JScrollPane" name="painelPlanos">
+    <Container class="javax.swing.JScrollPane" name="painelEntradas">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="30" y="330" width="811" height="340"/>
@@ -311,19 +317,19 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tabelasPlanos">
+        <Component class="javax.swing.JTable" name="tabelaEntradas">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="tabelasPlanos.getTableHeader().setResizingAllowed(false);&#xa;tabelasPlanos.getTableHeader().setReorderingAllowed(false);">
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="tabelaEntradas.getTableHeader().setResizingAllowed(false);&#xa;tabelaEntradas.getTableHeader().setReorderingAllowed(false);&#xa;tabelaEntradas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(quantidadeEntrada));&#xa;tabelaEntradas.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoEntrada));&#xa;tabelaEntradas.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorEntrada));">
               <Table columnCount="6" rowCount="0">
-                <Column editable="false" title="chavePlano" type="java.lang.String"/>
-                <Column editable="false" title="Aluno" type="java.lang.String"/>
-                <Column editable="false" title="Turma" type="java.lang.String"/>
-                <Column editable="false" title="Valor" type="java.lang.String"/>
-                <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
-                <Column editable="false" title="&#xda;ltimo Pagamento" type="java.lang.String"/>
+                <Column editable="false" title="CodBanco" type="java.lang.String"/>
+                <Column editable="true" title="Refer&#xea;ncia" type="java.lang.String"/>
+                <Column editable="true" title="Quantidade" type="java.lang.String"/>
+                <Column editable="true" title="Forma de Pagamento" type="java.lang.String"/>
+                <Column editable="true" title="Valor" type="java.lang.String"/>
+                <Column editable="false" title="Data" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
@@ -340,7 +346,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="componentHidden" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="tabelasPlanosComponentHidden"/>
+            <EventHandler event="componentHidden" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="tabelaEntradasComponentHidden"/>
           </Events>
         </Component>
       </SubComponents>
@@ -354,6 +360,9 @@
           <Image iconType="3" name="/imagens/financeiro/btnMensalidadesAReceberHover.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMensalidadesAReceberActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="400" y="290" width="287" height="35"/>
@@ -369,6 +378,9 @@
           <Image iconType="3" name="/imagens/financeiro/BTNcontasrecebidasHover.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnContasRecebidasActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="160" y="290" width="211" height="35"/>

@@ -38,7 +38,7 @@ public class AdicionarEntradasController {
         BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
         float quantidade = quantidadeGrande.floatValue();
         
-        String formaPagamento = view.getCampoFormaPagamento().getSelectedItem().toString();
+        String formaPagamento = this.retornarFormaPagamento();
         BigDecimal valorEntrada = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
         Date dataCadastro = view.getCampoData().getDate();
         
@@ -59,4 +59,19 @@ public class AdicionarEntradasController {
         }
     }
     
+    private String retornarFormaPagamento(){
+        int valorSelecionado = view.getCampoFormaPagamento().getSelectedIndex();
+        
+        switch(valorSelecionado){
+            case 1:
+                return "Dinheiro";
+            case 2:
+                return "Boleto";
+            case 3:
+                return "Crédito";
+            case 4:
+                return "Débito";
+        }
+        return "[Nenhum]";
+    }
 }

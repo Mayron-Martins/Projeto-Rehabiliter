@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.AlunosDao;
 import Dao.EntradasDao;
@@ -43,6 +44,7 @@ public class PlanoEntradasController {
     private final TurmasDao turmasDao = new TurmasDao();
     private final EntradasDao entradasDao = new EntradasDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+    private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
 
     public PlanoEntradasController(FinanceiroPlanodeEntradas view) {
         this.view = view;
@@ -554,5 +556,134 @@ public class PlanoEntradasController {
                 view.getPainelVendas().setVisible(false);
             break;
         }
+    }
+    //__________________________________________________________________________
+    
+    //Setar Tabela de Planos Pendentes
+    public void setarTabelaPlanosPendentes() throws SQLException, ParseException{
+        this.alternarPaineis(2);
+        ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
+        if(planos!=null){
+            limparTabelaPlanos();
+            for(int linhas=0; linhas<planos.size(); linhas++){
+                if(!planos.get(linhas).getSituacao().equals("Pago")){
+                        //Dados Aluno
+                    int codAluno = planos.get(linhas).getCodAluno();
+                    String dataPagamento = converterData.parseDate(planos.get(linhas).getDataPagamento());
+
+                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
+                    Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
+
+                    BigDecimal valorTotal = new BigDecimal(aluno.getValorContrato().toString());
+                    String subgrupo="";
+                    if(turmas.getSubgrupo()!=null){subgrupo = "-"+turmas.getSubgrupo();}
+                    String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma()+subgrupo;
+
+                    String situacao = planos.get(linhas).getSituacao();
+                    int chavePlano = planos.get(linhas).getChavePlano();
+
+                    Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, situacao, dataPagamento};
+                    tabelaPlanos.addRow(dadosDaTabela);
+                }
+            }
+        }else{
+            view.exibeMensagem("Sem Planos Cadastrados");
+            limparTabelaPlanos();
+        }
+    }
+    
+    public void setarTabelaPlanosPagos() throws SQLException, ParseException{
+        this.alternarPaineis(2);
+        ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
+        if(planos!=null){
+            limparTabelaPlanos();
+            for(int linhas=0; linhas<planos.size(); linhas++){
+                if(planos.get(linhas).getSituacao().equals("Pago")){
+                        //Dados Aluno
+                    int codAluno = planos.get(linhas).getCodAluno();
+                    String dataPagamento = converterData.parseDate(planos.get(linhas).getDataPagamento());
+
+                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
+                    Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
+
+                    BigDecimal valorTotal = new BigDecimal(aluno.getValorContrato().toString());
+                    String subgrupo="";
+                    if(turmas.getSubgrupo()!=null){subgrupo = "-"+turmas.getSubgrupo();}
+                    String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma()+subgrupo;
+
+                    String situacao = planos.get(linhas).getSituacao();
+                    int chavePlano = planos.get(linhas).getChavePlano();
+
+                    Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, situacao, dataPagamento};
+                    tabelaPlanos.addRow(dadosDaTabela);
+                }
+            }
+        }else{
+            view.exibeMensagem("Sem Planos Cadastrados");
+            limparTabelaPlanos();
+        }
+    }
+    //Fim das Funções de Setar Tabela
+    
+    //Editar Entradas
+    public void editarEntradas() throws SQLException, ParseException{
+        if(view.getBotaoVDetalhada().isEnabled()){
+            if(view.getPainelEntradas().isVisible()){
+                if(view.getTabelaEntradas().getSelectedRow()!=-1){
+                    int linhaSelecionada = view.getTabelaEntradas().getSelectedRow();
+                    
+                    int codEntrada = Integer.parseInt(tabelaEntradas.getValueAt(linhaSelecionada, 0).toString());
+                    String referencia = tabelaEntradas.getValueAt(linhaSelecionada, 1).toString();
+                    BigDecimal quantGrande = converterDinheiro.converterParaBigDecimal(tabelaEntradas.getValueAt(linhaSelecionada, 2).toString());
+                    float quantidade = quantGrande.floatValue();
+                    String formaPagamento = this.retornarFormaPagamento();
+                    BigDecimal valorEntrada = converterDinheiro.converterParaBigDecimal(view.getTabelaEntradas().getValueAt(linhaSelecionada, 4).toString());
+                    
+                    Entradas entrada = new Entradas(codEntrada, referencia, quantidade, formaPagamento, valorEntrada, null);
+                    if(referencia==null||quantidade==0||formaPagamento.equals("[Nenhum]")||valorEntrada.compareTo(BigDecimal.ZERO)==0){
+                        view.exibeMensagem("Valores Inválidos!");
+                    }
+                    else{
+                        entradasDao.atualizarDados(entrada);
+                        view.exibeMensagem("Sucesso!");
+                        setarTabelas();
+                    }                   
+                }else{view.exibeMensagem("Selecione uma Linha na Tabela Entradas!");}
+            }else{view.exibeMensagem("Permitida Edição Somente de Entradas!");}
+        }else{view.exibeMensagem("Selecione a Exibição Detalhada");}
+    }
+    
+    //Remover entradas
+    public void removerEntradas() throws SQLException, ParseException{
+        if(view.getBotaoVDetalhada().isEnabled()){
+            if(view.getPainelEntradas().isVisible()){
+                if(view.getTabelaEntradas().getSelectedRow()!=-1){
+                    int linhaSelecionada = view.getTabelaEntradas().getSelectedRow();
+                    
+                    int codEntrada = Integer.parseInt(tabelaEntradas.getValueAt(linhaSelecionada, 0).toString());
+                    
+                    entradasDao.removerEntrada(codEntrada);
+                    view.exibeMensagem("Sucesso!");
+                    setarTabelas();
+                                    
+                }else{view.exibeMensagem("Selecione uma Linha na Tabela Entradas!");}
+            }else{view.exibeMensagem("Permitida Remoção Somente de Entradas!");}
+        }else{view.exibeMensagem("Selecione a Exibição Detalhada");}
+    }
+    
+        private String retornarFormaPagamento(){
+        int valorSelecionado = view.getComboPagamentoEntrada().getSelectedIndex();
+        
+        switch(valorSelecionado){
+            case 1:
+                return "Dinheiro";
+            case 2:
+                return "Boleto";
+            case 3:
+                return "Crédito";
+            case 4:
+                return "Débito";
+        }
+        return "[Nenhum]";
     }
 }

@@ -6,6 +6,7 @@
 package View;
 
 import Controller.PlanoEntradasController;
+import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -26,8 +27,8 @@ import javax.swing.JTable;
 public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
     private final PlanoEntradasController controller;
     private final FinanceiroPlanodeEntradasAdc telaAdAEntradas= new FinanceiroPlanodeEntradasAdc();
-    private final JFormattedTextField valorEntrada = new JFormattedTextField(telaAdAEntradas.getCampoValor().getFormatter());
-    private final JFormattedTextField quantidadeEntrada = new JFormattedTextField(telaAdAEntradas.getCampoQuantidade().getFormatter());
+    private final JFormattedTextField valorEntrada = new JMoneyField();
+    private final JFormattedTextField quantidadeEntrada = new JMoneyField();
     private final JComboBox comboPagamentoEntrada = new JComboBox(telaAdAEntradas.getCampoFormaPagamento().getModel());
 
     /**
@@ -68,12 +69,12 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
         comboPagamento = new javax.swing.JComboBox<>();
         comboTipos = new javax.swing.JComboBox<>();
         comboPeriodo = new javax.swing.JComboBox<>();
-        painelEntradas = new javax.swing.JScrollPane();
-        tabelaEntradas = new javax.swing.JTable();
-        painelVendas = new javax.swing.JScrollPane();
-        tabelaVendas = new javax.swing.JTable();
         painelPlanos = new javax.swing.JScrollPane();
         tabelasPlanos = new javax.swing.JTable();
+        painelVendas = new javax.swing.JScrollPane();
+        tabelaVendas = new javax.swing.JTable();
+        painelEntradas = new javax.swing.JScrollPane();
+        tabelaEntradas = new javax.swing.JTable();
         btnMensalidadesAReceber = new javax.swing.JButton();
         btnContasRecebidas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -103,10 +104,20 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnRemover.png"))); // NOI18N
         btnRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnRemoverHover.png"))); // NOI18N
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 146, 34));
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnEditar.png"))); // NOI18N
         btnEditar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnEditarHover.png"))); // NOI18N
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 146, 34));
 
         botaoVResumida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumido.png"))); // NOI18N
@@ -155,6 +166,88 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
         });
         getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 140, -1));
 
+        tabelasPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelasPlanos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "chavePlano", "Aluno", "Turma", "Valor", "Situação", "Último Pagamento"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelasPlanos.getTableHeader().setResizingAllowed(false);
+        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelasPlanos.setFocusable(false);
+        tabelasPlanos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelasPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelasPlanos.setRowHeight(25);
+        tabelasPlanos.setShowVerticalLines(false);
+        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelasPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelasPlanosComponentHidden(evt);
+            }
+        });
+        painelPlanos.setViewportView(tabelasPlanos);
+
+        getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+
+        tabelaVendas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaVendas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CodBanco", "CodCliente", "Produtos", "Quantidade", "Total", "Forma Pagamento", "Data"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaVendas.getTableHeader().setResizingAllowed(false);
+        tabelaVendas.getTableHeader().setReorderingAllowed(false);
+        tabelaVendas.setFocusable(false);
+        tabelaVendas.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaVendas.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaVendas.setRowHeight(25);
+        tabelaVendas.setShowVerticalLines(false);
+        tabelaVendas.getTableHeader().setReorderingAllowed(false);
+        tabelaVendas.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaVendasComponentHidden(evt);
+            }
+        });
+        painelVendas.setViewportView(tabelaVendas);
+
+        getContentPane().add(painelVendas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+
         tabelaEntradas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaEntradas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -199,94 +292,22 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
 
         getContentPane().add(painelEntradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
-        tabelaVendas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaVendas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "CodBanco", "CodCliente", "Produtos", "Quantidade", "Total", "Forma Pagamento", "Data"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabelaVendas.getTableHeader().setResizingAllowed(false);
-        tabelaVendas.getTableHeader().setReorderingAllowed(false);
-        tabelaVendas.setFocusable(false);
-        tabelaVendas.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaVendas.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaVendas.setRowHeight(25);
-        tabelaVendas.setShowVerticalLines(false);
-        tabelaVendas.getTableHeader().setReorderingAllowed(false);
-        tabelaVendas.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaVendasComponentHidden(evt);
-            }
-        });
-        painelVendas.setViewportView(tabelaVendas);
-
-        getContentPane().add(painelVendas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
-
-        tabelasPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelasPlanos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "chavePlano", "Aluno", "Turma", "Valor", "Situação", "Último Pagamento"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabelasPlanos.getTableHeader().setResizingAllowed(false);
-        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
-        tabelasPlanos.setFocusable(false);
-        tabelasPlanos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelasPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelasPlanos.setRowHeight(25);
-        tabelasPlanos.setShowVerticalLines(false);
-        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
-        tabelasPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelasPlanosComponentHidden(evt);
-            }
-        });
-        painelPlanos.setViewportView(tabelasPlanos);
-
-        getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
-
         btnMensalidadesAReceber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnMensalidadesAReceber.png"))); // NOI18N
         btnMensalidadesAReceber.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnMensalidadesAReceberHover.png"))); // NOI18N
+        btnMensalidadesAReceber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMensalidadesAReceberActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnMensalidadesAReceber, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 287, 35));
 
         btnContasRecebidas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/BTNcontasrecebidas.png"))); // NOI18N
         btnContasRecebidas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/BTNcontasrecebidasHover.png"))); // NOI18N
+        btnContasRecebidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContasRecebidasActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnContasRecebidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 211, 35));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodeentrada.jpg"))); // NOI18N
@@ -356,6 +377,46 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
             Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAplicarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        try {
+            controller.editarEntradas();
+        } catch (SQLException ex) {
+            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        try {
+            controller.removerEntradas();
+        } catch (SQLException ex) {
+            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnContasRecebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContasRecebidasActionPerformed
+        try {
+            controller.setarTabelaPlanosPagos();
+        } catch (SQLException ex) {
+            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnContasRecebidasActionPerformed
+
+    private void btnMensalidadesAReceberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensalidadesAReceberActionPerformed
+        try {
+            controller.setarTabelaPlanosPendentes();
+        } catch (SQLException ex) {
+            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnMensalidadesAReceberActionPerformed
 
     /**
      * @param args the command line arguments
