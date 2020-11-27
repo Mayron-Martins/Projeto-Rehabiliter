@@ -68,7 +68,7 @@ public class AlunosDao extends Conexao{
         statement.setString(20, aluno.getDescricao());
         statement.setBigDecimal(21, new BigDecimal(aluno.getDebito().toString()));
         statement.setBigDecimal(22, new BigDecimal(aluno.getValorContrato().toString()));
-        statement.setDate(8, (Date) data);
+        statement.setDate(23, (Date) data);
         statement.execute();
         statement.close();
         
