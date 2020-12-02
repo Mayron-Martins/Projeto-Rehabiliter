@@ -88,6 +88,8 @@ public class AdicionarAlunosController {
     }
     
     public void adicionarAlunos() throws SQLException{
+        Date dataCadastro = converterData.getSqlDate(new Date());
+
         //Dados do Aluno
         int codAluno = verificar.verificarUltimo("tblAlunos", "codAluno")+1;
         String nome = view.getCampoNomeAluno().getText();
@@ -95,7 +97,6 @@ public class AdicionarAlunosController {
         String rg = ""; //Como não está na tabela é nula
         
         Date dataNascimento = view.getCampoNascimentoAluno().getDate();
-        System.out.println(dataNascimento);
         
         String telefone = view.getCampoTelefone().getText();
         String celular = view.getCampoCelular().getText();
@@ -144,7 +145,7 @@ public class AdicionarAlunosController {
         int diaVencimento = view.getCampoDiaVencimento().getDay();
         
         //Cria os tipos Aluno, Endereco e Matricula com os dados
-        Aluno aluno = new Aluno(codAluno, nome, cpf, rg, telefone, celular, email, dataNascimento, nomeMae, nomePai, contatoMae, contatoPai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato);
+        Aluno aluno = new Aluno(codAluno, nome, cpf, rg, telefone, celular, email, dataNascimento, nomeMae, nomePai, contatoMae, contatoPai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato, dataCadastro);
         EnderecoAlunos endereco = new EnderecoAlunos(codEndereco, codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
         Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, null, null, "Pendente");
