@@ -46,6 +46,12 @@ public class ServicosController {
         } else{
             for(int linhas=0; linhas<servicos.size(); linhas++){
                     String formaPagamento = servicos.get(linhas).getFormaPagamento();
+                    if(formaPagamento.equals("[Nenhuma]")){
+                        Object[] dadosDaTabela = {servicos.get(linhas).getCodBanco(), 
+                        servicos.get(linhas).getNome(),servicos.get(linhas).getPeriodo(),
+                        servicos.get(linhas).getFormaPagamento(),servicos.get(linhas).getValor()};
+                        this.tabelaDeServicos.addRow(dadosDaTabela);
+                    }
                     if(formaPagamento.equals("Dinheiro")){
                         Object[] dadosDaTabela = {servicos.get(linhas).getCodBanco(), 
                         servicos.get(linhas).getNome(),servicos.get(linhas).getPeriodo(),
@@ -83,9 +89,10 @@ public class ServicosController {
             int codTurma = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
             String nome = this.tabelaDeServicos.getValueAt(linhaSelecionada, 1).toString();
             
-            String periodo = view.getComboPeriodo().getSelectedItem().toString();
+            String periodo = this.retornarPeriodo();
             String metodoDePagamento = view.getMetodoPagamento().getSelectedItem().toString();
             
+            BigDecimal valor = new BigDecimal("0");
             BigDecimal valorAVista = new BigDecimal("0");
             BigDecimal valorBoleto = new BigDecimal("0");
             BigDecimal valorAPrazoCredito = new BigDecimal("0");
@@ -94,12 +101,13 @@ public class ServicosController {
             
             String valorDinheiro = converterDinheiro.converterParaBigDecimal(view.getTabelaServicos().getValueAt(linhaSelecionada, 4).toString()).toString();
             
+            if(metodoDePagamento.equals("[Nenhuma]")){valor = new BigDecimal(valorDinheiro);}
             if(metodoDePagamento.equals("Dinheiro")){valorAVista = new BigDecimal(valorDinheiro);}
             if(metodoDePagamento.equals("Boleto")){valorBoleto = new BigDecimal(valorDinheiro);}
             if(metodoDePagamento.equals("Cartão de Crédito")){valorAPrazoCredito = new BigDecimal(valorDinheiro);}
             if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
             
-            Servicos servico = new Servicos(codTurma, nome, periodo, metodoDePagamento, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito);
+            Servicos servico = new Servicos(codTurma, nome, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito);
         
         //Inserindo Dados
         if(nome.equals("")){
@@ -128,6 +136,7 @@ public class ServicosController {
           //Pega o valor da coluna Forma de Pagamento
           String metodoDePagamento = tabelaDeServicos.getValueAt(linhaSelecionada, 3).toString();
           //Joga o valor das colunas no combobox
+          this.preencherComboPeriodo();
           view.getComboPeriodo().setSelectedItem(periodo);
           view.getComboPeriodo().setSelectedItem(metodoDePagamento);  
       }
@@ -147,6 +156,44 @@ public class ServicosController {
         else{this.view.exibeMensagem("Erro, Nenhum Serviço Selecionado!");}
     }
     
+    private String retornarPeriodo(){
+        if(view.getComboPeriodo().isEnabled()){
+            return view.getComboPeriodo().getSelectedItem().toString();
+        }
+        else{
+            return view.getCampoOutroPeriodo().getText();
+        }
+    }
     
+    public void preencherComboPeriodo() throws SQLException{
+        ArrayList <Servicos> servicos = servicosDao.selecionarTodosServicos();
+        
+        String periodoServicoAnterior="";
+        String periodoServico;
+        if(servicos!=null){
+            view.getComboPeriodo().removeAllItems();
+            view.getComboPeriodo().addItem("[Nenhum]");
+            view.getComboPeriodo().addItem("Diária");
+            view.getComboPeriodo().addItem("Semanal");
+            view.getComboPeriodo().addItem("Mensal");
+            view.getComboPeriodo().addItem("Trimestral");
+            view.getComboPeriodo().addItem("Quadrimestral");
+            view.getComboPeriodo().addItem("Semestral");
+            view.getComboPeriodo().addItem("Anual");
+            
+            for(int linhas=0; linhas<servicos.size();linhas++){
+                periodoServico = servicos.get(linhas).getPeriodo();
+                
+                if(!periodoServico.equals(periodoServicoAnterior)){
+                    if(!periodoServico.equals("[Nenhum]")&&!periodoServico.equals("Diária")&&!periodoServico.equals("Semanal")
+                        &&!periodoServico.equals("Mensal")&&!periodoServico.equals("Trimestral")&&!periodoServico.equals("Quadrimestral")
+                        &&!periodoServico.equals("Semestral")&&!periodoServico.equals("Anual")){
+                        view.getComboPeriodo().addItem(periodoServico);
+                    }
+                }
+                periodoServicoAnterior=periodoServico;
+            }
+        }
+    }
     
 }

@@ -409,6 +409,11 @@ public class AlunosCadastro extends javax.swing.JFrame {
         jPanelCadastroFinal.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
         comboTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
+        comboTurma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTurmaActionPerformed(evt);
+            }
+        });
         jPanelCadastroFinal.add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 190, 32));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -535,6 +540,14 @@ public class AlunosCadastro extends javax.swing.JFrame {
         jPanelCadastroFinal.setVisible(false);
         jPanelPais.setVisible(true);
     }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void comboTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmaActionPerformed
+        try {
+            controller.verificarQuantidadeLimiteAlunos();
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_comboTurmaActionPerformed
     private void jpanelDadosActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
         this.setVisible(false);

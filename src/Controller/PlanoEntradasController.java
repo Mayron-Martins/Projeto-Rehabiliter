@@ -174,9 +174,7 @@ public class PlanoEntradasController {
             Planos plano = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codAluno).get(0);
             Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
 
-            String subgrupo="";
-            if(turmas.getSubgrupo()!=null){subgrupo = "-"+turmas.getSubgrupo();}
-            String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma()+subgrupo;
+            String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma();
 
             String situacao = plano.getSituacao();
             int chavePlano = plano.getChavePlano();
@@ -571,9 +569,8 @@ public class PlanoEntradasController {
                     Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
 
                     BigDecimal valorTotal = new BigDecimal(aluno.getValorContrato().toString());
-                    String subgrupo="";
-                    if(turmas.getSubgrupo()!=null){subgrupo = "-"+turmas.getSubgrupo();}
-                    String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma()+subgrupo;
+
+                    String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma();
 
                     String situacao = planos.get(linhas).getSituacao();
                     int chavePlano = planos.get(linhas).getChavePlano();
@@ -603,9 +600,8 @@ public class PlanoEntradasController {
                     Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
 
                     BigDecimal valorTotal = new BigDecimal(aluno.getValorContrato().toString());
-                    String subgrupo="";
-                    if(turmas.getSubgrupo()!=null){subgrupo = "-"+turmas.getSubgrupo();}
-                    String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma()+subgrupo;
+
+                    String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma();
 
                     String situacao = planos.get(linhas).getSituacao();
                     int chavePlano = planos.get(linhas).getChavePlano();

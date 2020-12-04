@@ -18,17 +18,15 @@ import java.util.logging.Logger;
 public class Turmas {
     private int codBanco;
     private String nomeTurma;
-    private String subgrupo;
     private int quantidadeAlunos;
     private int quantidadeMaximaAlunos;
     private String diasDaSemana;
     private Time horario;
 
     
-    public Turmas(int codBanco, String nomeTurma, String subgrupo, int quantidadeAlunos, int quantidadeMaximaAlunos, String diasDaSemana, String horario) {
+    public Turmas(int codBanco, String nomeTurma, int quantidadeAlunos, int quantidadeMaximaAlunos, String diasDaSemana, String horario) {
         this.codBanco = codBanco;
         this.nomeTurma = nomeTurma;
-        this.subgrupo = subgrupo;
         this.quantidadeAlunos = quantidadeAlunos;
         this.quantidadeMaximaAlunos = quantidadeMaximaAlunos;
         this.diasDaSemana = diasDaSemana;
@@ -47,10 +45,6 @@ public class Turmas {
 
     public String getNomeTurma() {
         return nomeTurma;
-    }
-
-    public String getSubgrupo() {
-        return subgrupo;
     }
 
     public int getQuantidadeAlunos() {

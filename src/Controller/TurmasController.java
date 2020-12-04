@@ -53,16 +53,15 @@ public class TurmasController {
             for(int linhas=0; linhas<turmas.size(); linhas++){
                 if(turmas.get(linhas).getQuantidadeMaximaAlunos()==0){
                     Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
-                    turmas.get(linhas).getNomeTurma(),turmas.get(linhas).getSubgrupo(),
-                    "",turmas.get(linhas).getQuantidadeAlunos(),
+                    turmas.get(linhas).getNomeTurma(), "",turmas.get(linhas).getQuantidadeAlunos(),
                     this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
                     converterHora.parseHour(turmas.get(linhas).getHorario())};
                     this.tabelaDeTurmas.addRow(dadosDaTabela);
                 }
                 else{
                     Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
-                    turmas.get(linhas).getNomeTurma(),turmas.get(linhas).getSubgrupo(),
-                    turmas.get(linhas).getQuantidadeMaximaAlunos(),turmas.get(linhas).getQuantidadeAlunos(),
+                    turmas.get(linhas).getNomeTurma(),turmas.get(linhas).getQuantidadeMaximaAlunos(),
+                    turmas.get(linhas).getQuantidadeAlunos(),
                     this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
                     converterHora.parseHour(turmas.get(linhas).getHorario())};
                     this.tabelaDeTurmas.addRow(dadosDaTabela);
@@ -77,16 +76,13 @@ public class TurmasController {
             int codTurma = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 0).toString());
             String nome = this.tabelaDeTurmas.getValueAt(linhaSelecionada, 1).toString();
             
-            String subgrupo;
-            if(this.tabelaDeTurmas.getValueAt(linhaSelecionada, 2) == null){subgrupo=null;}
-            else{subgrupo = this.view.getTabelaAlunos().getValueAt(linhaSelecionada, 2).toString();}
             
             
             int quantAlunos =0;
             
             int quantidadeMax;
-            if(this.tabelaDeTurmas.getValueAt(linhaSelecionada, 3)==null){quantidadeMax = 0;}
-            else{quantidadeMax = Integer.parseInt(this.tabelaDeTurmas.getValueAt(linhaSelecionada, 3).toString());}
+            if(this.tabelaDeTurmas.getValueAt(linhaSelecionada, 2)==null){quantidadeMax = 0;}
+            else{quantidadeMax = Integer.parseInt(this.tabelaDeTurmas.getValueAt(linhaSelecionada, 2).toString());}
             
             String diasDaSemana = this.view.getDiasDaSemana();
             ArrayList <String> diasDaSemanaUnitarios = new ArrayList<>();
@@ -97,7 +93,7 @@ public class TurmasController {
             Turmas turma = null;
             ArrayList <Horarios> horarios = new ArrayList <>();
             if(!view.getCampoHorario().equals("")){
-            turma = new Turmas(codTurma, nome, subgrupo, quantAlunos, quantidadeMax, diasDaSemana, horario);    
+            turma = new Turmas(codTurma, nome, quantAlunos, quantidadeMax, diasDaSemana, horario);    
 
         
         int diferenca, contador = diasDaSemanaUnitarios.size();
@@ -187,16 +183,14 @@ public class TurmasController {
                 for(int linhas = 0; linhas<turmas.size(); linhas++){
                     if(turmas.get(linhas).getQuantidadeMaximaAlunos()==0){
                         Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
-                        turmas.get(linhas).getNomeTurma(),turmas.get(linhas).getSubgrupo(),
-                        "",turmas.get(linhas).getQuantidadeAlunos(),
+                        turmas.get(linhas).getNomeTurma(), "",turmas.get(linhas).getQuantidadeAlunos(),
                         this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
                         converterHora.parseHour(turmas.get(linhas).getHorario())};
                         this.tabelaDeTurmas.addRow(dadosDaTabela);
                     }
                     else{
                         Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
-                        turmas.get(linhas).getNomeTurma(),turmas.get(linhas).getSubgrupo(),
-                        turmas.get(linhas).getQuantidadeMaximaAlunos(),turmas.get(linhas).getQuantidadeAlunos(),
+                        turmas.get(linhas).getNomeTurma(), turmas.get(linhas).getQuantidadeMaximaAlunos(),turmas.get(linhas).getQuantidadeAlunos(),
                         this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
                         converterHora.parseHour(turmas.get(linhas).getHorario())};
                         this.tabelaDeTurmas.addRow(dadosDaTabela);

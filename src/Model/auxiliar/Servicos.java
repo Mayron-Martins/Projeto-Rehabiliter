@@ -17,16 +17,18 @@ public class Servicos {
     private final String nome;
     private final String periodo;
     private final String formaPagamento;
+    private final BigDecimal valor;
     private final BigDecimal valorVista;
     private final BigDecimal valorBoleto;
     private final BigDecimal valorPrazoCredito;
     private final BigDecimal valorPrazoDebito;
 
-    public Servicos(int codBanco, String nome, String periodo, String formaPagamento, BigDecimal valorVista, BigDecimal valorBoleto, BigDecimal valorPrazoCredito, BigDecimal valorPrazoDebito) {
+    public Servicos(int codBanco, String nome, String periodo, String formaPagamento,BigDecimal valor, BigDecimal valorVista, BigDecimal valorBoleto, BigDecimal valorPrazoCredito, BigDecimal valorPrazoDebito) {
         this.codBanco = codBanco;
         this.nome = nome;
         this.periodo = periodo;
         this.formaPagamento = formaPagamento;
+        this.valor = new BigDecimal(valor.toString());
         this.valorVista = new BigDecimal (valorVista.toString());
         this.valorBoleto = new BigDecimal (valorBoleto.toString());
         this.valorPrazoCredito = new BigDecimal(valorPrazoCredito.toString());
@@ -66,6 +68,8 @@ public class Servicos {
     public String getFormaPagamento() {
         return formaPagamento;
     }
-    
-    
+
+    public BigDecimal getValor() {
+        return valor;
+    }
 }

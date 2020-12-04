@@ -292,7 +292,8 @@ public class TableCriator {
                 + "codServico INT PRIMARY KEY," //Cada serviço terá um código único no banco.
                 + "nome VARCHAR(15) NOT NULL," //Nome do Serviço (natação, hidroginástica, etc.).
                 + "periodo VARCHAR(10) NOT NULL,"
-                + "formaPagamento VARCHAR(25) NOT NULL," //Diária, Semanal, Mensal, etc.
+                + "formaPagamento VARCHAR(25) NOT NULL,"
+                + "valor DECIMAL(16, 2) NULL," //Diária, Semanal, Mensal, etc.
                 + "valorAVista DECIMAL(16,2) NULL,"
                 + "valorBoleto DECIMAL(16,2) NULL,"
                 + "valorCartaoDeCredito DECIMAL(16,2) NULL,"

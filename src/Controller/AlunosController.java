@@ -79,8 +79,8 @@ public class AlunosController {
             int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
             int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
             String nome = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
-            String nomeTurma = view.getComboTurmas().getSelectedItem().toString();
-            int codTurma = Integer.parseInt(String.valueOf(nomeTurma.charAt(0)));
+            String nomeTurmaAtual = view.getComboTurmas().getSelectedItem().toString();
+            int codTurmaAtual = Integer.parseInt(String.valueOf(nomeTurmaAtual.charAt(0)));
             String nomeServico = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 3).toString();
             int codServico = Integer.parseInt(String.valueOf(nomeServico.charAt(0)));
             BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString()).toString());
@@ -109,29 +109,46 @@ public class AlunosController {
             
             //Dados matrícula
             int anoAtual = converterData.obterAnoAtual();
-            String nomeMatricula = this.converterMatricula(anoAtual, codTurma, codAluno, codServico);
+            String nomeMatricula = this.converterMatricula(anoAtual, codTurmaAtual, codAluno, codServico);
             Aluno alunoAnterior = this.alunoAnterior(codAluno);
             
             Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
                     alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
-                    nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurma, codServico, alunoAnterior.getDescricao(), 
+                    nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurmaAtual, codServico, alunoAnterior.getDescricao(), 
                     valorDebito, valorContrato);
             
-            Matriculas matricula = new Matriculas(codAluno, codTurma, codAluno, anoAtual, nomeMatricula);
+            Matriculas matricula = new Matriculas(codAluno, codTurmaAtual, codAluno, anoAtual, nomeMatricula);
             EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);
-            Planos planoAluno = new Planos(codAluno, codTurma, codServico, diaVencimento, null, null, situacao);
-        
+            Planos planoAluno = new Planos(codAluno, codTurmaAtual, codServico, diaVencimento, null, null, situacao);
+            
+            
+            //Verificar se a turma atual possui vagas
+            Turmas turmaAnterior = this.pegarTurma(alunoAnterior.getTurma());
+            Turmas turmaAtual = this.pegarTurma(codTurmaAtual);
+            boolean verificarVagasTurma = false;
+            
+            if(turmaAnterior.getCodBanco()!=turmaAtual.getCodBanco()){
+                verificarVagasTurma = this.verificarQuantidadeLimiteAlunos(codTurmaAtual);
+            }
+            
         //Inserindo Dados
-        if(nome.equals("")|| logradouro.equals("") || numero.equals("")|| bairro.equals("")|| cidade.equals("")||
+        if(verificarVagasTurma==true){
+            view.exibeMensagem("Quantidade de Vagas Limite para a Turma Atingida!");
+            listarAlunos();
+        }
+        else{
+            if(nome.equals("")|| logradouro.equals("") || numero.equals("")|| bairro.equals("")|| cidade.equals("")||
         estado.equals("[Nenhum]")|| cep.equals("  .   -   ")){
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
             alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno, anoAtual);
+            turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
+            turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             listarAlunos();
         }
-            //Turmas 
+        }
         }
         
         else{this.view.exibeMensagem("Erro, Nenhum Aluno Selecionado!");}
@@ -144,8 +161,11 @@ public class AlunosController {
         if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
             int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+            String nomeTurma = view.getComboTurmas().getSelectedItem().toString();
+            int codTurma = Integer.parseInt(nomeTurma.split("\\.")[0]);
+            Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+codTurma).get(0);
             
-            
+            turmasDao.atualizarQuantAunos(codTurma, turma.getQuantidadeAlunos()-1);
             alunosDao.removerAluno(codAluno);
             this.view.exibeMensagem("Sucesso");
             listarAlunos();
@@ -240,9 +260,7 @@ public class AlunosController {
         }
         else{
             for(int linhas=0; linhas<turmas.size(); linhas++){
-            String subgrupo = "";    
-            if(turmas.get(linhas).getSubgrupo()!=null){subgrupo = "-"+turmas.get(linhas).getSubgrupo();}
-            view.getComboTurmas().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma()+subgrupo);
+            view.getComboTurmas().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma());
             }
         }
         
@@ -270,6 +288,7 @@ public class AlunosController {
             String metodoDePagamento = servicos.get(0).getFormaPagamento();
             
             BigDecimal valorContrato = null;
+            if(metodoDePagamento.equals("[Nenhuma]")){valorContrato = new BigDecimal(servicos.get(0).getValor().toString());}
             if(metodoDePagamento.equals("Dinheiro")){valorContrato = new BigDecimal(servicos.get(0).getValorVista().toString());}
             if(metodoDePagamento.equals("Boleto")){valorContrato = new BigDecimal(servicos.get(0).getValorBoleto().toString());}
             if(metodoDePagamento.equals("Cartão de Crédito")){valorContrato = new BigDecimal(servicos.get(0).getValorPrazoCredito().toString());}
@@ -312,16 +331,12 @@ public class AlunosController {
             
             
             //Inserindo dados na tabela de alunos
-            String subgrupo="";
-            if(turmas.get(0).getSubgrupo()!=null){subgrupo = "-"+turmas.get(0).getSubgrupo();}
-
-
             Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getCodBanco(), 
-            alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma()+subgrupo, 
+            alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma(), 
             servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getFormaPagamento(), alunos.get(linhas).getValorContrato(),
             alunos.get(linhas).getDebito()};
             this.tabelaDeAlunos.addRow(dadosDaTabelaAlunos);
-            this.view.getComboTurmas().setSelectedItem(turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma()+subgrupo);
+            this.view.getComboTurmas().setSelectedItem(turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma());
             this.view.getComboServicos().setSelectedItem(servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getFormaPagamento());
             
             
@@ -374,5 +389,17 @@ public class AlunosController {
         this.view.getComboServicos().setEnabled(true);
         this.view.getComboEstado().setEnabled(true);
         this.view.getComboListar().setEnabled(true);
+    }
+    
+    private boolean verificarQuantidadeLimiteAlunos(int codTurma) throws SQLException{
+            Turmas turma = this.pegarTurma(codTurma);
+            if(turma.getQuantidadeMaximaAlunos() != 0){
+                return turma.getQuantidadeAlunos()==turma.getQuantidadeMaximaAlunos();
+            }
+            return false;
+    }
+    
+    private Turmas pegarTurma(int codTurma) throws SQLException{
+        return turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+codTurma).get(0);
     }
 }

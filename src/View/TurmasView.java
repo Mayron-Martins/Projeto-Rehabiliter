@@ -31,7 +31,6 @@ public class TurmasView extends javax.swing.JFrame {
     private String diasDaSemana=null;
     private ArrayList <String> diasDaSemanaUnitarios;
     private String campoHorario="";
-    private final JTextField campoSubgrupoFormatado = new FormatacaodeCamposRestritos(2,0);
     private final JTextField campoMaximoAlunos = new FormatacaodeCamposRestritos();
 
     /**
@@ -225,14 +224,14 @@ public class TurmasView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CodBanco", "Nome", "Subgrupo", "Quant(Max)", "Quant Presente", "Dias da Semana", "Horário"
+                "CodBanco", "Nome", "Quant(Max)", "Quant Presente", "Dias da Semana", "Horário"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, false, false, false
+                false, true, true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -245,8 +244,7 @@ public class TurmasView extends javax.swing.JFrame {
         });
         tabelaAlunos.getTableHeader().setResizingAllowed(false);
         tabelaAlunos.getTableHeader().setReorderingAllowed(false);
-        tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(campoSubgrupoFormatado));
-        tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(campoMaximoAlunos));
+        tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(campoMaximoAlunos));
         tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaAlunos.setRowHeight(25);

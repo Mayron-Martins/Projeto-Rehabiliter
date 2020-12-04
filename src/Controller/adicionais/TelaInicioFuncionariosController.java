@@ -75,10 +75,8 @@ public class TelaInicioFuncionariosController {
                     alunos.get(linhas).getTurma());
 
             //Inserindo dados na tabela de alunos
-            String subgrupo="";
-            if(turmas.get(0).getSubgrupo()!=null){subgrupo = "-"+turmas.get(0).getSubgrupo();}
             String dataAniversario = converterData.parseDate(alunos.get(linhas).getDatadenascimento());
-            Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma()+subgrupo, dataAniversario};
+            Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma(), dataAniversario};
             this.tabelaDeAlunos.addRow(dadosDaTabelaAlunos);
             }
         }

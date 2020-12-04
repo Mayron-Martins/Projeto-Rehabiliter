@@ -6,11 +6,8 @@
 package View;
 
 import Controller.adicionais.AdicionarTurmasController;
-import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -53,9 +50,8 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         botaoFechar = new javax.swing.JButton();
         campoHoras = new javax.swing.JFormattedTextField();
         campoMinutos = new javax.swing.JFormattedTextField();
-        campoSubgrupos = new javax.swing.JFormattedTextField();
         campoCapMax = new FormatacaodeCamposRestritos();
-        campoNome = new FormatacaoCamposRestritosLetras(15);
+        campoNome = new javax.swing.JTextField();
         botaoConfirmar = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         barraDeRolagemDiasdaSemana = new javax.swing.JScrollBar();
@@ -95,22 +91,6 @@ public class TurmasAdicionar extends javax.swing.JFrame {
             erroMinutos.printStackTrace();}
         campoMinutos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         getContentPane().add(campoMinutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 195, 90, 30));
-
-        campoSubgrupos.addKeyListener(new KeyListener(){
-            public void keyTyped(KeyEvent e) {
-                String texto = campoSubgrupos.getText();
-                if(texto != null && texto.length() == 2) {
-                    e.consume();
-                }
-            }
-
-            public void keyPressed(KeyEvent e) {
-            }
-
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        getContentPane().add(campoSubgrupos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 70, 30));
 
         campoCapMax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -278,7 +258,6 @@ public class TurmasAdicionar extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField campoHoras;
     private javax.swing.JFormattedTextField campoMinutos;
     private javax.swing.JTextField campoNome;
-    private javax.swing.JFormattedTextField campoSubgrupos;
     private javax.swing.JLabel fundo;
     private javax.swing.JLayeredPane jLayeredPane1;
     // End of variables declaration//GEN-END:variables
@@ -372,11 +351,6 @@ private void moverCaixasClique(){
         return campoNome;
     }
 
-    public JFormattedTextField getCampoSubgrupos() {
-        return campoSubgrupos;
-    }
-
-    
 
     public String getDiasDaSemana() {
         return diasDaSemana;

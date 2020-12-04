@@ -6,7 +6,6 @@
 package View;
 
 import Controller.adicionais.AdicionarServicosController;
-import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -32,6 +31,12 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         controller = new AdicionarServicosController(this);
         btnFechar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
+        this.setarValores();
+        try {
+            controller.preencherComboPeriodo();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
@@ -44,9 +49,10 @@ public class ServicosAdicionar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        campoOutroTipo = new javax.swing.JTextField();
         comboPeriodo = new javax.swing.JComboBox<>();
         btnFechar = new javax.swing.JButton();
-        nomeServico = new FormatacaoCamposRestritosLetras(15);
+        nomeServico = new javax.swing.JTextField();
         valorDinheiro = new JMoneyField();
         metodoPagamento = new javax.swing.JComboBox<>();
         botaoConfirmar = new javax.swing.JButton();
@@ -57,7 +63,19 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Diária", "Semanal", "Mensal", "Trimestral", "Semestral", "Anual" }));
+        campoOutroTipo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoOutroTipoMouseClicked(evt);
+            }
+        });
+        getContentPane().add(campoOutroTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 202, 170, 30));
+
+        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Diária", "Semanal", "Mensal", "Trimestral", "Quadrimestral", "Semestral", "Anual" }));
+        comboPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboPeriodoMouseClicked(evt);
+            }
+        });
         getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 202, 170, 30));
 
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -124,6 +142,18 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
+    private void comboPeriodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboPeriodoMouseClicked
+        comboPeriodo.setEnabled(true);
+        campoOutroTipo.setText("Outro");
+        campoOutroTipo.setEnabled(false);
+    }//GEN-LAST:event_comboPeriodoMouseClicked
+
+    private void campoOutroTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoOutroTipoMouseClicked
+        campoOutroTipo.setEnabled(true);
+        this.esvaziarOutroTipo();
+        comboPeriodo.setEnabled(false);
+    }//GEN-LAST:event_campoOutroTipoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -162,6 +192,7 @@ public class ServicosAdicionar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoConfirmar;
     private javax.swing.JButton btnFechar;
+    private javax.swing.JTextField campoOutroTipo;
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JComboBox<String> metodoPagamento;
@@ -189,5 +220,20 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         return valorDinheiro;
     }
 
+    private void setarValores(){
+        comboPeriodo.setEnabled(true);
+        campoOutroTipo.setText("Outro");
+        campoOutroTipo.setEnabled(false);
+    }
+    
+    private void esvaziarOutroTipo(){
+        if(campoOutroTipo.getText().equals("Outro")){
+            campoOutroTipo.setText("");
+        }
+    }
+
+    public JTextField getCampoOutroTipo() {
+        return campoOutroTipo;
+    }
     
 }

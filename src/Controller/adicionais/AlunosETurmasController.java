@@ -34,11 +34,9 @@ public class AlunosETurmasController {
         ArrayList <Turmas> turmas = new ArrayList<>();
         turmas = this.turmasDao.selecionarTodasTurmas();
         for(int linhas=0; linhas<turmas.size(); linhas++){
-            String subgrupo = "";    
-            if(turmas.get(linhas).getSubgrupo()!=null){subgrupo = "-"+turmas.get(linhas).getSubgrupo();}
             if(turmas.get(linhas).getQuantidadeMaximaAlunos()==0){
                 Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
-                turmas.get(linhas).getNomeTurma()+subgrupo,
+                turmas.get(linhas).getNomeTurma(),
                 converterHora.parseHour(turmas.get(linhas).getHorario()),
                 this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
                 turmas.get(linhas).getQuantidadeAlunos(),"",
@@ -47,7 +45,7 @@ public class AlunosETurmasController {
             }
             else{
                 Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
-                turmas.get(linhas).getNomeTurma()+subgrupo,
+                turmas.get(linhas).getNomeTurma(),
                 converterHora.parseHour(turmas.get(linhas).getHorario()),
                 this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
                 turmas.get(linhas).getQuantidadeAlunos(),turmas.get(linhas).getQuantidadeMaximaAlunos(),

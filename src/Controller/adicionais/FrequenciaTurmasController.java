@@ -143,14 +143,11 @@ public class FrequenciaTurmasController {
         else{
             int codBanco;
             String nomeTurma;
-            String subgrupo;
             
             for(int linhas=0; linhas<turmas.size();linhas++){
-                subgrupo = "";
                 codBanco = turmas.get(linhas).getCodBanco();
                 nomeTurma = turmas.get(linhas).getNomeTurma();
-                if(turmas.get(linhas).getSubgrupo()!=null){subgrupo = " - "+turmas.get(linhas).getSubgrupo();}
-                view.getComboTurmas().addItem(codBanco+"."+nomeTurma+subgrupo);
+                view.getComboTurmas().addItem(codBanco+"."+nomeTurma);
             }
         }
     }

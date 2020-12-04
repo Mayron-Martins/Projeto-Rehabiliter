@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -39,6 +40,7 @@ public class ServicosView extends javax.swing.JFrame {
         btnRemover.setBackground(new Color(0,0,0,0));
         btnFechar.setBackground(new Color(0,0,0,0));
         desabilitarComponentes();
+        this.setarValores();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
     }
@@ -52,6 +54,7 @@ public class ServicosView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        campoOutroPeriodo = new javax.swing.JTextField();
         comboPeriodo = new javax.swing.JComboBox<>();
         metodoPagamento = new javax.swing.JComboBox<>();
         btnRemover = new javax.swing.JButton();
@@ -77,16 +80,28 @@ public class ServicosView extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        campoOutroPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoOutroPeriodoMouseClicked(evt);
+            }
+        });
+        getContentPane().add(campoOutroPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 295, 130, 30));
+
         comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diária", "Semanal", "Mensal", "Trimestral", "Semestral", "Anual" }));
+        comboPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboPeriodoMouseClicked(evt);
+            }
+        });
         getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(354, 295, 160, 30));
 
-        metodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
+        metodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
         metodoPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 metodoPagamentoActionPerformed(evt);
             }
         });
-        getContentPane().add(metodoPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 295, 320, 30));
+        getContentPane().add(metodoPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(678, 295, 160, 30));
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnRemover.png"))); // NOI18N
         btnRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnRemoverHover.png"))); // NOI18N
@@ -238,6 +253,18 @@ public class ServicosView extends javax.swing.JFrame {
         desabilitarComponentes();
     }//GEN-LAST:event_formMouseClicked
 
+    private void comboPeriodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboPeriodoMouseClicked
+        comboPeriodo.setEnabled(true);
+        campoOutroPeriodo.setText("Outro");
+        campoOutroPeriodo.setEnabled(false);
+    }//GEN-LAST:event_comboPeriodoMouseClicked
+
+    private void campoOutroPeriodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoOutroPeriodoMouseClicked
+        campoOutroPeriodo.setEnabled(true);
+        this.esvaziarOutroTipo();
+        comboPeriodo.setEnabled(false);        
+    }//GEN-LAST:event_campoOutroPeriodoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -278,6 +305,7 @@ public class ServicosView extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnRemover;
+    private javax.swing.JTextField campoOutroPeriodo;
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JComboBox<String> metodoPagamento;
@@ -303,12 +331,29 @@ public class ServicosView extends javax.swing.JFrame {
     
     public void desabilitarComponentes(){
         this.comboPeriodo.setVisible(false);
+        this.campoOutroPeriodo.setVisible(false);
         this.metodoPagamento.setVisible(false);
     }
     
     public void habilitarComponentes(){
         this.comboPeriodo.setVisible(true);
+        this.campoOutroPeriodo.setVisible(true);
         this.metodoPagamento.setVisible(true);
     }
+
+    public JTextField getCampoOutroPeriodo() {
+        return campoOutroPeriodo;
+    }
     
+    private void setarValores(){
+        comboPeriodo.setEnabled(true);
+        campoOutroPeriodo.setText("Outro");
+        campoOutroPeriodo.setEnabled(false);
+    }
+    
+    private void esvaziarOutroTipo(){
+        if(campoOutroPeriodo.getText().equals("Outro")){
+            campoOutroPeriodo.setText("");
+        }
+    }
 }

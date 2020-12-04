@@ -64,9 +64,7 @@ public class AdicionarAlunosController {
         }
         else{
             for(int linhas=0; linhas<turmas.size(); linhas++){
-            String subgrupo = "";
-            if(turmas.get(linhas).getSubgrupo()!=null){subgrupo = "-"+turmas.get(linhas).getSubgrupo();}
-            view.getComboTurma().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma()+subgrupo);
+            view.getComboTurma().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma());
             }
         }
         
@@ -151,10 +149,10 @@ public class AdicionarAlunosController {
         Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, null, null, "Pendente");
         
         //Obtem a quantidade de alunos presentes na turma
-        int quantAlunosPresentes = verificar.verificarUltimo("tblTurmas", "quantAlunos");
+        int quantAlunosPresentes = verificar.verificarUltimo("tblTurmas", "quantAlunos")+1;
         
         //Verifica se não há dados irregulares antes de colocar na tabela
-        if(nome.equals("")||dataNascimento == null||plano.equals("[Nenhum]")||turma.equals("[Nenhuma]")
+        if(nome.equals("")||plano.equals("[Nenhum]") || dataNascimento == null||turma.equals("[Nenhuma]")
                || logradouro.equals("")||bairro.equals("")||numero.equals("")||cidade.equals("")
                 ||estado.equals("[Nenhum]")||cep.equals("  .   -   ") || view.getCampoDiaVencimento()==null){
         view.exibeMensagem("Valores Preenchidos Incorretamente!");
@@ -216,6 +214,7 @@ public class AdicionarAlunosController {
             String metodoDePagamento = servicos.get(0).getFormaPagamento();
             
             BigDecimal valorContrato = null;
+            if(metodoDePagamento.equals("[Nenhuma]")){valorContrato = new BigDecimal(servicos.get(0).getValor().toString());}
             if(metodoDePagamento.equals("Dinheiro")){valorContrato = new BigDecimal(servicos.get(0).getValorVista().toString());}
             if(metodoDePagamento.equals("Boleto")){valorContrato = new BigDecimal(servicos.get(0).getValorBoleto().toString());}
             if(metodoDePagamento.equals("Cartão de Crédito")){valorContrato = new BigDecimal(servicos.get(0).getValorPrazoCredito().toString());}
@@ -230,5 +229,21 @@ public class AdicionarAlunosController {
         view.getComboTurma().addItem("[Nenhuma]");
         view.getComboPlano().removeAllItems();
         view.getComboPlano().addItem("[Nenhum]");
+    }
+    
+    public void verificarQuantidadeLimiteAlunos() throws SQLException{
+        int linhaSelecionada = view.getComboTurma().getSelectedIndex();
+        if(linhaSelecionada>0){
+            String nomeTurma = view.getComboTurma().getSelectedItem().toString();
+            int codTurma = Integer.parseInt(nomeTurma.split("\\.")[0]);
+            Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+codTurma).get(0);
+            if(turma.getQuantidadeMaximaAlunos() != 0){
+                if(turma.getQuantidadeAlunos()==turma.getQuantidadeMaximaAlunos()){
+                    view.exibeMensagem("Turma Completa! Por Favor Aumente o Limite em Turmas.");
+                    view.getComboTurma().setSelectedIndex(0);
+                }
+            }
+            
+        }
     }
 }

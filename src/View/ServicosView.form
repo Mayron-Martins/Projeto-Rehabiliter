@@ -31,6 +31,16 @@
     <Property name="useNullLayout" type="boolean" value="false"/>
   </Layout>
   <SubComponents>
+    <Component class="javax.swing.JTextField" name="campoOutroPeriodo">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoOutroPeriodoMouseClicked"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="530" y="295" width="130" height="30"/>
+        </Constraint>
+      </Constraints>
+    </Component>
     <Component class="javax.swing.JComboBox" name="comboPeriodo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -44,6 +54,9 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="comboPeriodoMouseClicked"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -56,11 +69,12 @@
     <Component class="javax.swing.JComboBox" name="metodoPagamento">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Dinheiro"/>
-            <StringItem index="1" value="Boleto"/>
-            <StringItem index="2" value="Cart&#xe3;o de Cr&#xe9;dito"/>
-            <StringItem index="3" value="Cart&#xe3;o de D&#xe9;bito"/>
+          <StringArray count="5">
+            <StringItem index="0" value="[Nenhuma]"/>
+            <StringItem index="1" value="Dinheiro"/>
+            <StringItem index="2" value="Boleto"/>
+            <StringItem index="3" value="Cart&#xe3;o de Cr&#xe9;dito"/>
+            <StringItem index="4" value="Cart&#xe3;o de D&#xe9;bito"/>
           </StringArray>
         </Property>
       </Properties>
@@ -72,7 +86,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="518" y="295" width="320" height="30"/>
+          <AbsoluteConstraints x="678" y="295" width="160" height="30"/>
         </Constraint>
       </Constraints>
     </Component>

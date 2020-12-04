@@ -33,9 +33,6 @@ public class AdicionarTurmasController {
         int codBancoTurma = verificar.verificarUltimo("tblTurmas", "codTurma")+1;
         int codBancoHorario = verificar.verificarUltimo("tblHorarios", "codHorario")+1;
         String nomeTurma = view.getCampoNome().getText();
-        String subgrupo;
-        if(view.getCampoSubgrupos().getText().equals("")){subgrupo = null;}
-        else{ subgrupo = view.getCampoSubgrupos().getText();}
         
         int quantidadeMax;
         if(view.getCampoCapMax().getText().equals("")){quantidadeMax = 0;}
@@ -49,7 +46,7 @@ public class AdicionarTurmasController {
         Turmas turma = null;
         ArrayList <Horarios> horarios = new ArrayList <>();
         if(!view.getCampoHorario().equals("")){
-        turma = new Turmas(codBancoTurma, nomeTurma, subgrupo, 0, quantidadeMax, diasDaSemana, horario);    
+        turma = new Turmas(codBancoTurma, nomeTurma, 0, quantidadeMax, diasDaSemana, horario);    
 
         
         int diferenca, contador = diasDaSemanaUnitario.size();
@@ -73,7 +70,6 @@ public class AdicionarTurmasController {
             view.getCampoNome().setText("");
             view.getCampoHoras().setText("");
             view.getCampoMinutos().setText("");
-            view.getCampoSubgrupos().setText("");
             view.getCampoCapMax().setText("");
             view.desmarcarCaixas();
         }

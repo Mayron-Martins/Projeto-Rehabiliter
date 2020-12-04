@@ -71,16 +71,6 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="campoSubgrupos">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="campoSubgrupos.addKeyListener(new KeyListener(){  &#xa;                    public void keyTyped(KeyEvent e) {&#xa;                       String texto = campoSubgrupos.getText();    &#xa;                       if(texto != null &amp;&amp; texto.length() == 2) {&#xa;                            e.consume();&#xa;                       }&#xa;                    }&#xa;&#xa;                    public void keyPressed(KeyEvent e) {&#xa;                    }&#xa;&#xa;                    public void keyReleased(KeyEvent e) {&#xa;                    }&#xa;                });"/>
-      </AuxValues>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="150" y="270" width="70" height="30"/>
-        </Constraint>
-      </Constraints>
-    </Component>
     <Component class="javax.swing.JTextField" name="campoCapMax">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoCapMaxActionPerformed"/>
@@ -98,9 +88,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoNomeActionPerformed"/>
       </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new FormatacaoCamposRestritosLetras(15)"/>
-      </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="120" y="195" width="240" height="30"/>

@@ -32,8 +32,8 @@ public class AlunosView extends javax.swing.JFrame {
 private Point point = new Point();
 private final AlunosController controller;
 private AlunosCadastro alunosCadastro = new AlunosCadastro();
-private javax.swing.JComboBox<String> comboServicos = new JComboBox<>(alunosCadastro.getComboPlano().getModel());
-private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>(alunosCadastro.getComboTurma().getModel());
+private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
+private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
 private javax.swing.JComboBox<String> comboEstado = new JComboBox<>(alunosCadastro.getComboEstado().getModel());
 private final JFormattedTextField valorContrato = new JMoneyField();
 private final JFormattedTextField valorDebito = new JMoneyField();

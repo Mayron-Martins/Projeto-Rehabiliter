@@ -30,17 +30,16 @@ public class TurmasDao extends Conexao{
     public void inserirDados (Turmas turma, ArrayList<Horarios> horario) throws SQLException{
         //Adicionando Turma
         String inTurmas = inserir.concat("tblTurmas("
-                + "codTurma, nome, subgrupo, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario)"
+                + "codTurma, nome, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario)"
                 + "VALUES("
-                + "?,?,?,?,?,?,?);");
+                + "?,?,?,?,?,?);");
         PreparedStatement statement = gerarStatement(inTurmas);
         statement.setInt(1, turma.getCodBanco());
         statement.setString(2, turma.getNomeTurma());
-        statement.setString(3, turma.getSubgrupo());
-        statement.setInt(4, 0);
-        statement.setInt(5, turma.getQuantidadeMaximaAlunos());
-        statement.setString(6, turma.getDiasDaSemana());
-        statement.setTime(7, turma.getHorario());
+        statement.setInt(3, 0);
+        statement.setInt(4, turma.getQuantidadeMaximaAlunos());
+        statement.setString(5, turma.getDiasDaSemana());
+        statement.setTime(6, turma.getHorario());
         statement.execute();
         statement.close();
         
@@ -54,15 +53,14 @@ public class TurmasDao extends Conexao{
     public void atualizarDados(Turmas turmas, ArrayList <Horarios> horario) throws SQLException{
         //atualizando a tabela de turmas
         String inTurmas = atualizar.concat("tblTurmas "
-                + "SET nome = ?, subgrupo = ?, quantLimiteDeAlunos = ?, diasDaSemana=?, horario=? where codTurma = ?");
+                + "SET nome = ?, quantLimiteDeAlunos = ?, diasDaSemana=?, horario=? where codTurma = ?");
         
         PreparedStatement statement = gerarStatement(inTurmas);
         statement.setString(1, turmas.getNomeTurma());
-        statement.setString(2, turmas.getSubgrupo());
-        statement.setInt(3, turmas.getQuantidadeMaximaAlunos());
-        statement.setString(4, turmas.getDiasDaSemana());
-        statement.setTime(5, turmas.getHorario());
-        statement.setInt(6, turmas.getCodBanco());
+        statement.setInt(2, turmas.getQuantidadeMaximaAlunos());
+        statement.setString(3, turmas.getDiasDaSemana());
+        statement.setTime(4, turmas.getHorario());
+        statement.setInt(5, turmas.getCodBanco());
         
         statement.execute();
         statement.close();
@@ -119,7 +117,6 @@ public class TurmasDao extends Conexao{
     do{
     int codBanco = resultset.getInt("codTurma");
     String nome = resultset.getString("nome");
-    String subgrupo = resultset.getString("subgrupo");
     int quantAlunos = resultset.getInt("quantAlunos");
     int quantLimiteDeAlunos = resultset.getInt("quantLimiteDeAlunos");
     String diasDaSemana = resultset.getString("diasDaSemana");
@@ -127,7 +124,7 @@ public class TurmasDao extends Conexao{
     int tamanhoHora = resultset.getTime("horario").toString().length()-3;
     String horario = resultset.getTime("horario").toString().substring(0, tamanhoHora);
 
-    Turmas turma = new Turmas(codBanco, nome, subgrupo, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario);
+    Turmas turma = new Turmas(codBanco, nome, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario);
 
     turmas.add(turma);
      }while(resultset.next());
