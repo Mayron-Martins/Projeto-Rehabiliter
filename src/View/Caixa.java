@@ -28,6 +28,7 @@ import javax.swing.JTextField;
  * @author 55989
  */
 public class Caixa extends javax.swing.JFrame {
+    private final int numeroTela = 8;
     private final CaixaController controller;
 
     /**
@@ -863,6 +864,9 @@ public class Caixa extends javax.swing.JFrame {
     public JRadioButton getAlternarClienteCadastrado() {
         return alternarClienteCadastrado;
     }
-    
+
+    public int getNumeroTela() {
+        return numeroTela;
+    }
     
 }

@@ -12,6 +12,7 @@ import java.awt.Color;
  * @author 55989
  */
 public class ImprimirExportar extends javax.swing.JFrame {
+    private final int numeroTela = 6;
 
     /**
      * Creates new form ImprimirExportar
@@ -113,4 +114,10 @@ public class ImprimirExportar extends javax.swing.JFrame {
     private javax.swing.JButton btnRelatoriosOrca;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    public int getNumeroTela() {
+        return numeroTela;
+    }
+
+
 }

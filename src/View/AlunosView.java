@@ -29,6 +29,7 @@ import javax.swing.JTextField;
  * @author 55989
  */
 public class AlunosView extends javax.swing.JFrame {
+private final int numeroTela = 1;
 private Point point = new Point();
 private final AlunosController controller;
 private AlunosCadastro alunosCadastro = new AlunosCadastro();
@@ -703,6 +704,10 @@ private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
 
     public JTable getTabelaPlanos() {
         return tabelaPlanos;
+    }
+
+    public int getNumeroTela() {
+        return numeroTela;
     }
     
     private void selecionarTabelas(int opcao){

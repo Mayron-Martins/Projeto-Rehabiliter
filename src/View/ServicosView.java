@@ -23,6 +23,7 @@ import javax.swing.JTextField;
  * @author 55989
  */
 public class ServicosView extends javax.swing.JFrame {
+    private final int numeroTela = 4;
     private final ServicosController controller;
     private final ServicosAdicionar servicosAdicionar;
     //private final JComboBox combo = new JComboBox();
@@ -356,4 +357,10 @@ public class ServicosView extends javax.swing.JFrame {
             campoOutroPeriodo.setText("");
         }
     }
+
+    public int getNumeroTela() {
+        return numeroTela;
+    }
+    
+    
 }

@@ -24,6 +24,7 @@ import javax.swing.JTextField;
  * @author 55989
  */
 public class ProdutosView extends javax.swing.JFrame {
+    private final int numeroTela = 3;
     private final ProdutosController controller;
     private final JFormattedTextField campoQuantidade = new JMoneyField();
     private final JFormattedTextField valorProduto = new JMoneyField();
@@ -325,6 +326,10 @@ public class ProdutosView extends javax.swing.JFrame {
 
     public JComboBox<String> getComboListar() {
         return comboListar;
+    }
+
+    public int getNumeroTela() {
+        return numeroTela;
     }
 
     

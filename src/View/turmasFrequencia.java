@@ -26,6 +26,7 @@ import javax.swing.JToggleButton;
  * @author 55989
  */
 public class turmasFrequencia extends javax.swing.JFrame {
+    private final int numeroTela = 9;
     private final FrequenciaTurmasController controller;
     private final JComboBox comboPresenca = new JComboBox();
     private final JComboBox comboPresencaBanco = new JComboBox();
@@ -446,6 +447,9 @@ public class turmasFrequencia extends javax.swing.JFrame {
     public JComboBox getComboPresencaBanco() {
         return comboPresencaBanco;
     }
-    
+
+    public int getNumeroTela() {
+        return numeroTela;
+    }
     
 }

@@ -27,6 +27,7 @@ import javax.swing.JTextField;
  * @author 55989
  */
 public class TurmasView extends javax.swing.JFrame {
+    private final int numeroTela = 2;
     private final TurmasController controller;
     private String diasDaSemana=null;
     private ArrayList <String> diasDaSemanaUnitarios;
@@ -581,6 +582,10 @@ private void diasDaSemana(){
 
     public String getCampoHorario() {
         return campoHorario;
+    }
+
+    public int getNumeroTela() {
+        return numeroTela;
     }
     
     

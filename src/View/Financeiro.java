@@ -12,6 +12,7 @@ import java.awt.Color;
  * @author 55989
  */
 public class Financeiro extends javax.swing.JFrame {
+    private final int numeroTela = 5;
 
     /**
      * Creates new form Financeiro
@@ -154,4 +155,10 @@ public class Financeiro extends javax.swing.JFrame {
     private javax.swing.JButton btnPlanodeEntradas;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    public int getNumeroTela() {
+        return numeroTela;
+    }
+
+
 }
