@@ -27,6 +27,10 @@ import sun.swing.table.DefaultTableCellHeaderRenderer;
  */
 public class telainicialFuncionario extends javax.swing.JFrame {
     private final TelaInicioFuncionariosController controller;
+    private final turmasFrequencia telaTurmasFrequencias = new turmasFrequencia();
+    private final AlunosView telaAlunos=new AlunosView();
+    private final Financeiro telaFinanceiro=new Financeiro();
+    private final Caixa telaCaixa= new Caixa();
 
     /**
      * Creates new form telainicialFuncionario
@@ -194,27 +198,23 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoMenuActionPerformed
 
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
-        // TODO add your handling code here:
-        AlunosView jump=new AlunosView();
-        jump.setVisible(true);
+        // TODO add your handling code here:    
+        telaAlunos.setVisible(true);
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
     private void botaoFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFrequenciaActionPerformed
-        // TODO add your handling code here:
-        turmasFrequencia abrir= new turmasFrequencia();
-        abrir.setVisible(true);
+        // TODO add your handling code here:       
+        telaTurmasFrequencias.setVisible(true);
     }//GEN-LAST:event_botaoFrequenciaActionPerformed
 
     private void botaoFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiroActionPerformed
         // TODO add your handling code here:
-        Financeiro abrir=new Financeiro();
-        abrir.setVisible(true);
+        telaFinanceiro.setVisible(true);
     }//GEN-LAST:event_botaoFinanceiroActionPerformed
 
     private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed
         // TODO add your handling code here:
-        Caixa abrir= new Caixa();
-        abrir.setVisible(true);
+        telaCaixa.setVisible(true);
     }//GEN-LAST:event_botaoCaixaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
