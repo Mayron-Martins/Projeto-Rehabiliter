@@ -5,6 +5,7 @@
  */
 package View;
 
+import Dao.FileCriator;
 import java.awt.Color;
 
 /**
@@ -13,6 +14,7 @@ import java.awt.Color;
  */
 public class ImprimirExportar extends javax.swing.JFrame {
     private final int numeroTela = 6;
+    private final FileCriator criacaoDePasta = new FileCriator();
 
     /**
      * Creates new form ImprimirExportar
@@ -42,6 +44,14 @@ public class ImprimirExportar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -72,6 +82,14 @@ public class ImprimirExportar extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        //criacaoDePasta.fileDocCriator();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        criacaoDePasta.fileDocCriator();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
