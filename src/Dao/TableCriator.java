@@ -145,7 +145,9 @@ public class TableCriator {
                 + "usuario VARCHAR(16) NOT NULL," // Cada funcionário terá um usuário único
                 + "senha VARCHAR(10) NOT NULL,"
                 + "cargo VARCHAR(25) NOT NULL,"
-                + "salario DECIMAL(16,2) NOT NULL"
+                + "salario DECIMAL(16,2) NOT NULL,"
+                + "telasPermitidas VARCHAR(20) NULL,"
+                + "status VARCHAR(10) NULL"
                 + ") ON [Funcionarios];");
     }
     

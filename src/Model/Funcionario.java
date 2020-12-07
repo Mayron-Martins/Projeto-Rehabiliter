@@ -16,23 +16,29 @@ public class Funcionario extends Pessoa{
     protected String senha;
     protected BigDecimal salario;
     protected String cargo;
+    protected String telasPermitidas;
+    protected String status;
 
-    public Funcionario(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario,String senha, BigDecimal salario, String cargo) {
+    public Funcionario(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario,String senha, BigDecimal salario, String cargo, String telasPermitidas, String status) {
         super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento, usuario);
         this.senha = senha;
         this.salario = new BigDecimal(salario.toString());
         this.cargo = cargo;
+        this.telasPermitidas = telasPermitidas;
+        this.status = status;
     }
     
-
+    
+    
     
     
     
     //***************************************************************************
     //CONSTRUTORES PARA LOGAR
-    public Funcionario(String usuario, String senha) {
+    public Funcionario(String usuario, String senha, String status) {
         super(usuario);
         this.senha = senha;
+        this.status = status;
     }
 
     
@@ -51,6 +57,14 @@ public class Funcionario extends Pessoa{
 
     public String getCargo() {
         return cargo;
+    }
+
+    public String getTelasPermitidas() {
+        return telasPermitidas;
+    }
+
+    public String getStatus() {
+        return status;
     }
     
     
