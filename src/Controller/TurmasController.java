@@ -131,7 +131,7 @@ public class TurmasController {
           //Habilita itens que ficam acima da tabela
           this.view.habilitarVisibilidadeComponente();
           //Pega o valor da coluna horario
-          String horario = this.view.getTabelaAlunos().getValueAt(linhaSelecionada, 6).toString();
+          String horario = this.view.getTabelaAlunos().getValueAt(linhaSelecionada, 5).toString();
           String hora = String.valueOf(horario.charAt(0))+horario.charAt(1);
           String minutos = String.valueOf(horario.charAt(3))+horario.charAt(4);
           //Coloca os valores nos campos edithoras e editminutos
