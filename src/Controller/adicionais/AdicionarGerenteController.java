@@ -9,6 +9,7 @@ import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.EnderecoFuncionarioDao;
 import Dao.FuncionarioDao;
+import Dao.TableCriatorPosInput;
 import Model.Funcionario;
 import Model.auxiliar.EnderecoFuncionario;
 import View.LoginGerente;
@@ -28,6 +29,7 @@ public class AdicionarGerenteController {
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final LoginGerente loginView = new LoginGerente();
+    private final TableCriatorPosInput criarTabelas = new TableCriatorPosInput();
 
     public AdicionarGerenteController(RegistrodeGerente view) {
         this.view = view;
@@ -68,6 +70,7 @@ public class AdicionarGerenteController {
         
         else{
             funcionarioDao.inserirDados(funcionario, endereco);
+            criarTabelas.tableLogdeAcoesdoFunc();
             view.exibeMensagem("Sucesso!");
             this.loginView.setVisible(true);
             view.dispose();
