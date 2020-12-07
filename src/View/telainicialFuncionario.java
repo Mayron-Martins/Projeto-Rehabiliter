@@ -198,7 +198,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoMenuActionPerformed
 
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
-        // TODO add your handling code here:    
+
         telaAlunos.setVisible(true);
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
