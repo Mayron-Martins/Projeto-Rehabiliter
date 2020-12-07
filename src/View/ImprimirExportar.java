@@ -65,10 +65,20 @@ public class ImprimirExportar extends javax.swing.JFrame {
 
         btnFrequencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnfrequencia.png"))); // NOI18N
         btnFrequencia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnfrequenciaHover.png"))); // NOI18N
+        btnFrequencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFrequenciaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, -1));
 
         btnRelatoriosOrca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnRelatoriosOrca.png"))); // NOI18N
         btnRelatoriosOrca.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnRelatoriosOrcaHover.png"))); // NOI18N
+        btnRelatoriosOrca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatoriosOrcaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRelatoriosOrca, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/fundo.jpg"))); // NOI18N
@@ -90,6 +100,22 @@ public class ImprimirExportar extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         criacaoDePasta.fileDocCriator();
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrequenciaActionPerformed
+        // TODO add your handling code here:
+        turmasFrequencia abrir= new turmasFrequencia();
+        abrir.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnFrequenciaActionPerformed
+
+    private void btnRelatoriosOrcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosOrcaActionPerformed
+        // TODO add your handling code here:
+        FinanceiroAnaliseFinanceira abrir=new FinanceiroAnaliseFinanceira();
+        abrir.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnRelatoriosOrcaActionPerformed
 
     /**
      * @param args the command line arguments

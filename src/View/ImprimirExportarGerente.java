@@ -56,14 +56,29 @@ public class ImprimirExportarGerente extends javax.swing.JFrame {
 
         btnFrequencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnfrequencia.png"))); // NOI18N
         btnFrequencia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnfrequenciaHover.png"))); // NOI18N
+        btnFrequencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFrequenciaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, -1));
 
         btnRelatoriosOrca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnRelatoriosOrca.png"))); // NOI18N
         btnRelatoriosOrca.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnRelatoriosOrcaHover.png"))); // NOI18N
+        btnRelatoriosOrca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatoriosOrcaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRelatoriosOrca, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, -1, -1));
 
         btnRelatoriosFunc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnrelatoriosFunciona.png"))); // NOI18N
         btnRelatoriosFunc.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnrelatoriosFuncionaHover.png"))); // NOI18N
+        btnRelatoriosFunc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatoriosFuncActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRelatoriosFunc, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 460, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/fundo.jpg"))); // NOI18N
@@ -77,6 +92,26 @@ public class ImprimirExportarGerente extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
+
+    private void btnRelatoriosFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosFuncActionPerformed
+        Relatoriosfun abrir=new Relatoriosfun();
+        abrir.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRelatoriosFuncActionPerformed
+
+    private void btnRelatoriosOrcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosOrcaActionPerformed
+        // TODO add your handling code here:
+        FinanceiroAnaliseFinanceira abrir=new FinanceiroAnaliseFinanceira();
+        abrir.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRelatoriosOrcaActionPerformed
+
+    private void btnFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrequenciaActionPerformed
+           turmasFrequencia abrir=new turmasFrequencia();
+           abrir.setVisible(true);
+           this.dispose();
+            // TODO add your handling code here:
+    }//GEN-LAST:event_btnFrequenciaActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,6 +5,8 @@
  */
 package View;
 
+import java.awt.Color;
+
 /**
  *
  * @author 55989
@@ -16,6 +18,8 @@ public class Relatoriosfun extends javax.swing.JFrame {
      */
     public Relatoriosfun() {
         initComponents();
+        btExportar.setBackground(new Color(0,0,0,0));
+        btImprimir.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
@@ -28,21 +32,207 @@ public class Relatoriosfun extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        botaoFechar = new javax.swing.JButton();
+        painelderolagem = new javax.swing.JScrollPane();
+        tabelaAlunos = new javax.swing.JTable();
+        painelderolagem1 = new javax.swing.JScrollPane();
+        tabelaAlunosBanco = new javax.swing.JTable();
+        comboPeriodo = new javax.swing.JComboBox<>();
+        comboIntervalo = new javax.swing.JComboBox<>();
+        comboTurmas = new javax.swing.JComboBox<>();
+        scrollPaneAviso = new javax.swing.JScrollPane();
+        campoAviso = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel();
+        btExportar = new javax.swing.JButton();
+        btImprimir = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
+        botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
+        botaoFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFecharActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
+
+        tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CodAluno", "Nome", "Confirmação", "Situação"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaAlunos.setFocusable(false);
+        tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaAlunos.setRowHeight(25);
+        tabelaAlunos.setShowVerticalLines(false);
+        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
+        tabelaAlunos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaAlunosComponentHidden(evt);
+            }
+        });
+        painelderolagem.setViewportView(tabelaAlunos);
+
+        getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+
+        tabelaAlunosBanco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaAlunosBanco.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CodAluno", "Nome", "Confirmação", "Situação"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaAlunosBanco.setFocusable(false);
+        tabelaAlunosBanco.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaAlunosBanco.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaAlunosBanco.setRowHeight(25);
+        tabelaAlunosBanco.setShowVerticalLines(false);
+        tabelaAlunosBanco.getTableHeader().setReorderingAllowed(false);
+        tabelaAlunosBanco.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaAlunosBancoComponentHidden(evt);
+            }
+        });
+        painelderolagem1.setViewportView(tabelaAlunosBanco);
+
+        getContentPane().add(painelderolagem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+
+        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Última Semana", "Último Mês", "Último Semestre", "Último Ano" }));
+        comboPeriodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPeriodoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 200, 40));
+
+        comboIntervalo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
+        comboIntervalo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboIntervaloActionPerformed(evt);
+            }
+        });
+        getContentPane().add(comboIntervalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 200, 40));
+
+        comboTurmas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
+        comboTurmas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTurmasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(comboTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 200, 40));
+
+        campoAviso.setEditable(false);
+        campoAviso.setColumns(20);
+        campoAviso.setRows(5);
+        campoAviso.setAutoscrolls(false);
+        scrollPaneAviso.setViewportView(campoAviso);
+
+        getContentPane().add(scrollPaneAviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 250, 190, 70));
+        campoAviso.setLineWrap(true);
+        campoAviso.setWrapStyleWord(true);
+
+        jPanel1.setBackground(new java.awt.Color(157, 198, 187));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/exportar.png"))); // NOI18N
+        btExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExportarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 230, 40));
+
+        btImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/imprimir.png"))); // NOI18N
+        btImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btImprimirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 230, 40));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 500, 100));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/relatoriosF.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_botaoFecharActionPerformed
+
+    private void tabelaAlunosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaAlunosComponentHidden
+
+    private void tabelaAlunosBancoComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosBancoComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaAlunosBancoComponentHidden
+
+    private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
+
+    }//GEN-LAST:event_comboPeriodoActionPerformed
+
+    private void comboIntervaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervaloActionPerformed
+
+    }//GEN-LAST:event_comboIntervaloActionPerformed
+
+    private void comboTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmasActionPerformed
+       
+    }//GEN-LAST:event_comboTurmasActionPerformed
+
+    private void btExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExportarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btExportarActionPerformed
+
+    private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btImprimirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,5 +270,19 @@ public class Relatoriosfun extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoFechar;
+    private javax.swing.JButton btExportar;
+    private javax.swing.JButton btImprimir;
+    private javax.swing.JTextArea campoAviso;
+    private javax.swing.JComboBox<String> comboIntervalo;
+    private javax.swing.JComboBox<String> comboPeriodo;
+    private javax.swing.JComboBox<String> comboTurmas;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane painelderolagem;
+    private javax.swing.JScrollPane painelderolagem1;
+    private javax.swing.JScrollPane scrollPaneAviso;
+    private javax.swing.JTable tabelaAlunos;
+    private javax.swing.JTable tabelaAlunosBanco;
     // End of variables declaration//GEN-END:variables
 }

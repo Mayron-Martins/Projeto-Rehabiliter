@@ -51,6 +51,11 @@ public class turmasFrequencia extends javax.swing.JFrame {
         scrollPaneAviso.setVisible(false);
         comboPeriodo.setEnabled(false);
         comboIntervalo.setEnabled(false);
+        
+        
+        btExportar.setBackground(new Color(0,0,0,0));
+        btImprimir.setBackground(new Color(0,0,0,0));
+        jPanel1.setVisible(false);
         this.addictionConfirmation =false;
         
         
@@ -102,6 +107,9 @@ public class turmasFrequencia extends javax.swing.JFrame {
         botaoSalvar = new javax.swing.JButton();
         scrollPaneAviso = new javax.swing.JScrollPane();
         campoAviso = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel();
+        btExportar = new javax.swing.JButton();
+        btImprimir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -259,6 +267,27 @@ public class turmasFrequencia extends javax.swing.JFrame {
         campoAviso.setLineWrap(true);
         campoAviso.setWrapStyleWord(true);
 
+        jPanel1.setBackground(new java.awt.Color(157, 198, 187));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/exportar.png"))); // NOI18N
+        btExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExportarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 230, 40));
+
+        btImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/imprimir.png"))); // NOI18N
+        btImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btImprimirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 230, 40));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 500, 100));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/fundo.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -341,6 +370,14 @@ public class turmasFrequencia extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tabelaAlunosBancoComponentHidden
 
+    private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btImprimirActionPerformed
+
+    private void btExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExportarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btExportarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -380,11 +417,16 @@ public class turmasFrequencia extends javax.swing.JFrame {
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoSalvar;
+    private javax.swing.JButton btExportar;
+    private javax.swing.JButton btImprimir;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JTextArea campoAviso;
     private javax.swing.JComboBox<String> comboIntervalo;
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JComboBox<String> comboTurmas;
+    private javax.swing.JPanel imPrimirExportar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane painelderolagem;
     private javax.swing.JScrollPane painelderolagem1;
     private javax.swing.JScrollPane scrollPaneAviso;

@@ -33,6 +33,8 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
         controller = new OrcamentarioController(this);
         botaoVDetalhada.setBackground(new Color(0,0,0,0));
         botaoVResumida.setBackground(new Color(0,0,0,0));
+        btnExportar.setBackground(new Color(0,0,0,0));
+        btnImprimir.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
         this.setarComponentes();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
@@ -63,6 +65,9 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
         R1 = new javax.swing.JLabel();
         R0 = new javax.swing.JLabel();
         campoTotalParcial = new JMoneyField();
+        imPrimirExportar = new javax.swing.JPanel();
+        btnImprimir = new javax.swing.JButton();
+        btnExportar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -184,6 +189,27 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
         campoTotalParcial.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         getContentPane().add(campoTotalParcial, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 242, 142, 70));
 
+        imPrimirExportar.setBackground(new java.awt.Color(157, 197, 187));
+        imPrimirExportar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/imprimir.png"))); // NOI18N
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
+        imPrimirExportar.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
+
+        btnExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/exportar.png"))); // NOI18N
+        btnExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarActionPerformed(evt);
+            }
+        });
+        imPrimirExportar.add(btnExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 230, 40));
+
+        getContentPane().add(imPrimirExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 540, 70));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/analiseFinanceira.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -219,6 +245,14 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
             Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_comboPeriodoActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExportarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,12 +298,15 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoVDetalhada;
     private javax.swing.JButton botaoVResumida;
+    private javax.swing.JButton btnExportar;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JFormattedTextField campoDespesaTotal;
     private javax.swing.JFormattedTextField campoGanhoRelativoTotal;
     private javax.swing.JFormattedTextField campoGanhoTotal;
     private javax.swing.JFormattedTextField campoPendente;
     private javax.swing.JFormattedTextField campoTotalParcial;
     private javax.swing.JComboBox<String> comboPeriodo;
+    private javax.swing.JPanel imPrimirExportar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane painelderolagem;
     private javax.swing.JTable tabelaOrcamentaria;
