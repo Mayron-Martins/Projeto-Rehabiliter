@@ -38,6 +38,7 @@ public class Caixa extends javax.swing.JFrame {
         initComponents();
         controller = new CaixaController(this);
         botaoBuscarCliente.setBackground(new Color(0,0,0,0));
+        impressaoComprovante.setBackground(new Color(0,0,0,0));
         botaoBuscarProdutos.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
         botaoPagamentoMensalidade.setBackground(new Color(0,0,0,0));
@@ -78,6 +79,7 @@ public class Caixa extends javax.swing.JFrame {
         campoDinheiro = new JMoneyField();
         jLabel1 = new javax.swing.JLabel();
         btnFechar = new javax.swing.JButton();
+        impressaoComprovante = new javax.swing.JCheckBox();
         campoCliente = new FormatacaoCamposRestritosLetras();
         botaoBuscarCliente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -215,6 +217,9 @@ public class Caixa extends javax.swing.JFrame {
             }
         });
         jPanelFormaDePagamento.add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        impressaoComprovante.setText("Imprimir Comprovante");
+        jPanelFormaDePagamento.add(impressaoComprovante, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, -1, -1));
 
         getContentPane().add(jPanelFormaDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 730, 410, 300));
 
@@ -754,6 +759,7 @@ public class Caixa extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField campoVPago;
     private javax.swing.JFormattedTextField campoVTotal;
     private javax.swing.JFormattedTextField campoVTroco;
+    private javax.swing.JCheckBox impressaoComprovante;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

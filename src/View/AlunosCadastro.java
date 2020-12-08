@@ -41,6 +41,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         botaoDescricao.setVisible(false);
        turmasehorarios.setBackground(new Color (0,0,0,0));
        botaoConfirmar.setBackground(new Color (0,0,0,0));
+       renovacaoAuto.setBackground(new Color (0,0,0,0));
        btnAnterior.setBackground(new Color (0,0,0,0));
        btnAnt.setBackground(new Color (0,0,0,0));
        btnProxi.setBackground(new Color (0,0,0,0));
@@ -119,6 +120,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         botaoConfirmar = new javax.swing.JButton();
         btnAnterior = new javax.swing.JButton();
         campoDiaVencimento = new com.toedter.calendar.JDayChooser();
+        renovacaoAuto = new javax.swing.JCheckBox();
         planodefundo = new javax.swing.JLabel();
         Cor = new javax.swing.JPanel();
 
@@ -440,6 +442,9 @@ public class AlunosCadastro extends javax.swing.JFrame {
         campoDiaVencimento.setDay(28);
         jPanelCadastroFinal.add(campoDiaVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
+        renovacaoAuto.setText("Renovação Automática");
+        jPanelCadastroFinal.add(renovacaoAuto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, -1, -1));
+
         getContentPane().add(jPanelCadastroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 710, 490));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/cadastrar-alunofundo.jpg"))); // NOI18N
@@ -648,6 +653,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelPais;
     private javax.swing.JPanel jpanelDados;
     private javax.swing.JLabel planodefundo;
+    private javax.swing.JCheckBox renovacaoAuto;
     private javax.swing.JButton turmasehorarios;
     // End of variables declaration//GEN-END:variables
 

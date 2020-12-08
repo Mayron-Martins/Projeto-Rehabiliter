@@ -158,7 +158,7 @@ public class TurmasAdicionar extends javax.swing.JFrame {
 
         getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 195, 190, 40));
 
-        fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/fundoadc.jpg"))); // NOI18N
+        fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/fundoTurma.png"))); // NOI18N
         getContentPane().add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
