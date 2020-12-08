@@ -35,9 +35,9 @@ public class FuncionarioDao extends Conexao{
         //Adicionando aluno
         String inFuncionario = inserir.concat("tblFuncionarios("
                 + "codFuncionario, nome, cpf, rg, telefone, celular, email, dataNascimento, "
-                + "codEndereco, usuario, senha, cargo, salario)"
+                + "codEndereco, usuario, senha, cargo, salario, telasPermitidas, status)"
                 + "VALUES("
-                + "?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
         PreparedStatement statement = gerarStatement(inFuncionario);
         statement.setInt(1, funcionario.getCodBanco());
         statement.setString(2, funcionario.getNome());
@@ -52,6 +52,8 @@ public class FuncionarioDao extends Conexao{
         statement.setString(11, funcionario.getSenha());
         statement.setString(12, funcionario.getCargo());
         statement.setBigDecimal(13, new BigDecimal(funcionario.getSalario().toString()));
+        statement.setString(14, funcionario.getTelasPermitidas());
+        statement.setString(15, funcionario.getStatus());
         statement.execute();
         statement.close();
         
@@ -65,7 +67,7 @@ public class FuncionarioDao extends Conexao{
     public void atualizarDados(Funcionario funcionario) throws SQLException{
         //atualizando a tabela de alunos
         String inFuncionario = atualizar.concat("tblFuncionarios "
-                + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, salario=? where codFuncionario = ?");
+                + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, salario=?, status=? where codFuncionario = ?");
         
         PreparedStatement statement = gerarStatement(inFuncionario);
         statement.setString(1, funcionario.getNome());
@@ -74,7 +76,8 @@ public class FuncionarioDao extends Conexao{
         statement.setString(4, funcionario.getTelefone());
         statement.setString(5, funcionario.getCelular());
         statement.setBigDecimal(6, new BigDecimal(funcionario.getSalario().toString()));
-        statement.setInt(7, funcionario.getCodBanco());
+        statement.setString(7, funcionario.getTelasPermitidas());
+        statement.setInt(8, funcionario.getCodBanco());
         
         statement.execute();
         statement.close();
@@ -82,12 +85,23 @@ public class FuncionarioDao extends Conexao{
         //atualizando a tabela de horarios
     }
     
+    public void atualizarStatus(Funcionario funcionario) throws SQLException{
+        String inFuncionario = atualizar.concat("tblFuncionarios "
+                + "SET status=? where usuario = ?");
+        
+        PreparedStatement statement = gerarStatement(inFuncionario);
+        statement.setString(1, funcionario.getStatus());
+        statement.setString(2, funcionario.getUsuario());
+        statement.execute();
+        statement.close();
+    }
+    
     public void atualizarSenha(Funcionario funcionario) throws SQLException{
         String inFuncionario = atualizar.concat("tblFuncionarios "
                 + "SET senha=? where usuario = ?");
         
         PreparedStatement statement = gerarStatement(inFuncionario);
-        statement.setString(1, funcionario.getNome());
+        statement.setString(1, funcionario.getSenha());
         statement.setString(2, funcionario.getUsuario());
         statement.execute();
         statement.close();
@@ -135,8 +149,10 @@ public class FuncionarioDao extends Conexao{
     String senha = resultset.getString("senha");
     BigDecimal salario= new BigDecimal(resultset.getBigDecimal("salario").toString());
     String cargo = resultset.getString("cargo");
+    String telasPermitidas = resultset.getString("telasPermitidas");
+    String status = resultset.getString("status");
     
-    Funcionario funcionario = new Funcionario(codBanco, nome, cpf, "", telefone,celular , "", dataNascimento, usuario, senha, salario, cargo);
+    Funcionario funcionario = new Funcionario(codBanco, nome, cpf, "", telefone,celular , "", dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status);
 
     funcionarios.add(funcionario);
      }while(resultset.next());
