@@ -42,16 +42,19 @@ public class Funcionarios extends javax.swing.JFrame {
         botaobuscar1.setBackground(new Color(0,0,0,0));
         botaoFechar1.setBackground(new Color(0,0,0,0));
         botaoAdicionar1.setBackground(new Color(0,0,0,0));
+        btnFechar.setBackground(Color.red);
         botaoRemover1.setBackground(new Color(0,0,0,0));
         botaoEditar1.setBackground(new Color(0,0,0,0));
         botaoListar1.setBackground(new Color(0,0,0,0));
         tabelaFuncionarios.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tabelaFuncionarios.getTableHeader().setOpaque(false);
+        panelPerm.setVisible(false);
         tabelaFuncionarios.getTableHeader().setBackground(new Color(0,0,0));
         tabelaFuncionarios.getTableHeader().setForeground(new Color(0,0,0));
         tabelaFuncionarios.setRowHeight(25);
         btnRelatorios.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
+        btnPermissoes.setBackground(new Color(0,0,0,0));
     }
 
     /**
@@ -63,6 +66,25 @@ public class Funcionarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelPerm = new javax.swing.JPanel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jRadioButton5 = new javax.swing.JRadioButton();
+        jRadioButton6 = new javax.swing.JRadioButton();
+        jRadioButton7 = new javax.swing.JRadioButton();
+        jRadioButton8 = new javax.swing.JRadioButton();
+        jRadioButton9 = new javax.swing.JRadioButton();
+        jRadioButton10 = new javax.swing.JRadioButton();
+        jRadioButton11 = new javax.swing.JRadioButton();
+        jRadioButton12 = new javax.swing.JRadioButton();
+        jRadioButton13 = new javax.swing.JRadioButton();
+        jRadioButton14 = new javax.swing.JRadioButton();
+        jRadioButton15 = new javax.swing.JRadioButton();
+        jRadioButton16 = new javax.swing.JRadioButton();
+        btnFechar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         botaoFechar1 = new javax.swing.JButton();
         botaoAdicionar1 = new javax.swing.JButton();
         botaoRemover1 = new javax.swing.JButton();
@@ -74,6 +96,7 @@ public class Funcionarios extends javax.swing.JFrame {
         painelderolagem1 = new javax.swing.JScrollPane();
         tabelaFuncionarios = new javax.swing.JTable();
         btnRelatorios = new javax.swing.JButton();
+        btnPermissoes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,6 +108,39 @@ public class Funcionarios extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelPerm.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelPerm.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, -1, -1));
+        panelPerm.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, -1));
+        panelPerm.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, -1, -1));
+        panelPerm.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, -1, -1));
+        panelPerm.add(jRadioButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, -1, -1));
+        panelPerm.add(jRadioButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, -1, -1));
+        panelPerm.add(jRadioButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, -1, -1));
+        panelPerm.add(jRadioButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, -1, -1));
+        panelPerm.add(jRadioButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, -1, -1));
+        panelPerm.add(jRadioButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, -1));
+        panelPerm.add(jRadioButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 380, -1, -1));
+        panelPerm.add(jRadioButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, -1, -1));
+        panelPerm.add(jRadioButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, -1, -1));
+        panelPerm.add(jRadioButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 430, -1, -1));
+        panelPerm.add(jRadioButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 490, -1, -1));
+        panelPerm.add(jRadioButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 490, -1, -1));
+
+        btnFechar.setBackground(new java.awt.Color(255, 255, 255));
+        btnFechar.setForeground(new java.awt.Color(255, 255, 255));
+        btnFechar.setText("X");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
+        panelPerm.add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 40, 30));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/fundoPerm.png"))); // NOI18N
+        panelPerm.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 530));
+
+        getContentPane().add(panelPerm, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 510, 530));
 
         botaoFechar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
         botaoFechar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
@@ -139,7 +195,7 @@ public class Funcionarios extends javax.swing.JFrame {
                 campoBuscarKeyPressed(evt);
             }
         });
-        getContentPane().add(campoBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 320, 40));
+        getContentPane().add(campoBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 320, 40));
 
         botaobuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaobuscar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
@@ -148,7 +204,7 @@ public class Funcionarios extends javax.swing.JFrame {
                 botaobuscar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(botaobuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 50, 40));
+        getContentPane().add(botaobuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 260, 50, 40));
 
         tabelaFuncionarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
@@ -203,6 +259,15 @@ public class Funcionarios extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnRelatorios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 210, 40));
+
+        btnPermissoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnPermissoes.png"))); // NOI18N
+        btnPermissoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPermissoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPermissoesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnPermissoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 270, 210, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios/Sem título-1.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -283,6 +348,16 @@ public class Funcionarios extends javax.swing.JFrame {
         telaFrequencia.setVisible(true);
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
+    private void btnPermissoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPermissoesActionPerformed
+        // TODO add your handling code here:
+        panelPerm.setVisible(true);
+    }//GEN-LAST:event_btnPermissoesActionPerformed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        // TODO add your handling code here:
+        panelPerm.setVisible(false);
+    }//GEN-LAST:event_btnFecharActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -325,11 +400,31 @@ public class Funcionarios extends javax.swing.JFrame {
     private javax.swing.JButton botaoListar1;
     private javax.swing.JButton botaoRemover1;
     private javax.swing.JButton botaobuscar1;
+    private javax.swing.JButton btnFechar;
+    private javax.swing.JButton btnPermissoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JTextField campoBuscar;
     private javax.swing.JComboBox<String> comboListar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton10;
+    private javax.swing.JRadioButton jRadioButton11;
+    private javax.swing.JRadioButton jRadioButton12;
+    private javax.swing.JRadioButton jRadioButton13;
+    private javax.swing.JRadioButton jRadioButton14;
+    private javax.swing.JRadioButton jRadioButton15;
+    private javax.swing.JRadioButton jRadioButton16;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JRadioButton jRadioButton5;
+    private javax.swing.JRadioButton jRadioButton6;
+    private javax.swing.JRadioButton jRadioButton7;
+    private javax.swing.JRadioButton jRadioButton8;
+    private javax.swing.JRadioButton jRadioButton9;
     private javax.swing.JScrollPane painelderolagem1;
+    private javax.swing.JPanel panelPerm;
     private javax.swing.JTable tabelaFuncionarios;
     // End of variables declaration//GEN-END:variables
 
