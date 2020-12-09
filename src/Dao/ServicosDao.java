@@ -23,7 +23,7 @@ public class ServicosDao extends Conexao{
     private final String remover = "DELETE FROM ";
     private final String selecionarTudo = "SELECT * FROM ";
     private final HorariosDao horariosDao = new HorariosDao();
-    private ConversaodeDataParaPadraoDesignado converterData;
+    private ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     
     
     //Inserir dados na tabela Servicos

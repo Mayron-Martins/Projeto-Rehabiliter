@@ -10,7 +10,7 @@ package Model;
  * @author Mayro
  */
 public class Gerente extends Funcionario{
-    public Gerente(String senha, String usuario, String status) {
-        super(senha, usuario, status);
+    public Gerente(String senha, String usuario) {
+        super(senha, usuario);
     }
 }

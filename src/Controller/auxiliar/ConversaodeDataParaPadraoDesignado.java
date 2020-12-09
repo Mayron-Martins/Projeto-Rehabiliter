@@ -1,6 +1,7 @@
 package Controller.auxiliar;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +37,31 @@ public class ConversaodeDataParaPadraoDesignado {
             return null;
         }
         return new java.sql.Date(data.getTime());
+    }
+    
+    public Date parseDateAndTime(Timestamp data) throws ParseException{
+        if(data==null){
+            return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        sdf.setLenient(false);
+        return sdf.parse(sdf.format(data));
+    }
+    
+        public String parseDateAndTime(Date data) throws ParseException{
+        if(data==null||data.equals("")){
+            return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        sdf.setLenient(false);
+        return sdf.format(data);
+    }
+        
+    public java.sql.Timestamp getSqlDateAndTime(Date data) {
+        if(data == null){
+            return null;
+        }
+        return new java.sql.Timestamp(data.getTime());
     }
     
     public String Datadesformatada(Date data) throws ParseException{

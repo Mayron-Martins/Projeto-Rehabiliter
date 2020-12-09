@@ -34,10 +34,9 @@ public class Funcionario extends Pessoa{
     
     //***************************************************************************
     //CONSTRUTORES PARA LOGAR
-    public Funcionario(String usuario, String senha, String status) {
+    public Funcionario(String usuario, String senha) {
         super(usuario);
         this.senha = senha;
-        this.status = status;
     }
 
     

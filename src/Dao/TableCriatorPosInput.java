@@ -43,7 +43,7 @@ public class TableCriatorPosInput extends Conexao{
     public void tableLogdeAcoesdoFunc() throws SQLException{
             this.gerarStatement().execute("CREATE TABLE tblLogdeAcoesdoFun"+this.quantFuncionarios()+"("
                 + "codFuncionario INT NOT NULL," //Associa o log ao código do funcionário
-                + "data DATE NOT NULL," //data e hora do acontecimento.
+                + "data DATETIME NOT NULL," //data e hora do acontecimento.
                 + "acao VARCHAR(MAX) NOT NULL,"
                 + "descricao VARCHAR(MAX) NULL"
                 + ")ON [Funcionarios];");

@@ -72,9 +72,6 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -194,9 +191,10 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
         try {
-            // TODO add your handling code here:
             controller.sairTela();
         } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         }
         LoginGerente jump = new LoginGerente();
@@ -291,14 +289,6 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
             Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
-
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        try {
-            controller.sairTela();
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

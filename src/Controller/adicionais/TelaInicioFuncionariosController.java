@@ -8,10 +8,12 @@ package Controller.adicionais;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.AlunosDao;
 import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.PlanosDao;
 import Dao.TurmasDao;
 import Model.Aluno;
 import Model.Funcionario;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Turmas;
 import View.telainicialFuncionario;
@@ -36,6 +38,7 @@ public class TelaInicioFuncionariosController {
     private final TurmasDao turmasDao = new TurmasDao();
     private final PlanosDao planosDao = new PlanosDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
 
     public TelaInicioFuncionariosController(telainicialFuncionario view) {
         this.view = view;
@@ -92,8 +95,12 @@ public class TelaInicioFuncionariosController {
         }
     }
     
-    public void sairTela() throws SQLException{
+    public void sairTela() throws SQLException, ParseException{
         funcionarioDao.atualizarStatusAll();
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            this.setarLog(funcionarios);
+        }
         view.dispose();
     }
     
@@ -203,6 +210,14 @@ public class TelaInicioFuncionariosController {
         }
         return permissao;
     }
+    
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Saída do Sistema", null);
+        return logAcao;
+    } 
 }
 
 
