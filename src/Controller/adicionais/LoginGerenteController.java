@@ -48,6 +48,8 @@ public class LoginGerenteController {
             else{
                 view.getTelagerente().setVisible(true);
                 this.setarPresencaFuncionario(usuario);
+                funcionarioDao.atualizarStatusAll();
+                funcionarioDao.atualizarStatus(usuario);
                 view.dispose();
             }
         }

@@ -12,6 +12,7 @@ import java.awt.Color;
  * @author 55989
  */
 public class Backup extends javax.swing.JFrame {
+    private final int numeroTela = 7;
 
     /**
      * Creates new form Backup

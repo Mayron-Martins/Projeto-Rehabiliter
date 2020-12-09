@@ -62,10 +62,11 @@ public class FuncionariosController {
             BigDecimal valorSalario = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 6).toString()).toString());
             String usuario = cpf;
             
+            String telasPermitidas = view.getTelasPermitidas();
             Funcionario funcionarioAnterior = this.funcionarioAnterior(codAluno);
             
             Funcionario funcionario = new Funcionario(codAluno, nome, cpf, "", telefone, celular, funcionarioAnterior.getEmail(), funcionarioAnterior.getDatadenascimento(),
-                    usuario, funcionarioAnterior.getSenha(), valorSalario, cargo);
+                    usuario, funcionarioAnterior.getSenha(), valorSalario, cargo, telasPermitidas, null);
         
 //Inserindo Dados
         if(nome.equals("")|| cpf.equals("   .   .   -  ")){
@@ -126,32 +127,6 @@ public class FuncionariosController {
         this.buscas(funcionariosAniversariantes);
     }
     
-    //Buscar Débito existentes
-    /*private void buscarDebitos(char opcao) throws SQLException, ParseException, Exception{
-        ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
-        ArrayList <Aluno> alunosComDebito = new ArrayList<>();
-        ArrayList <Aluno> alunosSemDebito = new ArrayList<>();
-        BigDecimal debito;
-        for(int linhas = 0; linhas<alunos.size(); linhas++){
-            debito = new BigDecimal(alunos.get(linhas).getDebito().toString());
-            if(debito.compareTo(BigDecimal.ZERO)>0){
-                alunosComDebito.add(alunos.get(linhas));
-            } else {
-                alunosSemDebito.add(alunos.get(linhas));
-            }
-        }
-        
-        switch(opcao){
-            case 'C':
-                this.buscas(alunosComDebito);
-            break;
-            
-            case 'S':
-                this.buscas(alunosSemDebito);
-            break;
-        }
-    }*/
-    
     //Listar
     public void listar() throws ParseException, Exception{
         String comboListar = view.getComboListar().getSelectedItem().toString();
@@ -168,8 +143,8 @@ public class FuncionariosController {
     }
 
     
-    private Funcionario funcionarioAnterior(int codAluno) throws SQLException, ParseException{
-         return  funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE codFuncionario = "+codAluno).get(0);
+    private Funcionario funcionarioAnterior(int codFuncionario) throws SQLException, ParseException{
+         return  funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE codFuncionario = "+codFuncionario).get(0);
     }
     
     private void buscas(ArrayList <Funcionario> listar) throws Exception{
@@ -186,6 +161,68 @@ public class FuncionariosController {
             this.tabelaDeFuncionarios.addRow(dadosDaTabelaFuncionarios);
 
             }
+        }
+    }
+    
+    public void selecionarTabela() throws SQLException, ParseException{
+        int linhaSelecionada = view.getTabelaFuncionarios().getSelectedRow();
+        
+        if(linhaSelecionada!=-1){
+            int codFuncionario = Integer.parseInt(tabelaDeFuncionarios.getValueAt(linhaSelecionada, 0).toString());
+            
+            view.getBotaoPermissoes().setVisible(true);
+            this.pegarTelasPermitidas(codFuncionario);
+        }
+        else{
+            view.getBotaoPermissoes().setVisible(false);
+        }
+    }
+    
+    private void pegarTelasPermitidas(int codFuncionario) throws SQLException, ParseException{
+        Funcionario funcionario = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE codFuncionario = "+codFuncionario).get(0);
+        String[] telas = funcionario.getTelasPermitidas().split(",");
+        for(int linhas=0; linhas<telas.length; linhas++){
+            telas[linhas]=telas[linhas].replace(",", "");
+            
+            switch(telas[linhas]){
+                case "1":
+                    view.getRadioAlunosSim().setSelected(true);
+                break;
+                case "2":
+                    view.getRadioTurmasSim().setSelected(true);
+                break;
+                case "3":
+                    view.getRadioProdutosSim().setSelected(true);
+                break;
+                case "4":
+                    view.getRadioServicosSim().setSelected(true);
+                break;
+                case "5":
+                    view.getRadioFinanceiroSim().setSelected(true);
+                break;
+                case "6":
+                    view.getRadioImprimirSim().setSelected(true);
+                break;
+                case "7":
+                    view.getRadioBackupSim().setSelected(true);
+                break;
+                case "8":
+                    view.getRadioCaixaSim().setSelected(true);
+                break;
+            }
+        }
+        view.setTelasPermitidas(funcionario.getTelasPermitidas());
+        
+    }
+    
+    public void atualizarTelasPermitidas() throws SQLException, ParseException{
+        int linhaSelecionada = view.getTabelaFuncionarios().getSelectedRow();
+        
+        if(linhaSelecionada!=-1){
+            int codFuncionario = Integer.parseInt(tabelaDeFuncionarios.getValueAt(linhaSelecionada, 0).toString());
+            Funcionario funcionario = new Funcionario(codFuncionario, null, null, null, null, null, null, null, null, null, BigDecimal.ZERO, null, view.getTelasPermitidas(), null);
+            
+            funcionarioDao.atualizarTelasPermitidas(funcionario);
         }
     }
 }

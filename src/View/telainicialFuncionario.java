@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -76,6 +77,9 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -185,8 +189,12 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
+        try {
+            // TODO add your handling code here:
+            controller.sairTela();
+        } catch (SQLException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         LoginFuncionario jump = new LoginFuncionario();
         jump.setVisible(true);
     }//GEN-LAST:event_botaoSairActionPerformed
@@ -198,23 +206,60 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoMenuActionPerformed
 
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
-
-        telaAlunos.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela()){
+                telaAlunos.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
     private void botaoFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFrequenciaActionPerformed
-        // TODO add your handling code here:       
-        telaTurmasFrequencias.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            if(controller.permissaoDeAcessoATela()){
+                telaTurmasFrequencias.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_botaoFrequenciaActionPerformed
 
     private void botaoFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiroActionPerformed
-        // TODO add your handling code here:
-        telaFinanceiro.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            if(controller.permissaoDeAcessoATela()){
+                telaFinanceiro.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoFinanceiroActionPerformed
 
     private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed
-        // TODO add your handling code here:
-        telaCaixa.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            if(controller.permissaoDeAcessoATela()){
+                telaCaixa.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoCaixaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -225,6 +270,14 @@ public class telainicialFuncionario extends javax.swing.JFrame {
             Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        try {
+            controller.sairTela();
+        } catch (SQLException ex) {
+            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -301,6 +354,10 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
 }
 
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
     public JScrollPane getjScrollPane1() {
         return jScrollPane1;
     }

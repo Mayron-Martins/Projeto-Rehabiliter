@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -71,6 +72,9 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -189,8 +193,12 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
+        try {
+            // TODO add your handling code here:
+            controller.sairTela();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
         LoginGerente jump = new LoginGerente();
         jump.setVisible(true);
     }//GEN-LAST:event_botaoSairActionPerformed
@@ -198,19 +206,46 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
         // TODO add your handling code here:
         AlunosView jump=new AlunosView();
-        jump.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela()){
+                jump.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
     private void botaoFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFrequenciaActionPerformed
         // TODO add your handling code here:
         turmasFrequencia abrir= new turmasFrequencia();
-        abrir.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela()){
+                abrir.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoFrequenciaActionPerformed
 
     private void botaoFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiroActionPerformed
         // TODO add your handling code here:
         Financeiro abrir=new Financeiro();
-        abrir.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela()){
+                abrir.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoFinanceiroActionPerformed
 
     private void botaoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMenuActionPerformed
@@ -221,13 +256,31 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionariosActionPerformed
         Funcionarios telaFuncionarios = new Funcionarios();
-        telaFuncionarios.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela()){
+                telaFuncionarios.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoFuncionariosActionPerformed
 
     private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed
         // TODO add your handling code here:
         Caixa abrir= new Caixa();
-        abrir.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela()){
+                abrir.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoCaixaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -238,6 +291,14 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
             Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        try {
+            controller.sairTela();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -313,6 +374,10 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     modeloDaColuna.getColumn(1).setMaxWidth(90);
     modeloDaColuna.getColumn(2).setMaxWidth(95);
 
+    }
+    
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
     }
 
     public JScrollPane getjScrollPane1() {

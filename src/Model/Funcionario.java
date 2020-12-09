@@ -32,7 +32,6 @@ public class Funcionario extends Pessoa{
     
     
     
-    
     //***************************************************************************
     //CONSTRUTORES PARA LOGAR
     public Funcionario(String usuario, String senha, String status) {

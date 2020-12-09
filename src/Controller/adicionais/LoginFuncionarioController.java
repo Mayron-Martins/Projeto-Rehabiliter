@@ -50,6 +50,8 @@ public class LoginFuncionarioController {
             else{
                 view.getTelaInicioFuncionario().setVisible(true);
                 this.setarPresencaFuncionario(usuario);
+                funcionarioDao.atualizarStatusAll();
+                funcionarioDao.atualizarStatus(usuario);
                 view.dispose();
             }}
         } 

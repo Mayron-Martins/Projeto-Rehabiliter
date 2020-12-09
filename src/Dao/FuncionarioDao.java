@@ -67,7 +67,7 @@ public class FuncionarioDao extends Conexao{
     public void atualizarDados(Funcionario funcionario) throws SQLException{
         //atualizando a tabela de alunos
         String inFuncionario = atualizar.concat("tblFuncionarios "
-                + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, salario=?, status=? where codFuncionario = ?");
+                + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, salario=?, telasPermitidas=? where codFuncionario = ?");
         
         PreparedStatement statement = gerarStatement(inFuncionario);
         statement.setString(1, funcionario.getNome());
@@ -85,13 +85,34 @@ public class FuncionarioDao extends Conexao{
         //atualizando a tabela de horarios
     }
     
-    public void atualizarStatus(Funcionario funcionario) throws SQLException{
+    public void atualizarTelasPermitidas(Funcionario funcionario) throws SQLException{
+        String inFuncionario = atualizar.concat("tblFuncionarios "
+                + "SET telasPermitidas=? where usuario = ?");
+        
+        PreparedStatement statement = gerarStatement(inFuncionario);
+        statement.setString(1, funcionario.getTelasPermitidas());
+        statement.setString(2, funcionario.getUsuario());
+        statement.execute();
+        statement.close();
+    }
+    
+    public void atualizarStatusAll() throws SQLException{
+        String inFuncionario = atualizar.concat("tblFuncionarios "
+                + "SET status=?");
+        
+        PreparedStatement statement = gerarStatement(inFuncionario);
+        statement.setString(1, "Inativo");
+        statement.execute();
+        statement.close();
+    }
+    
+    public void atualizarStatus(String usuario) throws SQLException{
         String inFuncionario = atualizar.concat("tblFuncionarios "
                 + "SET status=? where usuario = ?");
         
         PreparedStatement statement = gerarStatement(inFuncionario);
-        statement.setString(1, funcionario.getStatus());
-        statement.setString(2, funcionario.getUsuario());
+        statement.setString(1, "Ativo");
+        statement.setString(2, usuario);
         statement.execute();
         statement.close();
     }

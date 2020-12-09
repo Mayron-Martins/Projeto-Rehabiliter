@@ -7,9 +7,11 @@ package Controller.adicionais;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.AlunosDao;
+import Dao.FuncionarioDao;
 import Dao.PlanosDao;
 import Dao.TurmasDao;
 import Model.Aluno;
+import Model.Funcionario;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Turmas;
 import View.TelaInicialGerenteView;
@@ -33,6 +35,7 @@ public class TelaInicioGerenteController {
     private final AlunosDao alunosDao = new AlunosDao();
     private final TurmasDao turmasDao = new TurmasDao();
     private final PlanosDao planosDao = new PlanosDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
 
     public TelaInicioGerenteController(TelaInicialGerenteView view) {
         this.view = view;
@@ -64,6 +67,13 @@ public class TelaInicioGerenteController {
             }
         } 
     }
+    
+        public void sairTela() throws SQLException{
+        funcionarioDao.atualizarStatusAll();
+        view.dispose();
+    }
+        
+        
     
     private void buscas(ArrayList <Aluno> listar) throws SQLException, ParseException{
         ArrayList<Turmas> turmas = new ArrayList<>();
@@ -151,5 +161,50 @@ public class TelaInicioGerenteController {
         BigDecimal contrato = new BigDecimal(aluno.getValorContrato().toString());
         alunosDao.atualizarDebitos(codAluno, debitos.add(contrato));
         
+    }
+    
+    public boolean permissaoDeAcessoATela() throws SQLException, ParseException{
+        ArrayList<Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        
+        boolean permissao = false;
+        if(funcionarios!=null){
+            Funcionario funcionarioLogado = funcionarios.get(0);
+            String[] telas = funcionarioLogado.getTelasPermitidas().split(",");
+            for(int linhas=0; linhas<telas.length; linhas++){
+                telas[linhas]=telas[linhas].replace(",", "");
+
+                switch(telas[linhas]){
+                    case "1":
+                        permissao = true;
+                    break;
+                    case "2":
+                        permissao = true;
+                    break;
+                    case "3":
+                        permissao = true;
+                    break;
+                    case "4":
+                        permissao = true;
+                    break;
+                    case "5":
+                        permissao = true;
+                    break;
+                    case "6":
+                        permissao = true;
+                    break;
+                    case "7":
+                        permissao = true;
+                    break;
+                    case "8":
+                        permissao = true;
+                    break;
+                    case "9":
+                        permissao = true;
+                    break;
+                }
+            }
+            return permissao;
+        }
+        return permissao;
     }
 }
