@@ -9,12 +9,16 @@ import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.AlunosDao;
 import Dao.EnderecoAlunosDao;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.MatriculasDao;
 import Dao.PlanosDao;
 import Dao.ServicosDao;
 import Dao.TurmasDao;
 import Model.Aluno;
+import Model.Funcionario;
 import Model.auxiliar.EnderecoAlunos;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Matriculas;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
@@ -45,6 +49,8 @@ public class AlunosController {
     private final ServicosDao servicosDao = new ServicosDao();
     private final EnderecoAlunosDao enderecoDao = new EnderecoAlunosDao();
     private final PlanosDao planosDao = new PlanosDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
@@ -144,6 +150,13 @@ public class AlunosController {
             alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno, anoAtual);
             turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
             turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                String acao = "Edição de Dados de Aluno";
+                String descricao = "Editou os dados do aluno "+nome;
+                this.setarLog(funcionarios, acao, descricao);
+            }
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             listarAlunos();
@@ -161,12 +174,19 @@ public class AlunosController {
         if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
             int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+            String nomeAluno = tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
             String nomeTurma = view.getComboTurmas().getSelectedItem().toString();
             int codTurma = Integer.parseInt(nomeTurma.split("\\.")[0]);
             Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+codTurma).get(0);
             
             turmasDao.atualizarQuantAunos(codTurma, turma.getQuantidadeAlunos()-1);
             alunosDao.removerAluno(codAluno);
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                String acao = "Remoção de Aluno";
+                String descricao = "Removeu o aluno "+nomeAluno;
+                this.setarLog(funcionarios, acao, descricao);
+            }
             this.view.exibeMensagem("Sucesso");
             listarAlunos();
         }
@@ -402,4 +422,11 @@ public class AlunosController {
     private Turmas pegarTurma(int codTurma) throws SQLException{
         return turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+codTurma).get(0);
     }
+    
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+        return logAcao;
+    } 
 }

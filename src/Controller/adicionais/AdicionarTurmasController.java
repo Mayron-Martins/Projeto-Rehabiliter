@@ -6,13 +6,19 @@
 package Controller.adicionais;
 
 import Controller.auxiliar.VerificarCodigoNoBanco;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.TableCriatorPosInput;
 import Dao.TurmasDao;
+import Model.Funcionario;
 import Model.auxiliar.Horarios;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Turmas;
 import View.TurmasAdicionar;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -20,6 +26,9 @@ import java.util.ArrayList;
  */
 public class AdicionarTurmasController {
     private final TurmasAdicionar view;
+    private final TurmasDao turmaDao = new TurmasDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final TableCriatorPosInput criarTabela = new TableCriatorPosInput();
 
@@ -28,7 +37,7 @@ public class AdicionarTurmasController {
         this.view = view;
     }
     
-    public void adicionarTurma() throws SQLException{
+    public void adicionarTurma() throws SQLException, ParseException{
         //Pegando Dados Da tela
         int codBancoTurma = verificar.verificarUltimo("tblTurmas", "codTurma")+1;
         int codBancoHorario = verificar.verificarUltimo("tblHorarios", "codHorario")+1;
@@ -62,9 +71,13 @@ public class AdicionarTurmasController {
         if(nomeTurma.equals("")|| horario.equals("") ||view.testeValidacaoHorario()==false){
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
-            TurmasDao turmaDao = new TurmasDao();
             turmaDao.inserirDados(turma, horarios);
             criarTabela.tableFreqTurmas();
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                this.setarLog(funcionarios, nomeTurma);
+            }
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             view.getCampoNome().setText("");
@@ -76,5 +89,10 @@ public class AdicionarTurmasController {
         
     }
     
-    
+   private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String nomeTurma){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Turmas", "Cadastrou a turma "+nomeTurma);
+        return logAcao;
+    }  
 }

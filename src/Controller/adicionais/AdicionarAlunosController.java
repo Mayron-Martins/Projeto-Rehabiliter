@@ -11,11 +11,15 @@ import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
 import Dao.EnderecoAlunosDao;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.MatriculasDao;
 import Dao.ServicosDao;
 import Dao.TurmasDao;
 import Model.Aluno;
+import Model.Funcionario;
 import Model.auxiliar.EnderecoAlunos;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Matriculas;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
@@ -25,6 +29,7 @@ import View.ServicosView;
 import View.TurmasView;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -39,6 +44,8 @@ public class AdicionarAlunosController {
     private final AlunosDao alunosDao = new AlunosDao();
     private final EnderecoAlunosDao enderecoDao = new EnderecoAlunosDao();
     private final MatriculasDao matriculaDao = new MatriculasDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaoDiasDaSemana converterDias = new ConversaoDiasDaSemana();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
@@ -85,7 +92,7 @@ public class AdicionarAlunosController {
         }
     }
     
-    public void adicionarAlunos() throws SQLException{
+    public void adicionarAlunos() throws SQLException, ParseException{
         Date dataCadastro = converterData.getSqlDate(new Date());
 
         //Dados do Aluno
@@ -161,6 +168,10 @@ public class AdicionarAlunosController {
         else{
             alunosDao.inserirDados(aluno, endereco, matricula, planoAluno, codTurma, codTurma);
             turmasDao.atualizarQuantAunos(codTurma, quantAlunosPresentes);
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+            this.setarLog(funcionarios, nome, turma);
+            }
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             view.getCampoNomeAluno().setText("");
@@ -246,4 +257,11 @@ public class AdicionarAlunosController {
             
         }
     }
+    
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String nomeAluno, String nomeTurma){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Aluno", "Cadastrou o aluno "+nomeAluno+"na Turma "+nomeTurma);
+        return logAcao;
+    } 
 }

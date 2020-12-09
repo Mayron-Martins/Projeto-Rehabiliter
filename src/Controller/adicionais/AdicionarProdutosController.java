@@ -7,13 +7,18 @@ package Controller.adicionais;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.VerificarCodigoNoBanco;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.ProdutosDao;
+import Model.Funcionario;
 import Model.Produtos;
+import Model.auxiliar.LogAçoesFuncionario;
 import View.ProdutosAdicionar;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -21,7 +26,9 @@ import java.util.ArrayList;
  */
 public class AdicionarProdutosController {
     private final ProdutosAdicionar view;
-     private final ProdutosDao produtosDao = new ProdutosDao();
+    private final ProdutosDao produtosDao = new ProdutosDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     
@@ -52,6 +59,11 @@ public class AdicionarProdutosController {
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
             produtosDao.inserirDados(produto);
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                this.setarLog(funcionarios, nome);
+            }
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             view.getCampoNome().setText("");
@@ -71,4 +83,10 @@ public class AdicionarProdutosController {
         return quantidade>=1;   
     }
     
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String nomeProduto){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Produto", "Cadastrou o produto "+nomeProduto);
+        return logAcao;
+    } 
 }

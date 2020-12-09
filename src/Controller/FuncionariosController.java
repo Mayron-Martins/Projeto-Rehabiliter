@@ -9,7 +9,9 @@ import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.EnderecoFuncionarioDao;
 import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Model.Funcionario;
+import Model.auxiliar.LogAçoesFuncionario;
 import View.Funcionarios;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -27,6 +29,7 @@ public class FuncionariosController {
     private final DefaultTableModel tabelaDeFuncionarios;
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final EnderecoFuncionarioDao enderecoDao = new EnderecoFuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
@@ -73,6 +76,13 @@ public class FuncionariosController {
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
             funcionarioDao.atualizarDados(funcionario);
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                String acao = "Edição de Dados de Funcionário";
+                String descricao = "Editou os dados do funcionário "+nome;
+                this.setarLog(funcionarios, acao, descricao);
+            }
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             listarFuncionarios();
@@ -224,5 +234,12 @@ public class FuncionariosController {
             
             funcionarioDao.atualizarTelasPermitidas(funcionario);
         }
+    }
+    
+     private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+        return logAcao;
     }
 }

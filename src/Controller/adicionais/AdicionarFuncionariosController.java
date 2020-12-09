@@ -10,12 +10,15 @@ import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.EnderecoFuncionarioDao;
 import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.TableCriatorPosInput;
 import Model.Funcionario;
 import Model.auxiliar.EnderecoFuncionario;
+import Model.auxiliar.LogAçoesFuncionario;
 import View.FuncionariosAdicionar;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,6 +30,7 @@ public class AdicionarFuncionariosController {
     private final FuncionariosAdicionar view;
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final EnderecoFuncionarioDao endereco = new EnderecoFuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
@@ -36,7 +40,7 @@ public class AdicionarFuncionariosController {
         this.view = view;
     }
     
-    public void adicionarFuncionario() throws SQLException{
+    public void adicionarFuncionario() throws SQLException, ParseException{
         //Dados do Gerente
         int codFuncionario = verificar.verificarUltimo("tblFuncionarios", "codFuncionario")+1;
         String nome = view.getCampoNome().getText();
@@ -77,6 +81,11 @@ public class AdicionarFuncionariosController {
         else{
             funcionarioDao.inserirDados(funcionario, endereco);
             criarTabelas.tableLogdeAcoesdoFunc();
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                this.setarLog(funcionarios, nome, cargo);
+            }
             view.exibeMensagem("Sucesso!");
             view.getCampoNome().setText("");
             view.getCampoCPF().setText("");
@@ -94,4 +103,10 @@ public class AdicionarFuncionariosController {
     return view.getCampoSenha().getPassword()==null;
     }
     
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String nomeFuncionario, String cargo){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Funcionário", "Cadastrou o funcionário "+nomeFuncionario+" aos cargo de "+cargo);
+        return logAcao;
+    } 
 }

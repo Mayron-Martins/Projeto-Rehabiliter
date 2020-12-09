@@ -10,6 +10,7 @@ import Controller.auxiliar.JMoneyField;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -99,6 +100,8 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
         try {
             controller.adicionarEntrada();
         } catch (SQLException ex) {
+            Logger.getLogger(FinanceiroPlanodeContraAdc.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(FinanceiroPlanodeContraAdc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoConfirmarActionPerformed

@@ -6,12 +6,18 @@
 package Controller;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.ServicosDao;
+import Model.Funcionario;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Servicos;
 import View.ServicosView;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,6 +28,8 @@ public class ServicosController {
     private final ServicosView view;
     private final DefaultTableModel tabelaDeServicos;
     private final ServicosDao servicosDao = new ServicosDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
 
     public ServicosController(ServicosView view) {
@@ -83,7 +91,7 @@ public class ServicosController {
         }        
     }
     
-    public void editarServicos() throws SQLException{
+    public void editarServicos() throws SQLException, ParseException{
         if(this.view.getTabelaServicos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaServicos().getSelectedRow();
             int codTurma = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
@@ -114,6 +122,13 @@ public class ServicosController {
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
             servicosDao.atualizarDados(servico);
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                String acao = "Edição de Serviços";
+                String descricao = "Edição do serviço "+nome;
+                this.setarLog(funcionarios, acao, descricao);
+            }
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             limparTabela();
@@ -142,12 +157,20 @@ public class ServicosController {
       }
     }
     
-    public void removerServico() throws SQLException{
+    public void removerServico() throws SQLException, ParseException{
         if(this.view.getTabelaServicos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaServicos().getSelectedRow();
             int codTurma = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
+            String nomeServico = tabelaDeServicos.getValueAt(linhaSelecionada, 1).toString();
             
             servicosDao.removerServico(codTurma);
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                String acao = "Remoção de Serviços";
+                String descricao = "Remoção do serviço "+nomeServico;
+                this.setarLog(funcionarios, acao, descricao);
+            }
             this.view.exibeMensagem("Sucesso");
             limparTabela();
             this.view.desabilitarComponentes();
@@ -194,6 +217,13 @@ public class ServicosController {
                 periodoServicoAnterior=periodoServico;
             }
         }
+    }
+    
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+        return logAcao;
     }
     
 }

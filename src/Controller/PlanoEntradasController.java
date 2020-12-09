@@ -10,15 +10,19 @@ import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.AlunosDao;
 import Dao.DetOrcamentarioDao;
 import Dao.EntradasDao;
+import Dao.FuncionarioDao;
 import Dao.ItensVendidosDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.PlanosDao;
 import Dao.TurmasDao;
 import Dao.VendasDao;
 import Model.Aluno;
+import Model.Funcionario;
 import Model.Vendas;
 import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.Entradas;
 import Model.auxiliar.ItemVendido;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Turmas;
 import View.FinanceiroPlanodeEntradas;
@@ -46,6 +50,8 @@ public class PlanoEntradasController {
     private final TurmasDao turmasDao = new TurmasDao();
     private final EntradasDao entradasDao = new EntradasDao();
     private final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
 
@@ -639,6 +645,13 @@ public class PlanoEntradasController {
                     else{
                         entradasDao.atualizarDados(entrada);
                         orcamentarioDao.atualizarDados(orcamentario);
+                        
+                        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                        if(funcionarios!=null){
+                            String acao = "Edição de Entrada";
+                            String descricao = "Editou os dados da entrada "+referencia+" em ganhos";
+                            this.setarLog(funcionarios, acao, descricao);
+                        }
                         view.exibeMensagem("Sucesso!");
                         setarTabelas();
                     }                   
@@ -653,11 +666,19 @@ public class PlanoEntradasController {
             if(view.getPainelEntradas().isVisible()){
                 if(view.getTabelaEntradas().getSelectedRow()!=-1){
                     int linhaSelecionada = view.getTabelaEntradas().getSelectedRow();
-                    
+                   
                     int codEntrada = Integer.parseInt(tabelaEntradas.getValueAt(linhaSelecionada, 0).toString());
+                    String referencia = tabelaEntradas.getValueAt(linhaSelecionada, 1).toString();
                     
                     entradasDao.removerEntrada(codEntrada);
                     orcamentarioDao.removerOrcamentario("Entradas", codEntrada);
+                    
+                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                        if(funcionarios!=null){
+                            String acao = "Remoção de Entrada";
+                            String descricao = "Removeu a entrada "+referencia+" de ganhos";
+                            this.setarLog(funcionarios, acao, descricao);
+                        }
                     view.exibeMensagem("Sucesso!");
                     setarTabelas();
                                     
@@ -680,5 +701,12 @@ public class PlanoEntradasController {
                 return "Débito";
         }
         return "[Nenhum]";
+    }
+        
+        private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+        return logAcao;
     }
 }

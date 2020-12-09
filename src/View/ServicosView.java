@@ -9,6 +9,7 @@ import Controller.ServicosController;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
@@ -231,6 +232,8 @@ public class ServicosView extends javax.swing.JFrame {
             controller.removerServico();
         } catch (SQLException ex) {
             Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
@@ -238,6 +241,8 @@ public class ServicosView extends javax.swing.JFrame {
         try {
             controller.editarServicos();
         } catch (SQLException ex) {
+            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEditarActionPerformed

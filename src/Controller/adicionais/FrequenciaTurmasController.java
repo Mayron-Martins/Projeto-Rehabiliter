@@ -8,11 +8,15 @@ package Controller.adicionais;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.AlunosDao;
 import Dao.FrequenciaTurmasDao;
+import Dao.FuncionarioDao;
 import Dao.HorariosDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.TurmasDao;
 import Model.Aluno;
+import Model.Funcionario;
 import Model.auxiliar.FrequenciaTurmas;
 import Model.auxiliar.Horarios;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Turmas;
 import View.TurmasView;
 import View.turmasFrequencia;
@@ -37,6 +41,8 @@ public class FrequenciaTurmasController {
     private final TurmasView telaDeTurmas = new TurmasView();
     private final AlunosDao alunosDao = new AlunosDao();
     private final HorariosDao horariosDao = new HorariosDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final FrequenciaTurmasDao frequencia = new FrequenciaTurmasDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     
@@ -73,6 +79,7 @@ public class FrequenciaTurmasController {
                     else{
                         String turma = view.getComboTurmas().getSelectedItem().toString();
                         view.getCampoAviso().setForeground(Color.RED);
+                        view.getCampoAviso().removeAll();
                         view.getCampoAviso().append("A turma "+turma.split("\\.")[1]+" não possui horários para o dia de hoje.");
                         view.getScrollPaneAviso().setVisible(true);
                     }
@@ -103,6 +110,7 @@ public class FrequenciaTurmasController {
         for(int linhas=0; linhas<this.tabelaDeAlunos.getRowCount(); linhas++){
             int codTurma = this.retornarCodTurma();
             int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhas, 0).toString());
+            String nomeTurma = view.getComboTurmas().getSelectedItem().toString();
             LocalDate dataAtual = LocalDate.now();
             String dataInput = converterData.parseDate(converterData.conversaoLocalforDate(dataAtual));
             String situacao = tabelaDeAlunos.getValueAt(linhas, 3).toString().substring(0, 2);
@@ -110,6 +118,13 @@ public class FrequenciaTurmasController {
             FrequenciaTurmas frequenciaAtual = new FrequenciaTurmas(codTurma, codAluno, dataInput, situacao);
 
             frequencia.inserirDados(frequenciaAtual);
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                String acao = "Cadastro de Frequência";
+                String descricao = "Cadastrou a frequência para a turma "+nomeTurma;
+                this.setarLog(funcionarios, acao, descricao);
+            }
         }
         view.exibeMensagem("Dados Acicionados Com Sucesso!");
         limparTabela();
@@ -120,12 +135,20 @@ public class FrequenciaTurmasController {
         for(int linhas=0; linhas<this.tabelaDeAlunosBanco.getRowCount(); linhas++){
             int codTurma = this.retornarCodTurma();
             int codAluno = Integer.parseInt(tabelaDeAlunosBanco.getValueAt(linhas, 0).toString());
+            String nomeTurma = view.getComboTurmas().getSelectedItem().toString();
             String dataInput = converterData.parseDate(BuscarFrequenciasNaData().get(0).getDataInsert());
             String situacao = tabelaDeAlunosBanco.getValueAt(linhas, 3).toString().substring(0, 2);
 
             FrequenciaTurmas frequenciaAtual = new FrequenciaTurmas(codTurma, codAluno, dataInput, situacao);
 
             frequencia.atualizarDados(frequenciaAtual);
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                String acao = "Edição de Frequência";
+                String descricao = "Editou os dados da frequência para a turma "+nomeTurma;
+                this.setarLog(funcionarios, acao, descricao);
+            }
         }
         view.exibeMensagem("Dados Atualizados Com Sucesso!");
         limparTabelaBanco();
@@ -367,5 +390,12 @@ public class FrequenciaTurmasController {
                 view.getComboPresencaBanco().setSelectedIndex(2);
             break;
         }
+    }
+    
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+        return logAcao;
     }
 }

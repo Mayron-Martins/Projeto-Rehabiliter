@@ -7,13 +7,19 @@ package Controller;
 
 import Controller.auxiliar.ConversaoDiasDaSemana;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Dao.FuncionarioDao;
 import Dao.HorariosDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.TurmasDao;
+import Model.Funcionario;
 import Model.auxiliar.Horarios;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Turmas;
 import View.TurmasView;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,6 +30,8 @@ public class TurmasController {
     private final TurmasView view;
     private final TurmasDao turmasDao = new TurmasDao();
     private final HorariosDao horariosDao = new HorariosDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDiasDaSemana converterDias = new ConversaoDiasDaSemana();
     private final DefaultTableModel tabelaDeTurmas;
     private final ConversaodeDataParaPadraoDesignado converterHora = new ConversaodeDataParaPadraoDesignado();
@@ -70,7 +78,7 @@ public class TurmasController {
         }        
     }
     
-    public void editarTurmas() throws SQLException{
+    public void editarTurmas() throws SQLException, ParseException{
         if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
             int codTurma = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 0).toString());
@@ -111,6 +119,13 @@ public class TurmasController {
         } else{
             TurmasDao turmaDao = new TurmasDao();
             turmaDao.atualizarDados(turma, horarios);
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                String acao = "Edição de Dados de Turma";
+                String descricao = "Editou os dados da turma "+nome;
+                this.setarLog(funcionarios, acao, descricao);
+            }
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             limparTabela();
@@ -156,12 +171,20 @@ public class TurmasController {
       }
     }
     
-    public void removerTurma() throws SQLException{
+    public void removerTurma() throws SQLException, ParseException{
         if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
             int codTurma = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 0).toString());
+            String nomeTurma = tabelaDeTurmas.getValueAt(linhaSelecionada, 1).toString();
             
             turmasDao.removerTurma(codTurma);
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                String acao = "Remoção de Turma";
+                String descricao = "Remoção da turma "+nomeTurma;
+                this.setarLog(funcionarios, acao, descricao);
+            }
             this.view.exibeMensagem("Sucesso");
             limparTabela();
             this.view.desabilitarVisibilidadeComponente();
@@ -198,5 +221,12 @@ public class TurmasController {
                 }
             }
         }
+    }
+    
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+        return logAcao;
     }
 }

@@ -10,6 +10,7 @@ import Controller.auxiliar.JMoneyField;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
@@ -128,6 +129,8 @@ public class FuncionariosAdicionar extends javax.swing.JFrame {
         try {
             controller.adicionarFuncionario();
         } catch (SQLException ex) {
+            Logger.getLogger(FuncionariosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(FuncionariosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoConfirmarActionPerformed

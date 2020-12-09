@@ -10,16 +10,20 @@ import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
 import Dao.DetOrcamentarioDao;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.PlanosDao;
 import Dao.ProdutosDao;
 import Dao.ServicosDao;
 import Dao.TurmasDao;
 import Dao.VendasDao;
 import Model.Aluno;
+import Model.Funcionario;
 import Model.Produtos;
 import Model.Vendas;
 import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.ItemVendido;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
@@ -50,6 +54,8 @@ public class CaixaController {
     private final ServicosDao servicos = new ServicosDao();
     private final VendasDao vendasDao = new VendasDao();
     private final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final VerificarCodigoNoBanco verificador = new VerificarCodigoNoBanco();
@@ -353,6 +359,13 @@ public class CaixaController {
                     ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
                     itens.add(itemVendido);
                     produtosDao.atualizarEstoque(codProduto, produto.getQuantidade()-quantidade);
+                    
+                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                if(funcionarios!=null){
+                    String acao = "Venda Efetuada";
+                    String descricao = "Venda no Valor de R$"+valorTotal+" com "+formaDePagamento+" ao cliente "+codAluno;
+                    this.setarLog(funcionarios, acao, descricao);
+                }
                 }
                 
                 vendasDao.inserirDados(venda, itens);
@@ -383,6 +396,13 @@ public class CaixaController {
                         orcamentarioDao.inserirDados(orcamentario);
                         planosDao.atualizarSituacao(plano);
                         alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
+                        
+                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                    if(funcionarios!=null){
+                        String acao = "Pagamento de Plano";
+                        String descricao = "Pagamento do plano do aluno "+aluno.getNome()+" da turma "+aluno.getTurma()+" no valor de "+valorTotal;
+                        this.setarLog(funcionarios, acao, descricao);
+                    }
                     }
                     else{
                         view.exibeMensagem("Erro, verifique se o Valor Total corresponde ao Contrato!");
@@ -451,5 +471,12 @@ public class CaixaController {
         else{
             return "S";
         }
+    }
+    
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+        return logAcao;
     }
 }

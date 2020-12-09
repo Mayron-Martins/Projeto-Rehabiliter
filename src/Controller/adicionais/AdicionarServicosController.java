@@ -7,13 +7,19 @@ package Controller.adicionais;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.VerificarCodigoNoBanco;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.ServicosDao;
+import Model.Funcionario;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Servicos;
 import View.ServicosAdicionar;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 /**
@@ -23,6 +29,8 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 public class AdicionarServicosController {
     private final ServicosAdicionar view;
     private final ServicosDao servicosDao = new ServicosDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     
@@ -30,7 +38,7 @@ public class AdicionarServicosController {
         this.view = view;
     }
     
-    public void adicionarServico() throws SQLException{
+    public void adicionarServico() throws SQLException, ParseException{
         //Pegando Dados Da tela
         int codBancoServico = verificar.verificarUltimo("tblServicos", "codServico")+1;
         String nomeServico = view.getNomeServico().getText();
@@ -56,6 +64,11 @@ public class AdicionarServicosController {
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
             servicosDao.inserirDados(servico);
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                this.setarLog(funcionarios, nomeServico);
+            }
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             view.getNomeServico().setText("");
@@ -106,4 +119,11 @@ public class AdicionarServicosController {
             }
         }
     }
+    
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String nomeServico){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Serviço", "Cadastrou o serviço "+nomeServico);
+        return logAcao;
+    } 
 }

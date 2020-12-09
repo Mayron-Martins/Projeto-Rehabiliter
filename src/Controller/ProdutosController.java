@@ -8,13 +8,18 @@ package Controller;
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.EnderecoFuncionarioDao;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.ProdutosDao;
+import Model.Funcionario;
 import Model.Produtos;
+import Model.auxiliar.LogAçoesFuncionario;
 import View.ProdutosView;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,6 +31,8 @@ public class ProdutosController {
     private final DefaultTableModel tabelaDeProdutos;
     private final ProdutosDao produtosDao = new ProdutosDao();
     private final EnderecoFuncionarioDao enderecoDao = new EnderecoFuncionarioDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
@@ -68,6 +75,13 @@ public class ProdutosController {
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
             produtosDao.atualizarDados(produto);
+            
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                String acao = "Edição de Dados de Produto";
+                String descricao = "Editou os dados do produto "+nome;
+                this.setarLog(funcionarios, acao, descricao);
+            }
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             listarProdutos();
@@ -84,7 +98,15 @@ public class ProdutosController {
         if(this.view.getTabelaProdutos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaProdutos().getSelectedRow();
                 int codProduto = Integer.parseInt(tabelaDeProdutos.getValueAt(linhaSelecionada, 0).toString());
+                String nomeProduto = tabelaDeProdutos.getValueAt(linhaSelecionada, 1).toString();
                 produtosDao.removerProduto(codProduto);
+                
+                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                if(funcionarios!=null){
+                    String acao = "Remoção de Produto";
+                    String descricao = "Remoção do produto "+nomeProduto;
+                    this.setarLog(funcionarios, acao, descricao);
+                }
                 this.view.exibeMensagem("Sucesso");
                 listarProdutos();
         }
@@ -131,5 +153,10 @@ public class ProdutosController {
         }
     }
     
-
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+        return logAcao;
+    }
 }

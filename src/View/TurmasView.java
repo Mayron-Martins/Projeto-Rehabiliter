@@ -11,6 +11,7 @@ import Controller.auxiliar.FormatacaodeCamposRestritos;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -285,6 +286,8 @@ public class TurmasView extends javax.swing.JFrame {
             controller.removerTurma();
         } catch (SQLException ex) {
             Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoRemoverTurmasActionPerformed
 
@@ -294,6 +297,8 @@ public class TurmasView extends javax.swing.JFrame {
         try {
             controller.editarTurmas();
         } catch (SQLException ex) {
+            Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoEditarTurmasActionPerformed

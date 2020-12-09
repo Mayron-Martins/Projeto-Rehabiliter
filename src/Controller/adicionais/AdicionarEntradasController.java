@@ -10,11 +10,17 @@ import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.DetOrcamentarioDao;
 import Dao.EntradasDao;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
+import Model.Funcionario;
 import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.Entradas;
+import Model.auxiliar.LogAçoesFuncionario;
 import View.FinanceiroPlanodeEntradasAdc;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -25,6 +31,8 @@ public class AdicionarEntradasController {
     private final FinanceiroPlanodeEntradasAdc view;
     private final EntradasDao entradasDao = new EntradasDao();
     private final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
@@ -33,7 +41,7 @@ public class AdicionarEntradasController {
         this.view = view;
     }
     
-    public void adicionarEntrada() throws SQLException{
+    public void adicionarEntrada() throws SQLException, ParseException{
         //Dados Entrada
         int codEntrada = verificar.verificarUltimo("tblEntradas", "codEntrada") +1;
         int codOrcamentario = verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
@@ -57,6 +65,11 @@ public class AdicionarEntradasController {
           //Adicionando no Banco
           entradasDao.inserirDados(entrada);
           orcamentarioDao.inserirDados(orcamentario);
+          
+          ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                this.setarLog(funcionarios, referencia);
+            }
           view.exibeMensagem("Sucesso!");
           view.getCampoFormaPagamento().setSelectedIndex(0);
           view.getCampoQuantidade().setText("");
@@ -80,4 +93,11 @@ public class AdicionarEntradasController {
         }
         return "[Nenhum]";
     }
+    
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String referencia){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Entrada", "Cadastrou a entrada "+referencia+" aos ganhos");
+        return logAcao;
+    } 
 }

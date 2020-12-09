@@ -8,9 +8,13 @@ package Controller;
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.DetOrcamentarioDao;
+import Dao.FuncionarioDao;
 import Dao.GastosDao;
+import Dao.LogAçoesFuncionarioDao;
+import Model.Funcionario;
 import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.Gastos;
+import Model.auxiliar.LogAçoesFuncionario;
 import View.FinanceiroPlanodeContra;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -29,6 +33,8 @@ public class PlanoGastosController {
     private final DefaultTableModel tabelaGastos;
     private final GastosDao gastosDao = new GastosDao();
     private final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
 
@@ -260,6 +266,13 @@ public class PlanoGastosController {
                     else{
                         gastosDao.atualizarDados(gasto);
                         orcamentarioDao.atualizarDados(orcamentario);
+                        
+                        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                        if(funcionarios!=null){
+                            String acao = "Edição de Gasto";
+                            String descricao = "Editou o gasto "+motivo;
+                            this.setarLog(funcionarios, acao, descricao);
+                        }
                         view.exibeMensagem("Sucesso!");
                         setarTabelas();
                     }                   
@@ -276,9 +289,17 @@ public class PlanoGastosController {
                     int linhaSelecionada = view.getTabelaGastos().getSelectedRow();
                     
                     int codGasto = Integer.parseInt(tabelaGastos.getValueAt(linhaSelecionada, 0).toString());
+                    String motivo = tabelaGastos.getValueAt(linhaSelecionada, 1).toString();
                     
                     gastosDao.removerGastos(codGasto);
                     orcamentarioDao.removerOrcamentario("Gastos", this.chaveGasto(codGasto));
+                    
+                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                        if(funcionarios!=null){
+                            String acao = "Remoção de Gasto";
+                            String descricao = "Removeu o gasto "+motivo;
+                            this.setarLog(funcionarios, acao, descricao);
+                        }
                     view.exibeMensagem("Sucesso!");
                     setarTabelas();
                                     
@@ -307,4 +328,11 @@ public class PlanoGastosController {
             Gastos gasto = gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE codGasto = "+codGasto).get(0);
             return gasto.getChaveTransacao();
         }
+        
+    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
+        Funcionario funcionario = funcionarios.get(0);
+        Date dataEvento = new Date();
+        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+        return logAcao;
+    }
 }

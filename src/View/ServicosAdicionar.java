@@ -9,6 +9,7 @@ import Controller.adicionais.AdicionarServicosController;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -137,7 +138,7 @@ public class ServicosAdicionar extends javax.swing.JFrame {
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
         try {
             controller.adicionarServico();
-        } catch (SQLException ex) {
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(ServicosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoConfirmarActionPerformed

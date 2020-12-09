@@ -9,6 +9,7 @@ import Controller.adicionais.AdicionarTurmasController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -204,6 +205,8 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         try {
             controller.adicionarTurma();
         } catch (SQLException ex) {
+            Logger.getLogger(TurmasAdicionar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(TurmasAdicionar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoConfirmarActionPerformed
