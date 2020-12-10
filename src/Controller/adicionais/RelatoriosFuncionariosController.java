@@ -6,13 +6,13 @@
 package Controller.adicionais;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.ExportExcelFiles;
 import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
 import Model.Funcionario;
 import Model.auxiliar.LogAçoesFuncionario;
 import View.Relatoriosfun;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,10 +29,12 @@ public class RelatoriosFuncionariosController {
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+    private final ExportExcelFiles exportarTabela;
 
     public RelatoriosFuncionariosController(Relatoriosfun view) {
         this.view = view;
         this.tabelaDeLogs = (DefaultTableModel) view.getTabelaLogs().getModel();
+        this.exportarTabela = new ExportExcelFiles(this.tabelaDeLogs, "/documents/Rehabiliter/Exportações/Relatórios Funcionários");
     }
     
     public void limparTabela(){
@@ -200,6 +202,13 @@ public class RelatoriosFuncionariosController {
                view.getCampoDescricao().append(tabelaDeLogs.getValueAt(linhaSelecionada, 2).toString()); 
             }
             
+        }
+    }
+    
+    public void salvarDadosEmPlanilha(){
+        int numLinhas = tabelaDeLogs.getRowCount();
+        if(numLinhas>0){
+            exportarTabela.exportarArquivoExcel();
         }
     }
 }

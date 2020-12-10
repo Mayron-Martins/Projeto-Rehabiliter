@@ -206,7 +206,7 @@ public class Relatoriosfun extends javax.swing.JFrame {
     }//GEN-LAST:event_comboFuncionariosActionPerformed
 
     private void btExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExportarActionPerformed
-        // TODO add your handling code here:
+        controller.salvarDadosEmPlanilha();
     }//GEN-LAST:event_btExportarActionPerformed
 
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
