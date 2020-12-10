@@ -104,6 +104,7 @@ public class ImprimirExportar extends javax.swing.JFrame {
     private void btnFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrequenciaActionPerformed
         // TODO add your handling code here:
         turmasFrequencia abrir= new turmasFrequencia();
+        abrir.alternarImprimir();
         abrir.setVisible(true);
         this.dispose();
         
@@ -112,6 +113,7 @@ public class ImprimirExportar extends javax.swing.JFrame {
     private void btnRelatoriosOrcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosOrcaActionPerformed
         // TODO add your handling code here:
         FinanceiroAnaliseFinanceira abrir=new FinanceiroAnaliseFinanceira();
+        abrir.alternarImprimir();
         abrir.setVisible(true);
         this.dispose();
         

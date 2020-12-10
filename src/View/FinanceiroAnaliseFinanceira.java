@@ -37,6 +37,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
         btnImprimir.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
         this.setarComponentes();
+        
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
@@ -65,7 +66,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
         R1 = new javax.swing.JLabel();
         R0 = new javax.swing.JLabel();
         campoTotalParcial = new JMoneyField();
-        imPrimirExportar = new javax.swing.JPanel();
+        painelBotoesImprimirExportar = new javax.swing.JPanel();
         btnImprimir = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -189,8 +190,8 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
         campoTotalParcial.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         getContentPane().add(campoTotalParcial, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 242, 142, 70));
 
-        imPrimirExportar.setBackground(new java.awt.Color(157, 197, 187));
-        imPrimirExportar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        painelBotoesImprimirExportar.setBackground(new java.awt.Color(157, 197, 187));
+        painelBotoesImprimirExportar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/imprimir.png"))); // NOI18N
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -198,7 +199,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
                 btnImprimirActionPerformed(evt);
             }
         });
-        imPrimirExportar.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
+        painelBotoesImprimirExportar.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
         btnExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/exportar.png"))); // NOI18N
         btnExportar.addActionListener(new java.awt.event.ActionListener() {
@@ -206,9 +207,9 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
                 btnExportarActionPerformed(evt);
             }
         });
-        imPrimirExportar.add(btnExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 230, 40));
+        painelBotoesImprimirExportar.add(btnExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 230, 40));
 
-        getContentPane().add(imPrimirExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 540, 70));
+        getContentPane().add(painelBotoesImprimirExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 540, 70));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/analiseFinanceira.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -306,8 +307,8 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField campoPendente;
     private javax.swing.JFormattedTextField campoTotalParcial;
     private javax.swing.JComboBox<String> comboPeriodo;
-    private javax.swing.JPanel imPrimirExportar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel painelBotoesImprimirExportar;
     private javax.swing.JScrollPane painelderolagem;
     private javax.swing.JTable tabelaOrcamentaria;
     // End of variables declaration//GEN-END:variables
@@ -357,6 +358,16 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
         botaoVDetalhada.setEnabled(false);
         
         comboPeriodo.setSelectedIndex(0);
+        painelBotoesImprimirExportar.setVisible(false);
     }
     
+    public void alternarImprimir(){
+        botaoVDetalhada.setEnabled(true);
+        botaoVDetalhada.setVisible(false);
+        botaoVResumida.setEnabled(false);
+        botaoVResumida.setVisible(false);
+        comboPeriodo.setSelectedIndex(0);
+        painelBotoesImprimirExportar.setVisible(true);
+        
+    }
 }

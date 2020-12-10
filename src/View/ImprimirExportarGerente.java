@@ -102,12 +102,14 @@ public class ImprimirExportarGerente extends javax.swing.JFrame {
     private void btnRelatoriosOrcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosOrcaActionPerformed
         // TODO add your handling code here:
         FinanceiroAnaliseFinanceira abrir=new FinanceiroAnaliseFinanceira();
+        abrir.alternarImprimir();
         abrir.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRelatoriosOrcaActionPerformed
 
     private void btnFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrequenciaActionPerformed
            turmasFrequencia abrir=new turmasFrequencia();
+           abrir.alternarImprimir();
            abrir.setVisible(true);
            this.dispose();
             // TODO add your handling code here:
