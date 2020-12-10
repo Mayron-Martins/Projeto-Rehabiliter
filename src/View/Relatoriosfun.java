@@ -5,19 +5,31 @@
  */
 package View;
 
+import Controller.adicionais.RelatoriosFuncionariosController;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 /**
  *
  * @author 55989
  */
 public class Relatoriosfun extends javax.swing.JFrame {
+    private final RelatoriosFuncionariosController controller;
 
     /**
      * Creates new form Relatoriosfun
      */
     public Relatoriosfun() {
         initComponents();
+        controller = new RelatoriosFuncionariosController(this);
+        botaoFechar.setBackground(new Color(0,0,0,0));
         btExportar.setBackground(new Color(0,0,0,0));
         btImprimir.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
@@ -34,15 +46,12 @@ public class Relatoriosfun extends javax.swing.JFrame {
 
         botaoFechar = new javax.swing.JButton();
         painelderolagem = new javax.swing.JScrollPane();
-        tabelaAlunos = new javax.swing.JTable();
-        painelderolagem1 = new javax.swing.JScrollPane();
-        tabelaAlunosBanco = new javax.swing.JTable();
+        tabelaLogs = new javax.swing.JTable();
         comboPeriodo = new javax.swing.JComboBox<>();
         comboIntervalo = new javax.swing.JComboBox<>();
-        comboTurmas = new javax.swing.JComboBox<>();
+        comboFuncionarios = new javax.swing.JComboBox<>();
         scrollPaneAviso = new javax.swing.JScrollPane();
-        campoAviso = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
+        campoDescricao = new javax.swing.JTextArea();
         btExportar = new javax.swing.JButton();
         btImprimir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -50,6 +59,11 @@ public class Relatoriosfun extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -61,20 +75,20 @@ public class Relatoriosfun extends javax.swing.JFrame {
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
 
-        tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaLogs.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaLogs.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "CodAluno", "Nome", "Confirmação", "Situação"
+                "Data", "Ação", "Descrição"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -85,59 +99,25 @@ public class Relatoriosfun extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaAlunos.setFocusable(false);
-        tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaAlunos.setRowHeight(25);
-        tabelaAlunos.setShowVerticalLines(false);
-        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
-        tabelaAlunos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaAlunosComponentHidden(evt);
+        tabelaLogs.setFocusable(false);
+        tabelaLogs.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaLogs.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaLogs.setRowHeight(25);
+        tabelaLogs.setShowVerticalLines(false);
+        tabelaLogs.getTableHeader().setReorderingAllowed(false);
+        tabelaLogs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaLogsMouseClicked(evt);
             }
         });
-        painelderolagem.setViewportView(tabelaAlunos);
+        tabelaLogs.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaLogsKeyReleased(evt);
+            }
+        });
+        painelderolagem.setViewportView(tabelaLogs);
 
         getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
-
-        tabelaAlunosBanco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaAlunosBanco.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "CodAluno", "Nome", "Confirmação", "Situação"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, true, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabelaAlunosBanco.setFocusable(false);
-        tabelaAlunosBanco.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaAlunosBanco.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaAlunosBanco.setRowHeight(25);
-        tabelaAlunosBanco.setShowVerticalLines(false);
-        tabelaAlunosBanco.getTableHeader().setReorderingAllowed(false);
-        tabelaAlunosBanco.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaAlunosBancoComponentHidden(evt);
-            }
-        });
-        painelderolagem1.setViewportView(tabelaAlunosBanco);
-
-        getContentPane().add(painelderolagem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Última Semana", "Último Mês", "Último Semestre", "Último Ano" }));
         comboPeriodo.addActionListener(new java.awt.event.ActionListener() {
@@ -155,26 +135,23 @@ public class Relatoriosfun extends javax.swing.JFrame {
         });
         getContentPane().add(comboIntervalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 200, 40));
 
-        comboTurmas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
-        comboTurmas.addActionListener(new java.awt.event.ActionListener() {
+        comboFuncionarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
+        comboFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboTurmasActionPerformed(evt);
+                comboFuncionariosActionPerformed(evt);
             }
         });
-        getContentPane().add(comboTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 200, 40));
+        getContentPane().add(comboFuncionarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 200, 40));
 
-        campoAviso.setEditable(false);
-        campoAviso.setColumns(20);
-        campoAviso.setRows(5);
-        campoAviso.setAutoscrolls(false);
-        scrollPaneAviso.setViewportView(campoAviso);
+        campoDescricao.setEditable(false);
+        campoDescricao.setColumns(20);
+        campoDescricao.setRows(5);
+        campoDescricao.setAutoscrolls(false);
+        scrollPaneAviso.setViewportView(campoDescricao);
 
         getContentPane().add(scrollPaneAviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 250, 190, 70));
-        campoAviso.setLineWrap(true);
-        campoAviso.setWrapStyleWord(true);
-
-        jPanel1.setBackground(new java.awt.Color(157, 198, 187));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        campoDescricao.setLineWrap(true);
+        campoDescricao.setWrapStyleWord(true);
 
         btExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/exportar.png"))); // NOI18N
         btExportar.addActionListener(new java.awt.event.ActionListener() {
@@ -182,7 +159,7 @@ public class Relatoriosfun extends javax.swing.JFrame {
                 btExportarActionPerformed(evt);
             }
         });
-        jPanel1.add(btExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 230, 40));
+        getContentPane().add(btExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 230, 40));
 
         btImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/imprimir.png"))); // NOI18N
         btImprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -190,9 +167,7 @@ public class Relatoriosfun extends javax.swing.JFrame {
                 btImprimirActionPerformed(evt);
             }
         });
-        jPanel1.add(btImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 230, 40));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 500, 100));
+        getContentPane().add(btImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 230, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/relatoriosF.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -206,25 +181,29 @@ public class Relatoriosfun extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
 
-    private void tabelaAlunosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaAlunosComponentHidden
-
-    private void tabelaAlunosBancoComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosBancoComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaAlunosBancoComponentHidden
-
     private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
-
+       controller.ativarComboIntervalo();
+       
+        try {
+            controller.setarCampoIntervalo();
+        } catch (SQLException | ParseException ex) {
+            Logger.getLogger(Relatoriosfun.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
     private void comboIntervaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervaloActionPerformed
-
+        try {
+            controller.setarDadosTabela();
+        } catch (ParseException ex) {
+            Logger.getLogger(Relatoriosfun.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Relatoriosfun.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_comboIntervaloActionPerformed
 
-    private void comboTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmasActionPerformed
-       
-    }//GEN-LAST:event_comboTurmasActionPerformed
+    private void comboFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFuncionariosActionPerformed
+        controller.ativarComboPeriodo();
+    }//GEN-LAST:event_comboFuncionariosActionPerformed
 
     private void btExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExportarActionPerformed
         // TODO add your handling code here:
@@ -233,6 +212,24 @@ public class Relatoriosfun extends javax.swing.JFrame {
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btImprimirActionPerformed
+
+    private void tabelaLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaLogsMouseClicked
+        controller.selecionarTabela();
+    }//GEN-LAST:event_tabelaLogsMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            controller.setarLogs();
+        } catch (SQLException ex) {
+            Logger.getLogger(Relatoriosfun.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Relatoriosfun.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void tabelaLogsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaLogsKeyReleased
+        controller.selecionarTabela();
+    }//GEN-LAST:event_tabelaLogsKeyReleased
 
     /**
      * @param args the command line arguments
@@ -273,16 +270,39 @@ public class Relatoriosfun extends javax.swing.JFrame {
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton btExportar;
     private javax.swing.JButton btImprimir;
-    private javax.swing.JTextArea campoAviso;
+    private javax.swing.JTextArea campoDescricao;
+    private javax.swing.JComboBox<String> comboFuncionarios;
     private javax.swing.JComboBox<String> comboIntervalo;
     private javax.swing.JComboBox<String> comboPeriodo;
-    private javax.swing.JComboBox<String> comboTurmas;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane painelderolagem;
-    private javax.swing.JScrollPane painelderolagem1;
     private javax.swing.JScrollPane scrollPaneAviso;
-    private javax.swing.JTable tabelaAlunos;
-    private javax.swing.JTable tabelaAlunosBanco;
+    private javax.swing.JTable tabelaLogs;
     // End of variables declaration//GEN-END:variables
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+
+    public JTextArea getCampoDescricao() {
+        return campoDescricao;
+    }
+
+    public JComboBox<String> getComboFuncionarios() {
+        return comboFuncionarios;
+    }
+
+    public JComboBox<String> getComboIntervalo() {
+        return comboIntervalo;
+    }
+
+    public JComboBox<String> getComboPeriodo() {
+        return comboPeriodo;
+    }
+
+    public JTable getTabelaLogs() {
+        return tabelaLogs;
+    }
+    
+    
 }

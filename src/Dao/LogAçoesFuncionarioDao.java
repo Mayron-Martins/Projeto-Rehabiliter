@@ -7,7 +7,7 @@ package Dao;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Model.auxiliar.LogAçoesFuncionario;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,7 +61,7 @@ public class LogAçoesFuncionarioDao extends Conexao{
      
     do{
     int codFuncionario = resultset.getInt("codFuncionario");
-    Date dataEvento = (Date) converterData.parseDateAndTime(resultset.getTimestamp("data"));
+    Date dataEvento = converterData.parseDateAndTime(resultset.getTimestamp("data"));
     String acao = resultset.getString("acao");
     String descricao = resultset.getString("descricao");
 
