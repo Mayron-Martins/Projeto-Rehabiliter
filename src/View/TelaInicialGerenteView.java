@@ -34,6 +34,8 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
      */
     public TelaInicialGerenteView() {
         initComponents();
+        menuGerente.setVisible(false);
+        menuGerente.setBackground(new Color(0,0,0,0));
         controller = new TelaInicioGerenteController(this);
         botaoSair.setBackground(new Color(0,0,0,0));
         botaoCaixa.setBackground(new Color(0,0,0,0));
@@ -44,6 +46,20 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         botaoFuncionarios.setBackground(new Color(0,0,0,0));
         jScrollPane1.setVisible(false);
         setExtendedState(MAXIMIZED_BOTH);
+        
+        
+        botaoFechar.setBackground(new Color(0,0,0,0));
+        botaoSair.setBackground(new Color(0,0,0,0));
+        botaoAlunos1.setBackground(new Color(0,0,0,0));
+        botaoTurmas.setBackground(new Color(0,0,0,0));
+        botaoProdutos.setBackground(new Color(0,0,0,0));
+        botaoServicos.setBackground(new Color(0,0,0,0));
+        botaoFinanceiro1.setBackground(new Color(0,0,0,0));
+        botaoBackup.setBackground(new Color(0,0,0,0));
+        botaoImprimirExportar.setBackground(new Color(0,0,0,0));
+        botaoCaixa1.setBackground(new Color(0,0,0,0));
+        
+        
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
@@ -56,6 +72,18 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuGerente = new javax.swing.JPanel();
+        botaoFechar = new javax.swing.JButton();
+        botaoBackup = new javax.swing.JButton();
+        botaoImprimirExportar = new javax.swing.JButton();
+        botaoFinanceiro1 = new javax.swing.JButton();
+        botaoServicos = new javax.swing.JButton();
+        botaoTurmas = new javax.swing.JButton();
+        botaoAlunos1 = new javax.swing.JButton();
+        botaoProdutos = new javax.swing.JButton();
+        botaoCaixa1 = new javax.swing.JButton();
+        botaoSair1 = new javax.swing.JButton();
+        planodefundo1 = new javax.swing.JLabel();
         botaoFuncionarios = new javax.swing.JButton();
         botaoSair = new javax.swing.JButton();
         botaoCaixa = new javax.swing.JButton();
@@ -77,6 +105,96 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        menuGerente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        botaoFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFecharActionPerformed(evt);
+            }
+        });
+        menuGerente.add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 0, 40, 40));
+
+        botaoBackup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoBackup.png"))); // NOI18N
+        botaoBackup.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverBackup.png"))); // NOI18N
+        menuGerente.add(botaoBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 490, 360, 50));
+
+        botaoImprimirExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoImprimir.png"))); // NOI18N
+        botaoImprimirExportar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverImprimir.png"))); // NOI18N
+        botaoImprimirExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoImprimirExportarActionPerformed(evt);
+            }
+        });
+        menuGerente.add(botaoImprimirExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 430, 360, 50));
+
+        botaoFinanceiro1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoFinanceiro.png"))); // NOI18N
+        botaoFinanceiro1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverFinanceiro.png"))); // NOI18N
+        botaoFinanceiro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFinanceiro1ActionPerformed(evt);
+            }
+        });
+        menuGerente.add(botaoFinanceiro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 360, 360, 50));
+
+        botaoServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoServicos.png"))); // NOI18N
+        botaoServicos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverServicos.png"))); // NOI18N
+        botaoServicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoServicosActionPerformed(evt);
+            }
+        });
+        menuGerente.add(botaoServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 300, 360, 50));
+
+        botaoTurmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoTurmas.png"))); // NOI18N
+        botaoTurmas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverTurmas.png"))); // NOI18N
+        botaoTurmas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoTurmasActionPerformed(evt);
+            }
+        });
+        menuGerente.add(botaoTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 170, 360, 50));
+
+        botaoAlunos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoAlunos.png"))); // NOI18N
+        botaoAlunos1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverAlunos.png"))); // NOI18N
+        botaoAlunos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlunos1ActionPerformed(evt);
+            }
+        });
+        menuGerente.add(botaoAlunos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 100, 360, 50));
+
+        botaoProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoProdutos.png"))); // NOI18N
+        botaoProdutos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverProdutos.png"))); // NOI18N
+        botaoProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoProdutosActionPerformed(evt);
+            }
+        });
+        menuGerente.add(botaoProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 230, 360, 50));
+
+        botaoCaixa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoCaixa.png"))); // NOI18N
+        botaoCaixa1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverCaixa.png"))); // NOI18N
+        botaoCaixa1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCaixa1ActionPerformed(evt);
+            }
+        });
+        menuGerente.add(botaoCaixa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 550, 360, 50));
+
+        botaoSair1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoSair.png"))); // NOI18N
+        botaoSair1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverSair.png"))); // NOI18N
+        botaoSair1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSair1ActionPerformed(evt);
+            }
+        });
+        menuGerente.add(botaoSair1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 880, 270, 52));
+
+        planodefundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/menu-principal-funcionárioFundo.png"))); // NOI18N
+        menuGerente.add(planodefundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 1020));
+
+        getContentPane().add(menuGerente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 1030));
 
         botaoFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarios.png"))); // NOI18N
         botaoFuncionarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarioshover.png"))); // NOI18N
@@ -248,8 +366,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMenuActionPerformed
         // TODO add your handling code here:
-        MenuGerente jump=new MenuGerente();
-        jump.setVisible(true);
+        menuGerente.setVisible(true);
     }//GEN-LAST:event_botaoMenuActionPerformed
 
     private void botaoFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionariosActionPerformed
@@ -290,6 +407,66 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowOpened
 
+    private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
+        menuGerente.setVisible(false);
+
+    }//GEN-LAST:event_botaoFecharActionPerformed
+
+    private void botaoImprimirExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoImprimirExportarActionPerformed
+        // TODO add your handling code here:
+        ImprimirExportarGerente abrir= new ImprimirExportarGerente();
+        abrir.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_botaoImprimirExportarActionPerformed
+
+    private void botaoFinanceiro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiro1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Financeiro abrir = new Financeiro();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_botaoFinanceiro1ActionPerformed
+
+    private void botaoServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoServicosActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        ServicosView abrir=new ServicosView();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_botaoServicosActionPerformed
+
+    private void botaoTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTurmasActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        TurmasView abrir=new TurmasView();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_botaoTurmasActionPerformed
+
+    private void botaoAlunos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunos1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        AlunosView jump=new AlunosView();
+        jump.setVisible(true);
+    }//GEN-LAST:event_botaoAlunos1ActionPerformed
+
+    private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        ProdutosView abrir=new ProdutosView();
+        abrir.setVisible(true);
+
+    }//GEN-LAST:event_botaoProdutosActionPerformed
+
+    private void botaoCaixa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixa1ActionPerformed
+        // TODO add your handling code here:
+        Caixa abrir= new Caixa();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_botaoCaixa1ActionPerformed
+
+    private void botaoSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSair1ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+
+    }//GEN-LAST:event_botaoSair1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -328,14 +505,26 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel animaçãoRehabiliter;
     private javax.swing.JButton botaoAlunos;
+    private javax.swing.JButton botaoAlunos1;
+    private javax.swing.JButton botaoBackup;
     private javax.swing.JButton botaoCaixa;
+    private javax.swing.JButton botaoCaixa1;
+    private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoFinanceiro;
+    private javax.swing.JButton botaoFinanceiro1;
     private javax.swing.JButton botaoFrequencia;
     private javax.swing.JButton botaoFuncionarios;
+    private javax.swing.JButton botaoImprimirExportar;
     private javax.swing.JButton botaoMenu;
+    private javax.swing.JButton botaoProdutos;
     private javax.swing.JButton botaoSair;
+    private javax.swing.JButton botaoSair1;
+    private javax.swing.JButton botaoServicos;
+    private javax.swing.JButton botaoTurmas;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel menuGerente;
     private javax.swing.JLabel planodefundo;
+    private javax.swing.JLabel planodefundo1;
     private javax.swing.JTable tabelaAniversariantes;
     // End of variables declaration//GEN-END:variables
     
