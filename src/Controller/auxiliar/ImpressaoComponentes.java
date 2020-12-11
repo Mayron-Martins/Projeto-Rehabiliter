@@ -5,61 +5,35 @@
  */
 package Controller.auxiliar;
 
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.awt.image.ColorModel;
-import java.awt.print.Book;
-import java.awt.print.Pageable;
+import Dao.AlunosDao;
+import Model.Aluno;
+import Model.Vendas;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
 import javax.print.PrintException;
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
 import javax.print.ServiceUI;
-import javax.print.ServiceUIFactory;
-import javax.print.SimpleDoc;
-import javax.print.StreamPrintService;
-import javax.print.attribute.Attribute;
-import javax.print.attribute.AttributeSet;
-import javax.print.attribute.HashDocAttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttribute;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.PrintServiceAttribute;
-import javax.print.attribute.PrintServiceAttributeSet;
-import javax.print.attribute.standard.RequestingUserName;
-import javax.print.event.PrintServiceAttributeListener;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTDocument1;
-import sun.print.PSPrinterJob;
-import sun.print.PSStreamPrintService;
-import sun.print.PageableDoc;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
-import javax.print.attribute.standard.Sides;
-import org.apache.pdfbox.pdfparser.PDFParser;
+import javax.print.SimpleDoc;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.JobName;
+import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.OrientationRequested;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPageable;
 
@@ -68,7 +42,6 @@ import org.apache.pdfbox.printing.PDFPageable;
  * @author Mayro
  */
 public class ImpressaoComponentes {
-    private static PrintService impressora;
     
     public ImpressaoComponentes() {
         //detectaImpressoras();
@@ -114,5 +87,34 @@ public class ImpressaoComponentes {
         }
         }
         return null;
+    }
+    
+    public void imprimirString(String texto){
+        InputStream prin = new ByteArrayInputStream(texto.getBytes());
+        DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        SimpleDoc documentoTexto = new SimpleDoc(prin, docFlavor, null);
+        PrintService impressoraPadrao = PrintServiceLookup.lookupDefaultPrintService();
+        PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
+        PrintService printService = ServiceUI.printDialog(null, 300, 200, printServices, impressoraPadrao, DocFlavor.INPUT_STREAM.AUTOSENSE, new HashPrintRequestAttributeSet()).createPrintJob().getPrintService();
+        
+        PrintService impressora = findPrintService(printService.getName(), printServices);
+        PrintRequestAttributeSet printerAttributes= new HashPrintRequestAttributeSet();
+        printerAttributes.add(new JobName("Impressão", null));
+        printerAttributes.add(OrientationRequested.PORTRAIT);
+        printerAttributes.add(MediaSizeName.ISO_A4);
+        //Informa o tipo da folha
+        DocPrintJob printJob = impressora.createPrintJob();
+        
+        try{
+            printJob.print(documentoTexto, printerAttributes);
+        } catch (PrintException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível emitir Comprovante");
+        }
+        
+        try {
+            prin.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

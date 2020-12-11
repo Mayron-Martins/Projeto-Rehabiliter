@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -70,6 +71,7 @@ public class Caixa extends javax.swing.JFrame {
         alternarClienteSemCadastro = new javax.swing.JRadioButton();
         alternarProdCodigo = new javax.swing.JRadioButton();
         alternarProdNome = new javax.swing.JRadioButton();
+        campoCliente = new FormatacaoCamposRestritosLetras();
         jPanelFormaDePagamento = new javax.swing.JPanel();
         botaoConfirmar1 = new javax.swing.JButton();
         alternarDebito = new javax.swing.JRadioButton();
@@ -80,7 +82,6 @@ public class Caixa extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnFechar = new javax.swing.JButton();
         impressaoComprovante = new javax.swing.JCheckBox();
-        campoCliente = new FormatacaoCamposRestritosLetras();
         botaoBuscarCliente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaDeClientes = new javax.swing.JTable();
@@ -156,6 +157,13 @@ public class Caixa extends javax.swing.JFrame {
         });
         getContentPane().add(alternarProdNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
 
+        campoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoClienteKeyPressed(evt);
+            }
+        });
+        getContentPane().add(campoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 190, 40));
+
         jPanelFormaDePagamento.setBackground(new java.awt.Color(0, 122, 185));
         jPanelFormaDePagamento.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -218,17 +226,11 @@ public class Caixa extends javax.swing.JFrame {
         });
         jPanelFormaDePagamento.add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
+        impressaoComprovante.setSelected(true);
         impressaoComprovante.setText("Imprimir Comprovante");
         jPanelFormaDePagamento.add(impressaoComprovante, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, -1, -1));
 
         getContentPane().add(jPanelFormaDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 730, 410, 300));
-
-        campoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                campoClienteKeyPressed(evt);
-            }
-        });
-        getContentPane().add(campoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 190, 40));
 
         botaoBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaoBuscarCliente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
@@ -874,5 +876,10 @@ public class Caixa extends javax.swing.JFrame {
     public int getNumeroTela() {
         return numeroTela;
     }
+
+    public JCheckBox getImpressaoComprovante() {
+        return impressaoComprovante;
+    }
+    
     
 }

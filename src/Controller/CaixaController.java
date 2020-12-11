@@ -7,6 +7,7 @@ package Controller;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.ImpressaoComponentes;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
 import Dao.DetOrcamentarioDao;
@@ -35,6 +36,9 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -59,6 +63,7 @@ public class CaixaController {
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final VerificarCodigoNoBanco verificador = new VerificarCodigoNoBanco();
+    private final ImpressaoComponentes imprimirComprovante = new ImpressaoComponentes();
 
     public CaixaController(Caixa view) {
         this.view = view;
@@ -413,21 +418,23 @@ public class CaixaController {
                 }
                 
             }
-            
-            
-            
+            BigDecimal valorDesconto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVDesconto().getText()).toString());
             view.exibeMensagem("Venda Concluída!");
-            limparTabelaClientes();
-            limparTabelaProdutos();
-            limparTabelaCarrinho();
-            limparTabelaMensalidade();
-            view.getCampoQuantidade().setText("");
-            view.getCampoVTotal().setText("");
-            view.getCampoVPago().setText("");
-            view.getCampoVTroco().setText("");
-            view.getCampoVDesconto().setText("");
-            view.getCampoDinheiro().setText("");
-            view.getCampoParcelamento().setText("");
+            
+            if(view.getImpressaoComprovante().isSelected()){
+               String subtotalVenda = valorTotal.add(valorDesconto).toString();
+               String desconto = view.getCampoVDesconto().getText();
+               this.imprimirComprovanteVenda(venda, subtotalVenda, desconto);
+            }
+            else{
+                this.novaVenda();
+            }
+            
+            
+            
+            
+            
+
         }
         else{
             view.exibeMensagem("Adicione uma Forma de Pagamento!");
@@ -478,5 +485,103 @@ public class CaixaController {
         Date dataEvento = new Date();
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
         return logAcao;
+    }
+    
+    private void imprimirComprovanteVenda(Vendas venda,String subtotal, String desconto) throws ParseException{
+        //Dados da empresa
+        String nomeEmpresa = "REHABILITER";
+        String endereco = "";
+        String contato = "";
+        String dadosEmpresa = "\t\t  "+nomeEmpresa+"\n\r\t\t  "+endereco+"\n\r\t\t  "+contato+"\n\r---------------------------------------------------\n\r";
+        //String Divisória
+        String divisoria = "\t\tNOTA NÃO FISCAL\n\r---------------------------------------------------\n\r";
+        
+        //Dados do Cliente
+        String nomeCliente = "Cliente:";
+        String cpf = "CPF:";
+        if(venda.getCodAluno()==0){
+            nomeCliente+=" Sem Cadastro";
+        }
+        else{
+            AlunosDao alunoDao = new AlunosDao();
+            try {
+                Aluno aluno = alunoDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+venda.getCodAluno()).get(0);
+                nomeCliente+= " "+aluno.getNome();
+                if(aluno.getCpf()!=null){
+                    cpf+=" "+aluno.getCpf();
+                }
+                else{
+                    cpf+=" Não se Aplica";
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        String dadosCliente = nomeCliente+"\n\r"+cpf+"\n\r---------------------------------------------------\n\r";
+        
+        String cabecalho="";
+        String dadosTabela="";
+        
+        if(venda.getPlano().equals("N")){
+           String codHProduto = "COD";
+           String descricaoHProduto = "DESCRIÇÃO";
+           String quantidadeH = "QUANT";
+           String valorH = "VALOR";
+           cabecalho = codHProduto+"\t"+descricaoHProduto+"\t\t"+quantidadeH+"\t\t"+valorH+"\n\r";
+           
+           
+           int linhasTabela = tabelaDeCarrinho.getRowCount();
+           for(int linhas=0; linhas<linhasTabela; linhas++){
+               dadosTabela+=tabelaDeCarrinho.getValueAt(linhas, 0)+"  "
+                       +tabelaDeCarrinho.getValueAt(linhas, 1)+"  "
+                       +tabelaDeCarrinho.getValueAt(linhas, 3)+"  R$ "
+                       +tabelaDeCarrinho.getValueAt(linhas, 4)+"\n\r";
+           }
+        }
+        else{
+           String codHAluno = "COD";
+           String descricaoHPlano = "PLANO";
+           String vencimentoH = "VENCIMENTO";
+           String valorH = "VALOR";
+           cabecalho = codHAluno+"\t"+descricaoHPlano+"\t\t"+vencimentoH+"\t\t"+valorH+"\n";
+           
+           int linhasTabela = tabelaDeMensalidade.getRowCount();
+           for(int linhas=0; linhas<linhasTabela; linhas++){
+               dadosTabela+=tabelaDeMensalidade.getValueAt(linhas, 0)+"  "
+                       +tabelaDeMensalidade.getValueAt(linhas, 2)+"  "
+                       +tabelaDeMensalidade.getValueAt(linhas, 3)+"  R$ "
+                       +venda.getValorVenda()+"\n\r";
+           }
+        }
+        //Dados Gerais da Venda
+        String valorSubtotal = "SUBTOTAL \t\t\tR$"+subtotal+"\n\r";
+        String descontot = "DESCONTO \t\t\tR$"+desconto+"\n\r";
+        String valorTotal = "VALOR TOTAL \t\t  R$"+venda.getValorVenda()+"\n\r";
+        String valorPago = "PAGO \t\t\tR$"+venda.getValorPago()+"\n\r";
+        String valorTroco = "TROCO \t\t\tR$"+venda.getValorTroco()+"\n\r";
+        
+        String data = "\t  "+converterData.parseDateAndTime(new Date());
+        String despedida = "\n\n\t\t  VOLTE SEMPRE!";
+        String espaco = "---------------------------------------------------\n\r";
+        imprimirComprovante.imprimirString(dadosEmpresa+divisoria+dadosCliente+cabecalho+espaco+dadosTabela+espaco+valorSubtotal+descontot
+        +valorTotal+valorPago+valorTroco+espaco+data+despedida);
+        novaVenda();
+    }
+    
+    private void novaVenda(){
+        limparTabelaClientes();
+        limparTabelaProdutos();
+        limparTabelaCarrinho();
+        limparTabelaMensalidade();
+        view.getCampoQuantidade().setText("");
+        view.getCampoVTotal().setText("");
+        view.getCampoVPago().setText("");
+        view.getCampoVTroco().setText("");
+        view.getCampoVDesconto().setText("");
+        view.getCampoDinheiro().setText("");
+        view.getCampoParcelamento().setText("");
     }
 }
