@@ -8,6 +8,8 @@ package Controller.adicionais;
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaoDiasDaSemana;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.ExportarArquivos;
+import Controller.auxiliar.ImpressaoComponentes;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
 import Dao.EnderecoAlunosDao;
@@ -27,11 +29,14 @@ import Model.auxiliar.Turmas;
 import View.AlunosCadastro;
 import View.ServicosView;
 import View.TurmasView;
+import java.awt.print.PrinterException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 /**
  *
@@ -50,6 +55,8 @@ public class AdicionarAlunosController {
     private final ConversaoDiasDaSemana converterDias = new ConversaoDiasDaSemana();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+    private final ImpressaoComponentes imprimirContrato = new ImpressaoComponentes();
+    private final ExportarArquivos exportarContrato = new ExportarArquivos();
     
     public AdicionarAlunosController(AlunosCadastro view) {
         this.view = view;
@@ -92,7 +99,7 @@ public class AdicionarAlunosController {
         }
     }
     
-    public void adicionarAlunos() throws SQLException, ParseException{
+    public void adicionarAlunos() throws SQLException, ParseException, InvalidFormatException, IOException, PrinterException{
         Date dataCadastro = converterData.getSqlDate(new Date());
 
         //Dados do Aluno
@@ -154,6 +161,7 @@ public class AdicionarAlunosController {
         EnderecoAlunos endereco = new EnderecoAlunos(codEndereco, codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
         Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, null, null, "Pendente");
+        Servicos servicoContratado = this.buscarServico(codPlano);
         
         //Obtem a quantidade de alunos presentes na turma
         int quantAlunosPresentes = verificar.verificarUltimo("tblTurmas", "quantAlunos")+1;
@@ -166,13 +174,19 @@ public class AdicionarAlunosController {
         }
         
         else{
+            exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, planoAluno);
             alunosDao.inserirDados(aluno, endereco, matricula, planoAluno, codTurma, codTurma);
             turmasDao.atualizarQuantAunos(codTurma, quantAlunosPresentes);
             ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
             if(funcionarios!=null){
             this.setarLog(funcionarios, nome, turma);
             }
+            //exportarContrato.exportarContratoPDF();
             view.exibeMensagem("Sucesso!");
+            exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx");
+            view.exibeMensagem("Exportando Arquivo para Impressão.");
+            imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");
+            
             //Limpando Campos
             view.getCampoNomeAluno().setText("");
             view.getCampoCPFAluno().setText("");
@@ -263,5 +277,9 @@ public class AdicionarAlunosController {
         Date dataEvento = new Date();
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Aluno", "Cadastrou o aluno "+nomeAluno+"na Turma "+nomeTurma);
         return logAcao;
-    } 
+    }
+    
+    private Servicos buscarServico(int codServico) throws SQLException{
+        return servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
+    }
 }

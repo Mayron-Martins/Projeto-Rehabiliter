@@ -39,13 +39,12 @@ public class OrcamentarioController {
     private final AlunosDao alunosDao = new AlunosDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
-    private final ExportarArquivos exportarTabela;
+    private final ExportarArquivos exportarTabela = new ExportarArquivos();
     private final ImpressaoComponentes imprimirTabela = new ImpressaoComponentes();
 
     public OrcamentarioController(FinanceiroAnaliseFinanceira view) {
         this.view = view;
         this.tabelaOrcamentaria = (DefaultTableModel) view.getTabelaOrcamentaria().getModel();
-        this.exportarTabela = new ExportarArquivos(view.getTabelaOrcamentaria().getModel(), "/documents/Rehabiliter/Exportações/Relatórios Orçamentais");
     }
     
     //Limpar tabela
@@ -249,7 +248,7 @@ public class OrcamentarioController {
             String despesaTotal = view.getCampoDespesaTotal().getText();
             String ganhoRelativo = view.getCampoGanhoRelativoTotal().getText();
             String totalParcial = view.getCampoTotalParcial().getText();
-            exportarTabela.exportarExcel(ganhoTotal, pendente, despesaTotal, ganhoRelativo, totalParcial);
+            exportarTabela.exportarExcel(view.getTabelaOrcamentaria().getModel(), "/documents/Rehabiliter/Exportações/Relatórios Orçamentais", ganhoTotal, pendente, despesaTotal, ganhoRelativo, totalParcial);
         }
         else{
             view.exibeMensagem("Inicie uma tabela primeiro!");

@@ -6,13 +6,17 @@
 package View;
 
 import Controller.adicionais.AdicionarAlunosController;
+import Controller.auxiliar.ExportarArquivos;
 import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
+import Controller.auxiliar.ImpressaoComponentes;
 import Controller.auxiliar.JMoneyField;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.print.PrinterException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -22,6 +26,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 /**
  *
@@ -81,7 +86,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         campoRua = new FormatacaodeCamposRestritos(50, 0);
         jLabel10 = new javax.swing.JLabel();
-        campoCidade = new FormatacaodeCamposRestritos(20);
+        campoCidade = new FormatacaoCamposRestritosLetras(20);
         jLabel11 = new javax.swing.JLabel();
         campoBairro = new FormatacaodeCamposRestritos(25, 0);
         jLabel12 = new javax.swing.JLabel();
@@ -490,6 +495,8 @@ public class AlunosCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_turmasehorariosActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        //ExportarArquivos exportarContrato = new ExportarArquivos();
+        //exportarContrato.convertDocx2pdf("C:/Rehabiliter/Contrato Editado.docx");
         try {
             controller.verificacaoDeTurmaEServico();
         } catch (SQLException ex) {
@@ -506,9 +513,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
         try {
             controller.adicionarAlunos();
-        } catch (SQLException ex) {
-            Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        } catch (SQLException | ParseException | InvalidFormatException | IOException | PrinterException ex) {
             Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoConfirmarActionPerformed
