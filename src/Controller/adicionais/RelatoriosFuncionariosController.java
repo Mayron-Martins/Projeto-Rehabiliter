@@ -7,6 +7,7 @@ package Controller.adicionais;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.ExportarArquivos;
+import Controller.auxiliar.ImpressaoComponentes;
 import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
 import Model.Funcionario;
@@ -30,6 +31,7 @@ public class RelatoriosFuncionariosController {
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final ExportarArquivos exportarTabela;
+    private final ImpressaoComponentes imprimirTabela = new ImpressaoComponentes();
 
     public RelatoriosFuncionariosController(Relatoriosfun view) {
         this.view = view;
@@ -209,6 +211,19 @@ public class RelatoriosFuncionariosController {
         int numLinhas = tabelaDeLogs.getRowCount();
         if(numLinhas>0){
             exportarTabela.exportarExcel();
+        }
+        else{
+            view.exibeMensagem("Inicie uma tabela primeiro!");
+        }
+    }
+    
+    public void imprimirDados(){
+        int numLinhas = tabelaDeLogs.getRowCount();
+        if(numLinhas>0){
+            String nomeFuncionario = view.getComboFuncionarios().getSelectedItem().toString().split("\\.")[1];
+            String titulo = "Relatório do Funcionário "+nomeFuncionario;
+            String rodape = view.getComboIntervalo().getSelectedItem().toString().split("Dia ")[1];
+            imprimirTabela.imprimirTabelas(titulo, rodape, view.getTabelaLogs());
         }
         else{
             view.exibeMensagem("Inicie uma tabela primeiro!");

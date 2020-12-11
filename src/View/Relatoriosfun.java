@@ -32,7 +32,6 @@ public class Relatoriosfun extends javax.swing.JFrame {
         botaoFechar.setBackground(new Color(0,0,0,0));
         btExportar.setBackground(new Color(0,0,0,0));
         btImprimir.setBackground(new Color(0,0,0,0));
-        tabelaLogs.setEnabled(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
@@ -211,7 +210,8 @@ public class Relatoriosfun extends javax.swing.JFrame {
     }//GEN-LAST:event_btExportarActionPerformed
 
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
-        // TODO add your handling code here:
+
+        controller.imprimirDados();
     }//GEN-LAST:event_btImprimirActionPerformed
 
     private void tabelaLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaLogsMouseClicked

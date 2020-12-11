@@ -248,7 +248,11 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        // TODO add your handling code here:
+        try {
+            controller.imprimirDados();
+        } catch (ParseException ex) {
+            Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed

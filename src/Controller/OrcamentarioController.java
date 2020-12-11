@@ -8,10 +8,13 @@ package Controller;
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.ExportarArquivos;
+import Controller.auxiliar.ImpressaoComponentes;
 import Dao.AlunosDao;
 import Dao.DetOrcamentarioDao;
+import Dao.FuncionarioDao;
 import Dao.PlanosDao;
 import Model.Aluno;
+import Model.Funcionario;
 import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.Planos;
 import View.FinanceiroAnaliseFinanceira;
@@ -37,6 +40,7 @@ public class OrcamentarioController {
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ExportarArquivos exportarTabela;
+    private final ImpressaoComponentes imprimirTabela = new ImpressaoComponentes();
 
     public OrcamentarioController(FinanceiroAnaliseFinanceira view) {
         this.view = view;
@@ -246,6 +250,21 @@ public class OrcamentarioController {
             String ganhoRelativo = view.getCampoGanhoRelativoTotal().getText();
             String totalParcial = view.getCampoTotalParcial().getText();
             exportarTabela.exportarExcel(ganhoTotal, pendente, despesaTotal, ganhoRelativo, totalParcial);
+        }
+        else{
+            view.exibeMensagem("Inicie uma tabela primeiro!");
+        }
+    }
+    
+    public void imprimirDados() throws ParseException{
+        int numLinhas = tabelaOrcamentaria.getRowCount();
+        if(numLinhas>0){
+            String titulo = "Relatorio Orçamentário";
+            String rodape = converterData.parseDate(new Date());
+            if(view.getComboPeriodo().isEnabled()){
+              titulo += " "+view.getComboPeriodo().getSelectedItem().toString();  
+            }
+            imprimirTabela.imprimirTabelas(titulo, rodape, view.getTabelaOrcamentaria());
         }
         else{
             view.exibeMensagem("Inicie uma tabela primeiro!");

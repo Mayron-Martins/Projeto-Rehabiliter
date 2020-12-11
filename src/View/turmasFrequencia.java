@@ -366,7 +366,7 @@ public class turmasFrequencia extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaAlunosBancoComponentHidden
 
     private void botaoImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoImprimirActionPerformed
-        // TODO add your handling code here:
+        controller.imprimirDados();
     }//GEN-LAST:event_botaoImprimirActionPerformed
 
     private void botaoExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExportarActionPerformed

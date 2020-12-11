@@ -7,6 +7,7 @@ package Controller.adicionais;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.ExportarArquivos;
+import Controller.auxiliar.ImpressaoComponentes;
 import Dao.AlunosDao;
 import Dao.FrequenciaTurmasDao;
 import Dao.FuncionarioDao;
@@ -47,6 +48,7 @@ public class FrequenciaTurmasController {
     private final FrequenciaTurmasDao frequencia = new FrequenciaTurmasDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final ExportarArquivos exportarTabela;
+    private final ImpressaoComponentes imprimirTabela = new ImpressaoComponentes();
 
     public FrequenciaTurmasController(turmasFrequencia view) {
         this.view = view;
@@ -405,6 +407,19 @@ public class FrequenciaTurmasController {
         int numLinhas = tabelaDeAlunosBanco.getRowCount();
         if(numLinhas>0){
             exportarTabela.exportarExcel();
+        }
+        else{
+            view.exibeMensagem("Inicie uma tabela primeiro!");
+        }
+    }
+    
+    public void imprimirDados(){
+        int numLinhas = tabelaDeAlunosBanco.getRowCount();
+        if(numLinhas>0){
+            String nomeTurma = view.getComboTurmas().getSelectedItem().toString().split("\\.")[1];
+            String titulo = "Frequência da Turma "+nomeTurma;
+            String rodape = view.getComboIntervalo().getSelectedItem().toString().split("Dia ")[1];
+            imprimirTabela.imprimirTabelas(titulo, rodape, view.getTabelaAlunosBanco());
         }
         else{
             view.exibeMensagem("Inicie uma tabela primeiro!");
