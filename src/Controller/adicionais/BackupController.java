@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,18 +52,25 @@ public class BackupController {
         }
     }
     
-    public void adicionarDadosnoBanco() throws SQLException, ParseException{
-        Date dataAtual = new Date();
-        String nome = "LocalBackup";
-        int codBackup = verificar.verificarUltimo("tblBackups", "codBackup")+1;
-        String endereco = System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bkk";
-        String tabelas = "Todas";
+    public void adicionarDadosnoBanco(){
+        try {
+            Date dataAtual = new Date();
+            String nome = "LocalBackup";
+            int codBackup = verificar.verificarUltimo("tblBackups", "codBackup")+1;
+            String endereco = System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bkk";
+            String tabelas = "Todas";
         
-        Backup backup = new Backup(codBackup, nome, dataAtual, endereco, tabelas);
-        backupDao.exportarBanco();
-        backupBancoDao.inserirDados(backup);
-        view.exibeMensagem("Sucesso!");
-        inserirUltimoBackup();
+            Backup backup = new Backup(codBackup, nome, dataAtual, endereco, tabelas);
+            backupDao.exportarBanco();
+            backupBancoDao.inserirDados(backup);
+            view.exibeMensagem("Sucesso!");
+            inserirUltimoBackup();
+        } catch (SQLException ex) {
+            view.exibeMensagem("Não foi Possível Gravar os Dados por um erro de Sistema");
+        } catch (ParseException ex) {
+            Logger.getLogger(BackupController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
     public void importarBanco() throws SQLException{
