@@ -1,0 +1,71 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Controller.adicionais;
+
+import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.VerificarCodigoNoBanco;
+import Dao.BackupBancoDao;
+import Dao.BackupDao;
+import View.BackupView;
+import Model.auxiliar.Backup;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+
+/**
+ *
+ * @author Mayro
+ */
+public class BackupController {
+    private final BackupView view;
+    private final BackupDao backupDao = new BackupDao();
+    private final BackupBancoDao backupBancoDao= new BackupBancoDao();
+    private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+    private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
+
+    public BackupController(BackupView view) {
+        this.view = view;
+    }
+    
+    public void inserirUltimoBackup() throws SQLException, ParseException{
+        ArrayList <Backup> backups = backupBancoDao.selecionarTodosBackups();
+        view.getCampoDataLocal().setText("");
+        view.getCampoHoraLocal().setText("");
+        view.getCampoLocalizacaoLocal().setText("");
+        if(backups!=null){
+            String data = converterData.parseDateAndTime(converterData.parseDateAndTime(backups.get(backups.size()-1).getData()));
+            String[] split = data.split(" ");
+            view.getCampoDataLocal().setText(split[0]);
+            view.getCampoHoraLocal().setText(split[1]);
+            view.getCampoLocalizacaoLocal().setText(backups.get(backups.size()-1).getEnderecoBackup());
+        }
+        else{
+            view.getCampoDataLocal().setText("Sem Dados");
+            view.getCampoHoraLocal().setText("Sem Dados");
+            view.getCampoLocalizacaoLocal().setText("Sem Dados");
+        }
+    }
+    
+    public void adicionarDadosnoBanco() throws SQLException, ParseException{
+        Date dataAtual = new Date();
+        String nome = "LocalBackup";
+        int codBackup = verificar.verificarUltimo("tblBackups", "codBackup")+1;
+        String endereco = System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bkk";
+        String tabelas = "Todas";
+        
+        Backup backup = new Backup(codBackup, nome, dataAtual, endereco, tabelas);
+        backupDao.exportarBanco();
+        backupBancoDao.inserirDados(backup);
+        view.exibeMensagem("Sucesso!");
+        inserirUltimoBackup();
+    }
+    
+    public void importarBanco() throws SQLException{
+        backupDao.importarBanco();
+    }
+    
+}

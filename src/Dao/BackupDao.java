@@ -17,8 +17,8 @@ public class BackupDao extends ConexaoMaster{
     private final String pass = "164829";
     private final DatabaseCriator dataBaseCriator = new DatabaseCriator();
     
-    public void exportarBanco(String data) throws SQLException{
-        PreparedStatement statement = gerarStatement("BACKUP DATABASE Rehabiliter_Database TO DISK = '"+System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bkk'");
+    public void exportarBanco() throws SQLException{
+        PreparedStatement statement = gerarStatement("BACKUP DATABASE Rehabiliter_Database TO DISK = '"+System.getProperty("user.home")+"\\documents\\Rehabiliter\\Backups\\Local\\LocalBackup.bkk'");
         statement.execute();
         statement.close();
     }
@@ -30,7 +30,7 @@ public class BackupDao extends ConexaoMaster{
             statement.execute();
             statement.close();
         }
-        statement = gerarStatement("RESTORE DATABASE Rehabiliter_Database FROM DISK: '"+System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bkk'");
+        statement = gerarStatement("RESTORE DATABASE Rehabiliter_Database FROM DISK: '"+System.getProperty("user.home")+"\\documents\\Rehabiliter\\Backups\\Local\\LocalBackup.bkk'");
         statement.execute();
         statement.close();
     }

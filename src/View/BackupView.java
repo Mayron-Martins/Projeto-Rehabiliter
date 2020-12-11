@@ -5,20 +5,29 @@
  */
 package View;
 
+import Controller.adicionais.BackupController;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
  * @author 55989
  */
-public class Backup extends javax.swing.JFrame {
+public class BackupView extends javax.swing.JFrame {
     private final int numeroTela = 7;
+    private final BackupController controller;
 
     /**
      * Creates new form Backup
      */
-    public Backup() {
+    public BackupView() {
         initComponents();
+        controller = new BackupController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         painelLocal.setBackground(new Color(0,0,0,0));
         painelNuvem.setBackground(new Color(0,0,0,0));
@@ -26,6 +35,8 @@ public class Backup extends javax.swing.JFrame {
         btnExportarNuvem.setBackground(new Color(0,0,0,0));
         btnImportarLocal.setBackground(new Color(0,0,0,0));
         btnImportarNuvem.setBackground(new Color(0,0,0,0));
+        painelLocal.setEnabled(true);
+        painelNuvem.setEnabled(false);
     }
 
     /**
@@ -44,6 +55,9 @@ public class Backup extends javax.swing.JFrame {
         btnExportarNuvem = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         painelLocal = new javax.swing.JPanel();
+        campoLocalizacaoLocal = new javax.swing.JTextField();
+        campoDataLocal = new javax.swing.JTextField();
+        campoHoraLocal = new javax.swing.JTextField();
         btnImportarLocal = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnExportarLocal = new javax.swing.JButton();
@@ -53,6 +67,11 @@ public class Backup extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -64,6 +83,11 @@ public class Backup extends javax.swing.JFrame {
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
 
+        painelNuvem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelNuvemMouseClicked(evt);
+            }
+        });
         painelNuvem.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnImportarNuvem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/btnImportar.png"))); // NOI18N
@@ -88,7 +112,15 @@ public class Backup extends javax.swing.JFrame {
 
         getContentPane().add(painelNuvem, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, 340, 450));
 
+        painelLocal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelLocalMouseClicked(evt);
+            }
+        });
         painelLocal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        painelLocal.add(campoLocalizacaoLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 388, 278, 30));
+        painelLocal.add(campoDataLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 280, 210, 30));
+        painelLocal.add(campoHoraLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 320, 210, 30));
 
         btnImportarLocal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/btnImportar.png"))); // NOI18N
         btnImportarLocal.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/btnImportar.png"))); // NOI18N
@@ -106,6 +138,11 @@ public class Backup extends javax.swing.JFrame {
         painelLocal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
 
         btnExportarLocal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/btnExportar.png"))); // NOI18N
+        btnExportarLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarLocalActionPerformed(evt);
+            }
+        });
         painelLocal.add(btnExportarLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/quadro.png"))); // NOI18N
@@ -126,12 +163,46 @@ public class Backup extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoFecharActionPerformed
 
     private void btnImportarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarLocalActionPerformed
-        // TODO add your handling code here:
+        try {
+            controller.importarBanco();
+        } catch (SQLException ex) {
+            Logger.getLogger(BackupView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnImportarLocalActionPerformed
 
     private void btnImportarNuvemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarNuvemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnImportarNuvemActionPerformed
+
+    private void painelLocalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelLocalMouseClicked
+        painelLocal.setEnabled(true);
+        painelNuvem.setEnabled(false);
+    }//GEN-LAST:event_painelLocalMouseClicked
+
+    private void painelNuvemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelNuvemMouseClicked
+        painelNuvem.setEnabled(true);
+        painelLocal.setEnabled(false);
+    }//GEN-LAST:event_painelNuvemMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            controller.inserirUltimoBackup();
+        } catch (SQLException ex) {
+            Logger.getLogger(BackupView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(BackupView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnExportarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarLocalActionPerformed
+        try {
+            controller.adicionarDadosnoBanco();
+        } catch (SQLException ex) {
+            Logger.getLogger(BackupView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(BackupView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnExportarLocalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,20 +221,20 @@ public class Backup extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Backup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BackupView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Backup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BackupView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Backup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BackupView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Backup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BackupView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Backup().setVisible(true);
+                new BackupView().setVisible(true);
             }
         });
     }
@@ -174,6 +245,9 @@ public class Backup extends javax.swing.JFrame {
     private javax.swing.JButton btnExportarNuvem;
     private javax.swing.JButton btnImportarLocal;
     private javax.swing.JButton btnImportarNuvem;
+    private javax.swing.JTextField campoDataLocal;
+    private javax.swing.JTextField campoHoraLocal;
+    private javax.swing.JTextField campoLocalizacaoLocal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -182,4 +256,20 @@ public class Backup extends javax.swing.JFrame {
     private javax.swing.JPanel painelLocal;
     private javax.swing.JPanel painelNuvem;
     // End of variables declaration//GEN-END:variables
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    public JTextField getCampoHoraLocal() {
+        return campoHoraLocal;
+    }
+
+    public JTextField getCampoLocalizacaoLocal() {
+        return campoLocalizacaoLocal;
+    }
+
+    public JTextField getCampoDataLocal() {
+        return campoDataLocal;
+    }
+
+
 }
