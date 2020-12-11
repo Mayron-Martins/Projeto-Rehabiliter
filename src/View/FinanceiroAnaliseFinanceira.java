@@ -252,7 +252,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-        // TODO add your handling code here:
+        controller.salvarDadosEmPlanilha();
     }//GEN-LAST:event_btnExportarActionPerformed
 
     /**
@@ -368,6 +368,6 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JFrame {
         botaoVResumida.setVisible(false);
         comboPeriodo.setSelectedIndex(0);
         painelBotoesImprimirExportar.setVisible(true);
-        
+        tabelaOrcamentaria.setEnabled(false);
     }
 }

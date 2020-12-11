@@ -6,6 +6,7 @@
 package Controller.adicionais;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.ExportarArquivos;
 import Dao.AlunosDao;
 import Dao.FrequenciaTurmasDao;
 import Dao.FuncionarioDao;
@@ -45,12 +46,13 @@ public class FrequenciaTurmasController {
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final FrequenciaTurmasDao frequencia = new FrequenciaTurmasDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
-    
+    private final ExportarArquivos exportarTabela;
 
     public FrequenciaTurmasController(turmasFrequencia view) {
         this.view = view;
         this.tabelaDeAlunos = (DefaultTableModel) view.getTabelaAlunos().getModel();
         this.tabelaDeAlunosBanco = (DefaultTableModel) view.getTabelaAlunosBanco().getModel();
+        this.exportarTabela = new ExportarArquivos(view.getTabelaAlunosBanco().getModel(), "/documents/Rehabiliter/Exportações/Frequencia Turmas");
     }
     
     public void limparTabela(){
@@ -397,5 +399,15 @@ public class FrequenciaTurmasController {
         Date dataEvento = new Date();
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
         return logAcao;
+    }
+    
+    public void salvarDadosEmPlanilha(){
+        int numLinhas = tabelaDeAlunosBanco.getRowCount();
+        if(numLinhas>0){
+            exportarTabela.exportarExcel();
+        }
+        else{
+            view.exibeMensagem("Inicie uma tabela primeiro!");
+        }
     }
 }

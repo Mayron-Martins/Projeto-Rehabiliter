@@ -6,7 +6,7 @@
 package Controller.adicionais;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
-import Controller.auxiliar.ExportExcelFiles;
+import Controller.auxiliar.ExportarArquivos;
 import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
 import Model.Funcionario;
@@ -29,12 +29,12 @@ public class RelatoriosFuncionariosController {
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
-    private final ExportExcelFiles exportarTabela;
+    private final ExportarArquivos exportarTabela;
 
     public RelatoriosFuncionariosController(Relatoriosfun view) {
         this.view = view;
         this.tabelaDeLogs = (DefaultTableModel) view.getTabelaLogs().getModel();
-        this.exportarTabela = new ExportExcelFiles(this.tabelaDeLogs, "/documents/Rehabiliter/Exportações/Relatórios Funcionários");
+        this.exportarTabela = new ExportarArquivos(view.getTabelaLogs().getModel(), "/documents/Rehabiliter/Exportações/Relatórios Funcionários");
     }
     
     public void limparTabela(){
@@ -208,7 +208,10 @@ public class RelatoriosFuncionariosController {
     public void salvarDadosEmPlanilha(){
         int numLinhas = tabelaDeLogs.getRowCount();
         if(numLinhas>0){
-            exportarTabela.exportarArquivoExcel();
+            exportarTabela.exportarExcel();
+        }
+        else{
+            view.exibeMensagem("Inicie uma tabela primeiro!");
         }
     }
 }

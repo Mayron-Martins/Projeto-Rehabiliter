@@ -370,7 +370,7 @@ public class turmasFrequencia extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoImprimirActionPerformed
 
     private void botaoExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExportarActionPerformed
-        // TODO add your handling code here:
+        controller.salvarDadosEmPlanilha();
     }//GEN-LAST:event_botaoExportarActionPerformed
 
     /**
@@ -492,5 +492,6 @@ public class turmasFrequencia extends javax.swing.JFrame {
         botaoSalvar.setVisible(false);
         botaoExportar.setVisible(true);
         botaoImprimir.setVisible(true);
+        tabelaAlunosBanco.setEnabled(false);
     }
 }

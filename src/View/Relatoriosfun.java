@@ -32,6 +32,7 @@ public class Relatoriosfun extends javax.swing.JFrame {
         botaoFechar.setBackground(new Color(0,0,0,0));
         btExportar.setBackground(new Color(0,0,0,0));
         btImprimir.setBackground(new Color(0,0,0,0));
+        tabelaLogs.setEnabled(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
