@@ -29,8 +29,8 @@ public class BackupView extends javax.swing.JFrame {
         initComponents();
         controller = new BackupController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
-        painelLocal.setBackground(new Color(0,0,0,0));
-        painelNuvem.setBackground(new Color(0,0,0,0));
+        painelLocal.setBackground(new Color(11,13,138));
+        painelNuvem.setBackground(new Color(11,13,138));
         btnExportarLocal.setBackground(new Color(0,0,0,0));
         btnExportarNuvem.setBackground(new Color(0,0,0,0));
         btnImportarLocal.setBackground(new Color(0,0,0,0));

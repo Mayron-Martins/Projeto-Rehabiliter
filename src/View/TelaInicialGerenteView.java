@@ -49,7 +49,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         
         
         botaoFechar.setBackground(new Color(0,0,0,0));
-        botaoSair.setBackground(new Color(0,0,0,0));
+        botaoSair1.setBackground(new Color(0,0,0,0));
         botaoAlunos1.setBackground(new Color(0,0,0,0));
         botaoTurmas.setBackground(new Color(0,0,0,0));
         botaoProdutos.setBackground(new Color(0,0,0,0));
@@ -117,6 +117,11 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
         botaoBackup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoBackup.png"))); // NOI18N
         botaoBackup.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoHoverBackup.png"))); // NOI18N
+        botaoBackup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoBackupActionPerformed(evt);
+            }
+        });
         menuGerente.add(botaoBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 490, 360, 50));
 
         botaoImprimirExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/menufuncionario/botaoImprimir.png"))); // NOI18N
@@ -416,12 +421,12 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         // TODO add your handling code here:
         ImprimirExportarGerente abrir= new ImprimirExportarGerente();
         abrir.setVisible(true);
-        this.dispose();
+        menuGerente.setVisible(false);
     }//GEN-LAST:event_botaoImprimirExportarActionPerformed
 
     private void botaoFinanceiro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiro1ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        menuGerente.setVisible(false);
         Financeiro abrir = new Financeiro();
         abrir.setVisible(true);
     }//GEN-LAST:event_botaoFinanceiro1ActionPerformed
@@ -435,21 +440,21 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTurmasActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        menuGerente.setVisible(false);
         TurmasView abrir=new TurmasView();
         abrir.setVisible(true);
     }//GEN-LAST:event_botaoTurmasActionPerformed
 
     private void botaoAlunos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunos1ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        menuGerente.setVisible(false);
         AlunosView jump=new AlunosView();
         jump.setVisible(true);
     }//GEN-LAST:event_botaoAlunos1ActionPerformed
 
     private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        menuGerente.setVisible(false);
         ProdutosView abrir=new ProdutosView();
         abrir.setVisible(true);
 
@@ -459,6 +464,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         // TODO add your handling code here:
         Caixa abrir= new Caixa();
         abrir.setVisible(true);
+        menuGerente.setVisible(false);
     }//GEN-LAST:event_botaoCaixa1ActionPerformed
 
     private void botaoSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSair1ActionPerformed
@@ -466,6 +472,14 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         System.exit(0);
 
     }//GEN-LAST:event_botaoSair1ActionPerformed
+
+    private void botaoBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBackupActionPerformed
+        // TODO add your handling code here:    
+        BackupView abrir= new BackupView();
+        abrir.setVisible(true);
+        menuGerente.setVisible(false);
+        
+    }//GEN-LAST:event_botaoBackupActionPerformed
 
     /**
      * @param args the command line arguments
