@@ -24,6 +24,12 @@ public class DatabaseCriator {
     public DatabaseCriator(inicio view) {
         this.telaDeInicio = view;
     }
+
+    public DatabaseCriator() {
+        this.telaDeInicio = null;
+    }
+    
+    
     
     
     

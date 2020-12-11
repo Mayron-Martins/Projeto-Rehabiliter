@@ -203,6 +203,8 @@ public class RelatoriosFuncionariosController {
                view.getCampoDescricao().append(tabelaDeLogs.getValueAt(linhaSelecionada, 2).toString()); 
             }
             
+        }else{
+            view.getCampoDescricao().setVisible(false);
         }
     }
     
