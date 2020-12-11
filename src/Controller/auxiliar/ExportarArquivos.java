@@ -43,6 +43,8 @@ import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComThread;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import static org.apache.poi.hwpf.model.FileInformationBlock.logger;
 
 
@@ -293,6 +295,52 @@ public class ExportarArquivos {
                     app = new ActiveXComponent("Word.Application");
                     Dispatch documents = app.getProperty("Documents").toDispatch();
                     Dispatch document = Dispatch.call(documents, "Open", docxFilePath, false, true).toDispatch();
+                    File target = new File(pdfFile);
+                    if (target.exists()) {
+                        target.delete();
+                    }
+                    Dispatch.call(document, "SaveAs", pdfFile, 17);
+                    Dispatch.call(document, "Close", false);
+                    //long end = System.currentTimeMillis();
+                    //logger.info("============Convert Finished：" + (end - start) + "ms");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível Converter");
+                } finally {
+                    if (app != null) {
+                        app.invoke("Quit", new Variant[] {});
+                    }
+                    ComThread.Release();
+                }
+            }
+        }
+    }
+    
+    private void geraArquivoTxt(String conteudo) {
+		try {
+			FileWriter writer = new FileWriter(new File("C:/Rehabiliter/Comprovante.txt"));  
+			PrintWriter saida = new PrintWriter(writer);
+			saida.print(conteudo);
+			saida.close();  
+			writer.close();
+			System.out.println("Arquivo criado com sucesso!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+    }
+    
+    public void convertTxt2pdf(String txtFilePath) {
+        File docxFile = new File(txtFilePath);
+        String pdfFile = txtFilePath.substring(0, txtFilePath.lastIndexOf(".txt")) + ".pdf";
+
+        if (docxFile.exists()) {
+            if (!docxFile.isDirectory()) { 
+                ActiveXComponent app = null;
+                try {
+                    ComThread.InitMTA(true); 
+                    app = new ActiveXComponent("Txt.Application");
+                    Dispatch documents = app.getProperty("Documents").toDispatch();
+                    Dispatch document = Dispatch.call(documents, "Open", txtFilePath, false, true).toDispatch();
                     File target = new File(pdfFile);
                     if (target.exists()) {
                         target.delete();
