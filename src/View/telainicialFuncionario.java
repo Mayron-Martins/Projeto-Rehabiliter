@@ -296,7 +296,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         getContentPane().add(menuFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 290, 280));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-funcionáriofundo.jpg"))); // NOI18N
-        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 1360, -1));
+        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
