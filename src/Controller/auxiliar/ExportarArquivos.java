@@ -35,8 +35,12 @@ import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComThread;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
+import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.PrintWriter;
+import org.jodconverter.office.OfficeException;
+import org.jodconverter.office.OfficeUtils;
+import org.jodconverter.JodConverter;
+import org.jodconverter.office.LocalOfficeManager;
 
 
 /**
@@ -274,9 +278,9 @@ public class ExportarArquivos {
         }
     }
     
-    public void convertDocx2pdf(String docxFilePath) {
+    public void convertDocx2pdf(String docxFilePath, String extensao) {
         File docxFile = new File(docxFilePath);
-        String pdfFile = docxFilePath.substring(0, docxFilePath.lastIndexOf(".docx")) + ".pdf";
+        String pdfFile = docxFilePath.substring(0, docxFilePath.lastIndexOf(extensao)) + ".pdf";
 
         if (docxFile.exists()) {
             if (!docxFile.isDirectory()) { 
@@ -306,17 +310,35 @@ public class ExportarArquivos {
         }
     }
     
-    private void geraArquivoTxt(String conteudo) {
+    public void geraArquivoTxt(String conteudo, String caminho) {
 		try {
-			FileWriter writer = new FileWriter(new File("C:/Rehabiliter/Comprovante.txt"));  
-			PrintWriter saida = new PrintWriter(writer);
-			saida.print(conteudo);
-			saida.close();  
-			writer.close();
-			System.out.println("Arquivo criado com sucesso!");
+			BufferedWriter writer = new BufferedWriter(new FileWriter(caminho, true));  
+			writer.write(conteudo);
+			writer.newLine();
+                        writer.flush();
+                        writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+    }
+    
+    public void gerarPDF(String anyFile, String pdfFile){
+        File inputFile = new File(anyFile);
+        File outputFile = new File(pdfFile);
+        
+        final LocalOfficeManager officeManager = LocalOfficeManager.install(); 
+        try {
 
+    // Start an office process and connect to the started instance (on port 2002).
+        officeManager.start();
+
+    // Convert
+        JodConverter.convert(inputFile).to(outputFile).execute();
+}       catch (OfficeException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível Converter");
+        } finally {
+    // Stop the office process
+        OfficeUtils.stopQuietly(officeManager);
+}
     }
 }

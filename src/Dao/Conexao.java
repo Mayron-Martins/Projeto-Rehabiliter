@@ -18,6 +18,7 @@ public abstract class Conexao {
     private final String user = "sa";
     private final String pass = "164829";
     private final String url = "jdbc:sqlserver://localhost:1433; databaseName = Rehabiliter_Database;";
+    private final FileCriator criarPastas = new FileCriator();
 
     
     
@@ -30,6 +31,7 @@ public abstract class Conexao {
          DatabaseCriator existenciaDeBase = new DatabaseCriator(telaDeInicio);
          TableCriator criarTabelas = new TableCriator(telaDeInicio);
         try{
+            criarPastas.fileCriator();
             if(existenciaDeBase.databaseConfirmed(user, pass) == false){
                 existenciaDeBase.databaseCriation(user, pass);
                 criarTabelas.createTables();

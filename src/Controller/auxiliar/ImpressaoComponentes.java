@@ -43,6 +43,7 @@ import org.apache.pdfbox.printing.PDFPageable;
  */
 public class ImpressaoComponentes {
     
+    
     public ImpressaoComponentes() {
         //detectaImpressoras();
     }
@@ -69,7 +70,7 @@ public class ImpressaoComponentes {
 
             PrintService myPrintService = findPrintService(printService.getName(), printServices);
 
-            PrinterJob job = PrinterJob.getPrinterJob();    
+            PrinterJob job = PrinterJob.getPrinterJob();
             job.setPageable(new PDFPageable(document));
             job.setPrintService(myPrintService);
             job.print();
@@ -89,8 +90,8 @@ public class ImpressaoComponentes {
         return null;
     }
     
-    public void imprimirString(String texto){
-        InputStream prin = new ByteArrayInputStream("C:/Rehabiliter/Comprovante.txt".getBytes());
+    public void imprimirString(String caminho){
+        InputStream prin = new ByteArrayInputStream(caminho.getBytes());
         DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
         SimpleDoc documentoTexto = new SimpleDoc(prin, docFlavor, null);
         PrintService impressoraPadrao = PrintServiceLookup.lookupDefaultPrintService();

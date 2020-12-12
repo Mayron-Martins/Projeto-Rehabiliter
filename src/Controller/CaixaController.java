@@ -7,6 +7,7 @@ package Controller;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.ExportarArquivos;
 import Controller.auxiliar.ImpressaoComponentes;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
@@ -33,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,6 +66,7 @@ public class CaixaController {
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final VerificarCodigoNoBanco verificador = new VerificarCodigoNoBanco();
     private final ImpressaoComponentes imprimirComprovante = new ImpressaoComponentes();
+    private final ExportarArquivos exportarComprovante = new ExportarArquivos();
 
     public CaixaController(Caixa view) {
         this.view = view;
@@ -490,17 +493,26 @@ public class CaixaController {
     private void imprimirComprovanteVenda(Vendas venda,String subtotal, String desconto) throws ParseException{
         //Dados da empresa
         String nomeEmpresa = "REHABILITER";
-        String endereco = "";
-        String contato = "";
-        String dadosEmpresa = "\t\t  "+nomeEmpresa+"\n\r\t\t  "+endereco+"\n\r\t\t  "+contato+"\n\r---------------------------------------------------\n\r";
+        String endereco = "Rua Botafogo, 150. Centro de Santa Inês-MA";
+        String cnpj = "CNPJ: 30.854.735/0001-43";
+        String contato = "Tel.: 3653-6694";
+        String email= "rehabiliterfintess@gmail.com";
+        String dadosEmpresa = "\t\t   "+nomeEmpresa+"\n\r     "
+                +endereco+"\n\t     "
+                +cnpj+"\n\t\t  "
+                +contato+"\n\t    "
+                +email+"\n\r"
+                + "---------------------------------------------------------\n\r";
         //String Divisória
-        String divisoria = "\t\tNOTA NÃO FISCAL\n\r---------------------------------------------------\n\r";
+        String divisoria = "\t\t  NOTA NÃO FISCAL\n\r"
+                + "---------------------------------------------------------\n\r";
         
         //Dados do Cliente
         String nomeCliente = "Cliente:";
         String cpf = "CPF:";
         if(venda.getCodAluno()==0){
             nomeCliente+=" Sem Cadastro";
+            cpf+=" Não se Aplica";
         }
         else{
             AlunosDao alunoDao = new AlunosDao();
@@ -511,7 +523,7 @@ public class CaixaController {
                     cpf+=" "+aluno.getCpf();
                 }
                 else{
-                    cpf+=" Não se Aplica";
+                    cpf+=" Não Possui";
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
@@ -520,7 +532,7 @@ public class CaixaController {
             }
         }
         
-        String dadosCliente = nomeCliente+"\n\r"+cpf+"\n\r---------------------------------------------------\n\r";
+        String dadosCliente = nomeCliente+"\n\r"+cpf+"\n\r---------------------------------------------------------\n\r";
         
         String cabecalho="";
         String dadosTabela="";
@@ -530,14 +542,24 @@ public class CaixaController {
            String descricaoHProduto = "DESCRIÇÃO";
            String quantidadeH = "QUANT";
            String valorH = "VALOR";
-           cabecalho = codHProduto+"\t"+descricaoHProduto+"\t\t"+quantidadeH+"\t\t"+valorH+"\n\r";
+           cabecalho = codHProduto+"\t"+descricaoHProduto+"\t\t  "+quantidadeH+"\t  "+valorH+"\n\r";
            
            
            int linhasTabela = tabelaDeCarrinho.getRowCount();
            for(int linhas=0; linhas<linhasTabela; linhas++){
-               dadosTabela+=tabelaDeCarrinho.getValueAt(linhas, 0)+"  "
-                       +tabelaDeCarrinho.getValueAt(linhas, 1)+"  "
-                       +tabelaDeCarrinho.getValueAt(linhas, 3)+"  R$ "
+               
+               String produto = tabelaDeCarrinho.getValueAt(linhas, 1).toString();
+               if(produto.length()>20){
+                   produto = produto.substring(0, 19);
+               }
+               else{
+                   while(produto.length()<20){
+                       produto+=" ";
+                   }
+               }
+               dadosTabela+=tabelaDeCarrinho.getValueAt(linhas, 0)+"\t"
+                       +produto+"\t      "
+                       +tabelaDeCarrinho.getValueAt(linhas, 3)+"    R$ "
                        +tabelaDeCarrinho.getValueAt(linhas, 4)+"\n\r";
            }
         }
@@ -546,28 +568,47 @@ public class CaixaController {
            String descricaoHPlano = "PLANO";
            String vencimentoH = "VENCIMENTO";
            String valorH = "VALOR";
-           cabecalho = codHAluno+"\t"+descricaoHPlano+"\t\t"+vencimentoH+"\t\t"+valorH+"\n";
+           cabecalho = codHAluno+"\t"+descricaoHPlano+"\t\t"+vencimentoH+"\t  "+valorH+"\n";
            
            int linhasTabela = tabelaDeMensalidade.getRowCount();
            for(int linhas=0; linhas<linhasTabela; linhas++){
-               dadosTabela+=tabelaDeMensalidade.getValueAt(linhas, 0)+"  "
-                       +tabelaDeMensalidade.getValueAt(linhas, 2)+"  "
-                       +tabelaDeMensalidade.getValueAt(linhas, 3)+"  R$ "
+               String servico = tabelaDeMensalidade.getValueAt(linhas, 2).toString();
+               if(servico.length()>20){
+                   servico = servico.substring(0, 19);
+               }
+               else{
+                   while(servico.length()<20){
+                       servico+=" ";
+                   }
+               }
+               
+               dadosTabela+=tabelaDeMensalidade.getValueAt(linhas, 0).toString()+"\t"
+                       +servico+"\t   "
+                       +tabelaDeMensalidade.getValueAt(linhas, 3).toString()+"  R$ "
                        +venda.getValorVenda()+"\n\r";
            }
         }
         //Dados Gerais da Venda
-        String valorSubtotal = "SUBTOTAL \t\t\tR$"+subtotal+"\n\r";
-        String descontot = "DESCONTO \t\t\tR$"+desconto+"\n\r";
-        String valorTotal = "VALOR TOTAL \t\t  R$"+venda.getValorVenda()+"\n\r";
-        String valorPago = "PAGO \t\t\tR$"+venda.getValorPago()+"\n\r";
-        String valorTroco = "TROCO \t\t\tR$"+venda.getValorTroco()+"\n\r";
+        String valorSubtotal = "SUBTOTAL \t\t\t\t\tR$"+subtotal+"\n\r";
+        String descontot = "DESCONTO \t\t\t\t\tR$"+desconto+"\n\r";
+        String valorTotal = "VALOR TOTAL\t\t\t\t\tR$"+venda.getValorVenda()+"\n\r";
+        String valorPago = "PAGO \t\t\t\t\t\tR$"+venda.getValorPago()+"\n\r";
+        String valorTroco = "TROCO \t\t\t\t\t\tR$"+venda.getValorTroco()+"\n\r";
         
-        String data = "\t  "+converterData.parseDateAndTime(new Date());
-        String despedida = "\n\n\t\t  VOLTE SEMPRE!";
-        String espaco = "---------------------------------------------------\n\r";
-        imprimirComprovante.imprimirString(dadosEmpresa+divisoria+dadosCliente+cabecalho+espaco+dadosTabela+espaco+valorSubtotal+descontot
-        +valorTotal+valorPago+valorTroco+espaco+data+despedida);
+        Date dataComprovante = new Date();
+        String data = "\t\t"+converterData.parseDateAndTime(dataComprovante);
+        String despedida = "\n\n\t\t    VOLTE SEMPRE!";
+        String espaco = "---------------------------------------------------------\n\r";
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        String dataArquivo = sdf.format(dataComprovante);
+        
+        String comprovante = dadosEmpresa+divisoria+dadosCliente+cabecalho+espaco+dadosTabela+espaco+valorSubtotal+descontot
+        +valorTotal+valorPago+valorTroco+espaco+data+despedida;
+        exportarComprovante.geraArquivoTxt(comprovante, "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
+        exportarComprovante.gerarPDF("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt", "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".pdf");
+        
+        //imprimirComprovante.imprimirString("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
         novaVenda();
     }
     

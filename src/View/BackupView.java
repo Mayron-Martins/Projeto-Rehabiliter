@@ -195,13 +195,7 @@ public class BackupView extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnExportarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarLocalActionPerformed
-        try {
-            controller.adicionarDadosnoBanco();
-        } catch (SQLException ex) {
-            Logger.getLogger(BackupView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(BackupView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.adicionarDadosnoBanco();
     }//GEN-LAST:event_btnExportarLocalActionPerformed
 
     /**

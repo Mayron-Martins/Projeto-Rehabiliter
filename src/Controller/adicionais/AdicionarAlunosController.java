@@ -183,7 +183,7 @@ public class AdicionarAlunosController {
             }
             //exportarContrato.exportarContratoPDF();
             view.exibeMensagem("Sucesso!");
-            exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx");
+            exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx");
             view.exibeMensagem("Exportando Arquivo para Impressão.");
             imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");
             

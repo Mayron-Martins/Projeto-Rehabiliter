@@ -50,8 +50,6 @@ public class DatabaseCriator {
     
     //Cria a base de dados e as pastas subjacentes, assim como os grupos de arquivos e delimita um tamanho incial
     public void databaseCriation(String user, String pass){
-        FileCriator criarPastas = new FileCriator();
-        criarPastas.fileCriator();
         try{
             this.telaDeInicio.mudartexto("Criando Banco de Dados...");
             this.telaDeInicio.mudarPercentual();
