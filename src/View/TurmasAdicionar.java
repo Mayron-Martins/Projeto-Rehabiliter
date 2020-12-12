@@ -8,18 +8,20 @@ package View;
 import Controller.adicionais.AdicionarTurmasController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import java.awt.Color;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -32,6 +34,7 @@ public class TurmasAdicionar extends javax.swing.JFrame {
     private String campoHorario="";
     private int aberto=0;
 
+
     /**
      * Creates new form TurmasAdicionar
      */
@@ -42,19 +45,8 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         
-        //Fechar a tela quando pressionar ESC
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
-            @Override
-            public boolean dispatchKeyEvent(KeyEvent e) {
-                if(e.getID() == e.KEY_RELEASED 
-                        && e.getKeyCode() == KeyEvent.VK_ESCAPE){
-                    dispose();
-                    return true;
-                }
-                return false;
-            }
-        });
-        
+         //Fechar a tela quando pressionar ESC
+        fecharTelaESC();
     }
 
     /**
@@ -86,6 +78,11 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -228,6 +225,10 @@ public class TurmasAdicionar extends javax.swing.JFrame {
             Logger.getLogger(TurmasAdicionar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoConfirmarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -398,4 +399,19 @@ private void moverCaixasClique(){
     public JFormattedTextField getCampoMinutos() {
         return campoMinutos;
     }
+    
+    
+    public void fecharTelaESC() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+
+            
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    } 
 }

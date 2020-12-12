@@ -8,24 +8,25 @@ package View;
 
 import Controller.TurmasController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
-import Controller.auxiliar.teclaESC;
 import java.awt.Color;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -38,7 +39,8 @@ public class TurmasView extends javax.swing.JFrame {
     private ArrayList <String> diasDaSemanaUnitarios;
     private String campoHorario="";
     private final JTextField campoMaximoAlunos = new FormatacaodeCamposRestritos();
-    
+    private final TurmasAdicionar telaTurmasAdicionar=new TurmasAdicionar();
+
     /**
      * Creates new form Turmas
      */
@@ -55,21 +57,7 @@ public class TurmasView extends javax.swing.JFrame {
         
         //formatarTabelas.formatar(tabelaAlunos, 'C');
         desabilitarVisibilidadeComponente();
-        
-        //Fechar a tela quando pressionar ESC
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
-            @Override
-            public boolean dispatchKeyEvent(KeyEvent e) {
-                if(e.getID() == e.KEY_RELEASED 
-                        && e.getKeyCode() == KeyEvent.VK_ESCAPE){
-                    dispose();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        
+        fecharTelaESC();
     }
 
     /**
@@ -319,9 +307,8 @@ public class TurmasView extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoEditarTurmasActionPerformed
 
     private void botaoAdicionarTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarTurmasActionPerformed
-        // TODO add your handling code here:
-        TurmasAdicionar abrir=new TurmasAdicionar();
-        abrir.setVisible(true);
+        
+        telaTurmasAdicionar.setVisible(true);
     }//GEN-LAST:event_botaoAdicionarTurmasActionPerformed
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
@@ -402,7 +389,7 @@ public class TurmasView extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
-
+    
     /**
      * @param args the command line arguments
      */
@@ -614,4 +601,18 @@ private void diasDaSemana(){
     public int getNumeroTela() {
         return numeroTela;
     }
+    
+    public void fecharTelaESC() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+
+            
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    } 
 }

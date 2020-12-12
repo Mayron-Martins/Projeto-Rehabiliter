@@ -8,13 +8,19 @@ package View;
 import Controller.adicionais.TelaInicioFuncionariosController;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -32,6 +38,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     private final AlunosView telaAlunos=new AlunosView();
     private final Financeiro telaFinanceiro=new Financeiro();
     private final Caixa telaCaixa= new Caixa();
+    private final TurmasView turmasView=new TurmasView();
 
     /**
      * Creates new form telainicialFuncionario
@@ -420,8 +427,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     private void botaoTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTurmasActionPerformed
         // TODO add your handling code here:
         menuFuncionario.setVisible(false);
-        TurmasView abrir=new TurmasView();
-        abrir.setVisible(true);
+        turmasView.setVisible(true);
     }//GEN-LAST:event_botaoTurmasActionPerformed
 
     private void botaoAlunos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunos1ActionPerformed
@@ -558,5 +564,17 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         return tabelaAniversariantes;
     }
     
-    
+    public void fecharTelaESC() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+
+            
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    } 
 }
