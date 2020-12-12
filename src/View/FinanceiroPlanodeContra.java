@@ -37,6 +37,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
      */
     public FinanceiroPlanodeContra() {
         initComponents();
+        
         controller = new PlanoGastosController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         btnAdicionar.setBackground(new Color(0,0,0,0));
@@ -47,6 +48,9 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
         botaoVResumida.setBackground(new Color(0,0,0,0));
         this.setarComponentes();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
+        
+        
+        
     }
 
     /**
@@ -290,7 +294,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
          if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            this.dispose();
+             setVisible(false);
         }
     }//GEN-LAST:event_formKeyPressed
 
