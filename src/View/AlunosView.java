@@ -138,6 +138,11 @@ private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
                 formWindowOpened(evt);
             }
         });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -530,6 +535,13 @@ private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
     private void tabelaPlanosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaPlanosComponentHidden
         // TODO add your handling code here:
     }//GEN-LAST:event_tabelaPlanosComponentHidden
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+         if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
+            this.dispose();
+        }
+    }//GEN-LAST:event_formKeyPressed
      
     /**
      * @param args the command line arguments
