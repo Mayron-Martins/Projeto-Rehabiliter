@@ -10,7 +10,6 @@ import Model.auxiliar.Backup;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +21,7 @@ import java.util.Date;
 public class BackupBancoDao extends Conexao{
     private final String inserir = "INSERT INTO ";
     private final String selecionarTudo = "SELECT * FROM ";
-    private ConversaodeDataParaPadraoDesignado converterData;
+    private ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     
     public void inserirDados (Backup backup) throws SQLException{
         //Adicionando Turma

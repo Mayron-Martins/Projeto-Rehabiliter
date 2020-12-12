@@ -9,15 +9,11 @@ import Model.Aluno;
 import Model.auxiliar.EnderecoAlunos;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
-import com.documents4j.api.DocumentType;
-import com.documents4j.api.IConverter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,20 +28,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.converter.pdf.PdfConverter;
-import org.apache.poi.xwpf.converter.pdf.PdfOptions;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import com.documents4j.job.LocalConverter;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComThread;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import static org.apache.poi.hwpf.model.FileInformationBlock.logger;
 
 
 /**
@@ -327,37 +318,5 @@ public class ExportarArquivos {
 			e.printStackTrace();
 		}
 
-    }
-    
-    public void convertTxt2pdf(String txtFilePath) {
-        File docxFile = new File(txtFilePath);
-        String pdfFile = txtFilePath.substring(0, txtFilePath.lastIndexOf(".txt")) + ".pdf";
-
-        if (docxFile.exists()) {
-            if (!docxFile.isDirectory()) { 
-                ActiveXComponent app = null;
-                try {
-                    ComThread.InitMTA(true); 
-                    app = new ActiveXComponent("Txt.Application");
-                    Dispatch documents = app.getProperty("Documents").toDispatch();
-                    Dispatch document = Dispatch.call(documents, "Open", txtFilePath, false, true).toDispatch();
-                    File target = new File(pdfFile);
-                    if (target.exists()) {
-                        target.delete();
-                    }
-                    Dispatch.call(document, "SaveAs", pdfFile, 17);
-                    Dispatch.call(document, "Close", false);
-                    //long end = System.currentTimeMillis();
-                    //logger.info("============Convert Finished：" + (end - start) + "ms");
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Não foi possível Converter");
-                } finally {
-                    if (app != null) {
-                        app.invoke("Quit", new Variant[] {});
-                    }
-                    ComThread.Release();
-                }
-            }
-        }
     }
 }

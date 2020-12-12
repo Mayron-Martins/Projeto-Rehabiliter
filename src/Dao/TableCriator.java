@@ -415,7 +415,7 @@ public class TableCriator {
         this.gerarStatement().execute("CREATE TABLE tblBackups("
                 + "codBackup INT PRIMARY KEY," //Cada backup terá um código único.
                 + "nome VARCHAR(20) NOT NULL," //Data e horário como nome
-                + "data DATE NOT NULL," //
+                + "data DATETIME NOT NULL," //
                 + "endArquivo VARCHAR(MAX) NOT NULL," //Localização no computador.
                 + "tabelas VARCHAR(MAX) NOT NULL" //String com as tabelas presentes no backup, sequencialmente.
                 + ");");

@@ -11,6 +11,7 @@ import Dao.BackupBancoDao;
 import Dao.BackupDao;
 import View.BackupView;
 import Model.auxiliar.Backup;
+import java.io.File;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -53,13 +54,13 @@ public class BackupController {
     }
     
     public void adicionarDadosnoBanco(){
-        try {
+            try {
             Date dataAtual = new Date();
             String nome = "LocalBackup";
             int codBackup = verificar.verificarUltimo("tblBackups", "codBackup")+1;
             String endereco = System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bkk";
             String tabelas = "Todas";
-        
+
             Backup backup = new Backup(codBackup, nome, dataAtual, endereco, tabelas);
             backupDao.exportarBanco();
             backupBancoDao.inserirDados(backup);
@@ -74,7 +75,14 @@ public class BackupController {
     }
     
     public void importarBanco() throws SQLException{
-        backupDao.importarBanco();
+        File file = new File(System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bkk");
+        if(file.exists()){
+            backupDao.importarBanco();
+            view.exibeMensagem("Sucesso!");
+        }
+        else{
+            view.exibeMensagem("Realize um Backup Primeiro");
+        }
     }
     
 }

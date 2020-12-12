@@ -90,7 +90,7 @@ public class ImpressaoComponentes {
     }
     
     public void imprimirString(String texto){
-        InputStream prin = new ByteArrayInputStream(texto.getBytes());
+        InputStream prin = new ByteArrayInputStream("C:/Rehabiliter/Comprovante.txt".getBytes());
         DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
         SimpleDoc documentoTexto = new SimpleDoc(prin, docFlavor, null);
         PrintService impressoraPadrao = PrintServiceLookup.lookupDefaultPrintService();
