@@ -8,8 +8,12 @@ package View;
 
 import Controller.TurmasController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
+import Controller.auxiliar.teclaESC;
 import java.awt.Color;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -34,7 +38,7 @@ public class TurmasView extends javax.swing.JFrame {
     private ArrayList <String> diasDaSemanaUnitarios;
     private String campoHorario="";
     private final JTextField campoMaximoAlunos = new FormatacaodeCamposRestritos();
-
+    
     /**
      * Creates new form Turmas
      */
@@ -49,10 +53,21 @@ public class TurmasView extends javax.swing.JFrame {
         botaobuscar.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
-        
         //formatarTabelas.formatar(tabelaAlunos, 'C');
         desabilitarVisibilidadeComponente();
         
+        //Fechar a tela quando pressionar ESC
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                if(e.getID() == e.KEY_RELEASED 
+                        && e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                    dispose();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         
     }
@@ -599,7 +614,4 @@ private void diasDaSemana(){
     public int getNumeroTela() {
         return numeroTela;
     }
-    
-    
-    
 }

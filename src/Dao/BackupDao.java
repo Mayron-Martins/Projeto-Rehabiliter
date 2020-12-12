@@ -26,16 +26,16 @@ public class BackupDao extends ConexaoMaster{
     public void importarBanco() throws SQLException{
         PreparedStatement statement;
         if(dataBaseCriator.databaseConfirmed(user, pass)){
-            statement = gerarStatement("DECLARE @query VARCHAR(MAX) = '' "
+            statement = gerarStatement("DECLARE @query VARCHAR(MAX) = ''; "
             +"SELECT "
             + "@query = COALESCE(@query, ',') + 'KILL ' + CONVERT(VARCHAR, spid) + '; ' "
             + "FROM "
-            + "master..sysprocesses"
-            + "WHERE"
-            + "dbid = DB_ID('Rehabiliter_Database')"
-            + "AND dbid > 4"
-            + "AND spid <> @@SPID;"
-            + "IF (LEN(@query) > 0)"
+            + "master..sysprocesses "
+            + "WHERE "
+            + "dbid = DB_ID('Rehabiliter_Database') "
+            + "AND dbid > 4 "
+            + "AND spid <> @@SPID; "
+            + "IF (LEN(@query) > 0) "
             + "EXEC(@query)");
             statement.execute();            
             statement = gerarStatement("DROP DATABASE Rehabiliter_Database");

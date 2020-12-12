@@ -8,6 +8,10 @@ package View;
 import Controller.adicionais.AdicionarTurmasController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import java.awt.Color;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -37,6 +41,20 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         controller = new AdicionarTurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
+        
+        //Fechar a tela quando pressionar ESC
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                if(e.getID() == e.KEY_RELEASED 
+                        && e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                    dispose();
+                    return true;
+                }
+                return false;
+            }
+        });
+        
     }
 
     /**
@@ -380,10 +398,4 @@ private void moverCaixasClique(){
     public JFormattedTextField getCampoMinutos() {
         return campoMinutos;
     }
-    
-    
-    
-    
-
-
 }
