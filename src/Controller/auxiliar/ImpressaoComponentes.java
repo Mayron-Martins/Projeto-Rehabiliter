@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -40,8 +41,10 @@ import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
+import jdk.internal.util.xml.impl.ReaderUTF8;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPageable;
+import org.apache.xmlbeans.impl.common.ReaderInputStream;
 
 /**
  *
@@ -132,12 +135,14 @@ public class ImpressaoComponentes {
         PrintService printService = ServiceUI.printDialog(null, 300, 200, printServices, impressoraPadrao, DocFlavor.INPUT_STREAM.AUTOSENSE, new HashPrintRequestAttributeSet()).createPrintJob().getPrintService();
         PrintService service = findPrintService(printService.getName(), printServices);
         try{
-            FileInputStream in = new FileInputStream(new File(caminho));
-
+            //FileInputStream in = new FileInputStream(new File(caminho));
+           
+           InputStream in = new ByteArrayInputStream("\f".getBytes("UTF8"));
+            
             PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
             pras.add(new Copies(1));
 
-
+            
             DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
             Doc doc = new SimpleDoc(in, flavor, null);
 
@@ -146,20 +151,22 @@ public class ImpressaoComponentes {
             job.print(doc, pras);
             pjw.waitForDone();
             in.close();
-
+            /*
             // send FF to eject the page
-            InputStream ff = new ByteArrayInputStream("\f".getBytes());
+            InputStream ff = new ByteArrayInputStream("\f".getBytes("UTF-8"));
             Doc docff = new SimpleDoc(ff, flavor, null);
             DocPrintJob jobff = service.createPrintJob();
             pjw = new PrintJobWatcher(jobff);
             jobff.print(docff, null);
             pjw.waitForDone();
+*/
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Nenhum arquivo encontrado");
         } catch (PrintException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao enviar para a impressora");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao finalizar conexão");
+            Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
