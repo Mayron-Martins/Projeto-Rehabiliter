@@ -56,6 +56,8 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         jScrollPane1.setVisible(false);
         menuFuncionario.setVisible(false);
+        jdpPrincipal.setBackground(new Color(0,0,0,0));
+        
         
         
         
@@ -95,6 +97,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoProdutos = new javax.swing.JButton();
         botaoCaixa1 = new javax.swing.JButton();
         botaoSair1 = new javax.swing.JButton();
+        jdpPrincipal = new javax.swing.JDesktopPane();
         planodefundo1 = new javax.swing.JLabel();
         botaoSair = new javax.swing.JButton();
         botaoCaixa = new javax.swing.JButton();
@@ -206,6 +209,10 @@ public class telainicialFuncionario extends javax.swing.JFrame {
             }
         });
         menuFuncionario.add(botaoSair1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 960, 270, 52));
+
+        jdpPrincipal.setForeground(new java.awt.Color(0, 0, 75));
+        jdpPrincipal.setToolTipText("");
+        menuFuncionario.add(jdpPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 1020));
 
         planodefundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/menu-principal-funcionárioFundo.png"))); // NOI18N
         menuFuncionario.add(planodefundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, -1));
@@ -432,9 +439,15 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
     private void botaoAlunos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunos1ActionPerformed
         // TODO add your handling code here:
-        menuFuncionario.setVisible(false);
+     /*   menuFuncionario.setVisible(false);
         AlunosView jump=new AlunosView();
         jump.setVisible(true);
+     */
+        
+        JIFAlunosCadastro aluno=new JIFAlunosCadastro();
+        jdpPrincipal.add(aluno);
+        aluno.setVisible(true);
+        
     }//GEN-LAST:event_botaoAlunos1ActionPerformed
 
     private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
@@ -519,6 +532,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton botaoServicos;
     private javax.swing.JButton botaoTurmas;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JDesktopPane jdpPrincipal;
     private javax.swing.JPanel menuFuncionario;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JLabel planodefundo1;
