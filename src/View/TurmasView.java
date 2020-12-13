@@ -389,7 +389,7 @@ public class TurmasView extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
-    
+   
     /**
      * @param args the command line arguments
      */
