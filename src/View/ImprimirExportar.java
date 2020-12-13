@@ -7,6 +7,12 @@ package View;
 
 import Dao.FileCriator;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -25,6 +31,7 @@ public class ImprimirExportar extends javax.swing.JFrame {
         btnFrequencia.setBackground(new Color(0,0,0,0));
         btnRelatoriosOrca.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
+        fecharTelaESC();
     }
 
     /**
@@ -158,5 +165,17 @@ public class ImprimirExportar extends javax.swing.JFrame {
         return numeroTela;
     }
 
+    public void fecharTelaESC() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
 
+            
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    }
 }

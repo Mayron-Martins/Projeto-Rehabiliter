@@ -15,17 +15,23 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 /**
@@ -54,6 +60,8 @@ public class AlunosCadastro extends javax.swing.JFrame {
        btnProx.setBackground(new Color (0,0,0,0));
        jPanelCadastroFinal.setVisible(false);
        jPanelPais.setVisible(false);
+       
+       fecharTelaESC();
        
       
        
@@ -765,5 +773,18 @@ public class AlunosCadastro extends javax.swing.JFrame {
         return jpanelDados;
     }
     
+    public void fecharTelaESC() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+
+            
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    }
     
 }

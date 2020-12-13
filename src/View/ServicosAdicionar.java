@@ -8,14 +8,20 @@ package View;
 import Controller.adicionais.AdicionarServicosController;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -32,12 +38,14 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         controller = new AdicionarServicosController(this);
         btnFechar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
+        fecharTelaESC();
         this.setarValores();
         try {
             controller.preencherComboPeriodo();
         } catch (SQLException ex) {
             Logger.getLogger(ServicosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
 
@@ -237,4 +245,17 @@ public class ServicosAdicionar extends javax.swing.JFrame {
         return campoOutroTipo;
     }
     
+    public void fecharTelaESC() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+
+            
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    }
 }
