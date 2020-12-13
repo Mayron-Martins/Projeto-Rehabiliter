@@ -100,14 +100,15 @@ public class ImpressaoComponentes {
         
         PrintService impressora = findPrintService(printService.getName(), printServices);
         PrintRequestAttributeSet printerAttributes= new HashPrintRequestAttributeSet();
-        printerAttributes.add(new JobName("Impressão", null));
-        printerAttributes.add(OrientationRequested.PORTRAIT);
-        printerAttributes.add(MediaSizeName.ISO_A4);
+        //printerAttributes.add(new JobName("Impressão", null));
+        //printerAttributes.add(OrientationRequested.PORTRAIT);
+        //printerAttributes.add(MediaSizeName.ISO_A4);
         //Informa o tipo da folha
         DocPrintJob printJob = impressora.createPrintJob();
         
+        
         try{
-            printJob.print(documentoTexto, printerAttributes);
+            printJob.print(documentoTexto, null);
         } catch (PrintException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível emitir Comprovante");
         }

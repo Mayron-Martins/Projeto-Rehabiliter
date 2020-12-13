@@ -37,10 +37,17 @@ import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
+import org.apache.commons.compress.utils.IOUtils;
+import org.apache.poi.util.DocumentFormatException;
 import org.jodconverter.office.OfficeException;
 import org.jodconverter.office.OfficeUtils;
 import org.jodconverter.JodConverter;
+import org.jodconverter.document.DocumentFormat;
 import org.jodconverter.office.LocalOfficeManager;
+import org.jodconverter.office.OfficeManager;
+
 
 
 /**
@@ -49,7 +56,9 @@ import org.jodconverter.office.LocalOfficeManager;
  */
 public class ExportarArquivos {
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
-
+    private static final long TASK_QUEUE_TIMEOUT_MILLISEC = 30_000;
+    private static final long TASK_TIMEOUT_MILLISEC = 120_000;
+    private static final long PROCESS_TIMEOUT_MILLISEC = 30_000;
     
     
     
@@ -278,16 +287,15 @@ public class ExportarArquivos {
         }
     }
     
-    public void convertDocx2pdf(String docxFilePath, String extensao) {
+    public void convertDocx2pdf(String docxFilePath, String extensao, String idAplicacao) {
         File docxFile = new File(docxFilePath);
         String pdfFile = docxFilePath.substring(0, docxFilePath.lastIndexOf(extensao)) + ".pdf";
-
         if (docxFile.exists()) {
             if (!docxFile.isDirectory()) { 
                 ActiveXComponent app = null;
                 try {
                     ComThread.InitMTA(true); 
-                    app = new ActiveXComponent("Word.Application");
+                    app = new ActiveXComponent(idAplicacao);
                     Dispatch documents = app.getProperty("Documents").toDispatch();
                     Dispatch document = Dispatch.call(documents, "Open", docxFilePath, false, true).toDispatch();
                     File target = new File(pdfFile);
@@ -300,6 +308,7 @@ public class ExportarArquivos {
                     //logger.info("============Convert Finished：" + (end - start) + "ms");
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Não foi possível Converter");
+                    Logger.getLogger(ExportarArquivos.class.getName()).log(Level.SEVERE, null, e);
                 } finally {
                     if (app != null) {
                         app.invoke("Quit", new Variant[] {});
@@ -320,25 +329,5 @@ public class ExportarArquivos {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
-    
-    public void gerarPDF(String anyFile, String pdfFile){
-        File inputFile = new File(anyFile);
-        File outputFile = new File(pdfFile);
-        
-        final LocalOfficeManager officeManager = LocalOfficeManager.install(); 
-        try {
-
-    // Start an office process and connect to the started instance (on port 2002).
-        officeManager.start();
-
-    // Convert
-        JodConverter.convert(inputFile).to(outputFile).execute();
-}       catch (OfficeException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível Converter");
-        } finally {
-    // Stop the office process
-        OfficeUtils.stopQuietly(officeManager);
-}
     }
 }

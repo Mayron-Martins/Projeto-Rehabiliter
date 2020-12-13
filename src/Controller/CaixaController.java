@@ -606,9 +606,10 @@ public class CaixaController {
         String comprovante = dadosEmpresa+divisoria+dadosCliente+cabecalho+espaco+dadosTabela+espaco+valorSubtotal+descontot
         +valorTotal+valorPago+valorTroco+espaco+data+despedida;
         exportarComprovante.geraArquivoTxt(comprovante, "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
-        exportarComprovante.gerarPDF("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt", "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".pdf");
-        
+        //exportarComprovante.gerarPDF("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt", "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".pdf");
+        exportarComprovante.convertDocx2pdf("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt", ".txt", "ACTIVEX.ActiveXCtrl.1");
         //imprimirComprovante.imprimirString("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
+        
         novaVenda();
     }
     
