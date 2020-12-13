@@ -12,6 +12,8 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -20,6 +22,7 @@ import java.text.ParseException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
 import javax.print.PrintException;
@@ -31,9 +34,12 @@ import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.JobName;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
+import javax.print.event.PrintJobAdapter;
+import javax.print.event.PrintJobEvent;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPageable;
 
@@ -117,6 +123,87 @@ public class ImpressaoComponentes {
             prin.close();
         } catch (IOException ex) {
             Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void printTextFile(String caminho){
+        PrintService impressoraPadrao = PrintServiceLookup.lookupDefaultPrintService();
+        PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
+        PrintService printService = ServiceUI.printDialog(null, 300, 200, printServices, impressoraPadrao, DocFlavor.INPUT_STREAM.AUTOSENSE, new HashPrintRequestAttributeSet()).createPrintJob().getPrintService();
+        PrintService service = findPrintService(printService.getName(), printServices);
+        try{
+            FileInputStream in = new FileInputStream(new File(caminho));
+
+            PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
+            pras.add(new Copies(1));
+
+
+            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            Doc doc = new SimpleDoc(in, flavor, null);
+
+            DocPrintJob job = service.createPrintJob();
+            PrintJobWatcher pjw = new PrintJobWatcher(job);
+            job.print(doc, pras);
+            pjw.waitForDone();
+            in.close();
+
+            // send FF to eject the page
+            InputStream ff = new ByteArrayInputStream("\f".getBytes());
+            Doc docff = new SimpleDoc(ff, flavor, null);
+            DocPrintJob jobff = service.createPrintJob();
+            pjw = new PrintJobWatcher(jobff);
+            jobff.print(docff, null);
+            pjw.waitForDone();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Nenhum arquivo encontrado");
+        } catch (PrintException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao enviar para a impressora");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao finalizar conexão");
+        }
+    }
+    
+  
+
+
+    class PrintJobWatcher {
+        boolean done = false;
+
+        PrintJobWatcher(DocPrintJob job) {
+            job.addPrintJobListener(new PrintJobAdapter() { 
+                public void printJobCanceled(PrintJobEvent pje) {
+                    System.out.println("printJobCanceled");
+                    allDone();
+                }
+                public void printJobCompleted(PrintJobEvent pje) {
+                    System.out.println("printJobCompleted");
+                    allDone();
+                }
+                public void printJobFailed(PrintJobEvent pje) {
+                    System.out.println("printJobFailed");
+                    allDone();
+                }
+                public void printJobNoMoreEvents(PrintJobEvent pje) {
+                    System.out.println("printJobNoMoreEvents");
+                    allDone();
+                }
+                void allDone() {
+                    synchronized (PrintJobWatcher.this) {
+                        done = true;
+                        System.out.println("Printing done ...");
+                        PrintJobWatcher.this.notify();
+                    }
+                }
+            });
+        }
+        
+        public synchronized void waitForDone() {
+            try {
+                while (!done) {
+                    wait();
+                }
+            } catch (InterruptedException e) {
+            }
         }
     }
 }
