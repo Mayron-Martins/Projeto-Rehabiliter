@@ -168,7 +168,7 @@ public class Menu extends javax.swing.JFrame {
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        AlunosView jump=new AlunosView();
+        AlunosView jump=new AlunosView(this, true);
         jump.setVisible(true);
     }//GEN-LAST:event_botaoAlunosActionPerformed
 

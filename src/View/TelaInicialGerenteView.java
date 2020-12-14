@@ -28,12 +28,25 @@ import sun.swing.table.DefaultTableCellHeaderRenderer;
  */
 public class TelaInicialGerenteView extends javax.swing.JFrame {
     private final TelaInicioGerenteController controller;
+    private final AlunosView telaAlunos;
+    private final TurmasView telaTurmas;
+    private final turmasFrequencia telaTurmasFrequencia;
+    private final ProdutosView telaProdutos;
+    private final ServicosView telaServicos;
 
     /**
      * Creates new form telaInicialGerente
      */
     public TelaInicialGerenteView() {
         initComponents();
+        
+        telaAlunos=new AlunosView(this, true);
+        telaTurmas=new TurmasView(this, true);
+        telaTurmasFrequencia= new turmasFrequencia(this, true);
+        telaProdutos=new ProdutosView(this, true);
+        telaServicos=new ServicosView(this, true);
+        
+        
         menuGerente.setVisible(false);
         menuGerente.setBackground(new Color(0,0,0,0));
         controller = new TelaInicioGerenteController(this);
@@ -326,10 +339,11 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
         // TODO add your handling code here:
-        AlunosView jump=new AlunosView();
         try {
             if(controller.permissaoDeAcessoATela()){
-                jump.setVisible(true);
+                telaAlunos.setModal(true);
+                telaAlunos.setLocationRelativeTo(null);
+                telaAlunos.setVisible(true);   
             }
             else{this.exibeMensagem("Acesso Negado");}
         } catch (SQLException ex) {
@@ -341,10 +355,11 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFrequenciaActionPerformed
         // TODO add your handling code here:
-        turmasFrequencia abrir= new turmasFrequencia();
         try {
             if(controller.permissaoDeAcessoATela()){
-                abrir.setVisible(true);
+                telaTurmasFrequencia.setModal(true);
+                telaTurmasFrequencia.setLocationRelativeTo(null);
+                telaTurmasFrequencia.setVisible(true);
             }
             else{this.exibeMensagem("Acesso Negado");}
         } catch (SQLException ex) {
@@ -433,31 +448,70 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoServicosActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        ServicosView abrir=new ServicosView();
-        abrir.setVisible(true);
+        menuGerente.setVisible(false);
+        try {
+            if(controller.permissaoDeAcessoATela()){
+                telaServicos.setModal(true);
+                telaServicos.setLocationRelativeTo(null);
+                telaServicos.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoServicosActionPerformed
 
     private void botaoTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTurmasActionPerformed
         // TODO add your handling code here:
         menuGerente.setVisible(false);
-        TurmasView abrir=new TurmasView();
-        abrir.setVisible(true);
+        try{
+            if(controller.permissaoDeAcessoATela()){
+                telaTurmas.setModal(true);
+                telaTurmas.setLocationRelativeTo(null);
+                telaTurmas.setVisible(true);   
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoTurmasActionPerformed
 
     private void botaoAlunos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunos1ActionPerformed
         // TODO add your handling code here:
         menuGerente.setVisible(false);
-        AlunosView jump=new AlunosView();
-        jump.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela()){
+                telaAlunos.setModal(true);
+                telaAlunos.setLocationRelativeTo(null);
+                telaAlunos.setVisible(true);   
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoAlunos1ActionPerformed
 
     private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
         // TODO add your handling code here:
         menuGerente.setVisible(false);
-        ProdutosView abrir=new ProdutosView();
-        abrir.setVisible(true);
-
+        try {
+            if(controller.permissaoDeAcessoATela()){
+                telaProdutos.setModal(true);
+                telaProdutos.setLocationRelativeTo(null);
+                telaProdutos.setVisible(true);   
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoProdutosActionPerformed
 
     private void botaoCaixa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixa1ActionPerformed

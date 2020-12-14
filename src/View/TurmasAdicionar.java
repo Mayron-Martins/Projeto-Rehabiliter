@@ -27,7 +27,8 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class TurmasAdicionar extends javax.swing.JFrame {
+public class TurmasAdicionar extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final AdicionarTurmasController controller;
     private String diasDaSemana=null;
     private ArrayList <String> diasDaSemanaUnitarios;
@@ -37,9 +38,13 @@ public class TurmasAdicionar extends javax.swing.JFrame {
 
     /**
      * Creates new form TurmasAdicionar
+     * @param parent
+     * @param modal
      */
-    public TurmasAdicionar() {
+    public TurmasAdicionar(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        this.parent = parent;
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new AdicionarTurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -75,7 +80,7 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         caixaDomingo = new javax.swing.JCheckBox();
         fundo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -260,7 +265,14 @@ public class TurmasAdicionar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TurmasAdicionar().setVisible(true);
+                TurmasAdicionar dialog = new TurmasAdicionar(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

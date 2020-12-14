@@ -29,20 +29,27 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class ServicosView extends javax.swing.JFrame {
+public class ServicosView extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final int numeroTela = 4;
     private final ServicosController controller;
-    private final ServicosAdicionar servicosAdicionar;
     //private final JComboBox combo = new JComboBox();
     private final JFormattedTextField valorFormatado = new JMoneyField();
+    private final ServicosAdicionar telaServicosAdicionar;
 
     /**
      * Creates new form Servicos
+     * @param parent
+     * @param modal
      */
-    public ServicosView() {
+    public ServicosView(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        telaServicosAdicionar=new ServicosAdicionar(parent, true);
+        
         controller = new ServicosController(this);
-        servicosAdicionar = new ServicosAdicionar();
         btnAdicionar.setBackground(new Color(0,0,0,0));
         btnEditar.setBackground(new Color(0,0,0,0));
         btnRemover.setBackground(new Color(0,0,0,0));
@@ -74,7 +81,7 @@ public class ServicosView extends javax.swing.JFrame {
         tabelaServicos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -210,8 +217,9 @@ public class ServicosView extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
-        ServicosAdicionar abrir=new ServicosAdicionar();
-        abrir.setVisible(true);
+        telaServicosAdicionar.setModal(true);
+        telaServicosAdicionar.setLocationRelativeTo(null);
+        telaServicosAdicionar.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void metodoPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodoPagamentoActionPerformed
@@ -308,7 +316,14 @@ public class ServicosView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ServicosView().setVisible(true);
+                ServicosView dialog = new ServicosView(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

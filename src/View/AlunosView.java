@@ -32,27 +32,32 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class AlunosView extends javax.swing.JFrame {
-private final int numeroTela = 1;
-private Point point = new Point();
-private final AlunosController controller;
-private AlunosCadastro alunosCadastro = new AlunosCadastro();
-private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
-private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
-private javax.swing.JComboBox<String> comboEstado = new JComboBox<>(alunosCadastro.getComboEstado().getModel());
-private final JFormattedTextField valorContrato = new JMoneyField();
-private final JFormattedTextField valorDebito = new JMoneyField();
-private final JFormattedTextField telefonePai = new JFormattedTextField(alunosCadastro.getCampoContatoPai().getFormatter());
-private final JFormattedTextField cpfPai = new JFormattedTextField(alunosCadastro.getCampoCPFPai().getFormatter());
-private final JFormattedTextField telefoneMae = new JFormattedTextField(alunosCadastro.getCampoContatoMae().getFormatter());
-private final JFormattedTextField cpfMae = new JFormattedTextField(alunosCadastro.getCampoCPFMae().getFormatter());
-private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.getCampoCEP().getFormatter());
-private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
+public class AlunosView extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
+    private final int numeroTela = 1;
+    private Point point = new Point();
+    private final AlunosController controller;
+    private AlunosCadastro alunosCadastro = new AlunosCadastro();
+    private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
+    private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
+    private javax.swing.JComboBox<String> comboEstado = new JComboBox<>(alunosCadastro.getComboEstado().getModel());
+    private final JFormattedTextField valorContrato = new JMoneyField();
+    private final JFormattedTextField valorDebito = new JMoneyField();
+    private final JFormattedTextField telefonePai = new JFormattedTextField(alunosCadastro.getCampoContatoPai().getFormatter());
+    private final JFormattedTextField cpfPai = new JFormattedTextField(alunosCadastro.getCampoCPFPai().getFormatter());
+    private final JFormattedTextField telefoneMae = new JFormattedTextField(alunosCadastro.getCampoContatoMae().getFormatter());
+    private final JFormattedTextField cpfMae = new JFormattedTextField(alunosCadastro.getCampoCPFMae().getFormatter());
+    private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.getCampoCEP().getFormatter());
+    private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
     /**
      * Creates new form Alunos
+     * @param parent
+     * @param modal
      */
-    public AlunosView() {
+    public AlunosView(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        this.parent = parent;
         controller = new AlunosController(this);
         botaobuscar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -125,7 +130,7 @@ private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
         botaoAlunos = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -580,7 +585,14 @@ private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlunosView().setVisible(true);
+                AlunosView dialog = new AlunosView(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -728,6 +740,8 @@ private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
     public int getNumeroTela() {
         return numeroTela;
     }
+    
+    
     
     private void selecionarTabelas(int opcao){
         switch(opcao){

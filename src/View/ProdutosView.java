@@ -28,17 +28,26 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class ProdutosView extends javax.swing.JFrame {
+public class ProdutosView extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final int numeroTela = 3;
     private final ProdutosController controller;
     private final JFormattedTextField campoQuantidade = new JMoneyField();
     private final JFormattedTextField valorProduto = new JMoneyField();
+    private final ProdutosAdicionar telaProdutosAdicionar;
 
     /**
      * Creates new form produtos
+     * @param parent
+     * @param modal
      */
-    public ProdutosView() {
+    public ProdutosView(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        telaProdutosAdicionar= new ProdutosAdicionar(parent, true);
+        
         controller = new ProdutosController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
@@ -73,7 +82,7 @@ public class ProdutosView extends javax.swing.JFrame {
         tabelaProdutos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -204,9 +213,9 @@ public class ProdutosView extends javax.swing.JFrame {
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         // TODO add your handling code here:
-        ProdutosAdicionar abrir= new ProdutosAdicionar();
-        abrir.setVisible(true);
-
+        telaProdutosAdicionar.setModal(true);
+        telaProdutosAdicionar.setLocationRelativeTo(null);
+        telaProdutosAdicionar.setVisible(true);  
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
@@ -295,7 +304,14 @@ public class ProdutosView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProdutosView().setVisible(true);
+                ProdutosView dialog = new ProdutosView(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

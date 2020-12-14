@@ -30,7 +30,8 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class turmasFrequencia extends javax.swing.JFrame {
+public class turmasFrequencia extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final int numeroTela = 9;
     private final FrequenciaTurmasController controller;
     private final JComboBox comboPresenca = new JComboBox();
@@ -39,10 +40,14 @@ public class turmasFrequencia extends javax.swing.JFrame {
 
     /**
      * Creates new form turmasFrequencia
+     * @param parent
+     * @param modal
      */
-    public turmasFrequencia() {
+    public turmasFrequencia(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
-        fecharTelaESC();
+        this.parent = parent;
+        this.fecharTelaESC();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new FrequenciaTurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -118,7 +123,7 @@ public class turmasFrequencia extends javax.swing.JFrame {
         campoAviso = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -409,7 +414,14 @@ public class turmasFrequencia extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new turmasFrequencia().setVisible(true);
+                turmasFrequencia dialog = new turmasFrequencia(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

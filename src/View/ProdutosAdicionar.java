@@ -28,14 +28,20 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class ProdutosAdicionar extends javax.swing.JFrame {
+public class ProdutosAdicionar extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final AdicionarProdutosController controller;
 
     /**
      * Creates new form ProdutosAdicionar
+     * @param parent
+     * @param modal
      */
-    public ProdutosAdicionar() {
+    public ProdutosAdicionar(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        this.parent = parent;
+        
         controller = new AdicionarProdutosController(this);
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -62,7 +68,7 @@ public class ProdutosAdicionar extends javax.swing.JFrame {
         campoValor = new JMoneyField();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -159,7 +165,14 @@ public class ProdutosAdicionar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProdutosAdicionar().setVisible(true);
+                ProdutosAdicionar dialog = new ProdutosAdicionar(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

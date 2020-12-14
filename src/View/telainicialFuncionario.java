@@ -56,6 +56,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         jScrollPane1.setVisible(false);
         menuFuncionario.setVisible(false);
+        menuFuncionario.setBackground(new Color(0,0,0,2));
         jdpPrincipal.setBackground(new Color(0,0,0,0));
         
         
@@ -99,13 +100,13 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         planodefundo1 = new javax.swing.JLabel();
         botaoSair = new javax.swing.JButton();
         botaoCaixa = new javax.swing.JButton();
-        animaçãoRehabiliter = new javax.swing.JLabel();
         botaoAlunos = new javax.swing.JButton();
         botaoFrequencia = new javax.swing.JButton();
         botaoFinanceiro = new javax.swing.JButton();
         botaoMenu = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaAniversariantes = new javax.swing.JTable();
+        animaçãoRehabiliter = new javax.swing.JLabel();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -229,8 +230,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
             }
         });
 
-        animaçãoRehabiliter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
-
         botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosprincipal.png"))); // NOI18N
         botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosHoverprincipal.png"))); // NOI18N
         botaoAlunos.addActionListener(new java.awt.event.ActionListener() {
@@ -300,17 +299,19 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
 
+        animaçãoRehabiliter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
+
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-funcionáriofundo.jpg"))); // NOI18N
 
         jdpPrincipal.setLayer(menuFuncionario, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(botaoSair, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(botaoCaixa, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpPrincipal.setLayer(animaçãoRehabiliter, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(botaoAlunos, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(botaoFrequencia, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(botaoFinanceiro, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(botaoMenu, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(animaçãoRehabiliter, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpPrincipal.setLayer(planodefundo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jdpPrincipalLayout = new javax.swing.GroupLayout(jdpPrincipal);
@@ -393,7 +394,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
     private void botaoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMenuActionPerformed
         // TODO add your handling code here:
-        
+        this.desativarTudo();
         menuFuncionario.setVisible(true);
     }//GEN-LAST:event_botaoMenuActionPerformed
 
@@ -472,6 +473,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
         menuFuncionario.setVisible(false);
+        this.ativarTudo();
 
     }//GEN-LAST:event_botaoFecharActionPerformed
 
@@ -655,5 +657,27 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 dispose();
             }
         });
-    } 
+    }
+    
+    private void desativarTudo(){
+        botaoSair1.setEnabled(false);
+        botaoCaixa.setEnabled(false);
+        botaoAlunos.setEnabled(false);
+        botaoFrequencia.setEnabled(false);
+        botaoFinanceiro.setEnabled(false);
+        botaoMenu.setVisible(false);
+        jScrollPane1.setEnabled(false);
+        animaçãoRehabiliter.setVisible(false);
+    }
+    
+    private void ativarTudo(){
+        botaoSair1.setEnabled(true);
+        botaoCaixa.setEnabled(true);
+        botaoAlunos.setEnabled(true);
+        botaoFrequencia.setEnabled(true);
+        botaoFinanceiro.setEnabled(true);
+        botaoMenu.setVisible(true);
+        jScrollPane1.setEnabled(true);
+        animaçãoRehabiliter.setVisible(true);
+    }
 }

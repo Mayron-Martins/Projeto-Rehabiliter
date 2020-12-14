@@ -17,14 +17,21 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class Financeiro extends javax.swing.JFrame {
+public class Financeiro extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final int numeroTela = 5;
 
     /**
      * Creates new form Financeiro
+     * @param parent
+     * @param modal
      */
-    public Financeiro() {
+    public Financeiro(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        
         botaoFechar.setBackground(new Color(0,0,0,0));
         btnPlanodeContraServicos.setBackground(new Color(0,0,0,0));
         btnAnaliseFinanceira.setBackground(new Color(0,0,0,0));
@@ -48,7 +55,7 @@ public class Financeiro extends javax.swing.JFrame {
         btnPlanodeEntradas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -162,7 +169,14 @@ public class Financeiro extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Financeiro().setVisible(true);
+                Financeiro dialog = new Financeiro(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

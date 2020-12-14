@@ -32,20 +32,28 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class TurmasView extends javax.swing.JFrame {
+public class TurmasView extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final int numeroTela = 2;
     private final TurmasController controller;
     private String diasDaSemana=null;
     private ArrayList <String> diasDaSemanaUnitarios;
     private String campoHorario="";
     private final JTextField campoMaximoAlunos = new FormatacaodeCamposRestritos();
-    private final TurmasAdicionar telaTurmasAdicionar=new TurmasAdicionar();
+    private final TurmasAdicionar telaTurmasAdicionar;
+    private final turmasFrequencia telaTurmasFrequencia;
 
     /**
      * Creates new form Turmas
+     * @param parent
+     * @param modal
      */
-    public TurmasView()  {
+    public TurmasView(java.awt.Frame parent, boolean modal)  {
+        super(parent, modal);
         initComponents();
+        this.parent = parent;
+        telaTurmasAdicionar=new TurmasAdicionar(parent, true);
+        telaTurmasFrequencia=new turmasFrequencia(parent, true);
         controller = new TurmasController(this);
         botaoAdicionarTurmas.setBackground(new Color(0,0,0,0));
         botaoEditarTurmas.setBackground(new Color(0,0,0,0));
@@ -91,7 +99,7 @@ public class TurmasView extends javax.swing.JFrame {
         tabelaAlunos = new javax.swing.JTable();
         planodefundo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -307,7 +315,8 @@ public class TurmasView extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoEditarTurmasActionPerformed
 
     private void botaoAdicionarTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarTurmasActionPerformed
-        
+        telaTurmasAdicionar.setModal(true);
+        telaTurmasAdicionar.setLocationRelativeTo(null);         
         telaTurmasAdicionar.setVisible(true);
     }//GEN-LAST:event_botaoAdicionarTurmasActionPerformed
 
@@ -322,8 +331,9 @@ public class TurmasView extends javax.swing.JFrame {
 
     private void botaoListarTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarTurmasActionPerformed
         // TODO add your handling code here:
-        turmasFrequencia abrir=new turmasFrequencia();
-        abrir.setVisible(true);
+        telaTurmasFrequencia.setModal(true);
+        telaTurmasFrequencia.setLocationRelativeTo(null);         
+        telaTurmasFrequencia.setVisible(true);
     }//GEN-LAST:event_botaoListarTurmasActionPerformed
 
     private void barraDeRolagemDiasdaSemanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraDeRolagemDiasdaSemanaMouseDragged
@@ -421,7 +431,14 @@ public class TurmasView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TurmasView().setVisible(true);
+                TurmasView dialog = new TurmasView(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     
