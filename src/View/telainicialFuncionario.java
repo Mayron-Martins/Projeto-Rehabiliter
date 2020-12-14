@@ -393,8 +393,8 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
     private void botaoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMenuActionPerformed
         // TODO add your handling code here:
-        Menu jump=new Menu();
-        jump.setVisible(true);
+        
+        menuFuncionario.setVisible(true);
     }//GEN-LAST:event_botaoMenuActionPerformed
 
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
@@ -509,9 +509,9 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         jump.setVisible(true);
      */
         
-        JIFAlunosCadastro aluno=new JIFAlunosCadastro();
-        jdpPrincipal.add(aluno);
-        aluno.setVisible(true);
+        JIFAlunosCadastro alunotela=new JIFAlunosCadastro();
+        jdpPrincipal.add(alunotela);
+        alunotela.setVisible(true);
         
     }//GEN-LAST:event_botaoAlunos1ActionPerformed
 
