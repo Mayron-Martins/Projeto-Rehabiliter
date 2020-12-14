@@ -66,14 +66,16 @@ public class ImpressaoComponentes {
             PrintService impressoraPadrao = PrintServiceLookup.lookupDefaultPrintService();
             PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
             PrintService printService = ServiceUI.printDialog(null, 300, 200, printServices, impressoraPadrao, DocFlavor.INPUT_STREAM.AUTOSENSE, new HashPrintRequestAttributeSet()).createPrintJob().getPrintService();
-
-            PrintService myPrintService = findPrintService(printService.getName(), printServices);
-
-            PrinterJob job = PrinterJob.getPrinterJob();
-            job.setPageable(new PDFPageable(document));
-            job.setPrintService(myPrintService);
-            job.print();
-            document.close();
+            
+            if(printService!=null){
+               PrintService myPrintService = findPrintService(printService.getName(), printServices);
+                PrinterJob job = PrinterJob.getPrinterJob();
+                job.setPageable(new PDFPageable(document));
+                job.setPrintService(myPrintService);
+                job.print();
+                document.close(); 
+            }
+            
         } catch (IOException | PrinterException ex) {
             JOptionPane.showMessageDialog(null, "Não é possível imprimir");
         }

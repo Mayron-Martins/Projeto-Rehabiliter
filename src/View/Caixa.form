@@ -157,6 +157,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="campoParcelamento">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoParcelamentoMouseClicked"/>
           </Events>

@@ -212,6 +212,7 @@ public class Caixa extends javax.swing.JDialog {
         });
         jPanelFormaDePagamento.add(alternarCredito, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
+        campoParcelamento.setEditable(false);
         campoParcelamento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 campoParcelamentoMouseClicked(evt);
