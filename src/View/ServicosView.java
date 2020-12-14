@@ -56,7 +56,7 @@ public class ServicosView extends javax.swing.JDialog {
         btnFechar.setBackground(new Color(0,0,0,0));
         desabilitarComponentes();
         fecharTelaESC();
-        this.setarValores();
+        setarValores();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
     }
@@ -105,7 +105,7 @@ public class ServicosView extends javax.swing.JDialog {
         });
         getContentPane().add(campoOutroPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 295, 130, 30));
 
-        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diária", "Semanal", "Mensal", "Trimestral", "Semestral", "Anual" }));
+        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diária", "Semanal", "Mensal", "Trimestral", "Quadrimestral", "Semestral", "Anual" }));
         comboPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 comboPeriodoMouseClicked(evt);
@@ -285,7 +285,6 @@ public class ServicosView extends javax.swing.JDialog {
         campoOutroPeriodo.setText("Outro");
         campoOutroPeriodo.setEnabled(false);
         comboDias.setEnabled(false);
-        campoDias.setText("");
         campoDias.setEnabled(false);
     }//GEN-LAST:event_comboPeriodoMouseClicked
 
@@ -293,7 +292,6 @@ public class ServicosView extends javax.swing.JDialog {
         campoOutroPeriodo.setEnabled(true);
         this.esvaziarOutroTipo();
         comboDias.setEnabled(true);
-        campoDias.setText("");
         campoDias.setEnabled(true);
         comboPeriodo.setEnabled(false);        
     }//GEN-LAST:event_campoOutroPeriodoMouseClicked
@@ -391,10 +389,13 @@ public class ServicosView extends javax.swing.JDialog {
         return campoOutroPeriodo;
     }
     
-    private void setarValores(){
+    public void setarValores(){
         comboPeriodo.setEnabled(true);
         campoOutroPeriodo.setText("Outro");
         campoOutroPeriodo.setEnabled(false);
+        comboDias.setEnabled(false);
+        campoDias.setText("");
+        campoDias.setEnabled(false);
     }
     
     private void esvaziarOutroTipo(){

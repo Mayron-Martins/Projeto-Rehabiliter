@@ -100,7 +100,7 @@ public class ServicosController {
     public void editarServicos() throws SQLException, ParseException{
         if(this.view.getTabelaServicos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaServicos().getSelectedRow();
-            int codTurma = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
+            int codServico = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
             String nome = this.tabelaDeServicos.getValueAt(linhaSelecionada, 1).toString();
             
             String periodo = this.retornarPeriodo();
@@ -122,24 +122,52 @@ public class ServicosController {
             if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
             
             int periodDays = this.periodDays();
-            Servicos servico = new Servicos(codTurma, nome, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays);
-        
+            Servicos servico = new Servicos(codServico, nome, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays);
+            Servicos servicoAnterior = this.retornarServicoAnterior(codServico);
         //Inserindo Dados
         if(nome.equals("")){
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
-            servicosDao.atualizarDados(servico);
-            
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                String acao = "Edição de Serviços";
-                String descricao = "Edição do serviço "+nome;
-                this.setarLog(funcionarios, acao, descricao);
+            if(!this.retornarAlunosUsando(codServico)){
+                if(periodDays!=servicoAnterior.getPeriodDays()||valor.compareTo(servicoAnterior.getValor())!=0
+                    ||valorAPrazoCredito.compareTo(servicoAnterior.getValorPrazoCredito())!=0
+                    ||valorAPrazoDebito.compareTo(servicoAnterior.getValorPrazoDebito())!=0
+                    ||valorAVista.compareTo(servicoAnterior.getValorVista())!=0
+                    ||valorBoleto.compareTo(servicoAnterior.getValorBoleto())!=0){
+                    
+                    view.exibeMensagem("Não é possível alterar pois ainda existem alunos utilizando o serviço!");
+                 }
+                else{
+                    servicosDao.atualizarDados(servico);   
+                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                    if(funcionarios!=null){
+                        String acao = "Edição de Serviços";
+                        String descricao = "Edição do serviço "+nome;
+                        this.setarLog(funcionarios, acao, descricao);
+                    }
+                    view.exibeMensagem("Sucesso!");
+                    //Limpando Campos
+                    limparTabela();
+                    listarServicos();
+                    view.setarValores();
+                    selecionarTabela();
+                }
             }
-            view.exibeMensagem("Sucesso!");
-            //Limpando Campos
-            limparTabela();
-            listarServicos();
+            else{
+               servicosDao.atualizarDados(servico);   
+                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                if(funcionarios!=null){
+                    String acao = "Edição de Serviços";
+                    String descricao = "Edição do serviço "+nome;
+                    this.setarLog(funcionarios, acao, descricao);
+                }
+                view.exibeMensagem("Sucesso!");
+                //Limpando Campos
+                limparTabela();
+                listarServicos();
+                view.setarValores();
+                selecionarTabela();
+            }
         }
             //Turmas 
         }
@@ -149,7 +177,8 @@ public class ServicosController {
     
     public void selecionarTabela() throws SQLException{
       if(this.view.getTabelaServicos().getSelectedRow()!=-1){
-          //Número da linha selecionada
+        view.setarValores();
+        //Número da linha selecionada
           int linhaSelecionada = this.view.getTabelaServicos().getSelectedRow();
           //Habilita itens que ficam acima da tabela
           this.view.habilitarComponentes();
@@ -254,12 +283,12 @@ public class ServicosController {
                 case "Quadrimestral":
                     return 120;
                 case "Semestral":
-                    return 150;
+                    return 180;
                 case "Anual":
                     return 365;
             }
             try {
-                ArrayList <Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE periodo = "+tipo);
+                ArrayList <Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE periodo = '"+tipo+"'");
                 if(servicos!=null){
                     return servicos.get(0).getPeriodDays();
                 }
@@ -295,7 +324,7 @@ public class ServicosController {
     }
     
     private boolean retornarAlunosUsando(int codServico) throws SQLException, ParseException{
-        ArrayList <Aluno> alunos = alunoDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codServico = "+codServico+" AND ");
+        ArrayList <Aluno> alunos = alunoDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codServico = "+codServico);
         return alunos ==null;
     }
 }

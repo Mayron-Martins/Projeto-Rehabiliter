@@ -44,13 +44,14 @@
     <Component class="javax.swing.JComboBox" name="comboPeriodo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="6">
+          <StringArray count="7">
             <StringItem index="0" value="Di&#xe1;ria"/>
             <StringItem index="1" value="Semanal"/>
             <StringItem index="2" value="Mensal"/>
             <StringItem index="3" value="Trimestral"/>
-            <StringItem index="4" value="Semestral"/>
-            <StringItem index="5" value="Anual"/>
+            <StringItem index="4" value="Quadrimestral"/>
+            <StringItem index="5" value="Semestral"/>
+            <StringItem index="6" value="Anual"/>
           </StringArray>
         </Property>
       </Properties>
