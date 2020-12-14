@@ -48,7 +48,7 @@ public class ServicosView extends javax.swing.JDialog {
         
         this.parent = parent;
         telaServicosAdicionar=new ServicosAdicionar(parent, false);
-        
+        btnListar.setBackground(new Color(0,0,0,0));
         controller = new ServicosController(this);
         btnAdicionar.setBackground(new Color(0,0,0,0));
         btnEditar.setBackground(new Color(0,0,0,0));
@@ -81,6 +81,7 @@ public class ServicosView extends javax.swing.JDialog {
         btnFechar = new javax.swing.JButton();
         painelderolagem = new javax.swing.JScrollPane();
         tabelaServicos = new javax.swing.JTable();
+        btnListar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -132,7 +133,7 @@ public class ServicosView extends javax.swing.JDialog {
                 btnRemoverActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 210, 60));
+        getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 210, 60));
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnEditar.png"))); // NOI18N
         btnEditar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnEditarHover.png"))); // NOI18N
@@ -141,7 +142,7 @@ public class ServicosView extends javax.swing.JDialog {
                 btnEditarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 210, 210, 60));
+        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 210, 60));
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnAdicionar.png"))); // NOI18N
         btnAdicionar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnAdicionarHover.png"))); // NOI18N
@@ -150,7 +151,7 @@ public class ServicosView extends javax.swing.JDialog {
                 btnAdicionarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 210, 60));
+        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 210, 60));
 
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
         btnFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
@@ -208,6 +209,9 @@ public class ServicosView extends javax.swing.JDialog {
         painelderolagem.setViewportView(tabelaServicos);
 
         getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
+
+        btnListar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoListar.png"))); // NOI18N
+        getContentPane().add(btnListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 210, 210, 60));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/telafundo.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -342,6 +346,7 @@ public class ServicosView extends javax.swing.JDialog {
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnFechar;
+    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnRemover;
     private javax.swing.JTextField campoDias;
     private javax.swing.JTextField campoOutroPeriodo;

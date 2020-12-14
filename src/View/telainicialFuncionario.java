@@ -69,6 +69,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoFrequencia.setBackground(new Color(0,0,0,0));
         botaoMenu.setBackground(new Color(0,0,0,0));
         setExtendedState(MAXIMIZED_BOTH);
+        
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         jScrollPane1.setVisible(false);
         menuFuncionario.setVisible(false);
