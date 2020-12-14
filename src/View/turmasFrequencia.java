@@ -24,7 +24,6 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 
 /**
@@ -37,7 +36,7 @@ public class turmasFrequencia extends javax.swing.JDialog {
     private final FrequenciaTurmasController controller;
     private final JComboBox comboPresenca = new JComboBox();
     private final JComboBox comboPresencaBanco = new JComboBox();
-    private boolean addictionConfirmation;
+    private final boolean addictionConfirmation;
 
     /**
      * Creates new form turmasFrequencia

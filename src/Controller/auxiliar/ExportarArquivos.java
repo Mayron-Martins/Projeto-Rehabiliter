@@ -37,18 +37,8 @@ import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.Date;
-import org.apache.commons.compress.utils.IOUtils;
-import org.apache.poi.util.DocumentFormatException;
-import org.jodconverter.office.OfficeException;
-import org.jodconverter.office.OfficeUtils;
-import org.jodconverter.JodConverter;
-import org.jodconverter.document.DocumentFormat;
-import org.jodconverter.office.LocalOfficeManager;
-import org.jodconverter.office.OfficeManager;
 
 
 

@@ -20,7 +20,6 @@ import Model.auxiliar.FrequenciaTurmas;
 import Model.auxiliar.Horarios;
 import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Turmas;
-import View.TurmasView;
 import View.turmasFrequencia;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -41,7 +40,7 @@ public class FrequenciaTurmasController {
     private final DefaultTableModel tabelaDeAlunosBanco;
     private final TurmasDao turmasDao = new TurmasDao();
     private final AlunosDao alunosDao = new AlunosDao();
-    private final HorariosDao horariosDao = new HorariosDao();
+    private final HorariosDao horariosDao = new HorariosDao();  
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final FrequenciaTurmasDao frequencia = new FrequenciaTurmasDao();
