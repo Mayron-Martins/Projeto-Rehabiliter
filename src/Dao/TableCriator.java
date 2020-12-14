@@ -90,7 +90,9 @@ public class TableCriator {
                 + "descricao VARCHAR(MAX) NULL,"
                 + "debito DECIMAL(16,2) NULL,"
                 + "valorContrato DECIMAL(16,2) NOT NULL,"
-                + "dataCadastro Date NULL"  //Valor incrementado ou decrementado conforme o aluno faz compras.
+                + "dataCadastro Date NULL,"
+                + "valorMensal DECIMAL(16,2) NULL,"
+                + "renovacaoAutomatica INT NULL"  //Valor incrementado ou decrementado conforme o aluno faz compras.
                 + ") ON [AlunoseClientes];");
     }
     

@@ -39,6 +39,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.LocalDate;
+import java.util.Date;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.poi.util.DocumentFormatException;
 import org.jodconverter.office.OfficeException;
@@ -212,7 +214,7 @@ public class ExportarArquivos {
         }
      }
     
-        public void exportarContratoWord(Aluno aluno, EnderecoAlunos endereco, Servicos servico, Planos plano) throws InvalidFormatException{
+        public void exportarContratoWord(Aluno aluno, EnderecoAlunos endereco, Servicos servico, Planos plano, int diasContrato) throws InvalidFormatException{
         try {
             //Local do Arquivo Contrato
             FileInputStream contrato = new FileInputStream("C:/Rehabiliter/Contrato.docx");
@@ -247,6 +249,13 @@ public class ExportarArquivos {
                 }
             }else{responsavel = aluno.getNomedamae();}
             
+            String diaEncerramento = "Indefinido";
+            if(aluno.getRenovacaoAutomatica()==0){
+                Date dataEnc = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
+                LocalDate dataEncerramento = converterData.conversaoLocalforDate(dataEnc).plusDays(diasContrato);
+                diaEncerramento = converterData.parseDate(converterData.conversaoLocalforDate(dataEncerramento));
+            }
+            
             int ordem =0;
             for(XWPFParagraph listaParagrafos : documentoNovo.getParagraphs()){
                 for(XWPFRun run : listaParagrafos.getRuns()){
@@ -266,6 +275,7 @@ public class ExportarArquivos {
                         if(palavra.contains("FORMADEPAGAMENTO")&&ordem==10){palavra = palavra.replace("FORMADEPAGAMENTO", servico.getFormaPagamento());ordem++;}
                         if(palavra.contains("VALORMATRICULA")&&ordem==11){palavra = palavra.replace("VALORMATRICULA", "R$ "+aluno.getValorContrato());ordem++;}
                         if(palavra.contains("DATAINICIO")&&ordem==12){palavra = palavra.replace("DATAINICIO", converterData.parseDate(aluno.getDataCadastro()));ordem++;}
+                        if(palavra.contains("DATAFIM")&&ordem==13){palavra = palavra.replace("DATAFIM", diaEncerramento);ordem++;}
                         palavra = palavra.replace("{", "");
                         palavra = palavra.replace("}", "");
                         run.setText(palavra, 0);

@@ -32,6 +32,7 @@ import View.TurmasView;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -117,8 +118,9 @@ public class AdicionarAlunosController {
         String cpfPai = view.getCampoCPFPai().getText();
         String plano = view.getComboPlano().getSelectedItem().toString();
         String turma = view.getComboTurma().getSelectedItem().toString();
-        String descricao = ""; //Nula por enquanto
+        String descricao = view.getCampoDescricao().getText(); //Nula por enquanto
         BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
+        BigDecimal valorMensal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValorMensal().getText()).toString());
         BigDecimal debito = valorContrato;
         
         //Dados de Matrícula e Serviços
@@ -148,16 +150,23 @@ public class AdicionarAlunosController {
         String complemento = "";
         String referencia = "";
 
+        Servicos servicoContratado = this.buscarServico(codPlano);
         
         //Dados do Plano
-        int diaVencimento = view.getCampoDiaVencimento().getDay();
-        
+        int diaVencimento = this.diaVencimento(servicoContratado.getPeriodDays());
+        int renovacaoAutomatica =0;
+        if(view.getRenovacaoAuto().isSelected()){
+        renovacaoAutomatica = 1;
+        }
+
         //Cria os tipos Aluno, Endereco e Matricula com os dados
-        Aluno aluno = new Aluno(codAluno, nome, cpf, rg, telefone, celular, email, dataNascimento, nomeMae, nomePai, contatoMae, contatoPai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato, dataCadastro);
+        
+        Aluno aluno = new Aluno(codAluno, nome, cpf, rg, telefone, celular, email, 
+        dataNascimento, nomeMae, nomePai, contatoMae, contatoPai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
         EnderecoAlunos endereco = new EnderecoAlunos(codEndereco, codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
         Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, null, null, "Pendente");
-        Servicos servicoContratado = this.buscarServico(codPlano);
+        
         
         //Obtem a quantidade de alunos presentes na turma
         int quantAlunosPresentes = verificar.verificarUltimo("tblTurmas", "quantAlunos")+1;
@@ -170,7 +179,7 @@ public class AdicionarAlunosController {
         }
         
         else{
-            exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, planoAluno);
+            exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, planoAluno, servicoContratado.getPeriodDays());
             alunosDao.inserirDados(aluno, endereco, matricula, planoAluno, codTurma, codTurma);
             turmasDao.atualizarQuantAunos(codTurma, quantAlunosPresentes);
             ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
@@ -229,19 +238,20 @@ public class AdicionarAlunosController {
     public void setarValorContrato() throws SQLException{
         if(view.getComboPlano().getSelectedIndex()>0){
             String nomeServico = view.getComboPlano().getSelectedItem().toString();
-            int codServico = Integer.parseInt(String.valueOf(nomeServico.charAt(0)));
-            ArrayList<Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico);
+            int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
+            Servicos servico = this.buscarServico(codServico);
             
-            String metodoDePagamento = servicos.get(0).getFormaPagamento();
+            String metodoDePagamento = servico.getFormaPagamento();
             
             BigDecimal valorContrato = null;
-            if(metodoDePagamento.equals("[Nenhuma]")){valorContrato = new BigDecimal(servicos.get(0).getValor().toString());}
-            if(metodoDePagamento.equals("Dinheiro")){valorContrato = new BigDecimal(servicos.get(0).getValorVista().toString());}
-            if(metodoDePagamento.equals("Boleto")){valorContrato = new BigDecimal(servicos.get(0).getValorBoleto().toString());}
-            if(metodoDePagamento.equals("Cartão de Crédito")){valorContrato = new BigDecimal(servicos.get(0).getValorPrazoCredito().toString());}
-            if(metodoDePagamento.equals("Cartão de Débito")){valorContrato = new BigDecimal(servicos.get(0).getValorPrazoDebito().toString());}   
+            if(metodoDePagamento.equals("[Nenhuma]")){valorContrato = new BigDecimal(servico.getValor().toString());}
+            if(metodoDePagamento.equals("Dinheiro")){valorContrato = new BigDecimal(servico.getValorVista().toString());}
+            if(metodoDePagamento.equals("Boleto")){valorContrato = new BigDecimal(servico.getValorBoleto().toString());}
+            if(metodoDePagamento.equals("Cartão de Crédito")){valorContrato = new BigDecimal(servico.getValorPrazoCredito().toString());}
+            if(metodoDePagamento.equals("Cartão de Débito")){valorContrato = new BigDecimal(servico.getValorPrazoDebito().toString());}   
             
             view.getCampoValor().setText(valorContrato.toString());
+            this.setarValorMensal(servico);
         }
     }
     
@@ -277,5 +287,90 @@ public class AdicionarAlunosController {
     
     private Servicos buscarServico(int codServico) throws SQLException{
         return servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
+    }
+    
+    private void setarValorMensal(Servicos servicoContratado){
+        BigDecimal periodDays = new BigDecimal(servicoContratado.getPeriodDays());
+        BigDecimal valorTotal = new BigDecimal(0);
+        
+        if(servicoContratado.getValor().compareTo(BigDecimal.ZERO)!=0){
+            valorTotal = servicoContratado.getValor();
+        }
+        if(servicoContratado.getValorBoleto().compareTo(BigDecimal.ZERO)!=0){
+            valorTotal = servicoContratado.getValorBoleto();
+        }
+        if(servicoContratado.getValorPrazoCredito().compareTo(BigDecimal.ZERO)!=0){
+            valorTotal = servicoContratado.getValorPrazoCredito();
+        }
+        if(servicoContratado.getValorPrazoDebito().compareTo(BigDecimal.ZERO)!=0){
+            valorTotal = servicoContratado.getValorPrazoDebito();
+        }
+        if(servicoContratado.getValorVista().compareTo(BigDecimal.ZERO)!=0){
+            valorTotal = servicoContratado.getValorVista();
+        }
+
+        
+        BigDecimal valorMensal = new BigDecimal(0);
+        String mensal = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+        String anual = periodDays.divide(new BigDecimal(365), 3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+
+        
+        boolean resultadoMensal = mensal.matches("[0-9]*");
+        boolean resultadoAnual = anual.matches("[0-9]*");
+
+        if(resultadoMensal||resultadoAnual){
+            view.getCampoDiaVencimento().setEnabled(true);
+            if(resultadoMensal){
+               valorMensal = valorTotal.divide(periodDays.divide(new BigDecimal(30)));
+               valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+               view.getCampoValorMensal().setText(valorMensal.toString());
+            }
+            else{
+                valorMensal = valorTotal.divide(periodDays.divide(new BigDecimal(365)).multiply(new BigDecimal(12)));
+                valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+                view.getCampoValorMensal().setText(valorMensal.toString());
+            }    
+        }
+        else{
+            view.getCampoDiaVencimento().setEnabled(false);
+            boolean renovacaoAutomatica = view.getRenovacaoAuto().isSelected();
+            
+            if(periodDays.compareTo(new BigDecimal(15))<=0){
+                if(renovacaoAutomatica){
+                    valorMensal = valorTotal.multiply((new BigDecimal(30)).divide(periodDays,2, RoundingMode.UP));
+                    valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+                    
+                    view.getCampoValorMensal().setText(valorMensal.toString());
+                }
+                else{
+                    valorMensal = valorTotal;
+                    view.getCampoValorMensal().setText(valorMensal.toString());
+                }
+            }
+            else{
+                periodDays = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP);
+                periodDays = periodDays.setScale(0, RoundingMode.UP);
+                
+                valorMensal = valorTotal.divide(periodDays);
+                valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+
+                view.getCampoValorMensal().setText(valorMensal.toString());
+            }
+            
+        }  
+    }
+    private int diaVencimento(int diasContrato){
+        if(view.getCampoDiaVencimento().isEnabled()){
+            return view.getCampoDiaVencimento().getDay();
+        }
+        else{
+            BigDecimal dias = new BigDecimal(diasContrato);
+            dias = dias.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP);
+            BigDecimal diasInteiros = dias.setScale(0, RoundingMode.DOWN);
+            dias = dias.min(diasInteiros);
+            dias = dias.multiply(new BigDecimal(30)).setScale(0, RoundingMode.UP);
+
+            return dias.intValueExact();
+        }
     }
 }

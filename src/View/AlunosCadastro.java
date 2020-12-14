@@ -22,12 +22,14 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -91,7 +93,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
         descricao = new javax.swing.JPanel();
         btnConfirma = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        campoDescricao = new javax.swing.JTextArea();
         jpanelDados = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         campoNomeAluno = new FormatacaoCamposRestritosLetras(50);
@@ -141,7 +143,9 @@ public class AlunosCadastro extends javax.swing.JDialog {
         turmasehorarios = new javax.swing.JButton();
         comboPlano = new javax.swing.JComboBox<>();
         jLabel24 = new javax.swing.JLabel();
+        campoValorMensal = new JMoneyField();
         campoValor = new JMoneyField();
+        jLabel27 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         comboTurma = new javax.swing.JComboBox<>();
         jLabel26 = new javax.swing.JLabel();
@@ -183,9 +187,9 @@ public class AlunosCadastro extends javax.swing.JDialog {
         });
         descricao.add(btnConfirma, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        campoDescricao.setColumns(20);
+        campoDescricao.setRows(5);
+        jScrollPane1.setViewportView(campoDescricao);
 
         descricao.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 470, 170));
 
@@ -439,7 +443,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
                 turmasehorariosActionPerformed(evt);
             }
         });
-        jPanelCadastroFinal.add(turmasehorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 230, 32));
+        jPanelCadastroFinal.add(turmasehorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(478, 130, 230, 32));
 
         comboPlano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
         comboPlano.addActionListener(new java.awt.event.ActionListener() {
@@ -452,7 +456,14 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setText("Plano");
         jPanelCadastroFinal.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
-        jPanelCadastroFinal.add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 170, 32));
+
+        campoValorMensal.setEditable(false);
+        jPanelCadastroFinal.add(campoValorMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 100, 32));
+        jPanelCadastroFinal.add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 100, 32));
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel27.setText("Valor Mensal");
+        jPanelCadastroFinal.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 50, 90, -1));
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setText("Data de Vencimento");
@@ -467,7 +478,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jPanelCadastroFinal.add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 190, 32));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel26.setText("Valor");
+        jLabel26.setText("Valor Total");
         jPanelCadastroFinal.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, -1, -1));
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
@@ -491,9 +502,9 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jPanelCadastroFinal.add(campoDiaVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
         renovacaoAuto.setText("Renovação Automática");
-        jPanelCadastroFinal.add(renovacaoAuto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, -1, -1));
+        jPanelCadastroFinal.add(renovacaoAuto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, -1, -1));
 
-        getContentPane().add(jPanelCadastroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 710, 490));
+        getContentPane().add(jPanelCadastroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 740, 490));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/cadastrar-alunofundo.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, 420));
@@ -676,6 +687,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private javax.swing.JTextField campoCidade;
     private javax.swing.JFormattedTextField campoContatoMae;
     private javax.swing.JFormattedTextField campoContatoPai;
+    private javax.swing.JTextArea campoDescricao;
     private com.toedter.calendar.JDayChooser campoDiaVencimento;
     private com.toedter.calendar.JDateChooser campoNascimentoAluno;
     private javax.swing.JTextField campoNomeAluno;
@@ -685,6 +697,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private javax.swing.JTextField campoRua;
     private javax.swing.JFormattedTextField campoTelefone;
     private javax.swing.JFormattedTextField campoValor;
+    private javax.swing.JFormattedTextField campoValorMensal;
     private javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JComboBox<String> comboPlano;
     private javax.swing.JComboBox<String> comboTurma;
@@ -707,6 +720,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -717,7 +731,6 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelCadastroFinal;
     private javax.swing.JPanel jPanelPais;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel jpanelDados;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JCheckBox renovacaoAuto;
@@ -796,6 +809,12 @@ public class AlunosCadastro extends javax.swing.JDialog {
         return campoValor;
     }
 
+    public JFormattedTextField getCampoValorMensal() {
+        return campoValorMensal;
+    }
+    
+    
+
     public JComboBox<String> getComboEstado() {
         return comboEstado;
     }
@@ -823,6 +842,15 @@ public class AlunosCadastro extends javax.swing.JDialog {
     public JPanel getJpanelDados() {
         return jpanelDados;
     }
+
+    public JCheckBox getRenovacaoAuto() {
+        return renovacaoAuto;
+    }
+
+    public JTextArea getCampoDescricao() {
+        return campoDescricao;
+    }
+    
     
     public void fecharTelaESC() {
         JRootPane meurootpane = getRootPane();
