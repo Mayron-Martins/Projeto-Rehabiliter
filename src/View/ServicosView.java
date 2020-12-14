@@ -284,11 +284,17 @@ public class ServicosView extends javax.swing.JDialog {
         comboPeriodo.setEnabled(true);
         campoOutroPeriodo.setText("Outro");
         campoOutroPeriodo.setEnabled(false);
+        comboDias.setEnabled(false);
+        campoDias.setText("");
+        campoDias.setEnabled(false);
     }//GEN-LAST:event_comboPeriodoMouseClicked
 
     private void campoOutroPeriodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoOutroPeriodoMouseClicked
         campoOutroPeriodo.setEnabled(true);
         this.esvaziarOutroTipo();
+        comboDias.setEnabled(true);
+        campoDias.setText("");
+        campoDias.setEnabled(true);
         comboPeriodo.setEnabled(false);        
     }//GEN-LAST:event_campoOutroPeriodoMouseClicked
 
@@ -369,12 +375,16 @@ public class ServicosView extends javax.swing.JDialog {
         this.comboPeriodo.setVisible(false);
         this.campoOutroPeriodo.setVisible(false);
         this.metodoPagamento.setVisible(false);
+        this.comboDias.setVisible(false);
+        this.campoDias.setVisible(false);
     }
     
     public void habilitarComponentes(){
         this.comboPeriodo.setVisible(true);
         this.campoOutroPeriodo.setVisible(true);
         this.metodoPagamento.setVisible(true);
+        this.comboDias.setVisible(true);
+        this.campoDias.setVisible(true);
     }
 
     public JTextField getCampoOutroPeriodo() {
