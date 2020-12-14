@@ -5,6 +5,7 @@
  */
 package View;
 
+import Dao.FileCriator;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -17,13 +18,27 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class ImprimirExportarGerente extends javax.swing.JFrame {
-
+public class ImprimirExportarGerente extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
+    private final int numeroTela = 6;
+    private final FileCriator criacaoDePasta = new FileCriator();
+    private final turmasFrequencia telaTurmasFrequencia;
+    private final FinanceiroAnaliseFinanceira telaAnaliseFinanceira;
+    private final Relatoriosfun telaLogFuncionarios;
     /**
      * Creates new form ImprimirExportarGerente
+     * @param parent
+     * @param modal
      */
-    public ImprimirExportarGerente() {
+    public ImprimirExportarGerente(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        telaTurmasFrequencia= new turmasFrequencia(parent, true);
+        telaAnaliseFinanceira=new FinanceiroAnaliseFinanceira(parent, true);
+        telaLogFuncionarios=new Relatoriosfun(parent, true);
+        
         botaoFechar.setBackground(new Color(0,0,0,0));
         btnFrequencia.setBackground(new Color(0,0,0,0));
         btnRelatoriosFunc.setBackground(new Color(0,0,0,0));
@@ -47,9 +62,14 @@ public class ImprimirExportarGerente extends javax.swing.JFrame {
         btnRelatoriosFunc = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -101,26 +121,33 @@ public class ImprimirExportarGerente extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoFecharActionPerformed
 
     private void btnRelatoriosFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosFuncActionPerformed
-        Relatoriosfun abrir=new Relatoriosfun();
-        abrir.setVisible(true);
+        telaLogFuncionarios.setModal(true);
+        telaLogFuncionarios.setLocationRelativeTo(null);
+        telaLogFuncionarios.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRelatoriosFuncActionPerformed
 
     private void btnRelatoriosOrcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosOrcaActionPerformed
         // TODO add your handling code here:
-        FinanceiroAnaliseFinanceira abrir=new FinanceiroAnaliseFinanceira();
-        abrir.alternarImprimir();
-        abrir.setVisible(true);
+        telaAnaliseFinanceira.alternarImprimir();
+        telaAnaliseFinanceira.setModal(true);
+        telaAnaliseFinanceira.setLocationRelativeTo(null);
+        telaAnaliseFinanceira.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRelatoriosOrcaActionPerformed
 
     private void btnFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrequenciaActionPerformed
-           turmasFrequencia abrir=new turmasFrequencia();
-           abrir.alternarImprimir();
-           abrir.setVisible(true);
-           this.dispose();
+        telaTurmasFrequencia.alternarImprimir();
+        telaTurmasFrequencia.setModal(true);
+        telaTurmasFrequencia.setLocationRelativeTo(null);
+        telaTurmasFrequencia.setVisible(true);
+        this.dispose();
             // TODO add your handling code here:
     }//GEN-LAST:event_btnFrequenciaActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        criacaoDePasta.fileDocCriator();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -152,7 +179,14 @@ public class ImprimirExportarGerente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ImprimirExportarGerente().setVisible(true);
+                ImprimirExportarGerente dialog = new ImprimirExportarGerente(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -177,5 +211,11 @@ public void fecharTelaESC() {
             }
         });
     }
+
+    public int getNumeroTela() {
+        return numeroTela;
+    }
+
+
 }
 

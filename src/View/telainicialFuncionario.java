@@ -34,17 +34,33 @@ import sun.swing.table.DefaultTableCellHeaderRenderer;
  */
 public class telainicialFuncionario extends javax.swing.JFrame {
     private final TelaInicioFuncionariosController controller;
-    private final turmasFrequencia telaTurmasFrequencias = new turmasFrequencia();
-    private final AlunosView telaAlunos=new AlunosView();
-    private final Financeiro telaFinanceiro=new Financeiro();
-    private final Caixa telaCaixa= new Caixa();
-    private final TurmasView turmasView=new TurmasView();
+    private final AlunosView telaAlunos;
+    private final TurmasView telaTurmas;
+    private final turmasFrequencia telaTurmasFrequencia;
+    private final ProdutosView telaProdutos;
+    private final ServicosView telaServicos;
+    private final Financeiro telaFinanceiro;
+    private final ImprimirExportarGerente telaImprimirExportar;
+    private final BackupView telaBackup;
+    private final Caixa telaCaixa;
 
     /**
      * Creates new form telainicialFuncionario
      */
     public telainicialFuncionario() {
         initComponents();
+        
+        telaAlunos=new AlunosView(this, false);
+        telaTurmas=new TurmasView(this, false);
+        telaTurmasFrequencia= new turmasFrequencia(this, false);
+        telaProdutos=new ProdutosView(this, false);
+        telaServicos=new ServicosView(this, false);
+        telaFinanceiro = new Financeiro(this, false);
+        telaImprimirExportar= new ImprimirExportarGerente(this, false);
+        telaBackup= new BackupView(this, false);
+        telaCaixa= new Caixa(this, false);
+        
+        
         controller = new TelaInicioFuncionariosController(this);
         botaoSair.setBackground(new Color(0,0,0,0));
         botaoCaixa.setBackground(new Color(0,0,0,0));
@@ -57,7 +73,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         jScrollPane1.setVisible(false);
         menuFuncionario.setVisible(false);
         menuFuncionario.setBackground(new Color(0,0,0,2));
-        jdpPrincipal.setBackground(new Color(0,0,0,0));
         
         
         
@@ -85,7 +100,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jdpPrincipal = new javax.swing.JDesktopPane();
         menuFuncionario = new javax.swing.JPanel();
         botaoFechar = new javax.swing.JButton();
         botaoBackup = new javax.swing.JButton();
@@ -118,9 +132,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jdpPrincipal.setForeground(new java.awt.Color(0, 0, 0));
-        jdpPrincipal.setToolTipText("");
 
         menuFuncionario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -215,12 +226,15 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         planodefundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/menu-principal-funcionárioFundo.png"))); // NOI18N
         menuFuncionario.add(planodefundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, -1));
 
+        getContentPane().add(menuFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSairActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         botaoCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaprincipal.png"))); // NOI18N
         botaoCaixa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaHoverPrincipal.png"))); // NOI18N
@@ -229,6 +243,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoCaixaActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoCaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosprincipal.png"))); // NOI18N
         botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosHoverprincipal.png"))); // NOI18N
@@ -237,6 +252,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoAlunosActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         botaoFrequencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaprincipal.png"))); // NOI18N
         botaoFrequencia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaHoverprincipal.png"))); // NOI18N
@@ -245,6 +261,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoFrequenciaActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         botaoFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroprincipal.png"))); // NOI18N
         botaoFinanceiro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroHoverprincipal.png"))); // NOI18N
@@ -253,6 +270,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoFinanceiroActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         botaoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuprincipal.png"))); // NOI18N
         botaoMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuHoverPrincipal.png"))); // NOI18N
@@ -261,6 +279,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoMenuActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         tabelaAniversariantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -299,82 +318,13 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
         animaçãoRehabiliter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
+        getContentPane().add(animaçãoRehabiliter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-funcionáriofundo.jpg"))); // NOI18N
-
-        jdpPrincipal.setLayer(menuFuncionario, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpPrincipal.setLayer(botaoSair, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpPrincipal.setLayer(botaoCaixa, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpPrincipal.setLayer(botaoAlunos, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpPrincipal.setLayer(botaoFrequencia, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpPrincipal.setLayer(botaoFinanceiro, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpPrincipal.setLayer(botaoMenu, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpPrincipal.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpPrincipal.setLayer(animaçãoRehabiliter, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpPrincipal.setLayer(planodefundo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout jdpPrincipalLayout = new javax.swing.GroupLayout(jdpPrincipal);
-        jdpPrincipal.setLayout(jdpPrincipalLayout);
-        jdpPrincipalLayout.setHorizontalGroup(
-            jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(544, 544, 544)
-                .addComponent(botaoCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(820, 820, 820)
-                .addComponent(animaçãoRehabiliter, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(376, 376, 376)
-                .addComponent(botaoFinanceiro, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(1130, 1130, 1130)
-                .addComponent(botaoMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(botaoAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(menuFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(208, 208, 208)
-                .addComponent(botaoFrequencia, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(planodefundo)
-        );
-        jdpPrincipalLayout.setVerticalGroup(
-            jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(botaoCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(652, 652, 652)
-                .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(800, 800, 800)
-                .addComponent(animaçãoRehabiliter, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(350, 350, 350)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(botaoFinanceiro, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(botaoMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(botaoAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(menuFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 1020, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jdpPrincipalLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(botaoFrequencia, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(planodefundo)
-        );
-
-        getContentPane().add(jdpPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 1030));
+        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -399,62 +349,63 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoMenuActionPerformed
 
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
-        /*try {
-            if(controller.permissaoDeAcessoATela()){
-                telaAlunos.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela(telaAlunos.getNumeroTela()+"")){
+                telaAlunos.setModal(true);
+                telaAlunos.setLocationRelativeTo(null);
+                telaAlunos.setVisible(true);   
             }
             else{this.exibeMensagem("Acesso Negado");}
         } catch (SQLException ex) {
-            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        JIFAlunosCadastro tela = new JIFAlunosCadastro();
-        jdpPrincipal.add(tela);
-        tela.setVisible(true);
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
     private void botaoFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFrequenciaActionPerformed
         try {
-            // TODO add your handling code here:
-            if(controller.permissaoDeAcessoATela()){
-                telaTurmasFrequencias.setVisible(true);
+            if(controller.permissaoDeAcessoATela(telaTurmasFrequencia.getNumeroTela()+"")){
+                telaTurmasFrequencia.setModal(true);
+                telaTurmasFrequencia.setLocationRelativeTo(null);
+                telaTurmasFrequencia.setVisible(true);
             }
             else{this.exibeMensagem("Acesso Negado");}
         } catch (SQLException ex) {
-            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_botaoFrequenciaActionPerformed
 
     private void botaoFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiroActionPerformed
         try {
-            // TODO add your handling code here:
-            if(controller.permissaoDeAcessoATela()){
+            if(controller.permissaoDeAcessoATela(telaFinanceiro.getNumeroTela()+"")){
+                telaFinanceiro.setModal(true);
+                telaFinanceiro.setLocationRelativeTo(null);
                 telaFinanceiro.setVisible(true);
             }
             else{this.exibeMensagem("Acesso Negado");}
         } catch (SQLException ex) {
-            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoFinanceiroActionPerformed
 
     private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed
-        try {
-            // TODO add your handling code here:
-            if(controller.permissaoDeAcessoATela()){
-                telaCaixa.setVisible(true);
+       try {
+            if(controller.permissaoDeAcessoATela(telaCaixa.getNumeroTela()+"")){
+                telaCaixa.setModal(true);
+                telaCaixa.setLocationRelativeTo(null);
+                telaCaixa.setVisible(true);   
             }
             else{this.exibeMensagem("Acesso Negado");}
         } catch (SQLException ex) {
-            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoCaixaActionPerformed
 
@@ -479,57 +430,119 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
     private void botaoImprimirExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoImprimirExportarActionPerformed
         // TODO add your handling code here:
-        ImprimirExportar abrir= new ImprimirExportar();
-        abrir.setVisible(true);
         menuFuncionario.setVisible(false);
+        try {
+            if(controller.permissaoDeAcessoATela(telaImprimirExportar.getNumeroTela()+"")){
+                telaImprimirExportar.setModal(true);
+                telaImprimirExportar.setLocationRelativeTo(null);
+                telaImprimirExportar.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoImprimirExportarActionPerformed
 
     private void botaoFinanceiro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiro1ActionPerformed
         // TODO add your handling code here:
         menuFuncionario.setVisible(false);
-        Financeiro abrir = new Financeiro();
-        abrir.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela(telaFinanceiro.getNumeroTela()+"")){
+                telaFinanceiro.setModal(true);
+                telaFinanceiro.setLocationRelativeTo(null);
+                telaFinanceiro.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoFinanceiro1ActionPerformed
 
     private void botaoServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoServicosActionPerformed
         // TODO add your handling code here:
-        menuFuncionario.setVisible(false);
-        ServicosView abrir=new ServicosView();
-        abrir.setVisible(true);
+         menuFuncionario.setVisible(false);
+        try {
+            if(controller.permissaoDeAcessoATela(telaServicos.getNumeroTela()+"")){
+                telaServicos.setModal(true);
+                telaServicos.setLocationRelativeTo(null);
+                telaServicos.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoServicosActionPerformed
 
     private void botaoTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTurmasActionPerformed
-        // TODO add your handling code here:
         menuFuncionario.setVisible(false);
-        turmasView.setVisible(true);
+        try{
+            if(controller.permissaoDeAcessoATela(telaTurmas.getNumeroTela()+"")){
+                telaTurmas.setModal(true);
+                telaTurmas.setLocationRelativeTo(null);
+                telaTurmas.setVisible(true);   
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoTurmasActionPerformed
 
     private void botaoAlunos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunos1ActionPerformed
-        // TODO add your handling code here:
-     /*   menuFuncionario.setVisible(false);
-        AlunosView jump=new AlunosView();
-        jump.setVisible(true);
-     */
-        
-        JIFAlunosCadastro alunotela=new JIFAlunosCadastro();
-        jdpPrincipal.add(alunotela);
-        alunotela.setVisible(true);
-        
+        menuFuncionario.setVisible(false);
+        try {
+            if(controller.permissaoDeAcessoATela(telaAlunos.getNumeroTela()+"")){
+                telaAlunos.setModal(true);
+                telaAlunos.setLocationRelativeTo(null);
+                telaAlunos.setVisible(true);   
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoAlunos1ActionPerformed
 
     private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
         // TODO add your handling code here:
         menuFuncionario.setVisible(false);
-        ProdutosView abrir=new ProdutosView();
-        abrir.setVisible(true);
-
+        try {
+            if(controller.permissaoDeAcessoATela(telaProdutos.getNumeroTela()+"")){
+                telaProdutos.setModal(true);
+                telaProdutos.setLocationRelativeTo(null);
+                telaProdutos.setVisible(true);   
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoProdutosActionPerformed
 
     private void botaoCaixa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixa1ActionPerformed
         // TODO add your handling code here:
-        Caixa abrir= new Caixa();
-        abrir.setVisible(true);
         menuFuncionario.setVisible(false);
+        try {
+            if(controller.permissaoDeAcessoATela(telaCaixa.getNumeroTela()+"")){
+                telaCaixa.setModal(true);
+                telaCaixa.setLocationRelativeTo(null);
+                telaCaixa.setVisible(true);   
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoCaixa1ActionPerformed
 
     private void botaoSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSair1ActionPerformed
@@ -541,8 +554,18 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     private void botaoBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBackupActionPerformed
         // TODO add your handling code here:
         menuFuncionario.setVisible(false);
-        BackupView abrir= new BackupView();
-        abrir.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela(telaBackup.getNumeroTela()+"")){
+                telaBackup.setModal(true);
+                telaBackup.setLocationRelativeTo(null);
+                telaBackup.setVisible(true);   
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoBackupActionPerformed
 
     /**
@@ -599,7 +622,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton botaoServicos;
     private javax.swing.JButton botaoTurmas;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JDesktopPane jdpPrincipal;
     private javax.swing.JPanel menuFuncionario;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JLabel planodefundo1;

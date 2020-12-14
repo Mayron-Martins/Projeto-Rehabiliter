@@ -28,14 +28,22 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
+public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final AdicionarGastosController controller;
 
     /**
      * Creates new form FinanceiroPlanodeContraAdc
+     * @param parent
+     * @param modal
      */
-    public FinanceiroPlanodeContraAdc() {
+    public FinanceiroPlanodeContraAdc(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        
+        
         controller = new AdicionarGastosController(this);
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -61,7 +69,7 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
         campoData = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -143,7 +151,14 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FinanceiroPlanodeContraAdc().setVisible(true);
+                FinanceiroPlanodeContraAdc dialog = new FinanceiroPlanodeContraAdc(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

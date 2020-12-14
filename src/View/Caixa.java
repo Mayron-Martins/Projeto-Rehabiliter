@@ -28,15 +28,22 @@ import javax.swing.JTextField;
  *
  * @author 55989
  */
-public class Caixa extends javax.swing.JFrame {
+public class Caixa extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final int numeroTela = 8;
     private final CaixaController controller;
 
     /**
      * Creates new form Caixa
+     * @param parent
+     * @param modal
      */
-    public Caixa() {
+    public Caixa(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        
         controller = new CaixaController(this);
         botaoBuscarCliente.setBackground(new Color(0,0,0,0));
         impressaoComprovante.setBackground(new Color(0,0,0,0));
@@ -48,7 +55,7 @@ public class Caixa extends javax.swing.JFrame {
         botaoConfirmar.setBackground(new Color(0,0,0,0));
          botaoConfirmar1.setBackground(new Color(0,0,0,0));
         btnCancelar.setBackground(new Color(0,0,0,0));
-        setExtendedState(MAXIMIZED_BOTH);
+        //setExtendedState(MAXIMIZED_BOTH);
         this.setarComponentes();
         btnFechar.setBackground(new Color(0,0,0,0));
         painelTabelaProdutos.setVisible(true);
@@ -112,7 +119,7 @@ public class Caixa extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         Fundo1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -746,7 +753,14 @@ public class Caixa extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Caixa().setVisible(true);
+                Caixa dialog = new Caixa(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

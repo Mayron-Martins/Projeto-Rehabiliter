@@ -18,15 +18,26 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class ImprimirExportar extends javax.swing.JFrame {
+public class ImprimirExportar extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final int numeroTela = 6;
     private final FileCriator criacaoDePasta = new FileCriator();
+    private final turmasFrequencia telaTurmasFrequencia;
+    private final FinanceiroAnaliseFinanceira telaAnaliseFinanceira;
 
     /**
      * Creates new form ImprimirExportar
+     * @param parent
+     * @param modal
      */
-    public ImprimirExportar() {
+    public ImprimirExportar(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        telaTurmasFrequencia= new turmasFrequencia(parent, true);
+        telaAnaliseFinanceira=new FinanceiroAnaliseFinanceira(parent, true);
+        
         botaoFechar.setBackground(new Color(0,0,0,0));
         btnFrequencia.setBackground(new Color(0,0,0,0));
         btnRelatoriosOrca.setBackground(new Color(0,0,0,0));
@@ -48,7 +59,7 @@ public class ImprimirExportar extends javax.swing.JFrame {
         btnRelatoriosOrca = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -103,18 +114,20 @@ public class ImprimirExportar extends javax.swing.JFrame {
 
     private void btnFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrequenciaActionPerformed
         // TODO add your handling code here:
-        turmasFrequencia abrir= new turmasFrequencia();
-        abrir.alternarImprimir();
-        abrir.setVisible(true);
+        telaTurmasFrequencia.alternarImprimir();
+        telaTurmasFrequencia.setModal(true);
+        telaTurmasFrequencia.setLocationRelativeTo(null);
+        telaTurmasFrequencia.setVisible(true);
         this.dispose();
         
     }//GEN-LAST:event_btnFrequenciaActionPerformed
 
     private void btnRelatoriosOrcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosOrcaActionPerformed
         // TODO add your handling code here:
-        FinanceiroAnaliseFinanceira abrir=new FinanceiroAnaliseFinanceira();
-        abrir.alternarImprimir();
-        abrir.setVisible(true);
+        telaAnaliseFinanceira.alternarImprimir();
+        telaAnaliseFinanceira.setModal(true);
+        telaAnaliseFinanceira.setLocationRelativeTo(null);
+        telaAnaliseFinanceira.setVisible(true);
         this.dispose();
         
     }//GEN-LAST:event_btnRelatoriosOrcaActionPerformed
@@ -149,7 +162,14 @@ public class ImprimirExportar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ImprimirExportar().setVisible(true);
+                ImprimirExportar dialog = new ImprimirExportar(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

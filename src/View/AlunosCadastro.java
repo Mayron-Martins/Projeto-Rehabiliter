@@ -6,15 +6,13 @@
 package View;
 
 import Controller.adicionais.AdicionarAlunosController;
-import Controller.auxiliar.ExportarArquivos;
 import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
-import Controller.auxiliar.ImpressaoComponentes;
 import Controller.auxiliar.JMoneyField;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
-import java.awt.Button;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
@@ -38,19 +36,27 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
  *
  * @author 55989
  */
-public class AlunosCadastro extends javax.swing.JFrame {
+public class AlunosCadastro extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final AdicionarAlunosController controller;
+    private final AlunosCadastroTurmasEHorarios telaHorarios;
 
     /**
      * Creates new form AlunosCadastro
+     * @param parent
+     * @param modal
      */
-    public AlunosCadastro() {
+    public AlunosCadastro(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        telaHorarios = new AlunosCadastroTurmasEHorarios(parent, true);
+        
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new AdicionarAlunosController(this);
         botaofechar.setBackground(new Color (0,0,0,0));
         botaoDescricao.setBackground(new Color (0,0,0,0));
-        botaoDescricao.setVisible(false);
        turmasehorarios.setBackground(new Color (0,0,0,0));
        botaoConfirmar.setBackground(new Color (0,0,0,0));
        renovacaoAuto.setBackground(new Color (0,0,0,0));
@@ -138,7 +144,7 @@ public class AlunosCadastro extends javax.swing.JFrame {
         planodefundo = new javax.swing.JLabel();
         Cor = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -498,8 +504,9 @@ public class AlunosCadastro extends javax.swing.JFrame {
 
     private void turmasehorariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turmasehorariosActionPerformed
         // TODO add your handling code here:
-        AlunosCadastroTurmasEHorarios abrir = new AlunosCadastroTurmasEHorarios();
-        abrir.setVisible(true);
+        telaHorarios.setModal(true);
+        telaHorarios.setLocationRelativeTo(null);
+        telaHorarios.setVisible(true);
     }//GEN-LAST:event_turmasehorariosActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -605,7 +612,14 @@ public class AlunosCadastro extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlunosCadastro().setVisible(true);
+                AlunosCadastro dialog = new AlunosCadastro(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -785,6 +799,10 @@ public class AlunosCadastro extends javax.swing.JFrame {
                 dispose();
             }
         });
+    }
+
+    public Frame getParent() {
+        return parent;
     }
     
 }

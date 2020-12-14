@@ -11,13 +11,38 @@ import java.awt.Color;
  *
  * @author 55989
  */
-public class MenuGerente extends javax.swing.JFrame {
-
+public class MenuGerente extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
+    private final AlunosView telaAlunos;
+    private final TurmasView telaTurmas;
+    private final turmasFrequencia telaTurmasFrequencia;
+    private final ProdutosView telaProdutos;
+    private final ServicosView telaServicos;
+    private final Financeiro telaFinanceiro;
+    private final ImprimirExportarGerente telaImprimirExportar;
+    private final BackupView telaBackup;
+    private final Caixa telaCaixa;
     /**
      * Creates new form Menu
+     * @param parent
+     * @param modal
      */
-    public MenuGerente() {
+    public MenuGerente(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        telaAlunos=new AlunosView(parent, true);
+        telaTurmas=new TurmasView(parent, true);
+        telaTurmasFrequencia= new turmasFrequencia(parent, true);
+        telaProdutos=new ProdutosView(parent, true);
+        telaServicos=new ServicosView(parent, true);
+        telaFinanceiro = new Financeiro(parent, true);
+        telaImprimirExportar= new ImprimirExportarGerente(parent, true);
+        telaBackup= new BackupView(parent, true);
+        telaCaixa= new Caixa(parent, true);
+        
+        
         setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoSair.setBackground(new Color(0,0,0,0));
@@ -54,7 +79,7 @@ public class MenuGerente extends javax.swing.JFrame {
         botaoCaixa = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -161,51 +186,59 @@ public class MenuGerente extends javax.swing.JFrame {
 
     private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed
         // TODO add your handling code here:
-        Caixa abrir= new Caixa();
-        abrir.setVisible(true);
+        this.dispose();
+        telaCaixa.setModal(true);
+        telaCaixa.setLocationRelativeTo(null);
+        telaCaixa.setVisible(true);  
     }//GEN-LAST:event_botaoCaixaActionPerformed
 
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        AlunosView jump=new AlunosView();
-        jump.setVisible(true);
+        telaAlunos.setModal(true);
+        telaAlunos.setLocationRelativeTo(null);
+        telaAlunos.setVisible(true);  
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
     private void botaoTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTurmasActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        TurmasView abrir=new TurmasView();
-        abrir.setVisible(true);
+        telaTurmas.setModal(true);
+        telaTurmas.setLocationRelativeTo(null);
+        telaTurmas.setVisible(true);  
     }//GEN-LAST:event_botaoTurmasActionPerformed
 
     private void botaoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutosActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        ProdutosView abrir=new ProdutosView();
-        abrir.setVisible(true);
+        telaProdutos.setModal(true);
+        telaProdutos.setLocationRelativeTo(null);
+        telaProdutos.setVisible(true); 
         
     }//GEN-LAST:event_botaoProdutosActionPerformed
 
     private void botaoServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoServicosActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        ServicosView abrir=new ServicosView();
-        abrir.setVisible(true);
+        telaServicos.setModal(true);
+        telaServicos.setLocationRelativeTo(null);
+        telaServicos.setVisible(true);
     }//GEN-LAST:event_botaoServicosActionPerformed
 
     private void botaoFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiroActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Financeiro abrir = new Financeiro();
-        abrir.setVisible(true);
+        telaFinanceiro.setModal(true);
+        telaFinanceiro.setLocationRelativeTo(null);
+        telaFinanceiro.setVisible(true);
     }//GEN-LAST:event_botaoFinanceiroActionPerformed
 
     private void botaoImprimirExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoImprimirExportarActionPerformed
         // TODO add your handling code here:
-        ImprimirExportarGerente abrir= new ImprimirExportarGerente();
-        abrir.setVisible(true);
         this.dispose();
+        telaImprimirExportar.setModal(true);
+        telaImprimirExportar.setLocationRelativeTo(null);
+        telaImprimirExportar.setVisible(true);
     }//GEN-LAST:event_botaoImprimirExportarActionPerformed
 
     /**
@@ -239,7 +272,14 @@ public class MenuGerente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuGerente().setVisible(true);
+                MenuGerente dialog = new MenuGerente(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

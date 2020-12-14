@@ -10,6 +10,7 @@ import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -37,18 +38,18 @@ public class AlunosView extends javax.swing.JDialog {
     private final int numeroTela = 1;
     private Point point = new Point();
     private final AlunosController controller;
-    private AlunosCadastro alunosCadastro = new AlunosCadastro();
+    private AlunosCadastro telaAlunosCadastro;
     private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
     private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
-    private javax.swing.JComboBox<String> comboEstado = new JComboBox<>(alunosCadastro.getComboEstado().getModel());
-    private final JFormattedTextField valorContrato = new JMoneyField();
-    private final JFormattedTextField valorDebito = new JMoneyField();
-    private final JFormattedTextField telefonePai = new JFormattedTextField(alunosCadastro.getCampoContatoPai().getFormatter());
-    private final JFormattedTextField cpfPai = new JFormattedTextField(alunosCadastro.getCampoCPFPai().getFormatter());
-    private final JFormattedTextField telefoneMae = new JFormattedTextField(alunosCadastro.getCampoContatoMae().getFormatter());
-    private final JFormattedTextField cpfMae = new JFormattedTextField(alunosCadastro.getCampoCPFMae().getFormatter());
-    private final JFormattedTextField cep = new JFormattedTextField(alunosCadastro.getCampoCEP().getFormatter());
-    private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
+    private javax.swing.JComboBox<String> comboEstado; //= new JComboBox<>(telaAlunosCadastro.getComboEstado().getModel());
+    private JFormattedTextField valorContrato = new JMoneyField();
+    private JFormattedTextField valorDebito = new JMoneyField();
+    private JFormattedTextField telefonePai;//= new JFormattedTextField(telaAlunosCadastro.getCampoContatoPai().getFormatter());
+    private JFormattedTextField cpfPai; //= new JFormattedTextField(telaAlunosCadastro.getCampoCPFPai().getFormatter());
+    private JFormattedTextField telefoneMae; //= new JFormattedTextField(telaAlunosCadastro.getCampoContatoMae().getFormatter());
+    private JFormattedTextField cpfMae; //= new JFormattedTextField(telaAlunosCadastro.getCampoCPFMae().getFormatter());
+    private JFormattedTextField cep; //= new JFormattedTextField(telaAlunosCadastro.getCampoCEP().getFormatter());
+    private JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
     /**
      * Creates new form Alunos
      * @param parent
@@ -57,7 +58,18 @@ public class AlunosView extends javax.swing.JDialog {
     public AlunosView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
         this.parent = parent;
+        telaAlunosCadastro = new AlunosCadastro(parent, false);
+        comboEstado = new JComboBox<>(telaAlunosCadastro.getComboEstado().getModel());
+        telefonePai = new JFormattedTextField(telaAlunosCadastro.getCampoContatoPai().getFormatter());
+        cpfPai = new JFormattedTextField(telaAlunosCadastro.getCampoCPFPai().getFormatter());
+        telefoneMae = new JFormattedTextField(telaAlunosCadastro.getCampoContatoMae().getFormatter());
+        cpfMae = new JFormattedTextField(telaAlunosCadastro.getCampoCPFMae().getFormatter());
+        cep = new JFormattedTextField(telaAlunosCadastro.getCampoCEP().getFormatter());
+        
+        this.setarComposicaoTabelas();
+        
         controller = new AlunosController(this);
         botaobuscar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -108,10 +120,10 @@ public class AlunosView extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        painelAlunos = new javax.swing.JScrollPane();
-        tabelaAlunos = new javax.swing.JTable();
         painelPlanos = new javax.swing.JScrollPane();
         tabelaPlanos = new javax.swing.JTable();
+        painelAlunos = new javax.swing.JScrollPane();
+        tabelaAlunos = new javax.swing.JTable();
         painelPais = new javax.swing.JScrollPane();
         tabelaPais = new javax.swing.JTable();
         painelEnderecos = new javax.swing.JScrollPane();
@@ -157,51 +169,6 @@ public class AlunosView extends javax.swing.JDialog {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "CodBanco", "Nome", "Turma", "Forma de Pag.", "Valor Contrato", "Débito"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabelaAlunos.getTableHeader().setResizingAllowed(false);
-        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
-        tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboServicos));
-        tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboTurmas));
-        tabelaAlunos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorContrato));
-        tabelaAlunos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(valorDebito));
-        tabelaAlunos.setFocusable(false);
-        tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaAlunos.setRowHeight(25);
-        tabelaAlunos.setShowVerticalLines(false);
-        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
-        tabelaAlunos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaAlunosComponentHidden(evt);
-            }
-        });
-        painelAlunos.setViewportView(tabelaAlunos);
-
-        getContentPane().add(painelAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
-
         tabelaPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaPlanos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -226,9 +193,6 @@ public class AlunosView extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabelaPlanos.getTableHeader().setResizingAllowed(false);
-        tabelaPlanos.getTableHeader().setReorderingAllowed(false);
-        tabelaPlanos.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(diaVencimento));
         tabelaPlanos.setFocusable(false);
         tabelaPlanos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -243,6 +207,45 @@ public class AlunosView extends javax.swing.JDialog {
         painelPlanos.setViewportView(tabelaPlanos);
 
         getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+
+        tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CodBanco", "Nome", "Turma", "Forma de Pag.", "Valor Contrato", "Débito"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaAlunos.setFocusable(false);
+        tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaAlunos.setRowHeight(25);
+        tabelaAlunos.setShowVerticalLines(false);
+        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
+        tabelaAlunos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaAlunosComponentHidden(evt);
+            }
+        });
+        painelAlunos.setViewportView(tabelaAlunos);
+
+        getContentPane().add(painelAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
         tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaPais.setModel(new javax.swing.table.DefaultTableModel(
@@ -261,12 +264,6 @@ public class AlunosView extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        tabelaPais.getTableHeader().setResizingAllowed(false);
-        tabelaPais.getTableHeader().setReorderingAllowed(false);
-        tabelaPais.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cpfPai));
-        tabelaPais.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(telefonePai));
-        tabelaPais.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(cpfMae));
-        tabelaPais.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(telefoneMae));
         tabelaPais.setFocusable(false);
         tabelaPais.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaPais.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -299,10 +296,6 @@ public class AlunosView extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        tabelaEnderecos.getTableHeader().setResizingAllowed(false);
-        tabelaEnderecos.getTableHeader().setReorderingAllowed(false);
-        tabelaEnderecos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cep));
-        tabelaEnderecos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboEstado));
         tabelaEnderecos.setFocusable(false);
         tabelaEnderecos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaEnderecos.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -464,7 +457,9 @@ public class AlunosView extends javax.swing.JDialog {
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         // TODO add your handling code here:
-        alunosCadastro.setVisible(true);
+        telaAlunosCadastro.setModal(true);
+        telaAlunosCadastro.setLocationRelativeTo(null);
+        telaAlunosCadastro.setVisible(true);
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
@@ -792,5 +787,37 @@ public class AlunosView extends javax.swing.JDialog {
             }
         });
     }
+
+    public Frame getParent() {
+        return parent;
+    }
     
+    private void setarComposicaoTabelas(){
+        //Alunos
+        tabelaAlunos.getTableHeader().setResizingAllowed(false);
+        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
+        tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboServicos));
+        tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboTurmas));
+        tabelaAlunos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorContrato));
+        tabelaAlunos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(valorDebito));
+        
+        //Planos
+        tabelaPlanos.getTableHeader().setResizingAllowed(false);
+        tabelaPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelaPlanos.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(diaVencimento));
+        
+        //Pais
+        tabelaPais.getTableHeader().setResizingAllowed(false);
+        tabelaPais.getTableHeader().setReorderingAllowed(false);
+        tabelaPais.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cpfPai));
+        tabelaPais.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(telefonePai));
+        tabelaPais.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(cpfMae));
+        tabelaPais.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(telefoneMae));
+        
+        //Enderecos
+        tabelaEnderecos.getTableHeader().setResizingAllowed(false);
+        tabelaEnderecos.getTableHeader().setReorderingAllowed(false);
+        tabelaEnderecos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cep));
+        tabelaEnderecos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboEstado));
+    }
 }

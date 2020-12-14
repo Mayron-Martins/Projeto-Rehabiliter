@@ -47,7 +47,7 @@ public class ServicosView extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
-        telaServicosAdicionar=new ServicosAdicionar(parent, true);
+        telaServicosAdicionar=new ServicosAdicionar(parent, false);
         
         controller = new ServicosController(this);
         btnAdicionar.setBackground(new Color(0,0,0,0));

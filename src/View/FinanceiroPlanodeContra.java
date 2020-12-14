@@ -30,18 +30,26 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class FinanceiroPlanodeContra extends javax.swing.JFrame {
+public class FinanceiroPlanodeContra extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final PlanoGastosController controller;
-    private final FinanceiroPlanodeContraAdc telaGastosAd= new FinanceiroPlanodeContraAdc();
+    private final FinanceiroPlanodeContraAdc telaContraAdicionar;
     private final JFormattedTextField valorGasto = new JMoneyField();
     private final JFormattedTextField quantidadeGasto = new JMoneyField();
-    private final JComboBox comboPagamentoGasto = new JComboBox(telaGastosAd.getCampoFormaPagamento().getModel());
+    private final JComboBox comboPagamentoGasto;
 
     /**
      * Creates new form FinanceiroPlanodeContra
+     * @param parent
+     * @param modal
      */
-    public FinanceiroPlanodeContra() {
+    public FinanceiroPlanodeContra(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        telaContraAdicionar= new FinanceiroPlanodeContraAdc(parent, true);
+        comboPagamentoGasto = new JComboBox(telaContraAdicionar.getCampoFormaPagamento().getModel());
         
         controller = new PlanoGastosController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -84,7 +92,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -238,7 +246,9 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
-        telaGastosAd.setVisible(true);
+        telaContraAdicionar.setModal(true);
+        telaContraAdicionar.setLocationRelativeTo(null);
+        telaContraAdicionar.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void botaoVResumidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVResumidaMouseClicked
@@ -336,7 +346,14 @@ public class FinanceiroPlanodeContra extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FinanceiroPlanodeContra().setVisible(true);
+                FinanceiroPlanodeContra dialog = new FinanceiroPlanodeContra(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

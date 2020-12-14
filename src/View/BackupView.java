@@ -24,15 +24,22 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class BackupView extends javax.swing.JFrame {
+public class BackupView extends javax.swing.JDialog {
+    private final java.awt.Frame parent; 
     private final int numeroTela = 7;
     private final BackupController controller;
 
     /**
      * Creates new form Backup
+     * @param parent
+     * @param modal
      */
-    public BackupView() {
+    public BackupView(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        
         controller = new BackupController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         painelLocal.setBackground(new Color(11,13,138));
@@ -72,7 +79,7 @@ public class BackupView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -236,7 +243,14 @@ public class BackupView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BackupView().setVisible(true);
+                BackupView dialog = new BackupView(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -286,5 +300,11 @@ public class BackupView extends javax.swing.JFrame {
             }
         });
     }
+
+    public int getNumeroTela() {
+        return numeroTela;
+    }
+    
+    
 
 }

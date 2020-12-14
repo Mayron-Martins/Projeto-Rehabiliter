@@ -7,6 +7,7 @@ package View;
 
 import Controller.adicionais.FrequenciaTurmasController;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -525,4 +526,9 @@ public class turmasFrequencia extends javax.swing.JDialog {
             }
         });
     }
+
+    public Frame getParent() {
+        return parent;
+    }
+    
 }

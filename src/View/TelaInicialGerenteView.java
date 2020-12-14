@@ -33,6 +33,10 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private final turmasFrequencia telaTurmasFrequencia;
     private final ProdutosView telaProdutos;
     private final ServicosView telaServicos;
+    private final Financeiro telaFinanceiro;
+    private final ImprimirExportarGerente telaImprimirExportar;
+    private final BackupView telaBackup;
+    private final Caixa telaCaixa;
 
     /**
      * Creates new form telaInicialGerente
@@ -40,11 +44,15 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     public TelaInicialGerenteView() {
         initComponents();
         
-        telaAlunos=new AlunosView(this, true);
-        telaTurmas=new TurmasView(this, true);
-        telaTurmasFrequencia= new turmasFrequencia(this, true);
-        telaProdutos=new ProdutosView(this, true);
-        telaServicos=new ServicosView(this, true);
+        telaAlunos=new AlunosView(this, false);
+        telaTurmas=new TurmasView(this, false);
+        telaTurmasFrequencia= new turmasFrequencia(this, false);
+        telaProdutos=new ProdutosView(this, false);
+        telaServicos=new ServicosView(this, false);
+        telaFinanceiro = new Financeiro(this, false);
+        telaImprimirExportar= new ImprimirExportarGerente(this, false);
+        telaBackup= new BackupView(this, false);
+        telaCaixa= new Caixa(this, false);
         
         
         menuGerente.setVisible(false);
@@ -340,7 +348,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
         // TODO add your handling code here:
         try {
-            if(controller.permissaoDeAcessoATela()){
+            if(controller.permissaoDeAcessoATela(telaAlunos.getNumeroTela()+"")){
                 telaAlunos.setModal(true);
                 telaAlunos.setLocationRelativeTo(null);
                 telaAlunos.setVisible(true);   
@@ -356,7 +364,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private void botaoFrequenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFrequenciaActionPerformed
         // TODO add your handling code here:
         try {
-            if(controller.permissaoDeAcessoATela()){
+            if(controller.permissaoDeAcessoATela(telaTurmasFrequencia.getNumeroTela()+"")){
                 telaTurmasFrequencia.setModal(true);
                 telaTurmasFrequencia.setLocationRelativeTo(null);
                 telaTurmasFrequencia.setVisible(true);
@@ -371,10 +379,11 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiroActionPerformed
         // TODO add your handling code here:
-        Financeiro abrir=new Financeiro();
         try {
-            if(controller.permissaoDeAcessoATela()){
-                abrir.setVisible(true);
+            if(controller.permissaoDeAcessoATela(telaFinanceiro.getNumeroTela()+"")){
+                telaFinanceiro.setModal(true);
+                telaFinanceiro.setLocationRelativeTo(null);
+                telaFinanceiro.setVisible(true);
             }
             else{this.exibeMensagem("Acesso Negado");}
         } catch (SQLException ex) {
@@ -391,24 +400,16 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionariosActionPerformed
         Funcionarios telaFuncionarios = new Funcionarios();
-        try {
-            if(controller.permissaoDeAcessoATela()){
                 telaFuncionarios.setVisible(true);
-            }
-            else{this.exibeMensagem("Acesso Negado");}
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_botaoFuncionariosActionPerformed
 
     private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed
         // TODO add your handling code here:
-        Caixa abrir= new Caixa();
         try {
-            if(controller.permissaoDeAcessoATela()){
-                abrir.setVisible(true);
+            if(controller.permissaoDeAcessoATela(telaCaixa.getNumeroTela()+"")){
+                telaCaixa.setModal(true);
+                telaCaixa.setLocationRelativeTo(null);
+                telaCaixa.setVisible(true);   
             }
             else{this.exibeMensagem("Acesso Negado");}
         } catch (SQLException ex) {
@@ -434,23 +435,43 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoImprimirExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoImprimirExportarActionPerformed
         // TODO add your handling code here:
-        ImprimirExportarGerente abrir= new ImprimirExportarGerente();
-        abrir.setVisible(true);
         menuGerente.setVisible(false);
+        try {
+            if(controller.permissaoDeAcessoATela(telaImprimirExportar.getNumeroTela()+"")){
+                telaImprimirExportar.setModal(true);
+                telaImprimirExportar.setLocationRelativeTo(null);
+                telaImprimirExportar.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoImprimirExportarActionPerformed
 
     private void botaoFinanceiro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinanceiro1ActionPerformed
         // TODO add your handling code here:
         menuGerente.setVisible(false);
-        Financeiro abrir = new Financeiro();
-        abrir.setVisible(true);
+        try {
+            if(controller.permissaoDeAcessoATela(telaFinanceiro.getNumeroTela()+"")){
+                telaFinanceiro.setModal(true);
+                telaFinanceiro.setLocationRelativeTo(null);
+                telaFinanceiro.setVisible(true);
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoFinanceiro1ActionPerformed
 
     private void botaoServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoServicosActionPerformed
         // TODO add your handling code here:
         menuGerente.setVisible(false);
         try {
-            if(controller.permissaoDeAcessoATela()){
+            if(controller.permissaoDeAcessoATela(telaServicos.getNumeroTela()+"")){
                 telaServicos.setModal(true);
                 telaServicos.setLocationRelativeTo(null);
                 telaServicos.setVisible(true);
@@ -467,7 +488,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         // TODO add your handling code here:
         menuGerente.setVisible(false);
         try{
-            if(controller.permissaoDeAcessoATela()){
+            if(controller.permissaoDeAcessoATela(telaTurmas.getNumeroTela()+"")){
                 telaTurmas.setModal(true);
                 telaTurmas.setLocationRelativeTo(null);
                 telaTurmas.setVisible(true);   
@@ -484,7 +505,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         // TODO add your handling code here:
         menuGerente.setVisible(false);
         try {
-            if(controller.permissaoDeAcessoATela()){
+            if(controller.permissaoDeAcessoATela(telaAlunos.getNumeroTela()+"")){
                 telaAlunos.setModal(true);
                 telaAlunos.setLocationRelativeTo(null);
                 telaAlunos.setVisible(true);   
@@ -501,7 +522,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         // TODO add your handling code here:
         menuGerente.setVisible(false);
         try {
-            if(controller.permissaoDeAcessoATela()){
+            if(controller.permissaoDeAcessoATela(telaProdutos.getNumeroTela()+"")){
                 telaProdutos.setModal(true);
                 telaProdutos.setLocationRelativeTo(null);
                 telaProdutos.setVisible(true);   
@@ -516,9 +537,19 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoCaixa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixa1ActionPerformed
         // TODO add your handling code here:
-        Caixa abrir= new Caixa();
-        abrir.setVisible(true);
         menuGerente.setVisible(false);
+        try {
+            if(controller.permissaoDeAcessoATela(telaCaixa.getNumeroTela()+"")){
+                telaCaixa.setModal(true);
+                telaCaixa.setLocationRelativeTo(null);
+                telaCaixa.setVisible(true);   
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoCaixa1ActionPerformed
 
     private void botaoSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSair1ActionPerformed
@@ -529,9 +560,20 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
     private void botaoBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBackupActionPerformed
         // TODO add your handling code here:    
-        BackupView abrir= new BackupView();
-        abrir.setVisible(true);
+ 
         menuGerente.setVisible(false);
+        try {
+            if(controller.permissaoDeAcessoATela(telaBackup.getNumeroTela()+"")){
+                telaBackup.setModal(true);
+                telaBackup.setLocationRelativeTo(null);
+                telaBackup.setVisible(true);   
+            }
+            else{this.exibeMensagem("Acesso Negado");}
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaInicialGerenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_botaoBackupActionPerformed
 

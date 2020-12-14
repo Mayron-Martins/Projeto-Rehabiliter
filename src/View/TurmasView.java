@@ -52,8 +52,8 @@ public class TurmasView extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.parent = parent;
-        telaTurmasAdicionar=new TurmasAdicionar(parent, true);
-        telaTurmasFrequencia=new turmasFrequencia(parent, true);
+        telaTurmasAdicionar=new TurmasAdicionar(parent, false);
+        telaTurmasFrequencia=new turmasFrequencia(parent, false);
         controller = new TurmasController(this);
         botaoAdicionarTurmas.setBackground(new Color(0,0,0,0));
         botaoEditarTurmas.setBackground(new Color(0,0,0,0));

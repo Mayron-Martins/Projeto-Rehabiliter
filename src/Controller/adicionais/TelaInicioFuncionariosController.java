@@ -167,49 +167,22 @@ public class TelaInicioFuncionariosController {
     }
     
     
-    public boolean permissaoDeAcessoATela() throws SQLException, ParseException{
+    public boolean permissaoDeAcessoATela(String tela) throws SQLException, ParseException{
         ArrayList<Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
         
-        boolean permissao = false;
         if(funcionarios!=null){
             Funcionario funcionarioLogado = funcionarios.get(0);
             String[] telas = funcionarioLogado.getTelasPermitidas().split(",");
             for(int linhas=0; linhas<telas.length; linhas++){
                 telas[linhas]=telas[linhas].replace(",", "");
-
-                switch(telas[linhas]){
-                    case "1":
-                        permissao = true;
-                    break;
-                    case "2":
-                        permissao = true;
-                    break;
-                    case "3":
-                        permissao = true;
-                    break;
-                    case "4":
-                        permissao = true;
-                    break;
-                    case "5":
-                        permissao = true;
-                    break;
-                    case "6":
-                        permissao = true;
-                    break;
-                    case "7":
-                        permissao = true;
-                    break;
-                    case "8":
-                        permissao = true;
-                    break;
-                    case "9":
-                        permissao = true;
-                    break;
+                
+                if(telas[linhas].equals(tela)){
+                    return true;
                 }
             }
-            return permissao;
+            return false;
         }
-        return permissao;
+        return true;
     }
     
     private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios){

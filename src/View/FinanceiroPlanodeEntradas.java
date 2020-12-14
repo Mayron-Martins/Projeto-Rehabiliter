@@ -30,18 +30,27 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
+public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
+    private final java.awt.Frame parent;
     private final PlanoEntradasController controller;
-    private final FinanceiroPlanodeEntradasAdc telaAdAEntradas= new FinanceiroPlanodeEntradasAdc();
+    private final FinanceiroPlanodeEntradasAdc telaAdAEntradas;
     private final JFormattedTextField valorEntrada = new JMoneyField();
     private final JFormattedTextField quantidadeEntrada = new JMoneyField();
-    private final JComboBox comboPagamentoEntrada = new JComboBox(telaAdAEntradas.getCampoFormaPagamento().getModel());
+    private final JComboBox comboPagamentoEntrada;
 
     /**
      * Creates new form FinanceiroPlanodeEntradas
+     * @param parent
+     * @param modal
      */
-    public FinanceiroPlanodeEntradas() {
+    public FinanceiroPlanodeEntradas(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        telaAdAEntradas= new FinanceiroPlanodeEntradasAdc(parent, true);
+        comboPagamentoEntrada = new JComboBox(telaAdAEntradas.getCampoFormaPagamento().getModel());
+        
         controller = new PlanoEntradasController(this);
         btnAdicionar.setBackground(new Color(0,0,0,0));
         btnAplicar.setBackground(new Color(0,0,0,0));
@@ -86,7 +95,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
         btnContasRecebidas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -335,7 +344,8 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
-        
+        telaAdAEntradas.setModal(true);
+        telaAdAEntradas.setLocationRelativeTo(null);
         telaAdAEntradas.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
@@ -455,7 +465,14 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FinanceiroPlanodeEntradas().setVisible(true);
+                FinanceiroPlanodeEntradas dialog = new FinanceiroPlanodeEntradas(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

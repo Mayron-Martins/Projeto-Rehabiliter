@@ -20,6 +20,9 @@ import javax.swing.KeyStroke;
 public class Financeiro extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final int numeroTela = 5;
+    private final FinanceiroPlanodeContra telaPlanoContra;
+    private final FinanceiroPlanodeEntradas telaEntradas;
+    private final FinanceiroAnaliseFinanceira telaAnaliseFinanceira;
 
     /**
      * Creates new form Financeiro
@@ -31,6 +34,9 @@ public class Financeiro extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
+        telaPlanoContra =new FinanceiroPlanodeContra(parent, true);
+        telaEntradas= new FinanceiroPlanodeEntradas(parent, true);
+        telaAnaliseFinanceira = new FinanceiroAnaliseFinanceira(parent, true);
         
         botaoFechar.setBackground(new Color(0,0,0,0));
         btnPlanodeContraServicos.setBackground(new Color(0,0,0,0));
@@ -115,21 +121,24 @@ public class Financeiro extends javax.swing.JDialog {
 
     private void btnPlanodeContraServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanodeContraServicosActionPerformed
         // TODO add your handling code here:
-       FinanceiroPlanodeContra abrir =new FinanceiroPlanodeContra();
-       abrir.setVisible(true);
+       telaPlanoContra.setModal(true);
+       telaPlanoContra.setLocationRelativeTo(null);
+       telaPlanoContra.setVisible(true);
        
     }//GEN-LAST:event_btnPlanodeContraServicosActionPerformed
 
     private void btnAnaliseFinanceiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnaliseFinanceiraActionPerformed
         // TODO add your handling code here:
-        FinanceiroAnaliseFinanceira abrir = new FinanceiroAnaliseFinanceira();
-        abrir.setVisible(true);
+        telaAnaliseFinanceira.setModal(true);
+        telaAnaliseFinanceira.setLocationRelativeTo(null);
+        telaAnaliseFinanceira.setVisible(true); 
     }//GEN-LAST:event_btnAnaliseFinanceiraActionPerformed
 
     private void btnPlanodeEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanodeEntradasActionPerformed
         // TODO add your handling code here:
-        FinanceiroPlanodeEntradas abrir= new FinanceiroPlanodeEntradas();
-        abrir.setVisible(true);
+        telaEntradas.setModal(true);
+        telaEntradas.setLocationRelativeTo(null);
+        telaEntradas.setVisible(true); 
     }//GEN-LAST:event_btnPlanodeEntradasActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed

@@ -40,7 +40,7 @@ public class FrequenciaTurmasController {
     private final DefaultTableModel tabelaDeAlunos;
     private final DefaultTableModel tabelaDeAlunosBanco;
     private final TurmasDao turmasDao = new TurmasDao();
-    private final TurmasView telaDeTurmas = new TurmasView();
+    private final TurmasView telaDeTurmas;
     private final AlunosDao alunosDao = new AlunosDao();
     private final HorariosDao horariosDao = new HorariosDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
@@ -52,6 +52,7 @@ public class FrequenciaTurmasController {
 
     public FrequenciaTurmasController(turmasFrequencia view) {
         this.view = view;
+        telaDeTurmas = new TurmasView(view.getParent(), true);
         this.tabelaDeAlunos = (DefaultTableModel) view.getTabelaAlunos().getModel();
         this.tabelaDeAlunosBanco = (DefaultTableModel) view.getTabelaAlunosBanco().getModel();
     }
@@ -163,6 +164,8 @@ public class FrequenciaTurmasController {
         
         if(turmas == null){
             view.exibeMensagem("Sem Turmas Cadastradas");
+            telaDeTurmas.setModal(true);
+            telaDeTurmas.setLocationRelativeTo(null);
             telaDeTurmas.setVisible(true);
             view.dispose();
         }
