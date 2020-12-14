@@ -175,7 +175,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
         });
         getContentPane().add(botaofechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 50));
 
-        descricao.setBackground(new java.awt.Color(157, 197, 187));
+        descricao.setBackground(new java.awt.Color(157, 189, 197));
         descricao.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnConfirma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
