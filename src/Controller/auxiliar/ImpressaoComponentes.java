@@ -10,13 +10,16 @@ import Model.Aluno;
 import Model.Vendas;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -41,6 +44,7 @@ import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
+import javax.swing.SwingUtilities;
 import jdk.internal.util.xml.impl.ReaderUTF8;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPageable;
@@ -130,27 +134,67 @@ public class ImpressaoComponentes {
     }
     
     public void printTextFile(String caminho){
-        PrintService impressoraPadrao = PrintServiceLookup.lookupDefaultPrintService();
-        PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
-        PrintService printService = ServiceUI.printDialog(null, 300, 200, printServices, impressoraPadrao, DocFlavor.INPUT_STREAM.AUTOSENSE, new HashPrintRequestAttributeSet()).createPrintJob().getPrintService();
-        PrintService service = findPrintService(printService.getName(), printServices);
         try{
             //FileInputStream in = new FileInputStream(new File(caminho));
-           
-           InputStream in = new ByteArrayInputStream("\f".getBytes("UTF8"));
+           BufferedReader myBuffer = new BufferedReader(new InputStreamReader(new FileInputStream(caminho), "UTF-8"));
+           String texto = myBuffer.readLine();
+           String conect="";
+           while(texto!=null){
+               conect+=texto+"\n";
+               texto = myBuffer.readLine();
+           }
+           InputStream in = new ByteArrayInputStream((conect+"\f").getBytes("UTF-8"));
             
             PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
             pras.add(new Copies(1));
-
             
-            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-            Doc doc = new SimpleDoc(in, flavor, null);
-
+            DocFlavor flavor = new DocFlavor.INPUT_STREAM ("application/octet-stream");
+            SimpleDoc doc = new SimpleDoc(in, flavor, null);
+            
+            PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+            
+            PrintService impressoraPadrao = PrintServiceLookup.lookupDefaultPrintService();
+            PrintService[] printServices = PrintServiceLookup.lookupPrintServices(flavor, aset);           
+            if (printServices.length == 0) {
+                if (impressoraPadrao == null) {
+                  JOptionPane.showMessageDialog(null, "Não foram encontradas impressoras");
+                } else {
+                  DocPrintJob job = impressoraPadrao.createPrintJob();
+                  PrintJobWatcher pjw = new PrintJobWatcher(job);
+                  job.print(doc, aset);
+                  pjw.waitForDone();
+                  myBuffer.close();
+                }
+            } else {
+                SwingUtilities.invokeLater(() -> {
+                  PrintService service = ServiceUI.printDialog(null, 200, 200,
+                      printServices, impressoraPadrao, flavor, aset);
+                  if (service != null) {
+                    DocPrintJob job = service.createPrintJob();
+                    PrintJobWatcher pjw = new PrintJobWatcher(job);
+                      try {
+                          job.print(doc, aset);
+                          pjw.waitForDone();
+                          myBuffer.close();
+                      } catch (PrintException ex) {
+                          Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
+                      } catch (IOException ex) {
+                          Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
+                      }
+                    
+                  }
+                });
+            }
+            
+            
+            /*
             DocPrintJob job = service.createPrintJob();
             PrintJobWatcher pjw = new PrintJobWatcher(job);
             job.print(doc, pras);
             pjw.waitForDone();
-            in.close();
+            //in.close();
+            myBuffer.close();
+            */
             /*
             // send FF to eject the page
             InputStream ff = new ByteArrayInputStream("\f".getBytes("UTF-8"));
@@ -163,6 +207,7 @@ public class ImpressaoComponentes {
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Nenhum arquivo encontrado");
         } catch (PrintException ex) {
+            Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro ao enviar para a impressora");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao finalizar conexão");

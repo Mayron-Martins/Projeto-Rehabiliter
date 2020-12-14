@@ -30,6 +30,7 @@ import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.Caixa;
+import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
@@ -606,6 +607,11 @@ public class CaixaController {
         String comprovante = dadosEmpresa+divisoria+dadosCliente+cabecalho+espaco+dadosTabela+espaco+valorSubtotal+descontot
         +valorTotal+valorPago+valorTroco+espaco+data+despedida;
         exportarComprovante.geraArquivoTxt(comprovante, "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
+        try {
+            sleep(15);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(CaixaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         imprimirComprovante.printTextFile("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
         //exportarComprovante.gerarPDF("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt", "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".pdf");
         //exportarComprovante.convertDocx2pdf("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt", ".txt", "ACTIVEX.ActiveXCtrl.1");
