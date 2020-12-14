@@ -17,12 +17,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.plaf.BorderUIResource;
 
 /**
  *
@@ -55,6 +58,8 @@ public class Caixa extends javax.swing.JDialog {
         botaoConfirmar.setBackground(new Color(0,0,0,0));
          botaoConfirmar1.setBackground(new Color(0,0,0,0));
         btnCancelar.setBackground(new Color(0,0,0,0));
+        quantParcelas.setBackground(new Color(0,0,0,0));
+        quantParcelas.setBorder(null);
         //setExtendedState(MAXIMIZED_BOTH);
         this.setarComponentes();
         btnFechar.setBackground(new Color(0,0,0,0));
@@ -78,8 +83,8 @@ public class Caixa extends javax.swing.JDialog {
         alternarClienteSemCadastro = new javax.swing.JRadioButton();
         alternarProdCodigo = new javax.swing.JRadioButton();
         alternarProdNome = new javax.swing.JRadioButton();
-        campoCliente = new FormatacaoCamposRestritosLetras();
         jPanelFormaDePagamento = new javax.swing.JPanel();
+        campoParcelas = new FormatacaodeCamposRestritos();
         botaoConfirmar1 = new javax.swing.JButton();
         alternarDebito = new javax.swing.JRadioButton();
         alternarCredito = new javax.swing.JRadioButton();
@@ -89,6 +94,8 @@ public class Caixa extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         btnFechar = new javax.swing.JButton();
         impressaoComprovante = new javax.swing.JCheckBox();
+        campoCliente = new FormatacaoCamposRestritosLetras();
+        quantParcelas = new javax.swing.JTextField();
         botaoBuscarCliente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaDeClientes = new javax.swing.JTable();
@@ -164,20 +171,20 @@ public class Caixa extends javax.swing.JDialog {
         });
         getContentPane().add(alternarProdNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, -1, -1));
 
-        campoCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoClienteActionPerformed(evt);
-            }
-        });
-        campoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                campoClienteKeyPressed(evt);
-            }
-        });
-        getContentPane().add(campoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 190, 40));
-
         jPanelFormaDePagamento.setBackground(new java.awt.Color(0, 122, 185));
         jPanelFormaDePagamento.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        campoParcelas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoParcelasMouseClicked(evt);
+            }
+        });
+        campoParcelas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoParcelasKeyPressed(evt);
+            }
+        });
+        jPanelFormaDePagamento.add(campoParcelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 30, 40));
 
         botaoConfirmar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
         botaoConfirmar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
@@ -243,6 +250,23 @@ public class Caixa extends javax.swing.JDialog {
         jPanelFormaDePagamento.add(impressaoComprovante, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, -1, -1));
 
         getContentPane().add(jPanelFormaDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 460, 410, 300));
+
+        campoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoClienteActionPerformed(evt);
+            }
+        });
+        campoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoClienteKeyPressed(evt);
+            }
+        });
+        getContentPane().add(campoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 190, 40));
+
+        quantParcelas.setEditable(false);
+        quantParcelas.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        quantParcelas.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(quantParcelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 680, 30, 20));
 
         botaoBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaoBuscarCliente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
@@ -496,7 +520,7 @@ public class Caixa extends javax.swing.JDialog {
                 campoVTrocoActionPerformed(evt);
             }
         });
-        getContentPane().add(campoVTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 490, 95, 40));
+        getContentPane().add(campoVTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 495, 95, 40));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel6.setText("R$");
@@ -504,7 +528,7 @@ public class Caixa extends javax.swing.JDialog {
 
         campoVTotal.setEditable(false);
         campoVTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(campoVTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 490, 95, 40));
+        getContentPane().add(campoVTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 495, 95, 40));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel2.setText("R$");
@@ -667,6 +691,7 @@ public class Caixa extends javax.swing.JDialog {
 
     private void campoParcelamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoParcelamentoMouseClicked
         campoParcelamento.setEnabled(true);
+        campoParcelas.setEnabled(true);
         alternarCredito.setEnabled(true);
         alternarDebito.setEnabled(true);
         campoDinheiro.setText("");
@@ -677,6 +702,8 @@ public class Caixa extends javax.swing.JDialog {
         campoDinheiro.setEnabled(true);
         campoParcelamento.setText("");
         campoParcelamento.setEnabled(false);
+        campoParcelas.setText("");
+        campoParcelas.setEnabled(false);
         alternarCredito.setEnabled(false);
         alternarDebito.setEnabled(false);
     }//GEN-LAST:event_campoDinheiroMouseClicked
@@ -722,6 +749,21 @@ public class Caixa extends javax.swing.JDialog {
     private void campoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoClienteActionPerformed
+
+    private void campoParcelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            controller.setarParcelas();
+        }
+    }//GEN-LAST:event_campoParcelasKeyPressed
+
+    private void campoParcelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoParcelasMouseClicked
+        campoParcelamento.setEnabled(true);
+        campoParcelas.setEnabled(true);
+        alternarCredito.setEnabled(true);
+        alternarDebito.setEnabled(true);
+        campoDinheiro.setText("");
+        campoDinheiro.setEnabled(false);
+    }//GEN-LAST:event_campoParcelasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -786,6 +828,7 @@ public class Caixa extends javax.swing.JDialog {
     private javax.swing.JTextField campoCliente;
     private javax.swing.JFormattedTextField campoDinheiro;
     private javax.swing.JFormattedTextField campoParcelamento;
+    private javax.swing.JTextField campoParcelas;
     private javax.swing.JTextField campoProdutoCodigo;
     private javax.swing.JTextField campoProdutoNome;
     private javax.swing.JFormattedTextField campoQuantidade;
@@ -807,6 +850,7 @@ public class Caixa extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel painelPagamentoMensal;
     private javax.swing.JScrollPane painelTabelaProdutos;
+    private javax.swing.JTextField quantParcelas;
     private javax.swing.JTable tabelaDeCarrinho;
     private javax.swing.JTable tabelaDeClientes;
     private javax.swing.JTable tabelaDeProdutos;
@@ -828,6 +872,8 @@ public class Caixa extends javax.swing.JDialog {
         campoDinheiro.setEnabled(true);
         campoParcelamento.setText("");
         campoParcelamento.setEnabled(false);
+        campoParcelas.setText("");
+        campoParcelas.setEnabled(false);
         alternarCredito.setEnabled(false);
         alternarDebito.setEnabled(false);
     }
@@ -912,6 +958,13 @@ public class Caixa extends javax.swing.JDialog {
     public JCheckBox getImpressaoComprovante() {
         return impressaoComprovante;
     }
-    
+
+    public JTextField getCampoParcelas() {
+        return campoParcelas;
+    }
+
+    public JTextField getQuantParcelas() {
+        return quantParcelas;
+    }
     
 }

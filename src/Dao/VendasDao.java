@@ -32,9 +32,9 @@ public class VendasDao extends Conexao{
     public void inserirDados (Vendas venda, ArrayList<ItemVendido> item) throws SQLException{
         //Adicionando Turma
         String inVendas = inserir.concat("tblVendas("
-                + "codVenda, codCliente, codAluno, valorVenda, valorPagoCliente, valorTroco, dataVenda, chaveVenda, formaPagamento, plano)"
+                + "codVenda, codCliente, codAluno, valorVenda, valorPagoCliente, valorTroco, dataVenda, chaveVenda, formaPagamento, plano, parcelas)"
                 + "VALUES("
-                + "?,?,?,?,?,?,?,?,?,?);");
+                + "?,?,?,?,?,?,?,?,?,?,?);");
         PreparedStatement statement = gerarStatement(inVendas);
         statement.setInt(1, venda.getCodVenda());
         statement.setInt(2, venda.getCodCliente());
@@ -46,6 +46,7 @@ public class VendasDao extends Conexao{
         statement.setLong(8, venda.getChaveVenda());
         statement.setString(9, venda.getFormaPagamento());
         statement.setString(10, venda.getPlano());
+        statement.setInt(11, venda.getParcelas());
         statement.execute();
         statement.close();
         
@@ -81,8 +82,9 @@ public class VendasDao extends Conexao{
     String formaPagamento = resultset.getString("formaPagamento");
     long chaveVenda = resultset.getLong("chaveVenda");
     String plano = resultset.getString("plano");
+    int parcelas = resultset.getInt("parcelas");
 
-    Vendas venda = new Vendas(codVenda, codCliente, codAluno, valorVenda, valorPago, valorTroco, dataVenda, formaPagamento, plano, chaveVenda);
+    Vendas venda = new Vendas(codVenda, codCliente, codAluno, valorVenda, valorPago, valorTroco, dataVenda, formaPagamento, plano, chaveVenda, parcelas);
 
     vendas.add(venda);
      }while(resultset.next());

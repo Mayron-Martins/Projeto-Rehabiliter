@@ -144,4 +144,5 @@ public class ConversaodeDataParaPadraoDesignado {
     dataFormatada = dataFormatada.replaceAll(" ", "");
     return Long.valueOf(dataFormatada);
     }
+   
 }

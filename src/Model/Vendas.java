@@ -24,8 +24,9 @@ public class Vendas {
     private String formaPagamento;
     private long chaveVenda;
     private String plano;
+    private int parcelas;
     
-    public Vendas(int codVenda, int codCliente, int codAluno, BigDecimal valorVenda, BigDecimal valorPago, BigDecimal valorTroco, Date dataVenda, String formaPagamento, String plano) {
+    public Vendas(int codVenda, int codCliente, int codAluno, BigDecimal valorVenda, BigDecimal valorPago, BigDecimal valorTroco, Date dataVenda, String formaPagamento, String plano, int parcelas) {
         this.codVenda = codVenda;
         this.codCliente = codCliente;
         this.codAluno = codAluno;
@@ -38,9 +39,10 @@ public class Vendas {
         this.dataVenda = converterData.getSqlDate(dataVenda);
         this.chaveVenda = converterData.dataEHoraCodificada();
         this.plano = plano;
+        this.parcelas = parcelas;
     }
     
-    public Vendas(int codVenda, int codCliente, int codAluno, BigDecimal valorVenda, BigDecimal valorPago, BigDecimal valorTroco, Date dataVenda, String formaPagamento, String plano, long chaveVenda) {
+    public Vendas(int codVenda, int codCliente, int codAluno, BigDecimal valorVenda, BigDecimal valorPago, BigDecimal valorTroco, Date dataVenda, String formaPagamento, String plano, long chaveVenda, int parcelas) {
         this.codVenda = codVenda;
         this.codCliente = codCliente;
         this.codAluno = codAluno;
@@ -53,6 +55,7 @@ public class Vendas {
         this.dataVenda = converterData.getSqlDate(dataVenda);
         this.chaveVenda = chaveVenda;
         this.plano = plano;
+        this.parcelas = parcelas;
     }
 
     public int getCodVenda() {
@@ -94,5 +97,10 @@ public class Vendas {
     public String getPlano() {
         return plano;
     }
+
+    public int getParcelas() {
+        return parcelas;
+    }
+    
 
 }

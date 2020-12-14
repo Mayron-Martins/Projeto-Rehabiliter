@@ -221,11 +221,13 @@ public class CaixaController {
         if(totalLinhas>0){
             BigDecimal valorTotal = new BigDecimal("0");
             BigDecimal valorTabela;
+            BigDecimal valorDesconto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVDesconto().getText()).toString());
             for(int linhas=0; linhas<totalLinhas; linhas++){
                 valorTabela = new BigDecimal(converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 4).toString()).toString());
                 valorTotal = valorTotal.add(valorTabela);
             }
             valorTotal = valorTotal.setScale(2, RoundingMode.UP);
+            valorTotal = valorTotal.subtract(valorDesconto);
             view.getCampoVTotal().setText(valorTotal.toString());
         }
         else{
@@ -239,9 +241,7 @@ public class CaixaController {
         BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
         
         if(valorDesconto.compareTo(valorTotal)!=1){
-        BigDecimal novoValor = valorTotal.subtract(valorDesconto);
-        novoValor = novoValor.setScale(2, RoundingMode.UP);
-            view.getCampoVTotal().setText(novoValor.toString());
+        this.adicionarTotal();
         }
         else{
             view.exibeMensagem("Desconto Maior do Que o Valor Total!");
@@ -263,10 +263,20 @@ public class CaixaController {
          if(valorPago.compareTo(valorTotal)>=0){
              view.getCampoVPago().setText(valorPago.toString());
              this.adicionarTroco();
+             view.getQuantParcelas().setText("");
              view.getjPanelFormaDePagamento().setVisible(false);
          }
          else{
-             view.exibeMensagem("Valor Pago Insuficiente!");
+             if(view.getCampoParcelas().isEnabled()){
+                 view.getCampoVPago().setText(valorPago.toString());
+                 view.getCampoVTroco().setText("");
+                 view.getQuantParcelas().setText("");
+                 view.getQuantParcelas().setText(view.getCampoParcelas().getText()+" X");
+                 view.getjPanelFormaDePagamento().setVisible(false);
+             }
+             else{
+                 view.exibeMensagem("Valor Pago Insuficiente!");
+             }
          }
     }
     
@@ -343,7 +353,13 @@ public class CaixaController {
             String formaDePagamento = this.retornarFormaPagamento();
             int codAluno = this.retornarCliente();
             
-            Vendas venda = new Vendas(codVenda, codCliente, codAluno, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda());
+            int parcelas =1;
+            if(view.getCampoParcelas().isEnabled()){
+                parcelas = Integer.parseInt(view.getCampoParcelas().getText());
+            }
+            
+            
+            Vendas venda = new Vendas(codVenda, codCliente, codAluno, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
             ArrayList<ItemVendido> itens = new ArrayList<>();
             
             long chaveVenda = venda.getChaveVenda();
@@ -355,7 +371,6 @@ public class CaixaController {
             if(view.getPainelTabelaProdutos().isVisible()){
                 int quantLinhas = view.getTabelaDeCarrinho().getRowCount();
                 int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
-                DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Vendas", formaDePagamento, valorTotal, dataVenda, chaveVenda);
                 for(int linhas=0; linhas<quantLinhas;linhas++){
                     codProduto = Integer.parseInt(tabelaDeCarrinho.getValueAt(linhas, 0).toString());
                     quantidade = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 3).toString()).floatValue();
@@ -378,13 +393,18 @@ public class CaixaController {
                 }
                 
                 vendasDao.inserirDados(venda, itens);
-                orcamentarioDao.inserirDados(orcamentario);
+                LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
+                for(int linhas=0; linhas<parcelas;linhas++){
+                    dataParcelamentos = dataParcelamentos.plusMonths(1);
+                    dataVenda = converterData.conversaoLocalforDate(dataParcelamentos);
+                    DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario++, "Vendas", formaDePagamento, valorPago, dataVenda, chaveVenda);
+                    orcamentarioDao.inserirDados(orcamentario);
+                }
             }
             
             else{
                 int linhaSelecionada = view.getTabelaMensalidade().getSelectedRow();
                 int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
-                DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Planos", formaDePagamento, valorTotal, dataVenda, chaveVenda);
                 
                 Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
                 BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
@@ -402,7 +422,13 @@ public class CaixaController {
                 if(debitos.compareTo(BigDecimal.ZERO)!=0){
                     if(debitos.subtract(valor).compareTo(BigDecimal.ZERO)>=0){
                         vendasDao.inserirDados(venda, itens);
-                        orcamentarioDao.inserirDados(orcamentario);
+                        LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
+                        for(int linhas=0; linhas<parcelas;linhas++){
+                            dataParcelamentos = dataParcelamentos.plusMonths(1);
+                            dataVenda = converterData.conversaoLocalforDate(dataParcelamentos);
+                            DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario++, "Planos", formaDePagamento, valorPago, dataVenda, chaveVenda);
+                            orcamentarioDao.inserirDados(orcamentario);
+                        }
                         planosDao.atualizarSituacao(plano);
                         alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
                         
@@ -433,11 +459,6 @@ public class CaixaController {
             else{
                 this.novaVenda();
             }
-            
-            
-            
-            
-            
 
         }
         else{
@@ -593,7 +614,7 @@ public class CaixaController {
         String valorSubtotal = "SUBTOTAL \t\t\t\t\tR$"+subtotal+"\n\r";
         String descontot = "DESCONTO \t\t\t\t\tR$"+desconto+"\n\r";
         String valorTotal = "VALOR TOTAL\t\t\t\t\tR$"+venda.getValorVenda()+"\n\r";
-        String valorPago = "PAGO \t\t\t\t\t\tR$"+venda.getValorPago()+"\n\r";
+        String valorPago = "PAGO \t\t\t\t\t     "+venda.getParcelas()+" X R$"+venda.getValorPago()+"\n\r";
         String valorTroco = "TROCO \t\t\t\t\t\tR$"+venda.getValorTroco()+"\n\r";
         
         Date dataComprovante = new Date();
@@ -612,7 +633,7 @@ public class CaixaController {
         } catch (InterruptedException ex) {
             Logger.getLogger(CaixaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        imprimirComprovante.printTextFile("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
+        //imprimirComprovante.printTextFile("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
         //exportarComprovante.gerarPDF("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt", "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".pdf");
         //exportarComprovante.convertDocx2pdf("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt", ".txt", "ACTIVEX.ActiveXCtrl.1");
         //imprimirComprovante.imprimirString("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
@@ -632,5 +653,17 @@ public class CaixaController {
         view.getCampoVDesconto().setText("");
         view.getCampoDinheiro().setText("");
         view.getCampoParcelamento().setText("");
+        view.getQuantParcelas().setText("");
+    }
+    
+    public void setarParcelas(){
+        if(!view.getCampoParcelas().getText().equals("")&&!view.getCampoVTotal().getText().equals("")){
+            BigDecimal parcelas = new BigDecimal(view.getCampoParcelas().getText());
+            BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
+            
+            BigDecimal valorParcelamento = valorTotal.divide(parcelas, 2, RoundingMode.UP);
+            valorParcelamento = valorParcelamento.setScale(2, RoundingMode.UP);
+            view.getCampoParcelamento().setText(valorParcelamento.toString());
+        }
     }
 }
