@@ -221,7 +221,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoSair1ActionPerformed(evt);
             }
         });
-        menuFuncionario.add(botaoSair1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 960, 270, 52));
+        menuFuncionario.add(botaoSair1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 930, 270, 52));
 
         planodefundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/menu-principal-funcionárioFundo.png"))); // NOI18N
         menuFuncionario.add(planodefundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, -1));
@@ -234,7 +234,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoSairActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 935, 50, 20));
 
         botaoCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaprincipal.png"))); // NOI18N
         botaoCaixa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaHoverPrincipal.png"))); // NOI18N
@@ -243,7 +243,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoCaixaActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoCaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(botaoCaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 120, -1, -1));
 
         botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosprincipal.png"))); // NOI18N
         botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosHoverprincipal.png"))); // NOI18N
@@ -252,7 +252,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoAlunosActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
 
         botaoFrequencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaprincipal.png"))); // NOI18N
         botaoFrequencia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaHoverprincipal.png"))); // NOI18N
@@ -261,7 +261,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoFrequenciaActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(botaoFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 118, -1, -1));
 
         botaoFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroprincipal.png"))); // NOI18N
         botaoFinanceiro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroHoverprincipal.png"))); // NOI18N
@@ -270,7 +270,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoFinanceiroActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(botaoFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 120, -1, -1));
 
         botaoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuprincipal.png"))); // NOI18N
         botaoMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuHoverPrincipal.png"))); // NOI18N
@@ -279,7 +279,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoMenuActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 20, -1, -1));
 
         tabelaAniversariantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -318,13 +318,13 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
 
         animaçãoRehabiliter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
-        getContentPane().add(animaçãoRehabiliter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(animaçãoRehabiliter, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 740, 430, 260));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-funcionáriofundo.jpg"))); // NOI18N
-        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 1000));
 
         pack();
         setLocationRelativeTo(null);
@@ -338,6 +338,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.dispose();
         LoginFuncionario jump = new LoginFuncionario();
         jump.setVisible(true);
     }//GEN-LAST:event_botaoSairActionPerformed
