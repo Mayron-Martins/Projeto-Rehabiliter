@@ -73,8 +73,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoImprimirExportar.setBackground(new Color(0,0,0,0));
         botaoCaixa1.setBackground(new Color(0,0,0,0));
         
-        jdpPrincipal.setEnabled(false);
-        
     }
 
     /**
@@ -400,7 +398,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoMenuActionPerformed
 
     private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
-        try {
+        /*try {
             if(controller.permissaoDeAcessoATela()){
                 telaAlunos.setVisible(true);
             }
@@ -409,7 +407,10 @@ public class telainicialFuncionario extends javax.swing.JFrame {
             Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(telainicialFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
+        JIFAlunosCadastro tela = new JIFAlunosCadastro();
+        jdpPrincipal.add(tela);
+        tela.setVisible(true);
         
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
@@ -457,10 +458,10 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCaixaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jdpPrincipal.setEnabled(true);
+        /*
         JIFAlunosCadastro tela = new JIFAlunosCadastro();
         jdpPrincipal.add(tela);
-        tela.setVisible(true);
+        tela.setVisible(true);*/
         try {
             controller.inicializarTabela();
             controller.setarPlanos();
