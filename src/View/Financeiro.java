@@ -34,9 +34,9 @@ public class Financeiro extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
-        telaPlanoContra =new FinanceiroPlanodeContra(parent, true);
-        telaEntradas= new FinanceiroPlanodeEntradas(parent, true);
-        telaAnaliseFinanceira = new FinanceiroAnaliseFinanceira(parent, true);
+        telaPlanoContra =new FinanceiroPlanodeContra(parent, false);
+        telaEntradas= new FinanceiroPlanodeEntradas(parent, false);
+        telaAnaliseFinanceira = new FinanceiroAnaliseFinanceira(parent, false);
         
         botaoFechar.setBackground(new Color(0,0,0,0));
         btnPlanodeContraServicos.setBackground(new Color(0,0,0,0));

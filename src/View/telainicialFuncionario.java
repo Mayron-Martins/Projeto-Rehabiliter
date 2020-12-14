@@ -345,7 +345,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
     private void botaoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMenuActionPerformed
         // TODO add your handling code here:
-        this.desativarTudo();
         menuFuncionario.setVisible(true);
     }//GEN-LAST:event_botaoMenuActionPerformed
 
@@ -425,7 +424,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
         menuFuncionario.setVisible(false);
-        this.ativarTudo();
 
     }//GEN-LAST:event_botaoFecharActionPerformed
 
@@ -680,27 +678,5 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 dispose();
             }
         });
-    }
-    
-    private void desativarTudo(){
-        botaoSair1.setEnabled(false);
-        botaoCaixa.setEnabled(false);
-        botaoAlunos.setEnabled(false);
-        botaoFrequencia.setEnabled(false);
-        botaoFinanceiro.setEnabled(false);
-        botaoMenu.setVisible(false);
-        jScrollPane1.setEnabled(false);
-        animaçãoRehabiliter.setVisible(false);
-    }
-    
-    private void ativarTudo(){
-        botaoSair1.setEnabled(true);
-        botaoCaixa.setEnabled(true);
-        botaoAlunos.setEnabled(true);
-        botaoFrequencia.setEnabled(true);
-        botaoFinanceiro.setEnabled(true);
-        botaoMenu.setVisible(true);
-        jScrollPane1.setEnabled(true);
-        animaçãoRehabiliter.setVisible(true);
     }
 }

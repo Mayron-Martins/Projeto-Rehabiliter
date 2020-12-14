@@ -7,9 +7,11 @@ package Controller;
 
 import Controller.adicionais.AdicionarServicosController;
 import Controller.auxiliar.ConversaoDeDinheiro;
+import Dao.AlunosDao;
 import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
 import Dao.ServicosDao;
+import Model.Aluno;
 import Model.Funcionario;
 import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Servicos;
@@ -31,6 +33,7 @@ public class ServicosController {
     private final ServicosView view;
     private final DefaultTableModel tabelaDeServicos;
     private final ServicosDao servicosDao = new ServicosDao();
+    private final AlunosDao alunoDao = new AlunosDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
@@ -289,5 +292,10 @@ public class ServicosController {
     
     private Servicos retornarServicoAnterior(int codServico) throws SQLException{
         return servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
+    }
+    
+    private boolean retornarAlunosUsando(int codServico) throws SQLException, ParseException{
+        ArrayList <Aluno> alunos = alunoDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codServico = "+codServico+" AND ");
+        return alunos ==null;
     }
 }
