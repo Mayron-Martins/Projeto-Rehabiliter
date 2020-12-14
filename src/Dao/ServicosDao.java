@@ -30,9 +30,9 @@ public class ServicosDao extends Conexao{
     public void inserirDados (Servicos servico) throws SQLException{
         //Adicionando Turma
         String inServicos = inserir.concat("tblServicos("
-                + "codServico, nome, periodo, formaPagamento, valor, valorAVista, valorBoleto, valorCartaoDeCredito, valorCartaoDeDebito)"
+                + "codServico, nome, periodo, formaPagamento, valor, valorAVista, valorBoleto, valorCartaoDeCredito, valorCartaoDeDebito, periodDays)"
                 + "VALUES("
-                + "?,?,?,?,?,?,?,?,?);");
+                + "?,?,?,?,?,?,?,?,?, ?);");
         PreparedStatement statement = gerarStatement(inServicos);
         statement.setInt(1, servico.getCodBanco());
         statement.setString(2, servico.getNome());
@@ -43,6 +43,7 @@ public class ServicosDao extends Conexao{
         statement.setBigDecimal(7, servico.getValorBoleto());
         statement.setBigDecimal(8, servico.getValorPrazoCredito());
         statement.setBigDecimal(9, servico.getValorPrazoDebito());
+        statement.setInt(10, servico.getPeriodDays());
         statement.execute();
         statement.close();
     }
@@ -53,7 +54,7 @@ public class ServicosDao extends Conexao{
     public void atualizarDados(Servicos servico) throws SQLException{
         //atualizando a tabela de turmas
         String inServicos = atualizar.concat("tblServicos "
-                + "SET nome = ?, periodo = ?, formaPagamento = ?, valor =?, valorAVista = ?, valorBoleto=?, valorCartaoDeCredito=?, valorCartaoDeDebito=? where codServico = ?");
+                + "SET nome = ?, periodo = ?, formaPagamento = ?, valor =?, valorAVista = ?, valorBoleto=?, valorCartaoDeCredito=?, valorCartaoDeDebito=?, periodDays = ? where codServico = ?");
         
         PreparedStatement statement = gerarStatement(inServicos);
         statement.setString(1, servico.getNome());
@@ -64,7 +65,8 @@ public class ServicosDao extends Conexao{
         statement.setBigDecimal(6, servico.getValorBoleto());
         statement.setBigDecimal(7, servico.getValorPrazoCredito());
         statement.setBigDecimal(8, servico.getValorPrazoDebito());
-        statement.setInt(9, servico.getCodBanco());
+        statement.setInt(9, servico.getPeriodDays());
+        statement.setInt(10, servico.getCodBanco());
         
         statement.execute();
         statement.close();
@@ -108,8 +110,9 @@ public class ServicosDao extends Conexao{
     BigDecimal valorBoleto = new BigDecimal(resultset.getBigDecimal("valorBoleto").toString());
     BigDecimal valorAPrazoCredito = new BigDecimal(resultset.getBigDecimal("valorCartaoDeCredito").toString());
     BigDecimal valorAPrazoDebito = new BigDecimal (resultset.getBigDecimal("valorCartaoDeDebito").toString());
+    int periodDays = resultset.getInt("periodDays");
 
-    Servicos servico = new Servicos(codBanco, nome, periodo, formaPagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito);
+    Servicos servico = new Servicos(codBanco, nome, periodo, formaPagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays);
 
     servicos.add(servico);
      }while(resultset.next());

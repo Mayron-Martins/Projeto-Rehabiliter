@@ -6,6 +6,7 @@
 package View;
 
 import Controller.adicionais.AdicionarServicosController;
+import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -67,7 +68,9 @@ public class ServicosAdicionar extends javax.swing.JDialog {
 
         campoOutroTipo = new javax.swing.JTextField();
         comboPeriodo = new javax.swing.JComboBox<>();
+        campoDias = new FormatacaodeCamposRestritos();
         btnFechar = new javax.swing.JButton();
+        comboDias = new javax.swing.JComboBox<>();
         nomeServico = new javax.swing.JTextField();
         valorDinheiro = new JMoneyField();
         metodoPagamento = new javax.swing.JComboBox<>();
@@ -93,6 +96,7 @@ public class ServicosAdicionar extends javax.swing.JDialog {
             }
         });
         getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 202, 170, 30));
+        getContentPane().add(campoDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 240, 110, 30));
 
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
         btnFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
@@ -102,6 +106,9 @@ public class ServicosAdicionar extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 230, 60));
+
+        comboDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "D", "M", "A" }));
+        getContentPane().add(comboDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 240, 50, 30));
 
         nomeServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,11 +169,16 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         comboPeriodo.setEnabled(true);
         campoOutroTipo.setText("Outro");
         campoOutroTipo.setEnabled(false);
+        
+        campoDias.setEnabled(false);
+        comboDias.setEnabled(false);
     }//GEN-LAST:event_comboPeriodoMouseClicked
 
     private void campoOutroTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoOutroTipoMouseClicked
         campoOutroTipo.setEnabled(true);
         this.esvaziarOutroTipo();
+        campoDias.setEnabled(true);
+        comboDias.setEnabled(true);
         comboPeriodo.setEnabled(false);
     }//GEN-LAST:event_campoOutroTipoMouseClicked
 
@@ -215,7 +227,9 @@ public class ServicosAdicionar extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoConfirmar;
     private javax.swing.JButton btnFechar;
+    private javax.swing.JTextField campoDias;
     private javax.swing.JTextField campoOutroTipo;
+    private javax.swing.JComboBox<String> comboDias;
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JComboBox<String> metodoPagamento;
@@ -237,6 +251,14 @@ public class ServicosAdicionar extends javax.swing.JDialog {
 
     public JTextField getNomeServico() {
         return nomeServico;
+    }
+
+    public JTextField getCampoDias() {
+        return campoDias;
+    }
+
+    public JComboBox<String> getComboDias() {
+        return comboDias;
     }
 
     public JFormattedTextField getValorDinheiro() {

@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 /**
@@ -57,10 +59,11 @@ public class AdicionarServicosController {
         if(metodoDePagamento.equals("Boleto")){valorBoleto = new BigDecimal(valorDinheiro);}
         if(metodoDePagamento.equals("Cartão de Crédito")){valorAPrazoCredito = new BigDecimal(valorDinheiro);}
         if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
+        int periodDays = this.periodDays();
         
-        Servicos servico = new Servicos(codBancoServico, nomeServico, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito);
+        Servicos servico = new Servicos(codBancoServico, nomeServico, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays);
         //Inserindo Dados
-        if(nomeServico.equals("")|| periodo.equals("[Nenhum]")){
+        if(nomeServico.equals("")|| periodo.equals("[Nenhum]")||periodDays==0){
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
             servicosDao.inserirDados(servico);
@@ -76,6 +79,8 @@ public class AdicionarServicosController {
             view.getComboPeriodo().setSelectedIndex(0);
             view.getMetodoPagamento().setSelectedIndex(0);
             view.getValorDinheiro().setText("");
+            view.getCampoOutroTipo().setText("Outro");
+            view.getCampoDias().setText("");
         }
         
     }
@@ -125,5 +130,56 @@ public class AdicionarServicosController {
         Date dataEvento = new Date();
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Serviço", "Cadastrou o serviço "+nomeServico);
         return logAcao;
-    } 
+    }
+    
+    private int periodDays(){
+        if(view.getComboPeriodo().isEnabled()){
+            String tipo = view.getComboPeriodo().getSelectedItem().toString();
+            switch(tipo){
+                case "Diária":
+                    return 1;
+                case "Semanal":
+                    return 7;
+                case "Mensal":
+                    return 30;
+                case "Trimestral":
+                    return 90;
+                case "Quadrimestral":
+                    return 120;
+                case "Semestral":
+                    return 150;
+                case "Anual":
+                    return 365;
+            }
+            try {
+                ArrayList <Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE periodo = "+tipo);
+                if(servicos!=null){
+                    return servicos.get(0).getPeriodDays();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AdicionarServicosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            
+        }
+        
+        return this.periodOfOutro();
+    }
+    
+    private int periodOfOutro(){
+        String period = view.getComboDias().getSelectedItem().toString();
+        int dias=0;
+        if(view.getCampoDias() !=null){
+         dias = Integer.parseInt(view.getCampoDias().getText());
+        }
+        
+        if(period.equals("M")){
+            return 30*dias;
+        }
+        if(period.equals("A")){
+            return 365*dias;
+        }
+        return dias;
+    }
 }

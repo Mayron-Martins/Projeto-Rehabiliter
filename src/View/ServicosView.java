@@ -73,6 +73,8 @@ public class ServicosView extends javax.swing.JDialog {
         campoOutroPeriodo = new javax.swing.JTextField();
         comboPeriodo = new javax.swing.JComboBox<>();
         metodoPagamento = new javax.swing.JComboBox<>();
+        comboDias = new javax.swing.JComboBox<>();
+        campoDias = new javax.swing.JTextField();
         btnRemover = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
@@ -101,7 +103,7 @@ public class ServicosView extends javax.swing.JDialog {
                 campoOutroPeriodoMouseClicked(evt);
             }
         });
-        getContentPane().add(campoOutroPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 295, 130, 30));
+        getContentPane().add(campoOutroPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 295, 130, 30));
 
         comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diária", "Semanal", "Mensal", "Trimestral", "Semestral", "Anual" }));
         comboPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -109,7 +111,7 @@ public class ServicosView extends javax.swing.JDialog {
                 comboPeriodoMouseClicked(evt);
             }
         });
-        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(354, 295, 160, 30));
+        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 295, 160, 30));
 
         metodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
         metodoPagamento.addActionListener(new java.awt.event.ActionListener() {
@@ -118,6 +120,10 @@ public class ServicosView extends javax.swing.JDialog {
             }
         });
         getContentPane().add(metodoPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(678, 295, 160, 30));
+
+        comboDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "D", "M", "A" }));
+        getContentPane().add(comboDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 295, 50, 30));
+        getContentPane().add(campoDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(405, 295, 40, 30));
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnRemover.png"))); // NOI18N
         btnRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnRemoverHover.png"))); // NOI18N
@@ -333,7 +339,9 @@ public class ServicosView extends javax.swing.JDialog {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnRemover;
+    private javax.swing.JTextField campoDias;
     private javax.swing.JTextField campoOutroPeriodo;
+    private javax.swing.JComboBox<String> comboDias;
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JComboBox<String> metodoPagamento;
@@ -388,6 +396,16 @@ public class ServicosView extends javax.swing.JDialog {
     public int getNumeroTela() {
         return numeroTela;
     }
+
+    public JTextField getCampoDias() {
+        return campoDias;
+    }
+
+    public JComboBox<String> getComboDias() {
+        return comboDias;
+    }
+    
+    
     public void fecharTelaESC() {
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");

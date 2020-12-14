@@ -299,7 +299,8 @@ public class TableCriator {
                 + "valorAVista DECIMAL(16,2) NULL,"
                 + "valorBoleto DECIMAL(16,2) NULL,"
                 + "valorCartaoDeCredito DECIMAL(16,2) NULL,"
-                + "valorCartaoDeDebito DECIMAL(16,2) NULL"
+                + "valorCartaoDeDebito DECIMAL(16,2) NULL,"
+                + "periodDays INT NULL"
                 + ") ON [AlunoseClientes];");
     }
     
