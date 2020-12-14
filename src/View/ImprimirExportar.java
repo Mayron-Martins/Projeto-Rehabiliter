@@ -35,8 +35,8 @@ public class ImprimirExportar extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
-        telaTurmasFrequencia= new turmasFrequencia(parent, true);
-        telaAnaliseFinanceira=new FinanceiroAnaliseFinanceira(parent, true);
+        telaTurmasFrequencia= new turmasFrequencia(parent, false);
+        telaAnaliseFinanceira=new FinanceiroAnaliseFinanceira(parent, false);
         
         botaoFechar.setBackground(new Color(0,0,0,0));
         btnFrequencia.setBackground(new Color(0,0,0,0));

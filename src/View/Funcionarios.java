@@ -32,21 +32,34 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class Funcionarios extends javax.swing.JFrame {
+public class Funcionarios extends javax.swing.JDialog {
+    private final java.awt.Frame parent; 
     private final FuncionariosController controller;
-    private final FuncionariosAdicionar telaAdicionarFuncionarios = new FuncionariosAdicionar();
-    private final JFormattedTextField cpf = new JFormattedTextField(telaAdicionarFuncionarios.getCampoCPF().getFormatter());
-    private final JFormattedTextField telefone = new JFormattedTextField(telaAdicionarFuncionarios.getCampoTelefone().getFormatter());
-    private final JFormattedTextField celular = new JFormattedTextField(telaAdicionarFuncionarios.getCampoCelular().getFormatter());
+    private final FuncionariosAdicionar telaAdicionarFuncionarios;
+    private final JFormattedTextField cpf;
+    private final JFormattedTextField telefone;
+    private final JFormattedTextField celular;
     private final JFormattedTextField salario = new JMoneyField();
     private String telasPermitidas;
+    private final FrequenciaFuncionariosView telaFrequencia;
     
 
     /**
      * Creates new form Funcionarios
+     * @param parent
+     * @param modal
      */
-    public Funcionarios() {
+    public Funcionarios(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        telaAdicionarFuncionarios = new FuncionariosAdicionar(parent, false);
+        telaFrequencia = new FrequenciaFuncionariosView(parent, false);
+        cpf = new JFormattedTextField(telaAdicionarFuncionarios.getCampoCPF().getFormatter());
+        telefone = new JFormattedTextField(telaAdicionarFuncionarios.getCampoTelefone().getFormatter());
+        celular = new JFormattedTextField(telaAdicionarFuncionarios.getCampoCelular().getFormatter());
+        
         controller = new FuncionariosController(this);
         botaobuscar1.setBackground(new Color(0,0,0,0));
         botaoFechar1.setBackground(new Color(0,0,0,0));
@@ -110,7 +123,7 @@ public class Funcionarios extends javax.swing.JFrame {
         botaoPermissoes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -337,12 +350,6 @@ public class Funcionarios extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaFuncionarios.getTableHeader().setResizingAllowed(false);
-        tabelaFuncionarios.getTableHeader().setReorderingAllowed(false);
-        tabelaFuncionarios.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(cpf));
-        tabelaFuncionarios.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(telefone));
-        tabelaFuncionarios.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(celular));
-        tabelaFuncionarios.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(salario));
         tabelaFuncionarios.setFocusable(false);
         tabelaFuncionarios.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaFuncionarios.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -400,8 +407,9 @@ public class Funcionarios extends javax.swing.JFrame {
 
     private void botaoAdicionar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionar1ActionPerformed
         // TODO add your handling code here:
-        FuncionariosAdicionar abrir= new FuncionariosAdicionar();
-        abrir.setVisible(true);
+        telaAdicionarFuncionarios.setModal(true);
+        telaAdicionarFuncionarios.setLocationRelativeTo(null);
+        telaAdicionarFuncionarios.setVisible(true);
     }//GEN-LAST:event_botaoAdicionar1ActionPerformed
 
     private void botaoRemover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemover1ActionPerformed
@@ -461,7 +469,8 @@ public class Funcionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_campoBuscarKeyPressed
 
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        FrequenciaFuncionariosView telaFrequencia = new FrequenciaFuncionariosView();
+        telaFrequencia.setModal(true);
+        telaFrequencia.setLocationRelativeTo(null);
         telaFrequencia.setVisible(true);
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
@@ -614,7 +623,14 @@ public class Funcionarios extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Funcionarios().setVisible(true);
+                Funcionarios dialog = new Funcionarios(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -772,5 +788,14 @@ public class Funcionarios extends javax.swing.JFrame {
                 dispose();
             }
         });
+    }
+    
+    private void setarComponentesTabela(){
+        tabelaFuncionarios.getTableHeader().setResizingAllowed(false);
+        tabelaFuncionarios.getTableHeader().setReorderingAllowed(false);
+        tabelaFuncionarios.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(cpf));
+        tabelaFuncionarios.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(telefone));
+        tabelaFuncionarios.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(celular));
+        tabelaFuncionarios.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(salario));
     }
 }

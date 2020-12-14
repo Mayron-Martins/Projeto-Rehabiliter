@@ -48,8 +48,9 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
-        telaAdAEntradas= new FinanceiroPlanodeEntradasAdc(parent, true);
+        telaAdAEntradas= new FinanceiroPlanodeEntradasAdc(parent, false);
         comboPagamentoEntrada = new JComboBox(telaAdAEntradas.getCampoFormaPagamento().getModel());
+        this.setarComponentesTabela();
         
         controller = new PlanoEntradasController(this);
         btnAdicionar.setBackground(new Color(0,0,0,0));
@@ -206,8 +207,6 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabelaVendas.getTableHeader().setResizingAllowed(false);
-        tabelaVendas.getTableHeader().setReorderingAllowed(false);
         tabelaVendas.setFocusable(false);
         tabelaVendas.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaVendas.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -247,8 +246,6 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabelasPlanos.getTableHeader().setResizingAllowed(false);
-        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
         tabelasPlanos.setFocusable(false);
         tabelasPlanos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelasPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -288,11 +285,6 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabelaEntradas.getTableHeader().setResizingAllowed(false);
-        tabelaEntradas.getTableHeader().setReorderingAllowed(false);
-        tabelaEntradas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(quantidadeEntrada));
-        tabelaEntradas.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoEntrada));
-        tabelaEntradas.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorEntrada));
         tabelaEntradas.setFocusable(false);
         tabelaEntradas.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaEntradas.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -582,5 +574,15 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         });
     }
     
-    
+    private void setarComponentesTabela(){
+        tabelaVendas.getTableHeader().setResizingAllowed(false);
+        tabelaVendas.getTableHeader().setReorderingAllowed(false);
+        tabelasPlanos.getTableHeader().setResizingAllowed(false);
+        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelaEntradas.getTableHeader().setResizingAllowed(false);
+        tabelaEntradas.getTableHeader().setReorderingAllowed(false);
+        tabelaEntradas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(quantidadeEntrada));
+        tabelaEntradas.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoEntrada));
+        tabelaEntradas.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorEntrada));
+    }
 }

@@ -65,15 +65,10 @@ public class AdicionarAlunosController {
     public void verificacaoDeTurmaEServico() throws SQLException{
         ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
         ArrayList <Servicos> servicos = servicosDao.selecionarTodosServicos();
-        ServicosView telaServicos = new ServicosView(view.getParent(), true);
-        TurmasView telaTurmas = new TurmasView(view.getParent(), true);
         limparCombos();
         
         if(turmas==null){
             view.exibeMensagem("Sem Turmas Cadastradas! Adicione Alguma Para Entrar Nessa Tela!");
-            telaTurmas.setModal(true);
-            telaTurmas.setLocationRelativeTo(null);
-            telaTurmas.setVisible(true);
             if(view.isVisible()){
                view.dispose(); 
             }
@@ -86,9 +81,6 @@ public class AdicionarAlunosController {
         
         if(servicos==null){
             view.exibeMensagem("Sem Serviços Cadastrados! Adicione Algum Para Entrar Nessa Tela!");
-            telaServicos.setModal(true);
-            telaServicos.setLocationRelativeTo(null);
-            telaServicos.setVisible(true);
             if(view.isVisible()){
                view.dispose(); 
             }

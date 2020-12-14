@@ -37,6 +37,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private final ImprimirExportarGerente telaImprimirExportar;
     private final BackupView telaBackup;
     private final Caixa telaCaixa;
+    private final Funcionarios telaFuncionarios;
 
     /**
      * Creates new form telaInicialGerente
@@ -53,6 +54,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         telaImprimirExportar= new ImprimirExportarGerente(this, false);
         telaBackup= new BackupView(this, false);
         telaCaixa= new Caixa(this, false);
+        telaFuncionarios = new Funcionarios(this, false);
         
         
         menuGerente.setVisible(false);
@@ -399,8 +401,9 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoMenuActionPerformed
 
     private void botaoFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionariosActionPerformed
-        Funcionarios telaFuncionarios = new Funcionarios();
-                telaFuncionarios.setVisible(true);
+        telaFuncionarios.setModal(true);
+        telaFuncionarios.setLocationRelativeTo(null);
+        telaFuncionarios.setVisible(true);   
     }//GEN-LAST:event_botaoFuncionariosActionPerformed
 
     private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed

@@ -120,10 +120,10 @@ public class AlunosView extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        painelPlanos = new javax.swing.JScrollPane();
-        tabelaPlanos = new javax.swing.JTable();
         painelAlunos = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
+        painelPlanos = new javax.swing.JScrollPane();
+        tabelaPlanos = new javax.swing.JTable();
         painelPais = new javax.swing.JScrollPane();
         tabelaPais = new javax.swing.JTable();
         painelEnderecos = new javax.swing.JScrollPane();
@@ -169,45 +169,6 @@ public class AlunosView extends javax.swing.JDialog {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tabelaPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaPlanos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ChavePlano", "Dia Vencimento", "Situacao"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabelaPlanos.setFocusable(false);
-        tabelaPlanos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaPlanos.setRowHeight(25);
-        tabelaPlanos.setShowVerticalLines(false);
-        tabelaPlanos.getTableHeader().setReorderingAllowed(false);
-        tabelaPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaPlanosComponentHidden(evt);
-            }
-        });
-        painelPlanos.setViewportView(tabelaPlanos);
-
-        getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
-
         tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -246,6 +207,45 @@ public class AlunosView extends javax.swing.JDialog {
         painelAlunos.setViewportView(tabelaAlunos);
 
         getContentPane().add(painelAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+
+        tabelaPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaPlanos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ChavePlano", "Dia Vencimento", "Situacao"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaPlanos.setFocusable(false);
+        tabelaPlanos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaPlanos.setRowHeight(25);
+        tabelaPlanos.setShowVerticalLines(false);
+        tabelaPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelaPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaPlanosComponentHidden(evt);
+            }
+        });
+        painelPlanos.setViewportView(tabelaPlanos);
+
+        getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
         tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaPais.setModel(new javax.swing.table.DefaultTableModel(

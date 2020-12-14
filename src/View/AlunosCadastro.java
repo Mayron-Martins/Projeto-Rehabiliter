@@ -51,7 +51,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
-        telaHorarios = new AlunosCadastroTurmasEHorarios(parent, true);
+        telaHorarios = new AlunosCadastroTurmasEHorarios(parent, false);
         
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new AdicionarAlunosController(this);

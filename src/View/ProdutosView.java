@@ -46,7 +46,7 @@ public class ProdutosView extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
-        telaProdutosAdicionar= new ProdutosAdicionar(parent, true);
+        telaProdutosAdicionar= new ProdutosAdicionar(parent, false);
         
         controller = new ProdutosController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));

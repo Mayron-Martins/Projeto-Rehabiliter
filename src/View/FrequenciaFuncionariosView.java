@@ -25,14 +25,21 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class FrequenciaFuncionariosView extends javax.swing.JFrame {
+public class FrequenciaFuncionariosView extends javax.swing.JDialog {
+    private final java.awt.Frame parent; 
     private final FrequenciaFuncionariosController controller;
 
     /**
      * Creates new form Frequencia
+     * @param parent
+     * @param modal
      */
-    public FrequenciaFuncionariosView() {
+    public FrequenciaFuncionariosView(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        
         controller = new FrequenciaFuncionariosController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
@@ -56,7 +63,7 @@ public class FrequenciaFuncionariosView extends javax.swing.JFrame {
         comboIntervalo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -209,7 +216,14 @@ public class FrequenciaFuncionariosView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrequenciaFuncionariosView().setVisible(true);
+                FrequenciaFuncionariosView dialog = new FrequenciaFuncionariosView(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

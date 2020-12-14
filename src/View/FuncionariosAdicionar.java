@@ -28,14 +28,21 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class FuncionariosAdicionar extends javax.swing.JFrame {
+public class FuncionariosAdicionar extends javax.swing.JDialog {
+    private final java.awt.Frame parent; 
     private final AdicionarFuncionariosController controller;
 
     /**
      * Creates new form FuncionariosAdicionar
+     * @param parent
+     * @param modal
      */
-    public FuncionariosAdicionar() {
+    public FuncionariosAdicionar(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        
         controller = new AdicionarFuncionariosController(this);
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         botaofechar.setBackground(new Color(0,0,0,0));
@@ -67,7 +74,7 @@ public class FuncionariosAdicionar extends javax.swing.JFrame {
         campoCargo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -172,7 +179,14 @@ public class FuncionariosAdicionar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FuncionariosAdicionar().setVisible(true);
+                FuncionariosAdicionar dialog = new FuncionariosAdicionar(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

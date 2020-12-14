@@ -32,15 +32,15 @@ public class MenuGerente extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
-        telaAlunos=new AlunosView(parent, true);
-        telaTurmas=new TurmasView(parent, true);
-        telaTurmasFrequencia= new turmasFrequencia(parent, true);
-        telaProdutos=new ProdutosView(parent, true);
-        telaServicos=new ServicosView(parent, true);
-        telaFinanceiro = new Financeiro(parent, true);
-        telaImprimirExportar= new ImprimirExportarGerente(parent, true);
-        telaBackup= new BackupView(parent, true);
-        telaCaixa= new Caixa(parent, true);
+        telaAlunos=new AlunosView(parent, false);
+        telaTurmas=new TurmasView(parent, false);
+        telaTurmasFrequencia= new turmasFrequencia(parent, false);
+        telaProdutos=new ProdutosView(parent, false);
+        telaServicos=new ServicosView(parent, false);
+        telaFinanceiro = new Financeiro(parent, false);
+        telaImprimirExportar= new ImprimirExportarGerente(parent, false);
+        telaBackup= new BackupView(parent, false);
+        telaCaixa= new Caixa(parent, false);
         
         
         setBackground(new Color(0,0,0,0));

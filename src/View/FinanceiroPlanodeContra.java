@@ -48,8 +48,9 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
-        telaContraAdicionar= new FinanceiroPlanodeContraAdc(parent, true);
+        telaContraAdicionar= new FinanceiroPlanodeContraAdc(parent, false);
         comboPagamentoGasto = new JComboBox(telaContraAdicionar.getCampoFormaPagamento().getModel());
+        this.setarComponentesTabela();
         
         controller = new PlanoGastosController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -135,11 +136,6 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabelaGastos.getTableHeader().setResizingAllowed(false);
-        tabelaGastos.getTableHeader().setReorderingAllowed(false);
-        tabelaGastos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(quantidadeGasto));
-        tabelaGastos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoGasto));
-        tabelaGastos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorGasto));
         tabelaGastos.setFocusable(false);
         tabelaGastos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaGastos.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -436,4 +432,11 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         });
     }
     
+    private void setarComponentesTabela(){
+        tabelaGastos.getTableHeader().setResizingAllowed(false);
+        tabelaGastos.getTableHeader().setReorderingAllowed(false);
+        tabelaGastos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(quantidadeGasto));
+        tabelaGastos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoGasto));
+        tabelaGastos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorGasto));
+    }
 }
