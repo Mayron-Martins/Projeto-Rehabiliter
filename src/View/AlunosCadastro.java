@@ -40,6 +40,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final AdicionarAlunosController controller;
     private final AlunosCadastroTurmasEHorarios telaHorarios;
+    
 
     /**
      * Creates new form AlunosCadastro
@@ -52,6 +53,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
         
         this.parent = parent;
         telaHorarios = new AlunosCadastroTurmasEHorarios(parent, false);
+        
         
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new AdicionarAlunosController(this);
@@ -66,6 +68,8 @@ public class AlunosCadastro extends javax.swing.JDialog {
        btnProx.setBackground(new Color (0,0,0,0));
        jPanelCadastroFinal.setVisible(false);
        jPanelPais.setVisible(false);
+       btnConfirma.setBackground(new Color (0,0,0,0));
+       descricao.setVisible(false);
        
        fecharTelaESC();
        
@@ -84,6 +88,10 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private void initComponents() {
 
         botaofechar = new javax.swing.JButton();
+        descricao = new javax.swing.JPanel();
+        btnConfirma = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jpanelDados = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         campoNomeAluno = new FormatacaoCamposRestritosLetras(50);
@@ -162,6 +170,26 @@ public class AlunosCadastro extends javax.swing.JDialog {
             }
         });
         getContentPane().add(botaofechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 50));
+
+        descricao.setBackground(new java.awt.Color(157, 197, 187));
+        descricao.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnConfirma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
+        btnConfirma.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
+        btnConfirma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmaActionPerformed(evt);
+            }
+        });
+        descricao.add(btnConfirma, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        descricao.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 470, 170));
+
+        getContentPane().add(descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 490, 310));
 
         jpanelDados.setBackground(new java.awt.Color(157, 197, 187));
         jpanelDados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -521,8 +549,8 @@ public class AlunosCadastro extends javax.swing.JDialog {
 
     private void botaoDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDescricaoActionPerformed
         // TODO add your handling code here:
-        AlunosCadastroDescricao abrir = new AlunosCadastroDescricao();
-        abrir.setVisible(true);
+        descricao.setVisible(true);
+        
     }//GEN-LAST:event_botaoDescricaoActionPerformed
 
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
@@ -576,6 +604,11 @@ public class AlunosCadastro extends javax.swing.JDialog {
             Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_comboTurmaActionPerformed
+
+    private void btnConfirmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmaActionPerformed
+        // TODO add your handling code here:
+        descricao.setVisible(false);
+    }//GEN-LAST:event_btnConfirmaActionPerformed
     private void jpanelDadosActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
         this.setVisible(false);
@@ -631,6 +664,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private javax.swing.JButton botaofechar;
     private javax.swing.JButton btnAnt;
     private javax.swing.JButton btnAnterior;
+    private javax.swing.JButton btnConfirma;
     private javax.swing.JButton btnProx;
     private javax.swing.JButton btnProxi;
     private javax.swing.JTextField campoBairro;
@@ -654,6 +688,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JComboBox<String> comboPlano;
     private javax.swing.JComboBox<String> comboTurma;
+    private javax.swing.JPanel descricao;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -681,6 +716,8 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelCadastroFinal;
     private javax.swing.JPanel jPanelPais;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel jpanelDados;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JCheckBox renovacaoAuto;
