@@ -33,12 +33,12 @@ import javax.swing.KeyStroke;
  *
  * @author 55989
  */
-public class JIFAlunosCadastro extends javax.swing.JInternalFrame {
+public final class JIFAlunosCadastro extends javax.swing.JInternalFrame {
 
     
     private final int numeroTela = 1;
 private Point point = new Point();
-private final AlunosController controller;
+//private final AlunosController controller;
 private AlunosCadastro alunosCadastro = new AlunosCadastro();
 private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
 private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
@@ -60,7 +60,7 @@ private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null); //retirar o painel
         
         
-        controller = new AlunosController(this);
+        //controller = new AlunosController(this);
         botaobuscar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
@@ -389,31 +389,31 @@ private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
     }//GEN-LAST:event_tabelaEnderecosComponentHidden
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
-        try {
+        /*try {
             controller.removerAluno();
         } catch (ParseException ex) {
             Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
-        try {
+        /*try {
             controller.editarAlunos();
         } catch (ParseException ex) {
             Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void botaoListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarActionPerformed
-        try {
+        /*try {
             controller.listar();
         } catch (Exception ex) {
             Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_botaoListarActionPerformed
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
@@ -422,12 +422,12 @@ private final JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
     }//GEN-LAST:event_botaoFecharActionPerformed
 
     private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
-
+        /*
         try {
             controller.buscarAlunos();
         } catch (Exception ex) {
             Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_botaobuscarActionPerformed
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed

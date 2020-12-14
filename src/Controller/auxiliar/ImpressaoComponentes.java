@@ -143,7 +143,8 @@ public class ImpressaoComponentes {
                conect+=texto+"\n";
                texto = myBuffer.readLine();
            }
-           InputStream in = new ByteArrayInputStream((conect+"\f").getBytes("UTF-8"));
+           conect = conect +"\f";
+           InputStream in = new ByteArrayInputStream((conect).getBytes("UTF-8"));
             
             PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
             pras.add(new Copies(1));

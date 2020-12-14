@@ -73,7 +73,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoImprimirExportar.setBackground(new Color(0,0,0,0));
         botaoCaixa1.setBackground(new Color(0,0,0,0));
         
-        
+        jdpPrincipal.setEnabled(false);
         
     }
 
@@ -86,6 +86,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jdpPrincipal = new javax.swing.JDesktopPane();
         menuFuncionario = new javax.swing.JPanel();
         botaoFechar = new javax.swing.JButton();
         botaoBackup = new javax.swing.JButton();
@@ -97,7 +98,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoProdutos = new javax.swing.JButton();
         botaoCaixa1 = new javax.swing.JButton();
         botaoSair1 = new javax.swing.JButton();
-        jdpPrincipal = new javax.swing.JDesktopPane();
         planodefundo1 = new javax.swing.JLabel();
         botaoSair = new javax.swing.JButton();
         botaoCaixa = new javax.swing.JButton();
@@ -119,6 +119,9 @@ public class telainicialFuncionario extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jdpPrincipal.setForeground(new java.awt.Color(0, 0, 0));
+        jdpPrincipal.setToolTipText("");
 
         menuFuncionario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -210,14 +213,8 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         });
         menuFuncionario.add(botaoSair1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 960, 270, 52));
 
-        jdpPrincipal.setForeground(new java.awt.Color(0, 0, 75));
-        jdpPrincipal.setToolTipText("");
-        menuFuncionario.add(jdpPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 1020));
-
         planodefundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/menu-principal-funcionárioFundo.png"))); // NOI18N
         menuFuncionario.add(planodefundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, -1));
-
-        getContentPane().add(menuFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 1020));
 
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoSair.addActionListener(new java.awt.event.ActionListener() {
@@ -225,7 +222,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoSairActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 945, 90, 25));
 
         botaoCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaprincipal.png"))); // NOI18N
         botaoCaixa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaHoverPrincipal.png"))); // NOI18N
@@ -234,10 +230,8 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoCaixaActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoCaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(544, 90, 168, 203));
 
         animaçãoRehabiliter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
-        getContentPane().add(animaçãoRehabiliter, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 800, 420, 190));
 
         botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosprincipal.png"))); // NOI18N
         botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosHoverprincipal.png"))); // NOI18N
@@ -246,7 +240,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoAlunosActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 168, 203));
 
         botaoFrequencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaprincipal.png"))); // NOI18N
         botaoFrequencia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaHoverprincipal.png"))); // NOI18N
@@ -255,7 +248,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoFrequenciaActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 90, 168, 203));
 
         botaoFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroprincipal.png"))); // NOI18N
         botaoFinanceiro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroHoverprincipal.png"))); // NOI18N
@@ -264,7 +256,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoFinanceiroActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 90, 168, 203));
 
         botaoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuprincipal.png"))); // NOI18N
         botaoMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuHoverPrincipal.png"))); // NOI18N
@@ -273,7 +264,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
                 botaoMenuActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 20, 110, 70));
 
         tabelaAniversariantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -312,10 +302,80 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 350, 316, 180));
-
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-funcionáriofundo.jpg"))); // NOI18N
-        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jdpPrincipal.setLayer(menuFuncionario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(botaoSair, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(botaoCaixa, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(animaçãoRehabiliter, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(botaoAlunos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(botaoFrequencia, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(botaoFinanceiro, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(botaoMenu, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpPrincipal.setLayer(planodefundo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jdpPrincipalLayout = new javax.swing.GroupLayout(jdpPrincipal);
+        jdpPrincipal.setLayout(jdpPrincipalLayout);
+        jdpPrincipalLayout.setHorizontalGroup(
+            jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(544, 544, 544)
+                .addComponent(botaoCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(820, 820, 820)
+                .addComponent(animaçãoRehabiliter, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(376, 376, 376)
+                .addComponent(botaoFinanceiro, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(1130, 1130, 1130)
+                .addComponent(botaoMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(botaoAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(menuFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(208, 208, 208)
+                .addComponent(botaoFrequencia, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(planodefundo)
+        );
+        jdpPrincipalLayout.setVerticalGroup(
+            jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(botaoCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(652, 652, 652)
+                .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(800, 800, 800)
+                .addComponent(animaçãoRehabiliter, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(350, 350, 350)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(botaoFinanceiro, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(botaoMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(botaoAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(menuFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 1020, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jdpPrincipalLayout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(botaoFrequencia, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(planodefundo)
+        );
+
+        getContentPane().add(jdpPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 1030));
 
         pack();
         setLocationRelativeTo(null);
@@ -397,6 +457,10 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCaixaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jdpPrincipal.setEnabled(true);
+        JIFAlunosCadastro tela = new JIFAlunosCadastro();
+        jdpPrincipal.add(tela);
+        tela.setVisible(true);
         try {
             controller.inicializarTabela();
             controller.setarPlanos();
