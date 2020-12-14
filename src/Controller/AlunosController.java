@@ -24,8 +24,6 @@ import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.AlunosView;
-import View.ServicosView;
-import View.TurmasView;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
