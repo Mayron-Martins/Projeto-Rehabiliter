@@ -459,6 +459,8 @@ public class AlunosCadastro extends javax.swing.JDialog {
 
         campoValorMensal.setEditable(false);
         jPanelCadastroFinal.add(campoValorMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 100, 32));
+
+        campoValor.setEditable(false);
         jPanelCadastroFinal.add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 100, 32));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

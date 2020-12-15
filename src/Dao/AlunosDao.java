@@ -183,10 +183,8 @@ public class AlunosDao extends Conexao{
     BigDecimal debito= new BigDecimal(resultset.getBigDecimal("debito").toString());
     BigDecimal valorContrato= new BigDecimal(resultset.getBigDecimal("valorContrato").toString());
     Date dataCadastro = resultset.getDate("dataCadastro");
-    //BigDecimal valorMensal= new BigDecimal(resultset.getBigDecimal("valorMensal").toString());
-    //int renovacaoAutomatica = resultset.getInt("renovacaoAutomatica");
-    BigDecimal valorMensal= new BigDecimal(0);
-    int renovacaoAutomatica = 0;
+    BigDecimal valorMensal= new BigDecimal(resultset.getBigDecimal("valorMensal").toString());
+    int renovacaoAutomatica = resultset.getInt("renovacaoAutomatica");
     
     Aluno aluno = new Aluno(codBanco, nome, cpf, rg, telefone, celular, email, dataNascimento, nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato, dataCadastro,
     valorMensal, renovacaoAutomatica);

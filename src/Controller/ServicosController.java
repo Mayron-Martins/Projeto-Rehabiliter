@@ -57,7 +57,9 @@ public class ServicosController {
         servicos = this.servicosDao.selecionarTodosServicos();
         if(servicos==null){
             view.exibeMensagem("Sem Serviços Cadastradas");
+            limparTabela();
         } else{
+            limparTabela();
             for(int linhas=0; linhas<servicos.size(); linhas++){
                     String formaPagamento = servicos.get(linhas).getFormaPagamento();
                     if(formaPagamento.equals("[Nenhuma]")){

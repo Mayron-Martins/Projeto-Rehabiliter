@@ -189,14 +189,14 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
 
             },
             new String [] {
-                "CodBanco", "CodCliente", "Produtos", "Quantidade", "Total", "Forma Pagamento", "Data"
+                "CodBanco", "CodCliente", "Produtos", "Quantidade", "Total", "Forma Pagamento", "Parc.", "Data"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -228,14 +228,14 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
 
             },
             new String [] {
-                "chavePlano", "Aluno", "Turma", "Valor", "Situação", "Último Pagamento"
+                "chavePlano", "Aluno", "Turma", "Valor", "Parc.", "Situação", "Último Pagamento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

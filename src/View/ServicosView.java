@@ -211,6 +211,11 @@ public class ServicosView extends javax.swing.JDialog {
         getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         btnListar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoListar.png"))); // NOI18N
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 210, 210, 60));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/telafundo.jpg"))); // NOI18N
@@ -299,6 +304,14 @@ public class ServicosView extends javax.swing.JDialog {
         campoDias.setEnabled(true);
         comboPeriodo.setEnabled(false);        
     }//GEN-LAST:event_campoOutroPeriodoMouseClicked
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        try {
+            controller.listarServicos();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnListarActionPerformed
 
     /**
      * @param args the command line arguments

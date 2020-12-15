@@ -820,6 +820,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="campoValor">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JMoneyField()"/>
           </AuxValues>

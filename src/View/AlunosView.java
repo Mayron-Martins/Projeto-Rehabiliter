@@ -41,15 +41,7 @@ public class AlunosView extends javax.swing.JDialog {
     private AlunosCadastro telaAlunosCadastro;
     private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
     private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
-    private javax.swing.JComboBox<String> comboEstado; //= new JComboBox<>(telaAlunosCadastro.getComboEstado().getModel());
-    private JFormattedTextField valorContrato = new JMoneyField();
-    private JFormattedTextField valorDebito = new JMoneyField();
-    private JFormattedTextField telefonePai;//= new JFormattedTextField(telaAlunosCadastro.getCampoContatoPai().getFormatter());
-    private JFormattedTextField cpfPai; //= new JFormattedTextField(telaAlunosCadastro.getCampoCPFPai().getFormatter());
-    private JFormattedTextField telefoneMae; //= new JFormattedTextField(telaAlunosCadastro.getCampoContatoMae().getFormatter());
-    private JFormattedTextField cpfMae; //= new JFormattedTextField(telaAlunosCadastro.getCampoCPFMae().getFormatter());
-    private JFormattedTextField cep; //= new JFormattedTextField(telaAlunosCadastro.getCampoCEP().getFormatter());
-    private JTextField diaVencimento = new FormatacaodeCamposRestritos(2);
+    private javax.swing.JComboBox<String> comboEstado = new JComboBox<>();
     /**
      * Creates new form Alunos
      * @param parent
@@ -61,12 +53,6 @@ public class AlunosView extends javax.swing.JDialog {
         
         this.parent = parent;
         telaAlunosCadastro = new AlunosCadastro(parent, false);
-        comboEstado = new JComboBox<>(telaAlunosCadastro.getComboEstado().getModel());
-        telefonePai = new JFormattedTextField(telaAlunosCadastro.getCampoContatoPai().getFormatter());
-        cpfPai = new JFormattedTextField(telaAlunosCadastro.getCampoCPFPai().getFormatter());
-        telefoneMae = new JFormattedTextField(telaAlunosCadastro.getCampoContatoMae().getFormatter());
-        cpfMae = new JFormattedTextField(telaAlunosCadastro.getCampoCPFMae().getFormatter());
-        cep = new JFormattedTextField(telaAlunosCadastro.getCampoCEP().getFormatter());
         
         this.setarComposicaoTabelas();
         
@@ -124,10 +110,10 @@ public class AlunosView extends javax.swing.JDialog {
         tabelaAlunos = new javax.swing.JTable();
         painelPlanos = new javax.swing.JScrollPane();
         tabelaPlanos = new javax.swing.JTable();
-        painelPais = new javax.swing.JScrollPane();
-        tabelaPais = new javax.swing.JTable();
         painelEnderecos = new javax.swing.JScrollPane();
         tabelaEnderecos = new javax.swing.JTable();
+        painelPais = new javax.swing.JScrollPane();
+        tabelaPais = new javax.swing.JTable();
         botaoRemover = new javax.swing.JButton();
         botaoEditar = new javax.swing.JButton();
         botaoListar = new javax.swing.JButton();
@@ -175,14 +161,14 @@ public class AlunosView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "CodBanco", "Nome", "Turma", "Forma de Pag.", "Valor Contrato", "Débito"
+                "CodBanco", "Nome", "Turma", "Débito"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true
+                false, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -214,14 +200,14 @@ public class AlunosView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ChavePlano", "Dia Vencimento", "Situacao"
+                "ChavePlano", "Plano/Período", "Valor Contrato", "Valor Mensal", "Dia Vencimento", "Situacao"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false
+                false, true, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -246,38 +232,6 @@ public class AlunosView extends javax.swing.JDialog {
         painelPlanos.setViewportView(tabelaPlanos);
 
         getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
-
-        tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaPais.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Pai", "CPF (P)", "Contato (P)", "Mãe", "CPF (M)", "Contato (M)"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tabelaPais.setFocusable(false);
-        tabelaPais.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaPais.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaPais.setRowHeight(25);
-        tabelaPais.setShowVerticalLines(false);
-        tabelaPais.getTableHeader().setReorderingAllowed(false);
-        tabelaPais.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaPaisComponentHidden(evt);
-            }
-        });
-        painelPais.setViewportView(tabelaPais);
-
-        getContentPane().add(painelPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
         tabelaEnderecos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaEnderecos.setModel(new javax.swing.table.DefaultTableModel(
@@ -310,6 +264,38 @@ public class AlunosView extends javax.swing.JDialog {
         painelEnderecos.setViewportView(tabelaEnderecos);
 
         getContentPane().add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+
+        tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaPais.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Pai", "CPF (P)", "Contato (P)", "Mãe", "CPF (M)", "Contato (M)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabelaPais.setFocusable(false);
+        tabelaPais.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaPais.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaPais.setRowHeight(25);
+        tabelaPais.setShowVerticalLines(false);
+        tabelaPais.getTableHeader().setReorderingAllowed(false);
+        tabelaPais.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaPaisComponentHidden(evt);
+            }
+        });
+        painelPais.setViewportView(tabelaPais);
+
+        getContentPane().add(painelPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
         botaoRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoRemover.png"))); // NOI18N
         botaoRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverremover.png"))); // NOI18N
@@ -680,33 +666,6 @@ public class AlunosView extends javax.swing.JDialog {
         return comboEstado;
     }
 
-    public JFormattedTextField getValorContrato() {
-        return valorContrato;
-    }
-
-    public JFormattedTextField getValorDebito() {
-        return valorDebito;
-    }
-
-    public JFormattedTextField getTelefonePai() {
-        return telefonePai;
-    }
-
-    public JFormattedTextField getCpfPai() {
-        return cpfPai;
-    }
-
-    public JFormattedTextField getTelefoneMae() {
-        return telefoneMae;
-    }
-
-    public JFormattedTextField getCpfMae() {
-        return cpfMae;
-    }
-
-    public JFormattedTextField getCep() {
-        return cep;
-    }
 
     public JTextField getCampoPesquisa() {
         return campoPesquisa;
@@ -793,18 +752,40 @@ public class AlunosView extends javax.swing.JDialog {
     }
     
     private void setarComposicaoTabelas(){
+        //Variáveis
+        JFormattedTextField telefonePai = new JFormattedTextField();
+        JFormattedTextField cpfPai = new JFormattedTextField();
+        JFormattedTextField telefoneMae = new JFormattedTextField();
+        JFormattedTextField cpfMae = new JFormattedTextField();
+        JFormattedTextField cep = new JFormattedTextField();
+        
+        try {
+            //Transformação de variáveis
+            cpfPai.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            cpfMae.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            telefonePai.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
+            telefoneMae.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
+            cep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###-###")));
+            comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "AC", "AL", "AM", "AP", "BA", "CE", 
+            "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RO", "RN", "RR", "RS", "SC", "SE", "SP", "TO" }));
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         //Alunos
         tabelaAlunos.getTableHeader().setResizingAllowed(false);
         tabelaAlunos.getTableHeader().setReorderingAllowed(false);
-        tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboServicos));
         tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboTurmas));
-        tabelaAlunos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorContrato));
-        tabelaAlunos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(valorDebito));
+        tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JMoneyField()));
         
         //Planos
         tabelaPlanos.getTableHeader().setResizingAllowed(false);
         tabelaPlanos.getTableHeader().setReorderingAllowed(false);
-        tabelaPlanos.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(diaVencimento));
+        tabelaPlanos.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(comboServicos));
+        tabelaPlanos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JMoneyField()));
+        tabelaPlanos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JMoneyField()));
+        tabelaPlanos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new FormatacaodeCamposRestritos(2)));
         
         //Pais
         tabelaPais.getTableHeader().setResizingAllowed(false);
@@ -817,7 +798,8 @@ public class AlunosView extends javax.swing.JDialog {
         //Enderecos
         tabelaEnderecos.getTableHeader().setResizingAllowed(false);
         tabelaEnderecos.getTableHeader().setReorderingAllowed(false);
-        tabelaEnderecos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cep));
         tabelaEnderecos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboEstado));
+        tabelaEnderecos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cep));
+        
     }
 }

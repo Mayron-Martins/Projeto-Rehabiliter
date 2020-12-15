@@ -35,6 +35,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -364,13 +365,9 @@ public class AdicionarAlunosController {
             return view.getCampoDiaVencimento().getDay();
         }
         else{
-            BigDecimal dias = new BigDecimal(diasContrato);
-            dias = dias.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP);
-            BigDecimal diasInteiros = dias.setScale(0, RoundingMode.DOWN);
-            dias = dias.min(diasInteiros);
-            dias = dias.multiply(new BigDecimal(30)).setScale(0, RoundingMode.UP);
-
-            return dias.intValueExact();
+            LocalDate dataAtual = LocalDate.now();
+            dataAtual = dataAtual.plusDays(diasContrato);
+            return dataAtual.getDayOfMonth();
         }
     }
 }

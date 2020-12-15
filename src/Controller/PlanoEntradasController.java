@@ -143,6 +143,7 @@ public class PlanoEntradasController {
         limparTabelaVendas();
         for(int linhas=0; linhas<vendas.size(); linhas++){
             int codVenda = vendas.get(linhas).getCodVenda();
+            int parcelamento = vendas.get(linhas).getParcelas();
 
             //Dados Aluno
             String codAluno; 
@@ -162,7 +163,7 @@ public class PlanoEntradasController {
             
             String formaPagamento = vendas.get(linhas).getFormaPagamento();
             String dataVenda = converterData.parseDate(vendas.get(linhas).getDataVenda());
-            Object[] dadosDaTabela = {codVenda, codAluno, produtos, quantidade, valorTotal, formaPagamento, dataVenda};
+            Object[] dadosDaTabela = {codVenda, codAluno, produtos, quantidade, valorTotal, formaPagamento, parcelamento, dataVenda};
             tabelaVendas.addRow(dadosDaTabela);
         }
     }
@@ -173,6 +174,7 @@ public class PlanoEntradasController {
         for(int linhas=0; linhas<vendas.size(); linhas++){
             //Dados Aluno
             int codAluno = vendas.get(linhas).getCodAluno();
+            int parcelamento = vendas.get(linhas).getParcelas();
             BigDecimal valorTotal = new BigDecimal(vendas.get(linhas).getValorVenda().toString());
             String dataVenda = converterData.parseDate(vendas.get(linhas).getDataVenda());
             
@@ -185,7 +187,7 @@ public class PlanoEntradasController {
             String situacao = plano.getSituacao();
             int chavePlano = plano.getChavePlano();
             
-            Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, situacao, dataVenda};
+            Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, parcelamento, situacao, dataVenda};
             tabelaPlanos.addRow(dadosDaTabela);
         }
     }
@@ -300,7 +302,7 @@ public class PlanoEntradasController {
             
             if(dataVenda.compareTo(dataProxima)!=0){
             String dataVendaFormatada = converterData.parseDate(dataVenda);
-            Object[] dadosDaTabela = {codVenda, codAluno, produtos, quantidade, valorTotal, formaPagamento, dataVendaFormatada};
+            Object[] dadosDaTabela = {codVenda, codAluno, produtos, quantidade, valorTotal, formaPagamento, "N.A.",dataVendaFormatada};
             tabelaVendas.addRow(dadosDaTabela);  
             }
         }
@@ -341,7 +343,7 @@ public class PlanoEntradasController {
            
             if(dataVenda.compareTo(dataProxima)!=0){
             String dataVendaFormatada = converterData.parseDate(dataVenda);
-            Object[] dadosDaTabela = {chavePlano, nomeAluno, turma, valorTotal, situacao, dataVendaFormatada};
+            Object[] dadosDaTabela = {chavePlano, nomeAluno, turma, valorTotal,"N.A." ,situacao, dataVendaFormatada};
             tabelaPlanos.addRow(dadosDaTabela);
             }
         }

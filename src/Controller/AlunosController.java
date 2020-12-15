@@ -288,7 +288,7 @@ public class AlunosController {
         }
         else{
             for(int linhas=0; linhas<servicos.size(); linhas++){ 
-            view.getComboServicos().addItem(servicos.get(linhas).getCodBanco()+"."+servicos.get(linhas).getNome()+"-"+servicos.get(linhas).getFormaPagamento());
+            view.getComboServicos().addItem(servicos.get(linhas).getCodBanco()+"."+servicos.get(linhas).getNome()+"-"+servicos.get(linhas).getPeriodo());
             }
         }
     }
@@ -348,11 +348,9 @@ public class AlunosController {
             //Inserindo dados na tabela de alunos
             Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getCodBanco(), 
             alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma(), 
-            servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getFormaPagamento(), alunos.get(linhas).getValorContrato(),
             alunos.get(linhas).getDebito()};
             this.tabelaDeAlunos.addRow(dadosDaTabelaAlunos);
             this.view.getComboTurmas().setSelectedItem(turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma());
-            this.view.getComboServicos().setSelectedItem(servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getFormaPagamento());
             
             
             //Inserindo dados na tabela de Planos
@@ -360,12 +358,11 @@ public class AlunosController {
             int diaVencimento = planos.get(0).getDiaVencimento();
             String situacao = planos.get(0).getSituacao();
             
-            
-            
-            
-            
-            Object[] dadosDaTabelaPlanos = {chavePlano, diaVencimento, situacao};
+            Object[] dadosDaTabelaPlanos = {chavePlano, servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+
+                    "-"+servicos.get(0).getPeriodo(), alunos.get(linhas).getValorContrato(), alunos.get(linhas).getValorMensal(),
+                    diaVencimento, situacao};
             this.tabelaDePlanos.addRow(dadosDaTabelaPlanos);
+            this.view.getComboServicos().setSelectedItem(servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getPeriodo());
             
             
             //Inserino dados na tabela de Pais
