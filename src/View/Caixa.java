@@ -10,22 +10,24 @@ import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.plaf.BorderUIResource;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -62,6 +64,7 @@ public class Caixa extends javax.swing.JDialog {
         quantParcelas.setBorder(null);
         //setExtendedState(MAXIMIZED_BOTH);
         this.setarComponentes();
+        fecharTelaESC();
         btnFechar.setBackground(new Color(0,0,0,0));
         painelTabelaProdutos.setVisible(true);
         painelPagamentoMensal.setVisible(false);
@@ -676,7 +679,7 @@ public class Caixa extends javax.swing.JDialog {
 
     private void campoQuantidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoQuantidadeKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            getRootPane().setDefaultButton(botaoAdicionar);
+            controller.setarCarrinho();
         }
     }//GEN-LAST:event_campoQuantidadeKeyPressed
 
@@ -966,6 +969,31 @@ public class Caixa extends javax.swing.JDialog {
 
     public JTextField getQuantParcelas() {
         return quantParcelas;
+    }
+    
+    public void fecharTelaESC() {
+        JRootPane meurootpane = getRootPane();
+        JRootPane meurootpane2 = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        
+        meurootpane2.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "F1");
+        meurootpane2.getRootPane().getActionMap().put("F1", new AbstractAction("F1") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!jPanelFormaDePagamento.isVisible()){
+                    jPanelFormaDePagamento.setVisible(true);
+                }
+                else{
+                    jPanelFormaDePagamento.setVisible(false);
+                }
+            }
+        });
     }
     
 }
