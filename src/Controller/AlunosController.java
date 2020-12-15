@@ -25,8 +25,10 @@ import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.AlunosView;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
@@ -344,13 +346,18 @@ public class AlunosController {
                     alunos.get(linhas).getPlano());
             planos = this.planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+alunos.get(linhas).getCodBanco());
             
+            boolean renovacaoAutomatica = false;
+            if(alunos.get(linhas).getRenovacaoAutomatica()==1){
+                renovacaoAutomatica = true;
+            }
             
             //Inserindo dados na tabela de alunos
             Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getCodBanco(), 
             alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma(), 
-            alunos.get(linhas).getDebito()};
+            alunos.get(linhas).getDebito(), new Boolean(renovacaoAutomatica)};
             this.tabelaDeAlunos.addRow(dadosDaTabelaAlunos);
             this.view.getComboTurmas().setSelectedItem(turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma());
+            
             
             
             //Inserindo dados na tabela de Planos
@@ -363,6 +370,7 @@ public class AlunosController {
                     diaVencimento, situacao};
             this.tabelaDePlanos.addRow(dadosDaTabelaPlanos);
             this.view.getComboServicos().setSelectedItem(servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getPeriodo());
+            
             
             
             //Inserino dados na tabela de Pais
@@ -420,5 +428,88 @@ public class AlunosController {
         Date dataEvento = new Date();
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
         return logAcao;
-    } 
+    }
+    
+    /*
+    private void setarValorMensal(Servicos servicoContratado){
+        BigDecimal periodDays = new BigDecimal(servicoContratado.getPeriodDays());
+        BigDecimal valorTotal = new BigDecimal(0);
+        
+        if(servicoContratado.getValor().compareTo(BigDecimal.ZERO)!=0){
+            valorTotal = servicoContratado.getValor();
+        }
+        if(servicoContratado.getValorBoleto().compareTo(BigDecimal.ZERO)!=0){
+            valorTotal = servicoContratado.getValorBoleto();
+        }
+        if(servicoContratado.getValorPrazoCredito().compareTo(BigDecimal.ZERO)!=0){
+            valorTotal = servicoContratado.getValorPrazoCredito();
+        }
+        if(servicoContratado.getValorPrazoDebito().compareTo(BigDecimal.ZERO)!=0){
+            valorTotal = servicoContratado.getValorPrazoDebito();
+        }
+        if(servicoContratado.getValorVista().compareTo(BigDecimal.ZERO)!=0){
+            valorTotal = servicoContratado.getValorVista();
+        }
+
+        
+        BigDecimal valorMensal = new BigDecimal(0);
+        String mensal = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+        String anual = periodDays.divide(new BigDecimal(365), 3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+
+        
+        boolean resultadoMensal = mensal.matches("[0-9]*");
+        boolean resultadoAnual = anual.matches("[0-9]*");
+
+        if(resultadoMensal||resultadoAnual){
+            view.getCampoDiaVencimento().setEnabled(true);
+            if(resultadoMensal){
+               valorMensal = valorTotal.divide(periodDays.divide(new BigDecimal(30)));
+               valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+               view.getCampoValorMensal().setText(valorMensal.toString());
+            }
+            else{
+                valorMensal = valorTotal.divide(periodDays.divide(new BigDecimal(365)).multiply(new BigDecimal(12)));
+                valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+                view.getCampoValorMensal().setText(valorMensal.toString());
+            }    
+        }
+        else{
+            view.getCampoDiaVencimento().setEnabled(false);
+            boolean renovacaoAutomatica = view.getRenovacaoAuto().isSelected();
+            
+            if(periodDays.compareTo(new BigDecimal(15))<=0){
+                if(renovacaoAutomatica){
+                    valorMensal = valorTotal.multiply((new BigDecimal(30)).divide(periodDays,2, RoundingMode.UP));
+                    valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+                    
+                    view.getCampoValorMensal().setText(valorMensal.toString());
+                }
+                else{
+                    valorMensal = valorTotal;
+                    view.getCampoValorMensal().setText(valorMensal.toString());
+                }
+            }
+            else{
+                periodDays = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP);
+                periodDays = periodDays.setScale(0, RoundingMode.UP);
+                
+                valorMensal = valorTotal.divide(periodDays);
+                valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+
+                view.getCampoValorMensal().setText(valorMensal.toString());
+            }
+            
+        }  
+    }
+    private int diaVencimento(int diasContrato){
+        if(view.getCampoDiaVencimento().isEnabled()){
+            return view.getCampoDiaVencimento().getDay();
+        }
+        else{
+            LocalDate dataAtual = LocalDate.now();
+            dataAtual = dataAtual.plusDays(diasContrato);
+            return dataAtual.getDayOfMonth();
+        }
+    }
+*/
 }

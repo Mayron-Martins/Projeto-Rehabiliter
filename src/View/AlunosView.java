@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -161,14 +162,14 @@ public class AlunosView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "CodBanco", "Nome", "Turma", "Débito"
+                "CodBanco", "Nome", "Turma", "Débito", "Renovação Auto."
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true
+                false, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {

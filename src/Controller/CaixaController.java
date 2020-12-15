@@ -300,6 +300,18 @@ public class CaixaController {
         Planos plano = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codBanco).get(0);
         Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
         
+        int renovacaoAutomatica = aluno.getRenovacaoAutomatica();
+        BigDecimal valorMensal = new BigDecimal(aluno.getValorMensal().toString());
+        BigDecimal valorContrato = new BigDecimal(aluno.getValorContrato().toString());
+        
+        int periodDays = servico.getPeriodDays();
+        
+        if(renovacaoAutomatica==0){
+            
+        }
+        else{
+            
+        }
         
         String nomeServico = plano.getCodServico()+"."+servico.getNome()+"-"+servico.getFormaPagamento();
         String situacao = plano.getSituacao();
