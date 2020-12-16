@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.EventObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
@@ -84,8 +85,8 @@ public class AlunosView extends javax.swing.JDialog {
                 comboServicosActionPerformed(evt);
             }
             private void comboServicosActionPerformed(ActionEvent evt) {
-            int linhaSelecionada = tabelaAlunos.getSelectedRow();
-                if(tabelaAlunos.isRowSelected(linhaSelecionada)){
+            int linhaSelecionada = tabelaPlanos.getSelectedRow();
+                if(tabelaPlanos.isRowSelected(linhaSelecionada)){
                     try {
                           controller.setarValorContrato();
                     } catch (SQLException ex) {
@@ -787,6 +788,8 @@ public class AlunosView extends javax.swing.JDialog {
         tabelaPlanos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JMoneyField()));
         tabelaPlanos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JMoneyField()));
         tabelaPlanos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new FormatacaodeCamposRestritos(2)));
+        
+        
         
         //Pais
         tabelaPais.getTableHeader().setResizingAllowed(false);

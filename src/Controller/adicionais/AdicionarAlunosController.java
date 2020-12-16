@@ -322,12 +322,15 @@ public class AdicionarAlunosController {
         if(resultadoMensal||resultadoAnual){
             view.getCampoDiaVencimento().setEnabled(true);
             if(resultadoMensal){
-               valorMensal = valorTotal.divide(periodDays.divide(new BigDecimal(30)));
+               BigDecimal period = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP);
+               valorMensal = valorTotal.divide(period, 2, RoundingMode.UP);
                valorMensal = valorMensal.setScale(2, RoundingMode.UP);
                view.getCampoValorMensal().setText(valorMensal.toString());
             }
             else{
-                valorMensal = valorTotal.divide(periodDays.divide(new BigDecimal(365)).multiply(new BigDecimal(12)));
+                BigDecimal period = periodDays.divide(new BigDecimal(365), 2, RoundingMode.HALF_UP);
+                period = period.multiply(new BigDecimal(12));
+                valorMensal = valorTotal.divide(period, 2, RoundingMode.UP);
                 valorMensal = valorMensal.setScale(2, RoundingMode.UP);
                 view.getCampoValorMensal().setText(valorMensal.toString());
             }    

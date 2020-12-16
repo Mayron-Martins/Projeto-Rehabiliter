@@ -24,6 +24,7 @@ import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.AlunosView;
+import java.awt.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
@@ -31,7 +32,11 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EventObject;
+import javax.swing.JTable;
+import javax.swing.event.CellEditorListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 
 /**
  *
@@ -297,22 +302,25 @@ public class AlunosController {
     
     public void setarValorContrato() throws SQLException{
         if(view.getComboServicos().getSelectedIndex()>0){
-            int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
+            int linhaSelecionada = view.getTabelaPlanos().getSelectedRow();
             String nomeServico = view.getComboServicos().getSelectedItem().toString();
-            int codServico = Integer.parseInt(String.valueOf(nomeServico.charAt(0)));
-            ArrayList<Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico);
+            int diaVencimento = Integer.parseInt(tabelaDePlanos.getValueAt(linhaSelecionada, 4).toString());
+            int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
+            Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
             
-            String metodoDePagamento = servicos.get(0).getFormaPagamento();
+            String metodoDePagamento = servico.getFormaPagamento();
             
             BigDecimal valorContrato = null;
-            if(metodoDePagamento.equals("[Nenhuma]")){valorContrato = new BigDecimal(servicos.get(0).getValor().toString());}
-            if(metodoDePagamento.equals("Dinheiro")){valorContrato = new BigDecimal(servicos.get(0).getValorVista().toString());}
-            if(metodoDePagamento.equals("Boleto")){valorContrato = new BigDecimal(servicos.get(0).getValorBoleto().toString());}
-            if(metodoDePagamento.equals("Cartão de Crédito")){valorContrato = new BigDecimal(servicos.get(0).getValorPrazoCredito().toString());}
-            if(metodoDePagamento.equals("Cartão de Débito")){valorContrato = new BigDecimal(servicos.get(0).getValorPrazoDebito().toString());}   
+            if(metodoDePagamento.equals("[Nenhuma]")){valorContrato = new BigDecimal(servico.getValor().toString());}
+            if(metodoDePagamento.equals("Dinheiro")){valorContrato = new BigDecimal(servico.getValorVista().toString());}
+            if(metodoDePagamento.equals("Boleto")){valorContrato = new BigDecimal(servico.getValorBoleto().toString());}
+            if(metodoDePagamento.equals("Cartão de Crédito")){valorContrato = new BigDecimal(servico.getValorPrazoCredito().toString());}
+            if(metodoDePagamento.equals("Cartão de Débito")){valorContrato = new BigDecimal(servico.getValorPrazoDebito().toString());}   
             
-            view.getTabelaAlunos().setValueAt(valorContrato.toString(), linhaSelecionada, 4);
-            view.getTabelaAlunos().setValueAt(nomeServico, linhaSelecionada, 3);
+            view.getTabelaPlanos().setValueAt(valorContrato.toString(), linhaSelecionada, 2);
+            view.getTabelaPlanos().setValueAt(nomeServico, linhaSelecionada, 1);
+            this.setarValorMensal(servico, linhaSelecionada, codServico);
+            view.getTabelaPlanos().setValueAt(this.diaVencimento(servico.getPeriodDays(), linhaSelecionada,diaVencimento), linhaSelecionada, 4);
         }
     }
     
@@ -369,6 +377,8 @@ public class AlunosController {
                     "-"+servicos.get(0).getPeriodo(), alunos.get(linhas).getValorContrato(), alunos.get(linhas).getValorMensal(),
                     diaVencimento, situacao};
             this.tabelaDePlanos.addRow(dadosDaTabelaPlanos);
+            Component tableCellEditorComponent = this.view.getTabelaPlanos().getColumnModel().getColumn(4).getCellEditor().getTableCellEditorComponent(view.getTabelaPlanos(), diaVencimento, true, linhas, 4);
+            tableCellEditorComponent.setEnabled(false);
             this.view.getComboServicos().setSelectedItem(servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getPeriodo());
             
             
@@ -430,8 +440,8 @@ public class AlunosController {
         return logAcao;
     }
     
-    /*
-    private void setarValorMensal(Servicos servicoContratado){
+    
+    private void setarValorMensal(Servicos servicoContratado, int linhaSelecionada, int diaVencimento){
         BigDecimal periodDays = new BigDecimal(servicoContratado.getPeriodDays());
         BigDecimal valorTotal = new BigDecimal(0);
         
@@ -459,34 +469,39 @@ public class AlunosController {
         
         boolean resultadoMensal = mensal.matches("[0-9]*");
         boolean resultadoAnual = anual.matches("[0-9]*");
+        
+        Component tableCellEditorComponent = this.view.getTabelaPlanos().getColumnModel().getColumn(4).getCellEditor().getTableCellEditorComponent(view.getTabelaPlanos(), diaVencimento, true, linhaSelecionada, 4);
 
         if(resultadoMensal||resultadoAnual){
-            view.getCampoDiaVencimento().setEnabled(true);
+            tableCellEditorComponent.setEnabled(true);
             if(resultadoMensal){
-               valorMensal = valorTotal.divide(periodDays.divide(new BigDecimal(30)));
+               BigDecimal period = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP);
+               valorMensal = valorTotal.divide(period, 2, RoundingMode.UP);
                valorMensal = valorMensal.setScale(2, RoundingMode.UP);
-               view.getCampoValorMensal().setText(valorMensal.toString());
+               tabelaDePlanos.setValueAt(valorMensal, linhaSelecionada, 3);
             }
             else{
-                valorMensal = valorTotal.divide(periodDays.divide(new BigDecimal(365)).multiply(new BigDecimal(12)));
+                BigDecimal period = periodDays.divide(new BigDecimal(365), 2, RoundingMode.HALF_UP);
+                period = period.multiply(new BigDecimal(12));
+                valorMensal = valorTotal.divide(period, 2, RoundingMode.UP);
                 valorMensal = valorMensal.setScale(2, RoundingMode.UP);
-                view.getCampoValorMensal().setText(valorMensal.toString());
+                tabelaDePlanos.setValueAt(valorMensal, linhaSelecionada, 3);
             }    
         }
         else{
-            view.getCampoDiaVencimento().setEnabled(false);
-            boolean renovacaoAutomatica = view.getRenovacaoAuto().isSelected();
+            tableCellEditorComponent.setEnabled(false);
+            boolean renovacaoAutomatica = tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString().equals("true");
             
             if(periodDays.compareTo(new BigDecimal(15))<=0){
                 if(renovacaoAutomatica){
                     valorMensal = valorTotal.multiply((new BigDecimal(30)).divide(periodDays,2, RoundingMode.UP));
                     valorMensal = valorMensal.setScale(2, RoundingMode.UP);
                     
-                    view.getCampoValorMensal().setText(valorMensal.toString());
+                    tabelaDePlanos.setValueAt(valorMensal, linhaSelecionada, 3);
                 }
                 else{
                     valorMensal = valorTotal;
-                    view.getCampoValorMensal().setText(valorMensal.toString());
+                    tabelaDePlanos.setValueAt(valorMensal, linhaSelecionada, 3);
                 }
             }
             else{
@@ -496,14 +511,15 @@ public class AlunosController {
                 valorMensal = valorTotal.divide(periodDays);
                 valorMensal = valorMensal.setScale(2, RoundingMode.UP);
 
-                view.getCampoValorMensal().setText(valorMensal.toString());
+               tabelaDePlanos.setValueAt(valorMensal, linhaSelecionada, 3);
             }
             
         }  
     }
-    private int diaVencimento(int diasContrato){
-        if(view.getCampoDiaVencimento().isEnabled()){
-            return view.getCampoDiaVencimento().getDay();
+    private int diaVencimento(int diasContrato, int linhaSelecionada, int diaVencimento){
+        Component tableCellEditorComponent = this.view.getTabelaPlanos().getColumnModel().getColumn(4).getCellEditor().getTableCellEditorComponent(view.getTabelaPlanos(), diaVencimento, true, linhaSelecionada, 4);
+        if(tableCellEditorComponent.isEnabled()){
+            return Integer.parseInt(tabelaDePlanos.getValueAt(linhaSelecionada, 4).toString());
         }
         else{
             LocalDate dataAtual = LocalDate.now();
@@ -511,5 +527,5 @@ public class AlunosController {
             return dataAtual.getDayOfMonth();
         }
     }
-*/
+
 }
