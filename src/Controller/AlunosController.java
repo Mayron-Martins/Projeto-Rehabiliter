@@ -32,11 +32,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.EventObject;
-import javax.swing.JTable;
-import javax.swing.event.CellEditorListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 
 /**
  *
@@ -91,16 +87,23 @@ public class AlunosController {
             int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
             String nome = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
             String nomeTurmaAtual = view.getComboTurmas().getSelectedItem().toString();
-            int codTurmaAtual = Integer.parseInt(String.valueOf(nomeTurmaAtual.charAt(0)));
-            String nomeServico = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 3).toString();
-            int codServico = Integer.parseInt(String.valueOf(nomeServico.charAt(0)));
-            BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString()).toString());
-            BigDecimal valorDebito = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 5).toString()).toString());
-
+            int codTurmaAtual = Integer.parseInt(nomeTurmaAtual.split("\\.")[0]);
+            BigDecimal valorDebito = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 3).toString()).toString());
+            int renovacaoAutomatica = 0;
+            if(tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString().equals("true")){
+                renovacaoAutomatica = 1;
+            }
+            
             //Dados Planos
             int chavePlano = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
-            int diaVencimento = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 1).toString());
-            String situacao = this.tabelaDePlanos.getValueAt(linhaSelecionada, 2).toString();
+            String nomeServico = view.getComboServicos().getSelectedItem().toString();
+            int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
+            BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 2).toString()).toString());
+            BigDecimal valorMensal = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 3).toString()).toString());
+            int diaVencimento = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 4).toString());
+            String situacao = this.tabelaDePlanos.getValueAt(linhaSelecionada, 5).toString();
+            
+            
             
             //Dados Pais
             String nomePai = this.tabelaDePais.getValueAt(linhaSelecionada, 0).toString();
@@ -126,7 +129,7 @@ public class AlunosController {
             Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
                     alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
                     nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurmaAtual, codServico, alunoAnterior.getDescricao(), 
-                    valorDebito, valorContrato, alunoAnterior.getValorMensal(), alunoAnterior.getRenovacaoAutomatica());
+                    valorDebito, valorContrato, valorMensal, renovacaoAutomatica);
             
             Matriculas matricula = new Matriculas(codAluno, codTurmaAtual, codAluno, anoAtual, nomeMatricula);
             EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);

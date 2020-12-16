@@ -88,7 +88,8 @@ public class AlunosView extends javax.swing.JDialog {
             int linhaSelecionada = tabelaPlanos.getSelectedRow();
                 if(tabelaPlanos.isRowSelected(linhaSelecionada)){
                     try {
-                          controller.setarValorContrato();
+                        selecionarTabelas(2); 
+                        controller.setarValorContrato();
                     } catch (SQLException ex) {
                         Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -112,10 +113,10 @@ public class AlunosView extends javax.swing.JDialog {
         tabelaAlunos = new javax.swing.JTable();
         painelPlanos = new javax.swing.JScrollPane();
         tabelaPlanos = new javax.swing.JTable();
-        painelEnderecos = new javax.swing.JScrollPane();
-        tabelaEnderecos = new javax.swing.JTable();
         painelPais = new javax.swing.JScrollPane();
         tabelaPais = new javax.swing.JTable();
+        painelEnderecos = new javax.swing.JScrollPane();
+        tabelaEnderecos = new javax.swing.JTable();
         botaoRemover = new javax.swing.JButton();
         botaoEditar = new javax.swing.JButton();
         botaoListar = new javax.swing.JButton();
@@ -185,11 +186,22 @@ public class AlunosView extends javax.swing.JDialog {
         tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaAlunos.setRowHeight(25);
+        tabelaAlunos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaAlunos.setShowVerticalLines(false);
         tabelaAlunos.getTableHeader().setReorderingAllowed(false);
+        tabelaAlunos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaAlunosMouseClicked(evt);
+            }
+        });
         tabelaAlunos.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 tabelaAlunosComponentHidden(evt);
+            }
+        });
+        tabelaAlunos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaAlunosKeyReleased(evt);
             }
         });
         painelAlunos.setViewportView(tabelaAlunos);
@@ -224,48 +236,27 @@ public class AlunosView extends javax.swing.JDialog {
         tabelaPlanos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaPlanos.setRowHeight(25);
+        tabelaPlanos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaPlanos.setShowVerticalLines(false);
         tabelaPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelaPlanos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaPlanosMouseClicked(evt);
+            }
+        });
         tabelaPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 tabelaPlanosComponentHidden(evt);
             }
         });
+        tabelaPlanos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaPlanosKeyReleased(evt);
+            }
+        });
         painelPlanos.setViewportView(tabelaPlanos);
 
         getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
-
-        tabelaEnderecos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaEnderecos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Logradouro", "Nº", "Bairro", "Cidade", "Estado", "CEP"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tabelaEnderecos.setFocusable(false);
-        tabelaEnderecos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaEnderecos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaEnderecos.setRowHeight(25);
-        tabelaEnderecos.setShowVerticalLines(false);
-        tabelaEnderecos.getTableHeader().setReorderingAllowed(false);
-        tabelaEnderecos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaEnderecosComponentHidden(evt);
-            }
-        });
-        painelEnderecos.setViewportView(tabelaEnderecos);
-
-        getContentPane().add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
         tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaPais.setModel(new javax.swing.table.DefaultTableModel(
@@ -288,16 +279,70 @@ public class AlunosView extends javax.swing.JDialog {
         tabelaPais.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaPais.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaPais.setRowHeight(25);
+        tabelaPais.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaPais.setShowVerticalLines(false);
         tabelaPais.getTableHeader().setReorderingAllowed(false);
+        tabelaPais.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaPaisMouseClicked(evt);
+            }
+        });
         tabelaPais.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 tabelaPaisComponentHidden(evt);
             }
         });
+        tabelaPais.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaPaisKeyReleased(evt);
+            }
+        });
         painelPais.setViewportView(tabelaPais);
 
         getContentPane().add(painelPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+
+        tabelaEnderecos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaEnderecos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Logradouro", "Nº", "Bairro", "Cidade", "Estado", "CEP"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabelaEnderecos.setFocusable(false);
+        tabelaEnderecos.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaEnderecos.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaEnderecos.setRowHeight(25);
+        tabelaEnderecos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaEnderecos.setShowVerticalLines(false);
+        tabelaEnderecos.getTableHeader().setReorderingAllowed(false);
+        tabelaEnderecos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaEnderecosMouseClicked(evt);
+            }
+        });
+        tabelaEnderecos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tabelaEnderecosComponentHidden(evt);
+            }
+        });
+        tabelaEnderecos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaEnderecosKeyReleased(evt);
+            }
+        });
+        painelEnderecos.setViewportView(tabelaEnderecos);
+
+        getContentPane().add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
         botaoRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoRemover.png"))); // NOI18N
         botaoRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverremover.png"))); // NOI18N
@@ -537,6 +582,38 @@ public class AlunosView extends javax.swing.JDialog {
             this.dispose();
         }
     }//GEN-LAST:event_formKeyPressed
+
+    private void tabelaAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlunosMouseClicked
+        this.selecionarTabelas(1);
+    }//GEN-LAST:event_tabelaAlunosMouseClicked
+
+    private void tabelaPlanosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPlanosMouseClicked
+        this.selecionarTabelas(2);
+    }//GEN-LAST:event_tabelaPlanosMouseClicked
+
+    private void tabelaPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPaisMouseClicked
+        this.selecionarTabelas(3);
+    }//GEN-LAST:event_tabelaPaisMouseClicked
+
+    private void tabelaEnderecosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaEnderecosMouseClicked
+        this.selecionarTabelas(4);
+    }//GEN-LAST:event_tabelaEnderecosMouseClicked
+
+    private void tabelaAlunosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaAlunosKeyReleased
+        this.selecionarTabelas(1);
+    }//GEN-LAST:event_tabelaAlunosKeyReleased
+
+    private void tabelaPlanosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaPlanosKeyReleased
+        this.selecionarTabelas(2);
+    }//GEN-LAST:event_tabelaPlanosKeyReleased
+
+    private void tabelaPaisKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaPaisKeyReleased
+        this.selecionarTabelas(3);
+    }//GEN-LAST:event_tabelaPaisKeyReleased
+
+    private void tabelaEnderecosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaEnderecosKeyReleased
+        this.selecionarTabelas(4);
+    }//GEN-LAST:event_tabelaEnderecosKeyReleased
      
     /**
      * @param args the command line arguments
@@ -648,12 +725,6 @@ public class AlunosView extends javax.swing.JDialog {
         this.painelPais.setVisible(false);
         this.botaoAlunos.setVisible(false);
         this.painelEnderecos.setVisible(false);
-    }
-    
-    private void selecionarLinhasUniforme(){
-        int linhaSelecionada = this.tabelaAlunos.getSelectedRow();
-            this.tabelaPais.setRowSelectionInterval(linhaSelecionada, linhaSelecionada);
-            this.tabelaEnderecos.setRowSelectionInterval(linhaSelecionada, linhaSelecionada);
     }
 
     public JComboBox<String> getComboServicos() {

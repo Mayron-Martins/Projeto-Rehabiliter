@@ -87,7 +87,7 @@ public class AlunosDao extends Conexao{
     public void atualizarDados(Aluno aluno, EnderecoAlunos endereco, Matriculas matricula, Planos plano, int diasDaSemana) throws SQLException{
         //atualizando a tabela de alunos
         String inAlunos = atualizar.concat("tblAlunos "
-                + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, telefoneMae=?, telefonePai=?, matricula=?, codTurma=?, codDiasDaSemana=?, codServico=?, descricao=?, debito=?, valorContrato=? where codAluno = ?");
+                + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, telefoneMae=?, telefonePai=?, matricula=?, codTurma=?, codDiasDaSemana=?, codServico=?, descricao=?, debito=?, valorContrato=?, valorMensal=?, renovacaoAutomatica=? where codAluno = ?");
         
         PreparedStatement statement = gerarStatement(inAlunos);
         statement.setString(1, aluno.getNome());
@@ -104,7 +104,9 @@ public class AlunosDao extends Conexao{
         statement.setString(12, aluno.getDescricao());
         statement.setBigDecimal(13, new BigDecimal(aluno.getDebito().toString()));
         statement.setBigDecimal(14, new BigDecimal(aluno.getValorContrato().toString()));
-        statement.setInt(15, aluno.getCodBanco());
+        statement.setBigDecimal(15, new BigDecimal(aluno.getValorMensal().toString()));
+        statement.setInt(16, aluno.getRenovacaoAutomatica());
+        statement.setInt(17, aluno.getCodBanco());
         
         statement.execute();
         statement.close();
