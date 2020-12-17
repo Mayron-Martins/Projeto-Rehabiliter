@@ -10,14 +10,17 @@ import Dao.AlunosDao;
 import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
 import Dao.PlanosDao;
+import Dao.ServicosDao;
 import Dao.TurmasDao;
 import Model.Aluno;
 import Model.Funcionario;
 import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Planos;
+import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.TelaInicialGerenteView;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -37,6 +40,7 @@ public class TelaInicioGerenteController {
     private final AlunosDao alunosDao = new AlunosDao();
     private final TurmasDao turmasDao = new TurmasDao();
     private final PlanosDao planosDao = new PlanosDao();
+    private final ServicosDao servicosDao = new ServicosDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
 
@@ -121,9 +125,19 @@ public class TelaInicioGerenteController {
             for(int linhas=0; linhas<planos.size(); linhas++){
                 Planos planoAtual;
                 if(planos.get(linhas).getSituacao().equals("Pago")){
-                    planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), "Pendente");
+                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
+                    if(aluno.getRenovacaoAutomatica()==1){
+                        planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, 
+                            planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
+                            planos.get(linhas).getDataRenovacao(),"Pendente");
+                    }
+                    else{
+                        planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, 
+                            planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
+                            planos.get(linhas).getDataRenovacao(),"Encerrado");
+                    }
                     planosDao.atualizarSituacao(planoAtual);
-                    this.setarDebitos(planos.get(linhas).getCodAluno());
+                    this.setarDebitos(aluno);
                  }
          }
      }
@@ -134,40 +148,74 @@ public class TelaInicioGerenteController {
         LocalDate dataVencimento;
         Period periodo;
         ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
-        ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
         Planos planoAtual;
             
-        
             for(int linhas=0; linhas<planos.size(); linhas++){
-                if(planos.get(linhas).getDataPagamento()==null){
-                    Date dataCadastro = alunos.get(linhas).getDataCadastro();
-                    Date dataAux = converterData.parseDate(converterData.parseDate(dataCadastro));
-                    dataVencimento = converterData.conversaoLocalforDate(dataAux).plusMonths(1);
-                    periodo = Period.between(dataVencimento, dataAtual);
-                    if(periodo.getDays()>=1){
-                    planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), "Vencido");
-                    planosDao.atualizarSituacao(planoAtual);
-                    }  
+                if(planos.get(linhas).getSituacao().equals("Pendente")){
+                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
+                    Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
+                    if(planos.get(linhas).getDataPagamento()==null){
+                        Date dataUsual = aluno.getDataCadastro();
+                        Date dataAux = converterData.parseDate(converterData.parseDate(dataUsual));
+                        if(servico.getPeriodDays()>=30){
+                            LocalDate dataCadastro = converterData.conversaoLocalforDate(dataAux);
+                            String vencimento = planos.get(linhas).getDiaVencimento()+"/"+(dataCadastro.getMonthValue()+1)+"/"+dataCadastro.getYear();
+                            dataVencimento = converterData.conversaoLocalforDate(converterData.parseDate(vencimento));
+                        }
+                        else{
+                            dataVencimento = converterData.conversaoLocalforDate(dataAux).plusDays(servico.getPeriodDays());
+                        }
+                        periodo = Period.between(dataVencimento, dataAtual);
+                        if(periodo.getDays()>=1){
+                        planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, 
+                                planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
+                                planos.get(linhas).getDataRenovacao(),"Vencido");
+                        planosDao.atualizarSituacao(planoAtual);
+                        }  
+                    }
+
+                    else{
+                        Date dataUsual=planos.get(linhas).getDataPagamento();
+                        Date dataAux = converterData.parseDate(converterData.parseDate(dataUsual));
+
+                        if(servico.getPeriodDays()>=30){
+                           LocalDate dataCadastro = converterData.conversaoLocalforDate(dataAux);
+                           String vencimento = planos.get(linhas).getDiaVencimento()+"/"+(dataCadastro.getMonthValue()+1)+"/"+dataCadastro.getYear();
+                           dataVencimento = converterData.conversaoLocalforDate(converterData.parseDate(vencimento));
+                        }
+                        else{
+                           dataUsual=planos.get(linhas).getDataRenovacao();
+                           dataAux = converterData.parseDate(converterData.parseDate(dataUsual));
+                           dataVencimento = converterData.conversaoLocalforDate(dataAux).plusDays(servico.getPeriodDays());
+                        }
+                        periodo = Period.between(dataVencimento, dataAtual);
+                       if(periodo.getDays()>=1){
+                        planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, 
+                                planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
+                                planos.get(linhas).getDataRenovacao(), "Vencido");
+                        planosDao.atualizarSituacao(planoAtual);
+                       } 
+                     }
                 }
                 
-                else{
-                    Date dataAux = converterData.parseDate(converterData.parseDate(planos.get(linhas).getDataPagamento()));
-                    dataVencimento = converterData.conversaoLocalforDate(dataAux).plusMonths(1);
-                    periodo = Period.between(dataVencimento, dataAtual);
-                   if(periodo.getDays()>=1){
-                    planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), "Vencido");
-                    planosDao.atualizarSituacao(planoAtual);
-                   } 
-                 }
          }
     }
     
-    private void setarDebitos(int codAluno) throws SQLException, ParseException{
-        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
+    private void setarDebitos(Aluno alunoBanco) throws SQLException, ParseException{
+        Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+alunoBanco.getPlano()).get(0);
         
-        BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
-        BigDecimal contrato = new BigDecimal(aluno.getValorContrato().toString());
-        alunosDao.atualizarDebitos(codAluno, debitos.add(contrato));
+        BigDecimal debitos = new BigDecimal(alunoBanco.getDebito().toString());
+        BigDecimal valor = new BigDecimal(alunoBanco.getValorMensal().toString());
+        if(servico.getPeriodDays()<30){
+            if(alunoBanco.getRenovacaoAutomatica()==1){
+                BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
+                BigDecimal period = (new BigDecimal(30)).divide(periodDays,4, RoundingMode.UP);
+                valor = valor.divide(period, 4, RoundingMode.UP);
+                valor = valor.setScale(2, RoundingMode.UP);
+            }
+        }
+        
+        alunosDao.atualizarDebitos(alunoBanco.getCodBanco(), debitos.add(valor));
         
     }
     

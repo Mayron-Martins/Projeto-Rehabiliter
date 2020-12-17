@@ -7,7 +7,7 @@ package Controller.auxiliar;
 
 import Model.Aluno;
 import Model.auxiliar.EnderecoAlunos;
-import Model.auxiliar.Planos;
+import Model.auxiliar.Matriculas;
 import Model.auxiliar.Servicos;
 import java.io.File;
 import java.io.FileInputStream;
@@ -204,7 +204,7 @@ public class ExportarArquivos {
         }
      }
     
-        public void exportarContratoWord(Aluno aluno, EnderecoAlunos endereco, Servicos servico, Planos plano, int diasContrato) throws InvalidFormatException{
+        public void exportarContratoWord(Aluno aluno, EnderecoAlunos endereco, Servicos servico, Matriculas matricula, int diasContrato) throws InvalidFormatException{
         try {
             //Local do Arquivo Contrato
             FileInputStream contrato = new FileInputStream("C:/Rehabiliter/Contrato.docx");
@@ -252,7 +252,7 @@ public class ExportarArquivos {
                     if(run.getText(0)!=null){
                         String palavra = run.getText(0);
                         
-                        if(palavra.contains("MATRICULA")&&ordem==0){palavra = palavra.replace("MATRICULA", plano.getChavePlano()+""); ordem++;}
+                        if(palavra.contains("MATRICULA")&&ordem==0){palavra = palavra.replace("MATRICULA", matricula.getMatricula()+""); ordem++;}
                         if(palavra.contains("NOME")&&ordem==1){palavra = palavra.replace("NOME", aluno.getNome());ordem++;}
                         if(palavra.contains("ENDERECO")&&ordem==2){palavra = palavra.replace("ENDERECO", enderecoCompleto);ordem++;}
                         if(palavra.contains("TELEFONE")&&ordem==3){palavra = palavra.replace("TELEFONE", telefone);ordem++;}

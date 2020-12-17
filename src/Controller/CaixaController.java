@@ -30,6 +30,7 @@ import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.Caixa;
+import java.awt.Component;
 import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -37,6 +38,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -294,58 +296,30 @@ public class CaixaController {
         limparTabelaMensalidade();
         int linhaSelecionada = view.getTabelaDeClientes().getSelectedRow();
         int codBanco = Integer.parseInt(tabelaDeClientes.getValueAt(linhaSelecionada, 0).toString());
-        String nome = tabelaDeClientes.getValueAt(linhaSelecionada, 1).toString();
         
         Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codBanco).get(0);
         Planos plano = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codBanco).get(0);
         Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
         
-        int renovacaoAutomatica = aluno.getRenovacaoAutomatica();
-        BigDecimal valorMensal = new BigDecimal(aluno.getValorMensal().toString());
-        BigDecimal valorContrato = new BigDecimal(aluno.getValorContrato().toString());
-        
-        int periodDays = servico.getPeriodDays();
-        
-        if(renovacaoAutomatica==0){
-            
-        }
-        else{
-            
-        }
-        
-        String nomeServico = plano.getCodServico()+"."+servico.getNome()+"-"+servico.getFormaPagamento();
-        String situacao = plano.getSituacao();
-        String dataVencimento;
-        
-        Date dataPag = converterData.parseDate(converterData.parseDate(plano.getDataPagamento()));
-        Date dataCadastro = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
-        LocalDate dataBanco = converterData.conversaoLocalforDate(dataPag);
-        LocalDate dataCad = converterData.conversaoLocalforDate(dataCadastro);
-        if(dataBanco == null){
-            dataVencimento = plano.getDiaVencimento()+"/"+ (dataCad.getMonthValue()+1)+"/"+dataCad.getYear();
-        }
-        else{
-            dataVencimento = plano.getDiaVencimento()+"/"+(dataBanco.getMonthValue()+1)+"/"+dataBanco.getYear();
-        }
-        
-        Object[] dadosTabela = {codBanco, nome, nomeServico, dataVencimento, situacao};
-        tabelaDeMensalidade.addRow(dadosTabela);
-        
+        this.mensalidade(aluno, servico, plano);
     }
     
     public void setarTotalMensalidade() throws SQLException, ParseException{
         int linhaSelecionada = view.getTabelaMensalidade().getSelectedRow();
+        BigDecimal valorMensal = converterDinheiro.converterParaBigDecimal(tabelaDeMensalidade.getValueAt(linhaSelecionada, 3).toString());
         
         if(linhaSelecionada!=-1){
-            String situacao = tabelaDeMensalidade.getValueAt(linhaSelecionada, 4).toString();
-            if(!situacao.equals("Pago")){
-            int codBanco = Integer.parseInt(tabelaDeMensalidade.getValueAt(linhaSelecionada, 0).toString());
-            Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codBanco).get(0);
-            
-            view.getCampoVTotal().setText(aluno.getValorContrato().toString());
+            String situacao = tabelaDeMensalidade.getValueAt(linhaSelecionada, 5).toString();
+            if(!situacao.equals("Pago")||!situacao.equals("Encerrado")){
+            view.getCampoVTotal().setText(valorMensal.toString());
             }
             else{
-                view.exibeMensagem("Fatura já foi Paga!");
+                if(situacao.equals("Pago")){
+                  view.exibeMensagem("Fatura já foi Paga!");  
+                }
+                else{
+                  view.exibeMensagem("Plano Encerrado!");    
+                }
             }
         }
     }
@@ -418,7 +392,16 @@ public class CaixaController {
                 int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
                 
                 Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
+                Planos planoAntigo = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codAluno).get(0);
+                Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0); 
                 BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
+                
+                Date dataParaUso = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
+                if(planoAntigo.getDataRenovacao() != null){
+                   dataParaUso = converterData.parseDate(converterData.parseDate(planoAntigo.getDataRenovacao()));
+                }
+                LocalDate dataFim = converterData.conversaoLocalforDate(dataParaUso).plusDays(servico.getPeriodDays());
+                Date dataFimPlano = converterData.conversaoLocalforDate(dataFim);
                 
                 codProduto = 0;
                 quantidade = 1;
@@ -428,8 +411,21 @@ public class CaixaController {
                 ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
                 itens.add(itemVendido);
                 
+                Planos plano;
+                 
+                if(dataFim.isEqual(dataAtual)||dataFim.isBefore(dataAtual)){
+                    if(aluno.getRenovacaoAutomatica()==1){
+                        plano = new Planos(codAluno, 0, 0, 0, dataVenda, null, dataFimPlano, "Pago"); 
+                    }
+                    else{
+                        plano = new Planos(codAluno, 0, 0, 0, dataVenda, null, null, "Encerrado"); 
+                    }
+                   
+                }
+                else{
+                    plano = new Planos(codAluno, 0, 0, 0, dataVenda, null, planoAntigo.getDataRenovacao(), "Pago"); 
+                }
                 
-                Planos plano = new Planos(codAluno, 0, 0, 0, dataVenda, null, "Pago");
                 if(debitos.compareTo(BigDecimal.ZERO)!=0){
                     if(debitos.subtract(valor).compareTo(BigDecimal.ZERO)>=0){
                         vendasDao.inserirDados(venda, itens);
@@ -456,8 +452,7 @@ public class CaixaController {
                 }
                 else{
                     view.exibeMensagem("Aluno Sem Débitos!");
-                }
-                
+                }  
             }
             BigDecimal valorDesconto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVDesconto().getText()).toString());
             view.exibeMensagem("Venda Concluída!");
@@ -676,5 +671,63 @@ public class CaixaController {
             valorParcelamento = valorParcelamento.setScale(2, RoundingMode.UP);
             view.getCampoParcelamento().setText(valorParcelamento.toString());
         }
+    }
+    
+    private void mensalidade(Aluno aluno, Servicos servico, Planos plano) throws ParseException{
+        BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
+        String nomeServico = plano.getCodServico()+"."+servico.getNome()+"-"+servico.getPeriodo();
+        String situacao = plano.getSituacao();
+        String dataVencimento;
+        
+        int renovacaoAutomatica = aluno.getRenovacaoAutomatica();
+        
+        Date dataPag = converterData.parseDate(converterData.parseDate(plano.getDataPagamento()));
+        Date dataPrimaria = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
+        if(plano.getDataRenovacao()!=null){
+            dataPrimaria = converterData.parseDate(converterData.parseDate(plano.getDataRenovacao()));
+        }
+        LocalDate dataBanco = converterData.conversaoLocalforDate(dataPag);
+        LocalDate dataCad = converterData.conversaoLocalforDate(dataPrimaria);
+        
+        BigDecimal valorMensal = aluno.getValorMensal();
+
+        String mensal = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+        String anual = periodDays.divide(new BigDecimal(365), 3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+
+        
+        boolean resultadoMensal = mensal.matches("[1-9]*");
+        boolean resultadoAnual = anual.matches("[1-9]*");
+        
+        
+        if(resultadoMensal||resultadoAnual){
+           if(plano.getDataPagamento()==null){
+               dataVencimento = plano.getDiaVencimento()+"/"+ (dataCad.getMonthValue()+1)+"/"+dataCad.getYear();
+           }
+           else{
+               dataVencimento = plano.getDiaVencimento()+"/"+(dataBanco.getMonthValue()+1)+"/"+dataBanco.getYear();
+           }
+        }
+        else{
+            if(renovacaoAutomatica == 1){
+                BigDecimal period = (new BigDecimal(30)).divide(periodDays,4, RoundingMode.UP);
+                valorMensal = valorMensal.divide(period, 4, RoundingMode.UP);
+                valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+                if(plano.getDataPagamento()==null){
+                    LocalDate dataVen = dataCad.plusDays(servico.getPeriodDays());
+                    dataVencimento = converterData.parseDate(converterData.conversaoLocalforDate(dataVen));
+                }
+                else{
+                    LocalDate dataVen = dataBanco.plusDays(servico.getPeriodDays());
+                    dataVencimento = converterData.parseDate(converterData.conversaoLocalforDate(dataVen));
+                }   
+            }
+            else{
+               LocalDate dataVen = dataCad.plusDays(servico.getPeriodDays());
+               dataVencimento = converterData.parseDate(converterData.conversaoLocalforDate(dataVen));
+            }           
+        }
+        
+        Object[] dadosTabela = {aluno.getCodBanco(), aluno.getNome(), nomeServico, valorMensal, dataVencimento, situacao};
+        tabelaDeMensalidade.addRow(dadosTabela);
     }
 }

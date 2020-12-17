@@ -7,10 +7,12 @@ package Controller;
 
 import Controller.auxiliar.ConversaoDiasDaSemana;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Dao.AlunosDao;
 import Dao.FuncionarioDao;
 import Dao.HorariosDao;
 import Dao.LogAçoesFuncionarioDao;
 import Dao.TurmasDao;
+import Model.Aluno;
 import Model.Funcionario;
 import Model.auxiliar.Horarios;
 import Model.auxiliar.LogAçoesFuncionario;
@@ -32,6 +34,7 @@ public class TurmasController {
     private final HorariosDao horariosDao = new HorariosDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
+    private final AlunosDao alunoDao = new AlunosDao();
     private final ConversaoDiasDaSemana converterDias = new ConversaoDiasDaSemana();
     private final DefaultTableModel tabelaDeTurmas;
     private final ConversaodeDataParaPadraoDesignado converterHora = new ConversaodeDataParaPadraoDesignado();
@@ -177,18 +180,24 @@ public class TurmasController {
             int codTurma = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 0).toString());
             String nomeTurma = tabelaDeTurmas.getValueAt(linhaSelecionada, 1).toString();
             
-            turmasDao.removerTurma(codTurma);
-            
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                String acao = "Remoção de Turma";
-                String descricao = "Remoção da turma "+nomeTurma;
-                this.setarLog(funcionarios, acao, descricao);
+            if(this.retornarAlunosUsando(codTurma)){
+                turmasDao.removerTurma(codTurma);
+
+                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                if(funcionarios!=null){
+                    String acao = "Remoção de Turma";
+                    String descricao = "Remoção da turma "+nomeTurma;
+                    this.setarLog(funcionarios, acao, descricao);
+                }
+                this.view.exibeMensagem("Sucesso");
+                limparTabela();
+                this.view.desabilitarVisibilidadeComponente();
+                listarTurmas(); 
             }
-            this.view.exibeMensagem("Sucesso");
-            limparTabela();
-            this.view.desabilitarVisibilidadeComponente();
-            listarTurmas();
+            else{
+                view.exibeMensagem("Não é possível remover, pois ainda existem alunos presentes nessa turma!");
+            }
+            
         }
         else{this.view.exibeMensagem("Erro, Nenhuma Turma Selecionada!");}
     }
@@ -228,5 +237,10 @@ public class TurmasController {
         Date dataEvento = new Date();
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
         return logAcao;
+    }
+    
+    private boolean retornarAlunosUsando(int codTurma) throws SQLException, ParseException{
+        ArrayList <Aluno> alunos = alunoDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codTurma = "+codTurma);
+        return alunos ==null;
     }
 }

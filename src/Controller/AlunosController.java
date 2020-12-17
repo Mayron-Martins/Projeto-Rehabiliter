@@ -133,7 +133,7 @@ public class AlunosController {
             
             Matriculas matricula = new Matriculas(codAluno, codTurmaAtual, codAluno, anoAtual, nomeMatricula);
             EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);
-            Planos planoAluno = new Planos(codAluno, codTurmaAtual, codServico, diaVencimento, null, null, situacao);
+            Planos planoAluno = new Planos(codAluno, codTurmaAtual, codServico, diaVencimento, null, null, null, situacao);
             
             
             //Verificar se a turma atual possui vagas
@@ -470,8 +470,8 @@ public class AlunosController {
         String anual = periodDays.divide(new BigDecimal(365), 3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
 
         
-        boolean resultadoMensal = mensal.matches("[0-9]*");
-        boolean resultadoAnual = anual.matches("[0-9]*");
+        boolean resultadoMensal = mensal.matches("[1-9]*");
+        boolean resultadoAnual = anual.matches("[1-9]*");
         
         Component tableCellEditorComponent = this.view.getTabelaPlanos().getColumnModel().getColumn(4).getCellEditor().getTableCellEditorComponent(view.getTabelaPlanos(), diaVencimento, true, linhaSelecionada, 4);
 
@@ -494,29 +494,18 @@ public class AlunosController {
         else{
             tableCellEditorComponent.setEnabled(false);
             boolean renovacaoAutomatica = tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString().equals("true");
-            
-            if(periodDays.compareTo(new BigDecimal(15))<=0){
-                if(renovacaoAutomatica){
-                    valorMensal = valorTotal.multiply((new BigDecimal(30)).divide(periodDays,2, RoundingMode.UP));
-                    valorMensal = valorMensal.setScale(2, RoundingMode.UP);
-                    
-                    tabelaDePlanos.setValueAt(valorMensal, linhaSelecionada, 3);
-                }
-                else{
-                    valorMensal = valorTotal;
-                    tabelaDePlanos.setValueAt(valorMensal, linhaSelecionada, 3);
-                }
-            }
-            else{
-                periodDays = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP);
-                periodDays = periodDays.setScale(0, RoundingMode.UP);
-                
-                valorMensal = valorTotal.divide(periodDays);
+
+            if(renovacaoAutomatica){
+                BigDecimal period = (new BigDecimal(30)).divide(periodDays,4, RoundingMode.UP);
+                valorMensal = valorTotal.multiply(period);
                 valorMensal = valorMensal.setScale(2, RoundingMode.UP);
 
-               tabelaDePlanos.setValueAt(valorMensal, linhaSelecionada, 3);
+                tabelaDePlanos.setValueAt(valorMensal, linhaSelecionada, 3);
             }
-            
+            else{
+                valorMensal = valorTotal;
+                tabelaDePlanos.setValueAt(valorMensal, linhaSelecionada, 3);
+            }  
         }  
     }
     private int diaVencimento(int diasContrato, int linhaSelecionada, int diaVencimento){

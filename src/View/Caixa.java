@@ -102,12 +102,12 @@ public class Caixa extends javax.swing.JDialog {
         botaoBuscarCliente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaDeClientes = new javax.swing.JTable();
+        painelTabelaProdutos = new javax.swing.JScrollPane();
+        tabelaDeCarrinho = new javax.swing.JTable();
         painelPagamentoMensal = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaMensalidade = new javax.swing.JTable();
         botaoConfirmar = new javax.swing.JButton();
-        painelTabelaProdutos = new javax.swing.JScrollPane();
-        tabelaDeCarrinho = new javax.swing.JTable();
         campoProdutoNome = new FormatacaoCamposRestritosLetras();
         campoProdutoCodigo = new FormatacaodeCamposRestritos();
         botaoBuscarProdutos = new javax.swing.JButton();
@@ -304,54 +304,12 @@ public class Caixa extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabelaDeClientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaDeClientes.getTableHeader().setResizingAllowed(false);
         tabelaDeClientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabelaDeClientes);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, 480, 150));
-
-        painelPagamentoMensal.setBackground(new java.awt.Color(0, 134, 191));
-        painelPagamentoMensal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tabelaMensalidade.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "CodBanco", "Aluno", "Serviço", "Vencimento", "Situação"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabelaMensalidade.getTableHeader().setResizingAllowed(false);
-        tabelaMensalidade.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tabelaMensalidade);
-
-        painelPagamentoMensal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 850, 170));
-
-        botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
-        botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
-        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoConfirmarActionPerformed(evt);
-            }
-        });
-        painelPagamentoMensal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 330, 60));
-
-        getContentPane().add(painelPagamentoMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 870, 250));
 
         tabelaDeCarrinho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -386,6 +344,50 @@ public class Caixa extends javax.swing.JDialog {
         painelTabelaProdutos.setViewportView(tabelaDeCarrinho);
 
         getContentPane().add(painelTabelaProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 860, 200));
+
+        painelPagamentoMensal.setBackground(new java.awt.Color(0, 134, 191));
+        painelPagamentoMensal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tabelaMensalidade.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CodBanco", "Aluno", "Serviço", "Valor", "Vencimento", "Situação"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaMensalidade.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaMensalidade.getTableHeader().setResizingAllowed(false);
+        tabelaMensalidade.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tabelaMensalidade);
+
+        painelPagamentoMensal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 850, 170));
+
+        botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
+        botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
+        botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfirmarActionPerformed(evt);
+            }
+        });
+        painelPagamentoMensal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 330, 60));
+
+        getContentPane().add(painelPagamentoMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 870, 250));
 
         campoProdutoNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -455,6 +457,7 @@ public class Caixa extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabelaDeProdutos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaDeProdutos.getTableHeader().setResizingAllowed(false);
         tabelaDeProdutos.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tabelaDeProdutos);

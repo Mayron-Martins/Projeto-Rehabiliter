@@ -19,10 +19,11 @@ public class Planos {
     private int diaVencimento;
     private Date dataPagamento;
     private Date dataCancelamento;
+    private Date dataRenovacao;
     private String situacao;
     private int chavePlano;
 
-    public Planos(int codAluno, int codTurma, int codServico, int diaVencimento, Date dataPagamento, Date dataCancelamento, String situacao) {
+    public Planos(int codAluno, int codTurma, int codServico, int diaVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
         this.codAluno = codAluno;
         this.codTurma = codTurma;
         this.codServico = codServico;
@@ -31,6 +32,7 @@ public class Planos {
         ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
         this.dataPagamento = converterData.getSqlDate(dataPagamento);
         this.dataCancelamento = converterData.getSqlDate(dataCancelamento);
+        this.dataRenovacao = converterData.getSqlDate(dataRenovacao);
         this.situacao = situacao;
         
         String chave = String.valueOf(codAluno)+String.valueOf(codTurma)+String.valueOf(codServico);
@@ -68,11 +70,8 @@ public class Planos {
     public int getChavePlano() {
         return chavePlano;
     }
-    
-    
-    
-    
-    
-    
 
+    public Date getDataRenovacao() {
+        return dataRenovacao;
+    }
 }

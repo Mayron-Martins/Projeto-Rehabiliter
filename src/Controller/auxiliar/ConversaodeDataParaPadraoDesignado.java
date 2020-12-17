@@ -100,7 +100,7 @@ public class ConversaodeDataParaPadraoDesignado {
     }
     
     public boolean aniversarianteDoDia(Date dataAniversario){
-        Period aniversario = this.periodoEntreDataAtual(dataAniversario);
+        Period aniversario = periodoEntreDataAtual(dataAniversario);
         return aniversario.getDays()==0&&aniversario.getMonths()==0;
     }
     
@@ -112,7 +112,7 @@ public class ConversaodeDataParaPadraoDesignado {
     return dataHoje.getMonthValue()==dataAniversario.getMonthValue();
     }
     
-    private Period periodoEntreDataAtual(Date dataMenor){
+    public Period periodoEntreDataAtual(Date dataMenor){
     SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
     String format = formato.format(dataMenor);
     LocalDate dataHoje = LocalDate.now();

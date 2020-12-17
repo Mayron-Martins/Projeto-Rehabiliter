@@ -14,15 +14,14 @@ import Model.Funcionario;
 import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Servicos;
 import View.ServicosAdicionar;
-import java.awt.event.ItemListener;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.plaf.basic.BasicComboBoxUI;
 
 /**
  *
@@ -66,21 +65,28 @@ public class AdicionarServicosController {
         if(nomeServico.equals("")|| periodo.equals("[Nenhum]")||periodDays==0){
          view.exibeMensagem("Campos Preenchidos Incorretamente");
         } else{
-            servicosDao.inserirDados(servico);
             
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                this.setarLog(funcionarios, nomeServico);
+            if(this.verificarPeriodo(periodDays)){
+                servicosDao.inserirDados(servico);
+
+                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                if(funcionarios!=null){
+                    this.setarLog(funcionarios, nomeServico);
+                }
+                view.exibeMensagem("Sucesso!");
+                //Limpando Campos
+                view.getNomeServico().setText("");
+                preencherComboPeriodo();
+                view.getComboPeriodo().setSelectedIndex(0);
+                view.getMetodoPagamento().setSelectedIndex(0);
+                view.getValorDinheiro().setText("");
+                view.getCampoOutroTipo().setText("Outro");
+                view.getCampoDias().setText("");
             }
-            view.exibeMensagem("Sucesso!");
-            //Limpando Campos
-            view.getNomeServico().setText("");
-            preencherComboPeriodo();
-            view.getComboPeriodo().setSelectedIndex(0);
-            view.getMetodoPagamento().setSelectedIndex(0);
-            view.getValorDinheiro().setText("");
-            view.getCampoOutroTipo().setText("Outro");
-            view.getCampoDias().setText("");
+            else{
+                view.exibeMensagem("Por motivos de compatibilidade, esse período de dias não pôde ser aceito!");
+            }
+            
         }
         
     }
@@ -181,5 +187,23 @@ public class AdicionarServicosController {
             return 365*dias;
         }
         return dias;
+    }
+    
+    private boolean verificarPeriodo(int period){
+        BigDecimal periodDays = new BigDecimal(period);
+        
+        String mensal = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+        String anual = periodDays.divide(new BigDecimal(365), 3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+
+        
+        boolean resultadoMensal = mensal.matches("[0-9]*");
+        boolean resultadoAnual = anual.matches("[0-9]*");
+        
+        if(resultadoMensal||resultadoAnual){
+            return true;
+        }
+        else{
+            return period<30;
+        }
     }
 }
