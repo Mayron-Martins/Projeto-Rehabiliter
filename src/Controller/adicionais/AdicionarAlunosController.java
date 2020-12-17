@@ -185,7 +185,6 @@ public class AdicionarAlunosController {
             if(funcionarios!=null){
             this.setarLog(funcionarios, nome, turma);
             }
-            //exportarContrato.exportarContratoPDF();
             view.exibeMensagem("Sucesso!");
             exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx", "Word.Application");
             view.exibeMensagem("Exportando Arquivo para Impressão.");
