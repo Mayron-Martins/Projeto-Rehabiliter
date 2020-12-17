@@ -74,10 +74,16 @@ public class AlunosController {
         }
     }
     
+    
     //Lista todas as turmas 
     public void listarAlunos() throws SQLException, ParseException, Exception {
-        ArrayList <Aluno> alunos = this.alunosDao.selecionarTodosAlunos();
-        this.buscas(alunos);
+        if(view.getComboTurmasExistentes().getSelectedIndex()>=0){
+        String nomeTurmaAtual = view.getComboTurmasExistentes().getSelectedItem().toString();
+        int codTurmaAtual = Integer.parseInt(nomeTurmaAtual.split("\\.")[0]);
+        
+        ArrayList <Aluno> alunos = this.alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codTurma = "+codTurmaAtual);
+        this.buscas(alunos);   
+        }
     }
     
     public void editarAlunos() throws SQLException, ParseException, Exception{
@@ -226,27 +232,52 @@ public class AlunosController {
     
     //Buscar Débito existentes
     private void buscarDebitos(char opcao) throws SQLException, ParseException, Exception{
-        ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
         ArrayList <Aluno> alunosComDebito = new ArrayList<>();
-        ArrayList <Aluno> alunosSemDebito = new ArrayList<>();
-        BigDecimal debito;
-        for(int linhas = 0; linhas<alunos.size(); linhas++){
-            debito = new BigDecimal(alunos.get(linhas).getDebito().toString());
-            if(debito.compareTo(BigDecimal.ZERO)>0){
-                alunosComDebito.add(alunos.get(linhas));
-            } else {
-                alunosSemDebito.add(alunos.get(linhas));
-            }
-        }
-        
+        ArrayList <Aluno> alunosSemDebito = new ArrayList<>();        
+
         switch(opcao){
             case 'C':
-                this.buscas(alunosComDebito);
+                ArrayList <Planos> planosPendentes = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pendente' OR situacao = 'Vencido'");
+                if(planosPendentes!=null){
+                    for(int linhas=0; linhas<planosPendentes.size(); linhas++){
+                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planosPendentes.get(linhas).getCodAluno()).get(0);
+                        alunosComDebito.add(aluno);
+                    }
+                    this.buscas(alunosComDebito);
+                }else{
+                    view.exibeMensagem("Sem Dados");
+                }
+                
             break;
-            
+
             case 'S':
-                this.buscas(alunosSemDebito);
+                ArrayList <Planos> planosPagos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pago'");
+                if(planosPagos!=null){
+                    for(int linhas=0; linhas<planosPagos.size(); linhas++){
+                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planosPagos.get(linhas).getCodAluno()).get(0);
+                        alunosSemDebito.add(aluno);
+                    }
+                    this.buscas(alunosSemDebito);
+                }else{
+                    view.exibeMensagem("Sem Dados");
+                }
             break;
+        }
+        
+    }
+    
+    //Buscar alunos com contrato encerrado
+    private void buscarEncerrados() throws SQLException, ParseException, Exception{
+        ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Encerrado'");
+        ArrayList <Aluno> alunosEncerrados = new ArrayList<>();
+        if(planos !=null){
+            for(int linhas=0; linhas< planos.size(); linhas++){
+            Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
+            alunosEncerrados.add(aluno);
+            }
+            this.buscas(alunosEncerrados);
+        }else{
+            view.exibeMensagem("Sem Dados.");
         }
     }
     
@@ -270,6 +301,9 @@ public class AlunosController {
             case "Pagos": 
                 this.buscarDebitos('S');
             break;
+            case "Encerrados":
+                this.buscarEncerrados();
+            break;
         }
     }
 
@@ -285,9 +319,14 @@ public class AlunosController {
             }
         }
         else{
+            view.getComboTurmas().removeAllItems();
+            view.getComboTurmasExistentes().removeAllItems();
             for(int linhas=0; linhas<turmas.size(); linhas++){
+            
             view.getComboTurmas().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma());
+            view.getComboTurmasExistentes().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma());
             }
+            view.getComboTurmasExistentes().setSelectedIndex(0);
         }
         
         if(servicos==null){
@@ -297,6 +336,7 @@ public class AlunosController {
             }
         }
         else{
+            view.getComboServicos().removeAllItems();
             for(int linhas=0; linhas<servicos.size(); linhas++){ 
             view.getComboServicos().addItem(servicos.get(linhas).getCodBanco()+"."+servicos.get(linhas).getNome()+"-"+servicos.get(linhas).getPeriodo());
             }
@@ -345,7 +385,7 @@ public class AlunosController {
         ArrayList <Aluno> alunos = listar;
         
         removerSelecaoBox();
-        if(alunos==null){view.exibeMensagem("Aluno Não Encontrado!"); limparTabela();}
+        if(alunos==null){view.exibeMensagem("Sem dados!"); limparTabela();}
         else{
             limparTabela();
             for(int linhas = 0; linhas<alunos.size(); linhas++){

@@ -125,6 +125,7 @@ public class AlunosView extends javax.swing.JDialog {
         botaoAdicionar = new javax.swing.JButton();
         campoPesquisa = new javax.swing.JTextField();
         comboListar = new javax.swing.JComboBox<>();
+        comboTurmasExistentes = new javax.swing.JComboBox<>();
         botaoPlanos = new javax.swing.JButton();
         botaoPais = new javax.swing.JButton();
         botaoEndereco = new javax.swing.JButton();
@@ -405,8 +406,15 @@ public class AlunosView extends javax.swing.JDialog {
         });
         getContentPane().add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 320, 40));
 
-        comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Aniversariantes", "Pendentes", "Pagos" }));
+        comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Aniversariantes", "Pendentes", "Pagos", "Encerrados" }));
         getContentPane().add(comboListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
+
+        comboTurmasExistentes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTurmasExistentesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(comboTurmasExistentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 170, 30));
 
         botaoPlanos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPlanos.png"))); // NOI18N
         botaoPlanos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPlanosHover.png"))); // NOI18N
@@ -614,6 +622,16 @@ public class AlunosView extends javax.swing.JDialog {
     private void tabelaEnderecosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaEnderecosKeyReleased
         this.selecionarTabelas(4);
     }//GEN-LAST:event_tabelaEnderecosKeyReleased
+
+    private void comboTurmasExistentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmasExistentesActionPerformed
+        try {
+            controller.listarAlunos();
+        } catch (ParseException ex) {
+            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_comboTurmasExistentesActionPerformed
      
     /**
      * @param args the command line arguments
@@ -670,6 +688,7 @@ public class AlunosView extends javax.swing.JDialog {
     private javax.swing.JButton botaobuscar;
     private javax.swing.JTextField campoPesquisa;
     private javax.swing.JComboBox<String> comboListar;
+    private javax.swing.JComboBox<String> comboTurmasExistentes;
     private javax.swing.JScrollPane painelAlunos;
     private javax.swing.JScrollPane painelEnderecos;
     private javax.swing.JScrollPane painelPais;
@@ -767,7 +786,10 @@ public class AlunosView extends javax.swing.JDialog {
     public int getNumeroTela() {
         return numeroTela;
     }
-    
+
+    public JComboBox<String> getComboTurmasExistentes() {
+        return comboTurmasExistentes;
+    }
     
     
     private void selecionarTabelas(int opcao){
