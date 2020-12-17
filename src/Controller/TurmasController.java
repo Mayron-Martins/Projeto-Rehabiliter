@@ -86,14 +86,13 @@ public class TurmasController {
             int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
             int codTurma = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 0).toString());
             String nome = this.tabelaDeTurmas.getValueAt(linhaSelecionada, 1).toString();
-            
-            
-            
+                        
             int quantAlunos =0;
             
-            int quantidadeMax;
-            if(this.tabelaDeTurmas.getValueAt(linhaSelecionada, 2)==null){quantidadeMax = 0;}
-            else{quantidadeMax = Integer.parseInt(this.tabelaDeTurmas.getValueAt(linhaSelecionada, 2).toString());}
+            int quantidadeMax=0;
+            if(!this.tabelaDeTurmas.getValueAt(linhaSelecionada, 2).toString().equals("")){
+                quantidadeMax = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 2).toString());
+            }
             
             String diasDaSemana = this.view.getDiasDaSemana();
             ArrayList <String> diasDaSemanaUnitarios = new ArrayList<>();

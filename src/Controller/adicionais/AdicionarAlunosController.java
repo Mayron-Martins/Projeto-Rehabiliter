@@ -97,6 +97,13 @@ public class AdicionarAlunosController {
     
     public void adicionarAlunos() throws SQLException, ParseException, InvalidFormatException, IOException, PrinterException{
         Date dataCadastro = converterData.getSqlDate(new Date());
+        if(view.getCampoDataCadastro()!=null){
+            dataCadastro = view.getCampoDataCadastro().getDate();
+        }
+        Date dataUltimoPag = null;
+        if(view.getCampoDataUltimoPag()!= null){
+            dataUltimoPag = view.getCampoDataUltimoPag().getDate();
+        }
 
         //Dados do Aluno
         int codAluno = verificar.verificarUltimo("tblAlunos", "codAluno")+1;
@@ -164,7 +171,7 @@ public class AdicionarAlunosController {
         dataNascimento, nomeMae, nomePai, contatoMae, contatoPai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
         EnderecoAlunos endereco = new EnderecoAlunos(codEndereco, codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
-        Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, null, null, null, "Pendente");
+        Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, dataUltimoPag, null, null, "Pendente");
         
         
         //Obtem a quantidade de alunos presentes na turma
