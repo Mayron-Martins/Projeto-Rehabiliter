@@ -159,8 +159,7 @@ public class TelaInicioGerenteController {
                         Date dataAux = converterData.parseDate(converterData.parseDate(dataUsual));
                         if(servico.getPeriodDays()>=30){
                             LocalDate dataCadastro = converterData.conversaoLocalforDate(dataAux);
-                            String vencimento = planos.get(linhas).getDiaVencimento()+"/"+(dataCadastro.getMonthValue()+1)+"/"+dataCadastro.getYear();
-                            dataVencimento = converterData.conversaoLocalforDate(converterData.parseDate(vencimento));
+                            dataVencimento = LocalDate.of(dataCadastro.getYear(), dataCadastro.plusMonths(1).getMonthValue(), planos.get(linhas).getDiaVencimento());
                         }
                         else{
                             dataVencimento = converterData.conversaoLocalforDate(dataAux).plusDays(servico.getPeriodDays());
@@ -180,8 +179,7 @@ public class TelaInicioGerenteController {
 
                         if(servico.getPeriodDays()>=30){
                            LocalDate dataCadastro = converterData.conversaoLocalforDate(dataAux);
-                           String vencimento = planos.get(linhas).getDiaVencimento()+"/"+(dataCadastro.getMonthValue()+1)+"/"+dataCadastro.getYear();
-                           dataVencimento = converterData.conversaoLocalforDate(converterData.parseDate(vencimento));
+                           dataVencimento = LocalDate.of(dataCadastro.getYear(), dataCadastro.plusMonths(1).getMonthValue(), planos.get(linhas).getDiaVencimento());
                         }
                         else{
                            dataUsual=planos.get(linhas).getDataRenovacao();
