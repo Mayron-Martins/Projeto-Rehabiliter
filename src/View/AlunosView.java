@@ -62,6 +62,9 @@ public class AlunosView extends javax.swing.JDialog {
         this.setarComposicaoTabelas();
         
         controller = new AlunosController(this);
+        botaoFecharConf.setBackground(new Color(0,0,0,0));
+        jButton1.setBackground(new Color(0,0,0,0));
+        botaoConfigAdicionais.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
@@ -179,44 +182,51 @@ public class AlunosView extends javax.swing.JDialog {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        painelConfiguracoesAdicionais.setBackground(new java.awt.Color(116, 174, 159));
         painelConfiguracoesAdicionais.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        botaoFecharConf.setText("Fechar");
+        botaoFecharConf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharPeq.png"))); // NOI18N
         botaoFecharConf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoFecharConfActionPerformed(evt);
             }
         });
-        painelConfiguracoesAdicionais.add(botaoFecharConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        painelConfiguracoesAdicionais.add(botaoFecharConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Data Cadastro");
         painelConfiguracoesAdicionais.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
         painelConfiguracoesAdicionais.add(campoDataCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 140, 30));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Data Último Pagamento");
         painelConfiguracoesAdicionais.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
         painelConfiguracoesAdicionais.add(campoDataPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 140, 30));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Data Vencimento");
         painelConfiguracoesAdicionais.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, -1, -1));
         painelConfiguracoesAdicionais.add(campoDataVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 140, 30));
 
-        jButton1.setText("Setar Vencimento");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnSet.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        painelConfiguracoesAdicionais.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 120, 30));
+        painelConfiguracoesAdicionais.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 180, 30));
 
         campoAvisoDataVencimento.setEditable(false);
         campoAvisoDataVencimento.setColumns(20);
         campoAvisoDataVencimento.setRows(5);
         jScrollPane1.setViewportView(campoAvisoDataVencimento);
 
-        painelConfiguracoesAdicionais.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 270, 70));
+        painelConfiguracoesAdicionais.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 270, 70));
 
-        getContentPane().add(painelConfiguracoesAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 450, 200));
+        getContentPane().add(painelConfiguracoesAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 530, 200));
 
         tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
@@ -404,13 +414,13 @@ public class AlunosView extends javax.swing.JDialog {
 
         getContentPane().add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
-        botaoConfigAdicionais.setText("CONFIGURAÇÕES ADICIONAIS");
+        botaoConfigAdicionais.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnConfiguracoes.png"))); // NOI18N
         botaoConfigAdicionais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoConfigAdicionaisActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoConfigAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, -1));
+        getContentPane().add(botaoConfigAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 190, 30));
 
         botaoRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoRemover.png"))); // NOI18N
         botaoRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverremover.png"))); // NOI18N
