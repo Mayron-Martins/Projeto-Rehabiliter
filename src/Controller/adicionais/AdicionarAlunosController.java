@@ -135,7 +135,7 @@ public class AdicionarAlunosController {
         int codTurma = 0;
         if(!plano.equals("[Nenhum]")||!turma.equals("[Nenhuma]")){
         codPlano = Integer.parseInt(plano.split("\\.")[0]);
-        codTurma = Integer.parseInt(plano.split("\\.")[0]);
+        codTurma = Integer.parseInt(turma.split("\\.")[0]);
         }
         
         
