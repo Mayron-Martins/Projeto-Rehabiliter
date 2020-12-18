@@ -131,6 +131,20 @@ public class AlunosController {
             int anoAtual = converterData.obterAnoAtual();
             String nomeMatricula = this.converterMatricula(anoAtual, codTurmaAtual, codAluno, codServico);
             Aluno alunoAnterior = this.alunoAnterior(codAluno);
+            Planos planoAnterior = this.planoAnterior(codAluno);
+            
+            Date dataValidade = planoAnterior.getDataVencimento();
+            if(view.getCampoDataVencimento().getDate()!= null){
+                dataValidade = view.getCampoDataVencimento().getDate();
+            }
+            Date dataPagamento = planoAnterior.getDataPagamento();
+            if(view.getCampoDataPagamento().getDate() != null){
+                dataPagamento = view.getCampoDataPagamento().getDate();
+            }
+            Date dataCadastro = alunoAnterior.getDataCadastro();
+            if(view.getCampoDataCadastro().getDate() != null){
+                dataCadastro = view.getCampoDataCadastro().getDate();
+            }
             
             Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
                     alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
@@ -139,7 +153,9 @@ public class AlunosController {
             
             Matriculas matricula = new Matriculas(codAluno, codTurmaAtual, codAluno, anoAtual, nomeMatricula);
             EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);
-            Planos planoAluno = new Planos(codAluno, codTurmaAtual, codServico, diaVencimento, null, null, null, situacao);
+            Planos planoAluno = new Planos(codAluno, codTurmaAtual, codServico, diaVencimento, 
+                    dataValidade, dataPagamento, planoAnterior.getDataCancelamento(), 
+                    planoAnterior.getDataRenovacao(), situacao);
             
             
             //Verificar se a turma atual possui vagas
@@ -377,6 +393,10 @@ public class AlunosController {
          return  alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
     }
     
+    private Planos planoAnterior(int codAluno) throws SQLException{
+         return  planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codAluno).get(0);
+    }
+    
     private void buscas(ArrayList <Aluno> listar) throws Exception{
         ArrayList<Turmas> turmas = new ArrayList<>();
         ArrayList<Servicos> servicos = new ArrayList<>();
@@ -476,6 +496,10 @@ public class AlunosController {
         return turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+codTurma).get(0);
     }
     
+    private Servicos pegarServico(int codServico) throws SQLException{
+        return servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
+    }
+    
     private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
         Funcionario funcionario = funcionarios.get(0);
         Date dataEvento = new Date();
@@ -559,5 +583,124 @@ public class AlunosController {
             return dataAtual.getDayOfMonth();
         }
     }
+    
+    public void setarDatasConfiguracoesAd() throws SQLException, ParseException{
+        int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
+        if(linhaSelecionada>-1){
+            int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+            Aluno aluno = this.alunoAnterior(codAluno);
+            Planos plano = this.planoAnterior(codAluno);
+            view.getCampoDataCadastro().setDate(aluno.getDataCadastro());
+            view.getCampoDataPagamento().setDate(plano.getDataPagamento());
+            
+            if(plano.getDataVencimento()!=null){
+                view.getCampoDataVencimento().setDate(plano.getDataVencimento());
+                view.getCampoAvisoDataVencimento().setVisible(false);
+            }
+            else{
+                view.getCampoAvisoDataVencimento().setText("");
+                view.getCampoAvisoDataVencimento().append("Não há uma Data de Validade Mensal no Sistema.\nPor favor, pressionar o botão Setar Vencimento.");
+                view.getCampoAvisoDataVencimento().setVisible(true);
+            }
+        }
+    }
+    
+    public void setarDataVencimento() throws SQLException, ParseException, Exception{
+        int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
+        if(linhaSelecionada>-1 && view.getCampoDataVencimento().getDate()==null){
+            Date dataCadastro = view.getCampoDataCadastro().getDate();
+            System.out.println(dataCadastro);
+            Date dataPagamento = view.getCampoDataPagamento().getDate();
+            System.out.println(dataPagamento);
+            int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+            
+            editarAlunos();
+            Aluno aluno = this.alunoAnterior(codAluno);
+            Planos plano = this.planoAnterior(codAluno);
+            Servicos servico = this.pegarServico(plano.getCodServico());
+            BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
+            LocalDate dataVencimento;
+            
 
+            int renovacaoAutomatica = aluno.getRenovacaoAutomatica();
+
+
+            Date dataPag = converterData.parseDate(converterData.parseDate(dataPagamento));
+            Date dataPrimaria = converterData.parseDate(converterData.parseDate(dataCadastro));
+            LocalDate dataBanco = converterData.conversaoLocalforDate(dataPag);
+            LocalDate dataCad = converterData.conversaoLocalforDate(dataPrimaria);
+
+            BigDecimal valorMensal = aluno.getValorMensal();
+
+            String mensal = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+            String anual = periodDays.divide(new BigDecimal(365), 3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+
+
+            boolean resultadoMensal = mensal.matches("[1-9]*");
+            boolean resultadoAnual = anual.matches("[1-9]*");
+
+            
+            Planos novoPlano;
+            Date dataAVencer;
+            if(resultadoMensal||resultadoAnual){
+               if(dataPagamento==null){
+                   dataVencimento = LocalDate.of(dataCad.getYear(), dataCad.plusMonths(1).getMonthValue(), plano.getDiaVencimento());
+                   dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
+                   view.getCampoDataVencimento().setDate(dataAVencer);
+                   novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
+                           dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
+                   planosDao.atualizarSituacao(plano);
+               }
+               else{
+                   dataVencimento = LocalDate.of(dataBanco.getYear(), dataBanco.plusMonths(1).getMonthValue(), plano.getDiaVencimento());
+                   dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
+                   view.getCampoDataVencimento().setDate(dataAVencer);
+                   novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
+                           dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
+                   planosDao.atualizarSituacao(plano);
+               }
+            }
+            else{
+                if(renovacaoAutomatica == 1){
+                    if(dataPagamento==null){
+                        dataVencimento = dataCad.plusDays(servico.getPeriodDays());
+                        dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
+                        view.getCampoDataVencimento().setDate(dataAVencer);
+                        novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
+                           dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
+                        planosDao.atualizarSituacao(plano);
+                    }
+                    else{
+                        dataVencimento = dataBanco.plusDays(servico.getPeriodDays());
+                        dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
+                        view.getCampoDataVencimento().setDate(dataAVencer);
+                        novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
+                           dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
+                        planosDao.atualizarSituacao(plano);
+                    }   
+                }
+                else{
+                   dataVencimento = dataCad.plusDays(servico.getPeriodDays());
+                   dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
+                   view.getCampoDataVencimento().setDate(dataAVencer);
+                   novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
+                           dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
+                   planosDao.atualizarSituacao(plano);
+                }           
+            }
+            
+            
+        }
+        
+    }
+    
+    public void selecionarTabela(){
+        int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
+        if(linhaSelecionada!=-1){
+            view.getBotaoConfigAdicionais().setVisible(true);
+        }
+        else{
+            view.getBotaoConfigAdicionais().setVisible(false);
+        }
+    }
 }
