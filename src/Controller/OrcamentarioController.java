@@ -62,12 +62,16 @@ public class OrcamentarioController {
         if(orcamentarios!=null){
             if(view.getBotaoVResumida().isEnabled()){
                 this.setarTabelaResumida(orcamentarios);
-                this.setarCampoPendentes();
+                if(!view.getCampoDataEspecífica().isEnabled()){
+                    this.setarCampoPendentes();
+                }
                 this.setarCamposTotais();
              }
             else{
                 this.setarTabelaDetalhada(orcamentarios);
-                this.setarCampoPendentes();
+                if(!view.getCampoDataEspecífica().isEnabled()){
+                    this.setarCampoPendentes();
+                }
                 this.setarCamposTotais();
             }
         }
@@ -175,24 +179,31 @@ public class OrcamentarioController {
         Date dataPassada;
         
         int periodo = view.getComboPeriodo().getSelectedIndex();
+        if(view.getCampoDataEspecífica().isEnabled()&&view.getCampoDataEspecífica().getDate()!=null){
+            periodo = 0;
+            Date dataCampo = view.getCampoDataEspecífica().getDate();
+            dataBanco = converterData.getSqlDate(dataCampo);
+        }
         
         switch(periodo){
-            case 1:   
+            case 0:
+                return orcamentarioDao.pesquisarOrcamentarios("SELECT * FROM tblDetOrcamentario WHERE dataCadastro BETWEEN '"+dataBanco+"' AND '"+dataBanco+"';");                
+            case 2:   
             return orcamentarioDao.pesquisarOrcamentarios("SELECT * FROM tblDetOrcamentario WHERE dataCadastro BETWEEN '"+dataAtual+"' AND '"+dataAtual+"';");                
             
-            case 2:
+            case 3:
             dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusWeeks(1)));    
             return orcamentarioDao.pesquisarOrcamentarios("SELECT * FROM tblDetOrcamentario WHERE dataCadastro BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
 
-            case 3:
+            case 4:
                 dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusMonths(1)));    
                 return orcamentarioDao.pesquisarOrcamentarios("SELECT * FROM tblDetOrcamentario WHERE dataCadastro BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
 
-            case 4:
+            case 5:
                 dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusMonths(6)));    
                 return orcamentarioDao.pesquisarOrcamentarios("SELECT * FROM tblDetOrcamentario WHERE dataCadastro BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';"); 
 
-            case 5:
+            case 6:
                 dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusYears(1)));    
                 return orcamentarioDao.pesquisarOrcamentarios("SELECT * FROM tblDetOrcamentario WHERE dataCadastro BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
         }        

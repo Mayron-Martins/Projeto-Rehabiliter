@@ -334,6 +334,7 @@ public class Caixa extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabelaDeCarrinho.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaDeCarrinho.getTableHeader().setResizingAllowed(false);
         tabelaDeCarrinho.getTableHeader().setReorderingAllowed(false);
         tabelaDeCarrinho.addKeyListener(new java.awt.event.KeyAdapter() {

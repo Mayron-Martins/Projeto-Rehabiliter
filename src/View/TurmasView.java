@@ -264,6 +264,7 @@ public class TurmasView extends javax.swing.JDialog {
         tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaAlunos.setRowHeight(25);
+        tabelaAlunos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaAlunos.setShowVerticalLines(false);
         tabelaAlunos.getTableHeader().setReorderingAllowed(false);
         tabelaAlunos.addMouseListener(new java.awt.event.MouseAdapter() {

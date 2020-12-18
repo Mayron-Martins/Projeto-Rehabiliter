@@ -7,6 +7,7 @@ package View;
 
 import Controller.OrcamentarioController;
 import Controller.auxiliar.JMoneyField;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -64,6 +65,8 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnAplicar = new javax.swing.JButton();
+        campoDataEspecífica = new com.toedter.calendar.JDateChooser();
         botaoFechar = new javax.swing.JButton();
         botaoVDetalhada = new javax.swing.JButton();
         botaoVResumida = new javax.swing.JButton();
@@ -89,6 +92,16 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicar.png"))); // NOI18N
+        btnAplicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicarHover.png"))); // NOI18N
+        btnAplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAplicarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 60, 20));
+        getContentPane().add(campoDataEspecífica, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 150, 120, -1));
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
@@ -117,7 +130,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
         });
         getContentPane().add(botaoVResumida, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 175, 146, 34));
 
-        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sempre", "Diário", "Semanal", "Mensal", "Anual" }));
+        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Sempre", "Diário", "Semanal", "Mensal", "Semestral", "Anual" }));
         comboPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboPeriodoActionPerformed(evt);
@@ -153,6 +166,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
         tabelaOrcamentaria.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaOrcamentaria.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaOrcamentaria.setRowHeight(25);
+        tabelaOrcamentaria.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaOrcamentaria.setShowVerticalLines(false);
         tabelaOrcamentaria.getTableHeader().setReorderingAllowed(false);
         tabelaOrcamentaria.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -252,12 +266,20 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoVDetalhadaMouseClicked
 
     private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
-        try {
-            controller.setarTabelas();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
+        if(comboPeriodo.getSelectedIndex()>0){
+            campoDataEspecífica.setDate(null);
+            campoDataEspecífica.setEnabled(false);
+            try {
+                controller.setarTabelas();
+            } catch (SQLException ex) {
+                Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            campoDataEspecífica.setDate(null);
+            campoDataEspecífica.setEnabled(true);
         }
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
@@ -270,8 +292,18 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-        controller.salvarDadosEmPlanilha();
+        controller.salvarDadosEmPlanilha();        
     }//GEN-LAST:event_btnExportarActionPerformed
+
+    private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
+    try {
+            controller.setarTabelas();
+        } catch (SQLException ex) {
+            Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_btnAplicarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,8 +356,10 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoVDetalhada;
     private javax.swing.JButton botaoVResumida;
+    private javax.swing.JButton btnAplicar;
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnImprimir;
+    private com.toedter.calendar.JDateChooser campoDataEspecífica;
     private javax.swing.JFormattedTextField campoDespesaTotal;
     private javax.swing.JFormattedTextField campoGanhoRelativoTotal;
     private javax.swing.JFormattedTextField campoGanhoTotal;
@@ -377,6 +411,12 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
     public JTable getTabelaOrcamentaria() {
         return tabelaOrcamentaria;
     }
+
+    public JDateChooser getCampoDataEspecífica() {
+        return campoDataEspecífica;
+    }
+    
+    
     
     private void setarComponentes(){
         botaoVResumida.setEnabled(true);
@@ -384,6 +424,8 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
         
         comboPeriodo.setSelectedIndex(0);
         painelBotoesImprimirExportar.setVisible(false);
+        
+        campoDataEspecífica.setEnabled(false);
     }
     
     public void alternarImprimir(){

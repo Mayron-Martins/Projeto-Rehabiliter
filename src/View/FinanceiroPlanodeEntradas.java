@@ -215,6 +215,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         tabelaVendas.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaVendas.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaVendas.setRowHeight(25);
+        tabelaVendas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaVendas.setShowVerticalLines(false);
         tabelaVendas.getTableHeader().setReorderingAllowed(false);
         tabelaVendas.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -254,6 +255,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         tabelasPlanos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelasPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelasPlanos.setRowHeight(25);
+        tabelasPlanos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelasPlanos.setShowVerticalLines(false);
         tabelasPlanos.getTableHeader().setReorderingAllowed(false);
         tabelasPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -293,6 +295,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         tabelaEntradas.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaEntradas.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaEntradas.setRowHeight(25);
+        tabelaEntradas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaEntradas.setShowVerticalLines(false);
         tabelaEntradas.getTableHeader().setReorderingAllowed(false);
         tabelaEntradas.addComponentListener(new java.awt.event.ComponentAdapter() {

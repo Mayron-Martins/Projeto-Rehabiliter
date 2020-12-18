@@ -188,6 +188,7 @@ public class ProdutosView extends javax.swing.JDialog {
         tabelaProdutos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaProdutos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaProdutos.setRowHeight(25);
+        tabelaProdutos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaProdutos.setShowVerticalLines(false);
         tabelaProdutos.getTableHeader().setReorderingAllowed(false);
         tabelaProdutos.addComponentListener(new java.awt.event.ComponentAdapter() {

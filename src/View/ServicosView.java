@@ -194,6 +194,7 @@ public class ServicosView extends javax.swing.JDialog {
         tabelaServicos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaServicos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaServicos.setRowHeight(25);
+        tabelaServicos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaServicos.setShowVerticalLines(false);
         tabelaServicos.getTableHeader().setReorderingAllowed(false);
         tabelaServicos.addMouseListener(new java.awt.event.MouseAdapter() {

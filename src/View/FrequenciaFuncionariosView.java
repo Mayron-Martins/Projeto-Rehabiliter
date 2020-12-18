@@ -112,6 +112,7 @@ public class FrequenciaFuncionariosView extends javax.swing.JDialog {
         tabelaFuncionarios.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaFuncionarios.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaFuncionarios.setRowHeight(25);
+        tabelaFuncionarios.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaFuncionarios.setShowVerticalLines(false);
         tabelaFuncionarios.getTableHeader().setReorderingAllowed(false);
         tabelaFuncionarios.addComponentListener(new java.awt.event.ComponentAdapter() {

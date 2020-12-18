@@ -143,6 +143,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         tabelaGastos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaGastos.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaGastos.setRowHeight(25);
+        tabelaGastos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaGastos.setShowVerticalLines(false);
         tabelaGastos.getTableHeader().setReorderingAllowed(false);
         tabelaGastos.addComponentListener(new java.awt.event.ComponentAdapter() {

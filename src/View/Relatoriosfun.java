@@ -119,6 +119,7 @@ public class Relatoriosfun extends javax.swing.JDialog {
         tabelaLogs.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaLogs.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tabelaLogs.setRowHeight(25);
+        tabelaLogs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaLogs.setShowVerticalLines(false);
         tabelaLogs.getTableHeader().setReorderingAllowed(false);
         tabelaLogs.addMouseListener(new java.awt.event.MouseAdapter() {
