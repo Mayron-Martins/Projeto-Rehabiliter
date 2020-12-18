@@ -20,11 +20,15 @@ public class FileCriator {
         File pastaDatabase = new File("C:/Rehabiliter/Databases");
         File pastaInfo = new File("C:/Rehabiliter/Info");
         File pastaInfoComprovantes = new File("C:/Rehabiliter/Info/Comprovantes");
+        File pastaComponents = new File("C:/Rehabiliter/Components");
+        File pastaComponentsSystem = new File("C:/Rehabiliter/Components/System");
         
         if(!pastapai.exists()){pastapai.mkdirs();}
         if(!pastaDatabase.exists()){pastaDatabase.mkdirs();}
         if(!pastaInfo.exists()){pastaInfo.mkdirs();}
         if(!pastaInfoComprovantes.exists()){pastaInfoComprovantes.mkdirs();}
+        if(!pastaComponents.exists()){pastaComponents.mkdirs();}
+        if(!pastaComponentsSystem.exists()){pastaComponentsSystem.mkdirs();}
     }
     
     public void fileDocCriator(){
