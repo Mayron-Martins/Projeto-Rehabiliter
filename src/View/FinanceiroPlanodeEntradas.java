@@ -62,6 +62,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         btnRemover.setBackground(new Color(0,0,0,0));
         botaoVResumida.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
+        
         this.setarComponentes();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         fecharTelaESC();
@@ -76,6 +77,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        campoDataEspecífica = new com.toedter.calendar.JDateChooser();
         botaoFechar = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
@@ -100,6 +102,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(campoDataEspecífica, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 120, -1));
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
@@ -479,6 +482,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnMensalidadesAReceber;
     private javax.swing.JButton btnRemover;
+    private com.toedter.calendar.JDateChooser campoDataEspecífica;
     private javax.swing.JComboBox<String> comboPagamento;
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JComboBox<String> comboTipos;
