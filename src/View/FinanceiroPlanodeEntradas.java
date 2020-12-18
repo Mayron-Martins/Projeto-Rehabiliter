@@ -7,6 +7,7 @@ package View;
 
 import Controller.PlanoEntradasController;
 import Controller.auxiliar.JMoneyField;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -348,12 +349,16 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         if(comboPeriodo.getSelectedIndex()>0){
             comboTipos.setSelectedIndex(0);
             comboTipos.setEnabled(true);
+            campoDataEspecífica.setDate(null);
+            campoDataEspecífica.setEnabled(false);
         }
         else{
+            campoDataEspecífica.setDate(null);
+            campoDataEspecífica.setEnabled(true);
             comboTipos.setSelectedIndex(0);
-            comboTipos.setEnabled(false);
+            comboTipos.setEnabled(true);
             comboPagamento.setSelectedIndex(0);
-            comboPagamento.setEnabled(false);
+            comboPagamento.setEnabled(true);
         }
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
@@ -514,6 +519,8 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         painelVendas.setVisible(true);
         painelPlanos.setVisible(false);
         painelEntradas.setVisible(false);
+        
+        campoDataEspecífica.setEnabled(false);
     }
 
     public JScrollPane getPainelEntradas() {
@@ -562,6 +569,10 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
 
     public JButton getBotaoVResumida() {
         return botaoVResumida;
+    }
+
+    public JDateChooser getCampoDataEspecífica() {
+        return campoDataEspecífica;
     }
     
     public void fecharTelaESC() {

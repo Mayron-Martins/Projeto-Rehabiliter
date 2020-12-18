@@ -407,10 +407,22 @@ public class PlanoEntradasController {
         Date dataPassada;
         
         int periodo = view.getComboPeriodo().getSelectedIndex();
+        if(view.getCampoDataEspecífica().isEnabled()&&view.getCampoDataEspecífica().getDate()!=null){
+            periodo = 0;
+            Date dataCampo = view.getCampoDataEspecífica().getDate();
+            dataBanco = converterData.getSqlDate(dataCampo);
+        }
         String formaPagamento = this.pegarFormaPagamento();
         String tipoVenda = this.tipoVenda();
         
         switch(periodo){
+            case 0:
+                if(formaPagamento.equals("nenhuma")){
+                    return vendasDao.pesquisarVendas("SELECT * FROM tblVendas WHERE plano = '"+tipoVenda+"' AND dataVenda BETWEEN '"+dataBanco+"' AND '"+dataBanco+"';");
+                }else{
+                    return vendasDao.pesquisarVendas("SELECT * FROM tblVendas WHERE plano = '"+tipoVenda+"' AND formaPagamento = '"+formaPagamento+"' AND dataVenda BETWEEN '"+dataBanco+"' AND '"+dataBanco+"';");
+                } 
+                
             case 1:   
                 if(formaPagamento.equals("nenhuma")){
                     return vendasDao.pesquisarVendas("SELECT * FROM tblVendas WHERE plano = '"+tipoVenda+"' AND dataVenda BETWEEN '"+dataAtual+"' AND '"+dataAtual+"';");
@@ -461,9 +473,21 @@ public class PlanoEntradasController {
         Date dataPassada;
         
         int periodo = view.getComboPeriodo().getSelectedIndex();
+        if(view.getCampoDataEspecífica().isEnabled()&&view.getCampoDataEspecífica().getDate()!=null){
+            periodo = 0;
+            Date dataCampo = view.getCampoDataEspecífica().getDate();
+            dataBanco = converterData.getSqlDate(dataCampo);
+        }
         String formaPagamento = this.pegarFormaPagamento();
         
         switch(periodo){
+            case 0:
+                if(formaPagamento.equals("nenhuma")){
+                    return entradasDao.pesquisarEntradas("SELECT * FROM tblEntradas WHERE dataCadastro BETWEEN '"+dataBanco+"' AND '"+dataBanco+"';");
+                }else{
+                    return entradasDao.pesquisarEntradas("SELECT * FROM tblEntradas WHERE  formaPagamento = '"+formaPagamento+"' AND dataCadastro BETWEEN '"+dataBanco+"' AND '"+dataBanco+"';");
+                } 
+                
             case 1:   
                 if(formaPagamento.equals("nenhuma")){
                     return entradasDao.pesquisarEntradas("SELECT * FROM tblEntradas WHERE dataCadastro BETWEEN '"+dataAtual+"' AND '"+dataAtual+"';");
