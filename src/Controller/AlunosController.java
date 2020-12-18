@@ -137,19 +137,23 @@ public class AlunosController {
             if(view.getCampoDataVencimento().getDate()!= null){
                 dataValidade = view.getCampoDataVencimento().getDate();
             }
+            
             Date dataPagamento = planoAnterior.getDataPagamento();
             if(view.getCampoDataPagamento().getDate() != null){
                 dataPagamento = view.getCampoDataPagamento().getDate();
             }
+
             Date dataCadastro = alunoAnterior.getDataCadastro();
             if(view.getCampoDataCadastro().getDate() != null){
                 dataCadastro = view.getCampoDataCadastro().getDate();
+
             }
+
             
             Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
                     alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
                     nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurmaAtual, codServico, alunoAnterior.getDescricao(), 
-                    valorDebito, valorContrato, valorMensal, renovacaoAutomatica);
+                    valorDebito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
             
             Matriculas matricula = new Matriculas(codAluno, codTurmaAtual, codAluno, anoAtual, nomeMatricula);
             EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);

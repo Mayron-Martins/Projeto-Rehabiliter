@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -58,7 +59,8 @@ public class Aluno extends Pessoa {
         this.descricao = descricao;
         this.debito = new BigDecimal(debito.toString());
         this.valorContrato = new BigDecimal(valorContrato.toString());
-        this.dataCadastro = dataCadastro;
+        ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+        this.dataCadastro = converterData.getSqlDate(dataCadastro);
         this.valorMensal = new BigDecimal(valorMensal.toString());
         this.renovacaoAutomatica = renovacaoAutomatica;
     }
