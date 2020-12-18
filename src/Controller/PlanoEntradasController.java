@@ -14,6 +14,7 @@ import Dao.FuncionarioDao;
 import Dao.ItensVendidosDao;
 import Dao.LogAçoesFuncionarioDao;
 import Dao.PlanosDao;
+import Dao.ServicosDao;
 import Dao.TurmasDao;
 import Dao.VendasDao;
 import Model.Aluno;
@@ -24,9 +25,11 @@ import Model.auxiliar.Entradas;
 import Model.auxiliar.ItemVendido;
 import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Planos;
+import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.FinanceiroPlanodeEntradas;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -52,6 +55,7 @@ public class PlanoEntradasController {
     private final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
+    private final ServicosDao servicosDao = new ServicosDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
 
@@ -564,28 +568,27 @@ public class PlanoEntradasController {
     //Setar Tabela de Planos Pendentes
     public void setarTabelaPlanosPendentes() throws SQLException, ParseException{
         this.alternarPaineis(2);
-        ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
+        ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pendente' OR situacao = 'Vencido'");
         if(planos!=null){
             limparTabelaPlanos();
             for(int linhas=0; linhas<planos.size(); linhas++){
-                if(!planos.get(linhas).getSituacao().equals("Pago")){
-                        //Dados Aluno
-                    int codAluno = planos.get(linhas).getCodAluno();
-                    String dataPagamento = converterData.parseDate(planos.get(linhas).getDataPagamento());
+                    //Dados Aluno
+                int codAluno = planos.get(linhas).getCodAluno();
+                String dataPagamento = converterData.parseDate(planos.get(linhas).getDataPagamento());
 
-                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
-                    Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
+                Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
+                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
+                Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
 
-                    BigDecimal valorTotal = new BigDecimal(aluno.getValorContrato().toString());
+                BigDecimal valorTotal = this.valorMensalidade(aluno, servico);
 
-                    String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma();
+                String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma();
 
-                    String situacao = planos.get(linhas).getSituacao();
-                    int chavePlano = planos.get(linhas).getChavePlano();
+                String situacao = planos.get(linhas).getSituacao();
+                int chavePlano = planos.get(linhas).getChavePlano();
 
-                    Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, situacao, dataPagamento};
-                    tabelaPlanos.addRow(dadosDaTabela);
-                }
+                Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, situacao, dataPagamento};
+                tabelaPlanos.addRow(dadosDaTabela);
             }
         }else{
             view.exibeMensagem("Sem Planos Cadastrados");
@@ -595,28 +598,27 @@ public class PlanoEntradasController {
     
     public void setarTabelaPlanosPagos() throws SQLException, ParseException{
         this.alternarPaineis(2);
-        ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
+        ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pago'");
         if(planos!=null){
             limparTabelaPlanos();
             for(int linhas=0; linhas<planos.size(); linhas++){
-                if(planos.get(linhas).getSituacao().equals("Pago")){
-                        //Dados Aluno
-                    int codAluno = planos.get(linhas).getCodAluno();
-                    String dataPagamento = converterData.parseDate(planos.get(linhas).getDataPagamento());
+                //Dados Aluno
+                int codAluno = planos.get(linhas).getCodAluno();
+                String dataPagamento = converterData.parseDate(planos.get(linhas).getDataPagamento());
 
-                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
-                    Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
+                Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
+                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
+                Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
 
-                    BigDecimal valorTotal = new BigDecimal(aluno.getValorContrato().toString());
+                BigDecimal valorTotal = this.valorMensalidade(aluno, servico);
 
-                    String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma();
+                String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma();
 
-                    String situacao = planos.get(linhas).getSituacao();
-                    int chavePlano = planos.get(linhas).getChavePlano();
+                String situacao = planos.get(linhas).getSituacao();
+                int chavePlano = planos.get(linhas).getChavePlano();
 
-                    Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, situacao, dataPagamento};
-                    tabelaPlanos.addRow(dadosDaTabela);
-                }
+                Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, situacao, dataPagamento};
+                tabelaPlanos.addRow(dadosDaTabela);
             }
         }else{
             view.exibeMensagem("Sem Planos Cadastrados");
@@ -711,4 +713,18 @@ public class PlanoEntradasController {
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
         return logAcao;
     }
+        private BigDecimal valorMensalidade(Aluno aluno, Servicos servico){
+            BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
+            int renovacaoAutomatica = aluno.getRenovacaoAutomatica();            
+            BigDecimal valorMensal = aluno.getValorMensal();
+
+            if(servico.getPeriodDays()<30){
+                if(renovacaoAutomatica == 1){
+                    BigDecimal period = (new BigDecimal(30)).divide(periodDays,4, RoundingMode.UP);
+                    valorMensal = valorMensal.divide(period, 4, RoundingMode.UP);
+                    valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+                } 
+            }
+            return valorMensal;
+        }
 }

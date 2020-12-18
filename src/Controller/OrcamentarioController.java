@@ -11,12 +11,12 @@ import Controller.auxiliar.ExportarArquivos;
 import Controller.auxiliar.ImpressaoComponentes;
 import Dao.AlunosDao;
 import Dao.DetOrcamentarioDao;
-import Dao.FuncionarioDao;
 import Dao.PlanosDao;
+import Dao.ServicosDao;
 import Model.Aluno;
-import Model.Funcionario;
 import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.Planos;
+import Model.auxiliar.Servicos;
 import View.FinanceiroAnaliseFinanceira;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -37,6 +37,7 @@ public class OrcamentarioController {
     private final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
     private final PlanosDao planosDao = new PlanosDao();
     private final AlunosDao alunosDao = new AlunosDao();
+    private final ServicosDao servicosDao = new ServicosDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ExportarArquivos exportarTabela = new ExportarArquivos();
@@ -199,13 +200,14 @@ public class OrcamentarioController {
     }
     
     private void setarCampoPendentes() throws SQLException, ParseException{
-        ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao != 'Pago'");
+        ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pendente' OR situacao = 'Vencido'");
         BigDecimal valorPendente = new BigDecimal("0");
         
         if(planos !=null){
             for(int linhas=0; linhas<planos.size(); linhas++){
                 Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
-                valorPendente = valorPendente.add(aluno.getValorContrato());
+                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
+                valorPendente = valorPendente.add(this.valorMensalidade(aluno, servico));
             }
             valorPendente = valorPendente.setScale(2, RoundingMode.UP);
             view.getCampoPendente().setText(valorPendente.toString());
@@ -269,4 +271,18 @@ public class OrcamentarioController {
             view.exibeMensagem("Inicie uma tabela primeiro!");
         }
     }
+    private BigDecimal valorMensalidade(Aluno aluno, Servicos servico){
+            BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
+            int renovacaoAutomatica = aluno.getRenovacaoAutomatica();            
+            BigDecimal valorMensal = aluno.getValorMensal();
+
+            if(servico.getPeriodDays()<30){
+                if(renovacaoAutomatica == 1){
+                    BigDecimal period = (new BigDecimal(30)).divide(periodDays,4, RoundingMode.UP);
+                    valorMensal = valorMensal.divide(period, 4, RoundingMode.UP);
+                    valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+                } 
+            }
+            return valorMensal;
+        }
 }

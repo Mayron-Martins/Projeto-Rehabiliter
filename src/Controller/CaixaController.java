@@ -682,13 +682,14 @@ public class CaixaController {
         if(dataVencimento != null){
             int renovacaoAutomatica = aluno.getRenovacaoAutomatica();            
             BigDecimal valorMensal = aluno.getValorMensal();
-
-            if(renovacaoAutomatica == 1){
-                BigDecimal period = (new BigDecimal(30)).divide(periodDays,4, RoundingMode.UP);
-                valorMensal = valorMensal.divide(period, 4, RoundingMode.UP);
-                valorMensal = valorMensal.setScale(2, RoundingMode.UP);
-            }          
-
+            
+            if(servico.getPeriodDays()<30){
+                if(renovacaoAutomatica == 1){
+                    BigDecimal period = (new BigDecimal(30)).divide(periodDays,4, RoundingMode.UP);
+                    valorMensal = valorMensal.divide(period, 4, RoundingMode.UP);
+                    valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+                } 
+            }
             Object[] dadosTabela = {aluno.getCodBanco(), aluno.getNome(), nomeServico, valorMensal, dataVencimento, situacao};
             tabelaDeMensalidade.addRow(dadosTabela);
         }else{
