@@ -174,9 +174,22 @@ public class PlanoGastosController {
         Date dataPassada;
         
         int periodo = view.getComboPeriodo().getSelectedIndex();
+        if(view.getCampoDataEspecífica().isEnabled()&&view.getCampoDataEspecífica().getDate()!=null){
+            periodo = 0;
+            Date dataCampo = view.getCampoDataEspecífica().getDate();
+            dataBanco = converterData.getSqlDate(dataCampo);
+        }
+        
         String formaPagamento = this.pegarFormaPagamento();
         
         switch(periodo){
+            case 0:
+                if(formaPagamento.equals("nenhuma")){
+                    return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataBanco+"' AND '"+dataBanco+"';");
+                }else{
+                    return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE  formaPagamento = '"+formaPagamento+"' AND dataGasto BETWEEN '"+dataBanco+"' AND '"+dataBanco+"';");
+                } 
+                
             case 1:   
                 if(formaPagamento.equals("nenhuma")){
                     return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataAtual+"' AND '"+dataAtual+"';");

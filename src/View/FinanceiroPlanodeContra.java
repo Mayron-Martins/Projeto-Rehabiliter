@@ -7,6 +7,7 @@ package View;
 
 import Controller.PlanoGastosController;
 import Controller.auxiliar.JMoneyField;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -80,6 +81,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private void initComponents() {
 
         botaoFechar = new javax.swing.JButton();
+        campoDataEspecífica = new com.toedter.calendar.JDateChooser();
         painelGastos = new javax.swing.JScrollPane();
         tabelaGastos = new javax.swing.JTable();
         comboPeriodo = new javax.swing.JComboBox<>();
@@ -111,6 +113,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
             }
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
+        getContentPane().add(campoDataEspecífica, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 120, -1));
 
         tabelaGastos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaGastos.setModel(new javax.swing.table.DefaultTableModel(
@@ -261,12 +264,16 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         if(comboPeriodo.getSelectedIndex()>0){
             comboTipos.setSelectedIndex(0);
             comboTipos.setEnabled(true);
+            campoDataEspecífica.setDate(null);
+            campoDataEspecífica.setEnabled(false);
         }
         else{
+            campoDataEspecífica.setDate(null);
+            campoDataEspecífica.setEnabled(true);
             comboTipos.setSelectedIndex(0);
-            comboTipos.setEnabled(false);
+            comboTipos.setEnabled(true);
             comboPagamento.setSelectedIndex(0);
-            comboPagamento.setEnabled(false);
+            comboPagamento.setEnabled(true);
         }
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
@@ -362,6 +369,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private javax.swing.JButton btnAplicar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnRemover;
+    private com.toedter.calendar.JDateChooser campoDataEspecífica;
     private javax.swing.JComboBox<String> comboPagamento;
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JComboBox<String> comboTipos;
@@ -384,6 +392,8 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         //botões
         botaoVResumida.setEnabled(true);
         botaoVDetalhada.setEnabled(false);
+        
+        campoDataEspecífica.setEnabled(false);
     }
 
     public JComboBox getComboPagamentoGasto() {
@@ -417,6 +427,12 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     public JScrollPane getPainelGastos() {
         return painelGastos;
     }
+
+    public JDateChooser getCampoDataEspecífica() {
+        return campoDataEspecífica;
+    }
+    
+    
     
     public void fecharTelaESC() {
         JRootPane meurootpane = getRootPane();
