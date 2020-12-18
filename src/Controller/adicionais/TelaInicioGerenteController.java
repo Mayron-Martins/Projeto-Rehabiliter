@@ -168,6 +168,7 @@ public class TelaInicioGerenteController {
         ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
         Planos planoAtual;
             
+        int verificadorExistencia =0;
             for(int linhas=0; linhas<planos.size(); linhas++){
                 if(planos.get(linhas).getSituacao().equals("Pendente")){
                     Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
@@ -182,9 +183,13 @@ public class TelaInicioGerenteController {
                             planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
                             planos.get(linhas).getDataRenovacao(),"Vencido");
                     planosDao.atualizarSituacao(planoAtual);
+                    verificadorExistencia++;
                         }  
                     }
-         }
+            }
+        if(verificadorExistencia>0){
+            view.exibeMensagem("A mensalidade de alguns alunos vence hoje. Verifique a tela de Alunos!");
+        }
     }
     
     private void setarDebitos(Aluno alunoBanco) throws SQLException, ParseException{
