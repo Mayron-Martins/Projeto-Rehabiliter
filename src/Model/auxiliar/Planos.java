@@ -17,13 +17,14 @@ public class Planos {
     private int codTurma;
     private int codServico;
     private int diaVencimento;
+    private Date dataVencimento;
     private Date dataPagamento;
     private Date dataCancelamento;
     private Date dataRenovacao;
     private String situacao;
     private int chavePlano;
 
-    public Planos(int codAluno, int codTurma, int codServico, int diaVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
+    public Planos(int codAluno, int codTurma, int codServico, int diaVencimento, Date dataVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
         this.codAluno = codAluno;
         this.codTurma = codTurma;
         this.codServico = codServico;
@@ -33,6 +34,7 @@ public class Planos {
         this.dataPagamento = converterData.getSqlDate(dataPagamento);
         this.dataCancelamento = converterData.getSqlDate(dataCancelamento);
         this.dataRenovacao = converterData.getSqlDate(dataRenovacao);
+        this.dataVencimento = converterData.getSqlDate(dataVencimento);
         this.situacao = situacao;
         
         String chave = String.valueOf(codAluno)+String.valueOf(codTurma)+String.valueOf(codServico);
@@ -73,5 +75,9 @@ public class Planos {
 
     public Date getDataRenovacao() {
         return dataRenovacao;
+    }
+
+    public Date getDataVencimento() {
+        return dataVencimento;
     }
 }

@@ -29,19 +29,20 @@ public class PlanosDao extends Conexao{
     public void inserirDados (Planos plano) throws SQLException{
         //Adicionando Matrícula
         String inPlanos = inserir.concat("tblPlanos("
-                + "codAluno, codTurma, codServico, dataPagamento, diaVencimento, dataCancelamento, dataRenovacao, situacao, chavePlano)"
+                + "codAluno, codTurma, codServico, dataPagamento, diaVencimento, dataVencimento, dataCancelamento, dataRenovacao, situacao, chavePlano)"
                 + "VALUES("
-                + "?,?,?,?,?,?,?,?,?);");
+                + "?,?,?,?,?,?,?,?,?,?);");
         PreparedStatement statement = gerarStatement(inPlanos);
         statement.setInt(1, plano.getCodAluno());
         statement.setInt(2, plano.getCodTurma());
         statement.setInt(3, plano.getCodServico());
         statement.setDate(4, (Date) plano.getDataPagamento());
         statement.setInt(5, plano.getDiaVencimento());
-        statement.setDate(6, (Date) plano.getDataCancelamento());
-        statement.setDate(7, (Date) plano.getDataRenovacao());
-        statement.setString(8, plano.getSituacao());
-        statement.setInt(9, plano.getChavePlano());
+        statement.setDate(6, (Date) plano.getDataVencimento());
+        statement.setDate(7, (Date) plano.getDataCancelamento());
+        statement.setDate(8, (Date) plano.getDataRenovacao());
+        statement.setString(9, plano.getSituacao());
+        statement.setInt(10, plano.getChavePlano());
         statement.execute();
         statement.close();
     }
@@ -63,14 +64,15 @@ public class PlanosDao extends Conexao{
     
     public void atualizarSituacao(Planos plano) throws SQLException{
         String inPlanos = atualizar.concat("tblPlanos "
-                + "SET dataPagamento = ?, dataCancelamento = ?, dataRenovacao=?, situacao = ?  WHERE codAluno = ?");
+                + "SET dataVencimento = ?, dataPagamento = ?, dataCancelamento = ?, dataRenovacao=?, situacao = ?  WHERE codAluno = ?");
         
         PreparedStatement statement = gerarStatement(inPlanos);
-        statement.setDate(1, (Date) plano.getDataPagamento());
-        statement.setDate(2, (Date) plano.getDataCancelamento());
-        statement.setDate(3, (Date) plano.getDataRenovacao());
-        statement.setString(4, plano.getSituacao());
-        statement.setInt(5, plano.getCodAluno());
+        statement.setDate(1, (Date) plano.getDataVencimento());
+        statement.setDate(2, (Date) plano.getDataPagamento());
+        statement.setDate(3, (Date) plano.getDataCancelamento());
+        statement.setDate(4, (Date) plano.getDataRenovacao());
+        statement.setString(5, plano.getSituacao());
+        statement.setInt(6, plano.getCodAluno());
         
         statement.execute();
         statement.close();     
@@ -109,13 +111,14 @@ public class PlanosDao extends Conexao{
     int codTurma = resultset.getInt("codTurma");
     int codServico = resultset.getInt("codServico");
     int diaVencimeto = resultset.getInt("diaVencimento");
+    Date dataVencimento = resultset.getDate("dataVencimento");
     Date dataPagamento = resultset.getDate("dataPagamento");
     Date dataCancelamento = resultset.getDate("dataCancelamento");
     Date dataRenovacao = resultset.getDate("dataRenovacao");
     String situacao = resultset.getString("situacao");
     int chavePlano = resultset.getInt("chavePlano");
 
-    Planos plano = new Planos(codAluno, codTurma, codServico, diaVencimeto, dataPagamento, dataCancelamento,dataRenovacao,situacao);
+    Planos plano = new Planos(codAluno, codTurma, codServico, diaVencimeto, dataVencimento, dataPagamento, dataCancelamento,dataRenovacao,situacao);
 
     planos.add(plano);
      }while(resultset.next());

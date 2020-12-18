@@ -8,6 +8,7 @@ package View;
 import Controller.AlunosController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
@@ -16,18 +17,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.EventObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JCheckBox;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
@@ -74,6 +77,11 @@ public class AlunosView extends javax.swing.JDialog {
         botaoPais.setBackground(new Color(0,0,0,0));
         botaoAlunos.setBackground(new Color(0,0,0,0));
         botaoPlanos.setBackground(new Color(0,0,0,0));
+        
+        campoAvisoDataVencimento.setVisible(false);
+        botaoConfigAdicionais.setVisible(false);
+        painelConfiguracoesAdicionais.setVisible(false);
+        campoDataVencimento.setEnabled(false);
         this.setInicialBotoes();
         fecharTelaESC();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
@@ -109,6 +117,17 @@ public class AlunosView extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        painelConfiguracoesAdicionais = new javax.swing.JPanel();
+        botaoFecharConf = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        campoDataCadastro = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
+        campoDataPagamento = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        campoDataVencimento = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        campoAvisoDataVencimento = new javax.swing.JTextArea();
         painelAlunos = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
         painelPlanos = new javax.swing.JScrollPane();
@@ -117,6 +136,7 @@ public class AlunosView extends javax.swing.JDialog {
         tabelaPais = new javax.swing.JTable();
         painelEnderecos = new javax.swing.JScrollPane();
         tabelaEnderecos = new javax.swing.JTable();
+        botaoConfigAdicionais = new javax.swing.JButton();
         botaoRemover = new javax.swing.JButton();
         botaoEditar = new javax.swing.JButton();
         botaoListar = new javax.swing.JButton();
@@ -158,6 +178,45 @@ public class AlunosView extends javax.swing.JDialog {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        painelConfiguracoesAdicionais.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        botaoFecharConf.setText("Fechar");
+        botaoFecharConf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFecharConfActionPerformed(evt);
+            }
+        });
+        painelConfiguracoesAdicionais.add(botaoFecharConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel1.setText("Data Cadastro");
+        painelConfiguracoesAdicionais.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+        painelConfiguracoesAdicionais.add(campoDataCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 140, 30));
+
+        jLabel2.setText("Data Último Pagamento");
+        painelConfiguracoesAdicionais.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+        painelConfiguracoesAdicionais.add(campoDataPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 140, 30));
+
+        jLabel3.setText("Data Vencimento");
+        painelConfiguracoesAdicionais.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, -1, -1));
+        painelConfiguracoesAdicionais.add(campoDataVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 140, 30));
+
+        jButton1.setText("Setar Vencimento");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        painelConfiguracoesAdicionais.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 120, 30));
+
+        campoAvisoDataVencimento.setEditable(false);
+        campoAvisoDataVencimento.setColumns(20);
+        campoAvisoDataVencimento.setRows(5);
+        jScrollPane1.setViewportView(campoAvisoDataVencimento);
+
+        painelConfiguracoesAdicionais.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 270, 70));
+
+        getContentPane().add(painelConfiguracoesAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 450, 200));
 
         tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
@@ -344,6 +403,14 @@ public class AlunosView extends javax.swing.JDialog {
         painelEnderecos.setViewportView(tabelaEnderecos);
 
         getContentPane().add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+
+        botaoConfigAdicionais.setText("CONFIGURAÇÕES ADICIONAIS");
+        botaoConfigAdicionais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConfigAdicionaisActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoConfigAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, -1));
 
         botaoRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoRemover.png"))); // NOI18N
         botaoRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverremover.png"))); // NOI18N
@@ -577,6 +644,9 @@ public class AlunosView extends javax.swing.JDialog {
 
     private void botaoPlanosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlanosActionPerformed
         this.trocarTabelas(1);
+        for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
+                painelPlanos.getComponent(linhas).setVisible(true);
+        }
         this.selecionarTabelas(1);
     }//GEN-LAST:event_botaoPlanosActionPerformed
 
@@ -593,34 +663,48 @@ public class AlunosView extends javax.swing.JDialog {
 
     private void tabelaAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlunosMouseClicked
         this.selecionarTabelas(1);
+        for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
+                painelPlanos.getComponent(linhas).setVisible(false);
+        }
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaAlunosMouseClicked
 
     private void tabelaPlanosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPlanosMouseClicked
         this.selecionarTabelas(2);
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaPlanosMouseClicked
 
     private void tabelaPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPaisMouseClicked
         this.selecionarTabelas(3);
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaPaisMouseClicked
 
     private void tabelaEnderecosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaEnderecosMouseClicked
         this.selecionarTabelas(4);
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaEnderecosMouseClicked
 
     private void tabelaAlunosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaAlunosKeyReleased
         this.selecionarTabelas(1);
+        for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
+            painelPlanos.getComponent(linhas).setVisible(false);
+        }
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaAlunosKeyReleased
 
     private void tabelaPlanosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaPlanosKeyReleased
         this.selecionarTabelas(2);
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaPlanosKeyReleased
 
     private void tabelaPaisKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaPaisKeyReleased
         this.selecionarTabelas(3);
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaPaisKeyReleased
 
     private void tabelaEnderecosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaEnderecosKeyReleased
         this.selecionarTabelas(4);
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaEnderecosKeyReleased
 
     private void comboTurmasExistentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmasExistentesActionPerformed
@@ -632,6 +716,40 @@ public class AlunosView extends javax.swing.JDialog {
             Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_comboTurmasExistentesActionPerformed
+
+    private void botaoConfigAdicionaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfigAdicionaisActionPerformed
+        try {
+            controller.setarDatasConfiguracoesAd();
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(int linhas=0; linhas<this.getComponentCount(); linhas++){
+                this.getComponent(linhas).setEnabled(false);
+            }
+            painelConfiguracoesAdicionais.setEnabled(true);
+            painelConfiguracoesAdicionais.setVisible(true);
+    }//GEN-LAST:event_botaoConfigAdicionaisActionPerformed
+
+    private void botaoFecharConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharConfActionPerformed
+        // TODO add your handling code here:
+        for(int linhas=0; linhas<this.getComponentCount(); linhas++){
+            this.getComponent(linhas).setEnabled(true);
+        }
+        painelConfiguracoesAdicionais.setEnabled(false);
+        painelConfiguracoesAdicionais.setVisible(false);
+    }//GEN-LAST:event_botaoFecharConfActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            controller.setarDataVencimento();
+        } catch (ParseException ex) {
+            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
      
     /**
      * @param args the command line arguments
@@ -678,18 +796,30 @@ public class AlunosView extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoAlunos;
+    private javax.swing.JButton botaoConfigAdicionais;
     private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoEndereco;
     private javax.swing.JButton botaoFechar;
+    private javax.swing.JButton botaoFecharConf;
     private javax.swing.JButton botaoListar;
     private javax.swing.JButton botaoPais;
     private javax.swing.JButton botaoPlanos;
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaobuscar;
+    private javax.swing.JTextArea campoAvisoDataVencimento;
+    private com.toedter.calendar.JDateChooser campoDataCadastro;
+    private com.toedter.calendar.JDateChooser campoDataPagamento;
+    private com.toedter.calendar.JDateChooser campoDataVencimento;
     private javax.swing.JTextField campoPesquisa;
     private javax.swing.JComboBox<String> comboListar;
     private javax.swing.JComboBox<String> comboTurmasExistentes;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane painelAlunos;
+    private javax.swing.JPanel painelConfiguracoesAdicionais;
     private javax.swing.JScrollPane painelEnderecos;
     private javax.swing.JScrollPane painelPais;
     private javax.swing.JScrollPane painelPlanos;
@@ -790,6 +920,30 @@ public class AlunosView extends javax.swing.JDialog {
     public JComboBox<String> getComboTurmasExistentes() {
         return comboTurmasExistentes;
     }
+
+    public JDateChooser getCampoDataCadastro() {
+        return campoDataCadastro;
+    }
+
+    public JDateChooser getCampoDataPagamento() {
+        return campoDataPagamento;
+    }
+
+    public JDateChooser getCampoDataVencimento() {
+        return campoDataVencimento;
+    }
+
+    public JPanel getPainelConfiguracoesAdicionais() {
+        return painelConfiguracoesAdicionais;
+    }
+
+    public JButton getBotaoConfigAdicionais() {
+        return botaoConfigAdicionais;
+    }
+
+    public JTextArea getCampoAvisoDataVencimento() {
+        return campoAvisoDataVencimento;
+    }
     
     
     private void selecionarTabelas(int opcao){
@@ -827,6 +981,7 @@ public class AlunosView extends javax.swing.JDialog {
             break;
         }
     }
+    
     
     public void fecharTelaESC() {
         JRootPane meurootpane = getRootPane();

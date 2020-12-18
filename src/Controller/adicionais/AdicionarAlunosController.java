@@ -97,11 +97,11 @@ public class AdicionarAlunosController {
     
     public void adicionarAlunos() throws SQLException, ParseException, InvalidFormatException, IOException, PrinterException{
         Date dataCadastro = converterData.getSqlDate(new Date());
-        if(view.getCampoDataCadastro()!=null){
+        if(view.getCampoDataCadastro().getDate()!=null){
             dataCadastro = view.getCampoDataCadastro().getDate();
         }
         Date dataUltimoPag = null;
-        if(view.getCampoDataUltimoPag()!= null){
+        if(view.getCampoDataUltimoPag().getDate()!= null){
             dataUltimoPag = view.getCampoDataUltimoPag().getDate();
         }
 
@@ -171,7 +171,9 @@ public class AdicionarAlunosController {
         dataNascimento, nomeMae, nomePai, contatoMae, contatoPai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
         EnderecoAlunos endereco = new EnderecoAlunos(codEndereco, codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
-        Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, dataUltimoPag, null, null, "Pendente");
+        
+        Date dataVencimento = this.dataVencimento(aluno, servicoContratado, dataUltimoPag, diaVencimento);
+        Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, dataVencimento, dataUltimoPag, null, null, "Pendente");
         
         
         //Obtem a quantidade de alunos presentes na turma
@@ -365,5 +367,54 @@ public class AdicionarAlunosController {
             dataAtual = dataAtual.plusDays(diasContrato);
             return dataAtual.getDayOfMonth();
         }
+    }
+    
+    private Date dataVencimento(Aluno aluno, Servicos servico, Date dataPagamento, int diaVencimento) throws ParseException{
+        BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
+        LocalDate dataVencimento;
+        
+        int renovacaoAutomatica = aluno.getRenovacaoAutomatica();
+        
+        Date dataPag = converterData.parseDate(converterData.parseDate(dataPagamento));
+        Date dataPrimaria = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
+        LocalDate dataBanco = converterData.conversaoLocalforDate(dataPag);
+        LocalDate dataCad = converterData.conversaoLocalforDate(dataPrimaria);
+        
+        BigDecimal valorMensal = aluno.getValorMensal();
+
+        String mensal = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+        String anual = periodDays.divide(new BigDecimal(365), 3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+
+        
+        boolean resultadoMensal = mensal.matches("[1-9]*");
+        boolean resultadoAnual = anual.matches("[1-9]*");
+        
+        
+        if(resultadoMensal||resultadoAnual){
+           if(dataPagamento==null){
+               dataVencimento = LocalDate.of(dataCad.getYear(), dataCad.plusMonths(1).getMonthValue(), diaVencimento);
+               return converterData.conversaoLocalforDate(dataVencimento);
+           }
+           else{
+               dataVencimento = LocalDate.of(dataBanco.getYear(), dataBanco.plusMonths(1).getMonthValue(), diaVencimento);
+               return converterData.conversaoLocalforDate(dataVencimento);
+           }
+        }
+        else{
+            if(renovacaoAutomatica == 1){
+                if(dataPagamento==null){
+                    dataVencimento = dataCad.plusDays(servico.getPeriodDays());
+                    return converterData.conversaoLocalforDate(dataVencimento);
+                }
+                else{
+                    dataVencimento = dataBanco.plusDays(servico.getPeriodDays());
+                    return converterData.conversaoLocalforDate(dataVencimento);
+                }   
+            }
+            else{
+               dataVencimento = dataCad.plusDays(servico.getPeriodDays());
+               return converterData.conversaoLocalforDate(dataVencimento);
+            }           
+        } 
     }
 }
