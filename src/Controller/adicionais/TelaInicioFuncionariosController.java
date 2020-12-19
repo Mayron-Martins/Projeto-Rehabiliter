@@ -205,7 +205,6 @@ public class TelaInicioFuncionariosController {
         
     }
     
-    
     public boolean permissaoDeAcessoATela(String tela) throws SQLException, ParseException{
         ArrayList<Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
         
