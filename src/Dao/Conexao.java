@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Dao;
+import Controller.auxiliar.SQLFiles;
 import View.inicio;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,6 +20,7 @@ public abstract class Conexao {
     private final String pass = "164829";
     private final String url = "jdbc:sqlserver://localhost:1433; databaseName = Rehabiliter_Database;";
     private final FileCriator criarPastas = new FileCriator();
+    private final SQLFiles files = new SQLFiles();
 
     
     
@@ -32,6 +34,7 @@ public abstract class Conexao {
          TableCriator criarTabelas = new TableCriator(telaDeInicio);
         try{
             criarPastas.fileCriator();
+            files.stopDatabase();
             if(existenciaDeBase.databaseConfirmed(user, pass) == false){
                 existenciaDeBase.databaseCriation(user, pass);
                 criarTabelas.createTables();

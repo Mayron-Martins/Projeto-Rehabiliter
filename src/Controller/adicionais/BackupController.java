@@ -58,7 +58,7 @@ public class BackupController {
             Date dataAtual = new Date();
             String nome = "LocalBackup";
             int codBackup = verificar.verificarUltimo("tblBackups", "codBackup")+1;
-            String endereco = System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bkk";
+            String endereco = System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bak";
             String tabelas = "Todas";
 
             Backup backup = new Backup(codBackup, nome, dataAtual, endereco, tabelas);
@@ -75,7 +75,7 @@ public class BackupController {
     }
     
     public void importarBanco() throws SQLException{
-        File file = new File(System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bkk");
+        File file = new File(System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bak");
         if(file.exists()){
             backupDao.importarBanco();
             view.exibeMensagem("Sucesso!");
