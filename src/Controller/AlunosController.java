@@ -484,13 +484,11 @@ public class AlunosController {
         this.view.getComboTurmas().setEnabled(false);
         this.view.getComboServicos().setEnabled(false);
         this.view.getComboEstado().setEnabled(false);
-        this.view.getComboListar().setEnabled(false);
     }
     public void ativarSelecaoBox(){
         this.view.getComboTurmas().setEnabled(true);
         this.view.getComboServicos().setEnabled(true);
         this.view.getComboEstado().setEnabled(true);
-        this.view.getComboListar().setEnabled(true);
     }
     
     private boolean verificarQuantidadeLimiteAlunos(int codTurma) throws SQLException{
