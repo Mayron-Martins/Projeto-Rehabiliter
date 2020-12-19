@@ -465,7 +465,7 @@ public class AlunosView extends javax.swing.JDialog {
                 botaobuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 230, 50, 40));
+        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 230, 50, 40));
 
         botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
         botaoAdicionar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverAdicionar.png"))); // NOI18N
@@ -481,7 +481,7 @@ public class AlunosView extends javax.swing.JDialog {
                 campoPesquisaKeyPressed(evt);
             }
         });
-        getContentPane().add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 320, 40));
+        getContentPane().add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 320, 40));
 
         comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Aniversariantes", "Pendentes", "Pagos", "Encerrados" }));
         getContentPane().add(comboListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
@@ -491,7 +491,7 @@ public class AlunosView extends javax.swing.JDialog {
                 comboTurmasExistentesActionPerformed(evt);
             }
         });
-        getContentPane().add(comboTurmasExistentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 170, 30));
+        getContentPane().add(comboTurmasExistentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 270, 30));
 
         botaoPlanos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPlanos.png"))); // NOI18N
         botaoPlanos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPlanosHover.png"))); // NOI18N

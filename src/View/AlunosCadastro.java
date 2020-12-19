@@ -434,11 +434,11 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jLabel15.setFont(new java.awt.Font("Futura Md BT", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(11, 13, 138));
         jLabel15.setText("DADOS CADASTRAIS DO ALUNO");
-        jPanelCadastroFinal.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jPanelCadastroFinal.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setText("Turma");
-        jPanelCadastroFinal.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
+        jPanelCadastroFinal.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
         turmasehorarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHora.png"))); // NOI18N
         turmasehorarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoTurmaseHoraHover.png"))); // NOI18N
@@ -455,11 +455,11 @@ public class AlunosCadastro extends javax.swing.JDialog {
                 comboPlanoActionPerformed(evt);
             }
         });
-        jPanelCadastroFinal.add(comboPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 190, 32));
+        jPanelCadastroFinal.add(comboPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 400, 32));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setText("Plano");
-        jPanelCadastroFinal.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+        jPanelCadastroFinal.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
         jPanelCadastroFinal.add(campoValorMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 100, 32));
         jPanelCadastroFinal.add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 100, 32));
 
@@ -469,7 +469,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setText("Data de Vencimento");
-        jPanelCadastroFinal.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
+        jPanelCadastroFinal.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         comboTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
         comboTurma.addActionListener(new java.awt.event.ActionListener() {
@@ -477,7 +477,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
                 comboTurmaActionPerformed(evt);
             }
         });
-        jPanelCadastroFinal.add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 190, 32));
+        jPanelCadastroFinal.add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 400, 32));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setText("Data Último Pag");
@@ -490,7 +490,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
                 botaoConfirmarActionPerformed(evt);
             }
         });
-        jPanelCadastroFinal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 330, 60));
+        jPanelCadastroFinal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 420, 330, 60));
 
         btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnAnterior.png"))); // NOI18N
         btnAnterior.addActionListener(new java.awt.event.ActionListener() {
@@ -498,10 +498,10 @@ public class AlunosCadastro extends javax.swing.JDialog {
                 btnAnteriorActionPerformed(evt);
             }
         });
-        jPanelCadastroFinal.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, -1, -1));
+        jPanelCadastroFinal.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, -1, -1));
 
         campoDiaVencimento.setDay(28);
-        jPanelCadastroFinal.add(campoDiaVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+        jPanelCadastroFinal.add(campoDiaVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
 
         renovacaoAuto.setText("Renovação Automática");
         renovacaoAuto.addActionListener(new java.awt.event.ActionListener() {

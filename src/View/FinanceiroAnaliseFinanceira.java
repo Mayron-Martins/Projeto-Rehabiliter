@@ -50,6 +50,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
         btnExportar.setBackground(new Color(0,0,0,0));
         btnImprimir.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
+        btnAplicar.setBackground(new Color(0,0,0,0));
         this.setarComponentes();
         fecharTelaESC();
         
@@ -93,7 +94,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicar.png"))); // NOI18N
+        btnAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnAplicar.png"))); // NOI18N
         btnAplicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicarHover.png"))); // NOI18N
         btnAplicar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
