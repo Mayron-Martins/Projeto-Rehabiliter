@@ -157,6 +157,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
         campoDataUltimoPag = new com.toedter.calendar.JDateChooser();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
         planodefundo = new javax.swing.JLabel();
         Cor = new javax.swing.JPanel();
 
@@ -521,6 +522,9 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jLabel29.setText("Data Cadastro");
         jPanelCadastroFinal.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, -1, -1));
 
+        jCheckBox1.setText("Impressão de Contrato");
+        jPanelCadastroFinal.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 330, -1, -1));
+
         getContentPane().add(jPanelCadastroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 740, 490));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/cadastrar-alunofundo.jpg"))); // NOI18N
@@ -738,6 +742,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboPlano;
     private javax.swing.JComboBox<String> comboTurma;
     private javax.swing.JPanel descricao;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
