@@ -301,12 +301,17 @@ public class AlunosController {
         }
     }
     
+    private void buscarTodos() throws SQLException, ParseException, Exception{
+        ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
+        this.buscas(alunos);
+    }
+    
     //Listar
     public void listar() throws ParseException, Exception{
         String comboListar = view.getComboListar().getSelectedItem().toString();
         switch(comboListar){
             case "Todos":
-                listarAlunos();
+                buscarTodos();
             break;
             
             case "Aniversariantes":

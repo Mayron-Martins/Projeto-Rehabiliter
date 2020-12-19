@@ -291,7 +291,7 @@ public class AlunosView extends javax.swing.JDialog {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, true, false
+                false, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1034,13 +1034,13 @@ public class AlunosView extends javax.swing.JDialog {
         }
         
         //Alunos
-        tabelaAlunos.getTableHeader().setResizingAllowed(false);
+        tabelaAlunos.getTableHeader().setResizingAllowed(true);
         tabelaAlunos.getTableHeader().setReorderingAllowed(false);
         tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboTurmas));
         tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JMoneyField()));
         
         //Planos
-        tabelaPlanos.getTableHeader().setResizingAllowed(false);
+        tabelaPlanos.getTableHeader().setResizingAllowed(true);
         tabelaPlanos.getTableHeader().setReorderingAllowed(false);
         tabelaPlanos.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(comboServicos));
         tabelaPlanos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JMoneyField()));
@@ -1050,7 +1050,7 @@ public class AlunosView extends javax.swing.JDialog {
         
         
         //Pais
-        tabelaPais.getTableHeader().setResizingAllowed(false);
+        tabelaPais.getTableHeader().setResizingAllowed(true);
         tabelaPais.getTableHeader().setReorderingAllowed(false);
         tabelaPais.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cpfPai));
         tabelaPais.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(telefonePai));
@@ -1058,7 +1058,7 @@ public class AlunosView extends javax.swing.JDialog {
         tabelaPais.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(telefoneMae));
         
         //Enderecos
-        tabelaEnderecos.getTableHeader().setResizingAllowed(false);
+        tabelaEnderecos.getTableHeader().setResizingAllowed(true);
         tabelaEnderecos.getTableHeader().setReorderingAllowed(false);
         tabelaEnderecos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboEstado));
         tabelaEnderecos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cep));

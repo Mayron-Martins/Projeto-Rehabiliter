@@ -260,8 +260,8 @@
               <Table columnCount="6" rowCount="0">
                 <Column editable="false" title="ChavePlano" type="java.lang.Integer"/>
                 <Column editable="true" title="Plano/Per&#xed;odo" type="java.lang.String"/>
-                <Column editable="false" title="Valor Contrato" type="java.lang.String"/>
-                <Column editable="false" title="Valor Mensal" type="java.lang.String"/>
+                <Column editable="true" title="Valor Contrato" type="java.lang.String"/>
+                <Column editable="true" title="Valor Mensal" type="java.lang.String"/>
                 <Column editable="true" title="Dia Vencimento" type="java.lang.Integer"/>
                 <Column editable="false" title="Situacao" type="java.lang.String"/>
               </Table>

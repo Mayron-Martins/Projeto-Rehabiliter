@@ -187,7 +187,7 @@ public class AdicionarAlunosController {
         }
         
         else{
-            //exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, matricula, servicoContratado.getPeriodDays());
+            exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, matricula, servicoContratado.getPeriodDays());
             alunosDao.inserirDados(aluno, endereco, matricula, planoAluno, codTurma, codTurma);
             turmasDao.atualizarQuantAunos(codTurma, quantAlunosPresentes);
             ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
@@ -195,9 +195,9 @@ public class AdicionarAlunosController {
             this.setarLog(funcionarios, nome, turma);
             }
             view.exibeMensagem("Sucesso!");
-            //exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx", "Word.Application");
-            //view.exibeMensagem("Exportando Arquivo para Impressão.");
-            //imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");
+            exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx", "Word.Application");
+            view.exibeMensagem("Exportando Arquivo para Impressão.");
+            imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");
             
             //Limpando Campos
             view.getCampoNomeAluno().setText("");
