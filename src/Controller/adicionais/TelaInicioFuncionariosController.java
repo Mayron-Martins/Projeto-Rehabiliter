@@ -162,25 +162,28 @@ public class TelaInicioFuncionariosController {
         Period periodo;
         ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
         Planos planoAtual;
-        
+            
         int verificadorExistencia =0;
             for(int linhas=0; linhas<planos.size(); linhas++){
                 if(planos.get(linhas).getSituacao().equals("Pendente")){
-                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
-                    Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
-                    Date dataUsual = planos.get(linhas).getDataVencimento();
-                    Date dataAux = converterData.parseDate(converterData.parseDate(dataUsual));
-                    dataVencimento = converterData.conversaoLocalforDate(dataAux);
+                    if(planos.get(linhas).getDataVencimento()!=null){
+                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
+                        Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
+                        Date dataUsual = planos.get(linhas).getDataVencimento();
+                        Date dataAux = converterData.parseDate(converterData.parseDate(dataUsual));
+                        dataVencimento = converterData.conversaoLocalforDate(dataAux);
 
-                    periodo = Period.between(dataVencimento, dataAtual);
-                    if(periodo.getDays()>=1){
+                        periodo = Period.between(dataVencimento, dataAtual);
+                        if(periodo.getDays()>=1){
                         planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, planos.get(linhas).getDataVencimento(),
-                        planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
-                        planos.get(linhas).getDataRenovacao(),"Vencido");
+                                planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
+                                planos.get(linhas).getDataRenovacao(),"Vencido");
                         planosDao.atualizarSituacao(planoAtual);
                         verificadorExistencia++;
-                    }  
-                }
+                            }
+                    }
+                      
+                    }
             }
         if(verificadorExistencia>0){
             view.exibeMensagem("A mensalidade de alguns alunos vence hoje. Verifique a tela de Alunos!");
