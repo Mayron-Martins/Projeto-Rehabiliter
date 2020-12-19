@@ -79,6 +79,7 @@ public class ImpressaoComponentes {
         } catch (IOException | PrinterException ex) {
             JOptionPane.showMessageDialog(null, "Não é possível imprimir");
         }
+        catch(NullPointerException e){}
         
     }
     

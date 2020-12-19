@@ -201,7 +201,7 @@ public class AdicionarAlunosController {
             
             //Imprimir se Ativada a impressão do contrato
             if(view.getImpressaoContrato().isSelected()){
-                exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, matricula, servicoContratado.getPeriodDays());
+                /*exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, matricula, servicoContratado.getPeriodDays());
                 
                 try {
                     sleep(10);
@@ -210,7 +210,7 @@ public class AdicionarAlunosController {
                 }
                 exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx", "Word.Application");
                 view.exibeMensagem("Exportando Arquivo para Impressão.");
-                imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");
+                imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");*/
             }
             
             //Limpando Campos
