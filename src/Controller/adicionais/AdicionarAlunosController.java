@@ -5,6 +5,7 @@
  */
 package Controller.adicionais;
 
+import Controller.CaixaController;
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaoDiasDaSemana;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
@@ -29,6 +30,7 @@ import Model.auxiliar.Turmas;
 import View.AlunosCadastro;
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
@@ -36,6 +38,8 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 /**
@@ -187,7 +191,6 @@ public class AdicionarAlunosController {
         }
         
         else{
-            exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, matricula, servicoContratado.getPeriodDays());
             alunosDao.inserirDados(aluno, endereco, matricula, planoAluno, codTurma, codTurma);
             turmasDao.atualizarQuantAunos(codTurma, quantAlunosPresentes);
             ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
@@ -195,9 +198,20 @@ public class AdicionarAlunosController {
             this.setarLog(funcionarios, nome, turma);
             }
             view.exibeMensagem("Sucesso!");
-            exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx", "Word.Application");
-            view.exibeMensagem("Exportando Arquivo para Impressão.");
-            imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");
+            
+            //Imprimir se Ativada a impressão do contrato
+            if(view.getImpressaoContrato().isSelected()){
+                exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, matricula, servicoContratado.getPeriodDays());
+                
+                try {
+                    sleep(10);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(CaixaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx", "Word.Application");
+                view.exibeMensagem("Exportando Arquivo para Impressão.");
+                imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");
+            }
             
             //Limpando Campos
             view.getCampoNomeAluno().setText("");
