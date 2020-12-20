@@ -41,6 +41,7 @@ import org.apache.pdfbox.printing.PDFPageable;
  * @author Mayro
  */
 public class ImpressaoComponentes {
+    private final LogsSystem gerarLog = new LogsSystem();
     
     
     public ImpressaoComponentes() {
@@ -161,17 +162,7 @@ public class ImpressaoComponentes {
                       printServices, impressoraPadrao, flavor, aset);
                   if (service != null) {
                     DocPrintJob job = service.createPrintJob();
-                    PrintJobWatcher pjw = new PrintJobWatcher(job);
-                      try {
-                          job.print(doc, aset);
-                          pjw.waitForDone();
-                          myBuffer.close();
-                      } catch (PrintException ex) {
-                          Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
-                      } catch (IOException ex) {
-                          Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
-                      }
-                    
+                    PrintJobWatcher pjw = new PrintJobWatcher(job);   
                   }
                 });
             }
@@ -196,11 +187,14 @@ public class ImpressaoComponentes {
 */
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Nenhum arquivo encontrado");
+            gerarLog.logIssue(ex.getMessage());
         } catch (PrintException ex) {
             Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
+            gerarLog.logIssue(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao enviar para a impressora");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao finalizar conexão");
+            gerarLog.logIssue(ex.getMessage());
             Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
