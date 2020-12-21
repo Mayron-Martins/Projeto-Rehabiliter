@@ -16,8 +16,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
 import javax.print.PrintException;
@@ -28,8 +30,11 @@ import javax.swing.JTable;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintServiceAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
 import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.PrinterName;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
 import javax.swing.SwingUtilities;
@@ -123,6 +128,7 @@ public class ImpressaoComponentes {
         }
     }
     
+    /*
     public void printTextFile(String caminho){
         try{
             //FileInputStream in = new FileInputStream(new File(caminho));
@@ -162,7 +168,16 @@ public class ImpressaoComponentes {
                       printServices, impressoraPadrao, flavor, aset);
                   if (service != null) {
                     DocPrintJob job = service.createPrintJob();
-                    PrintJobWatcher pjw = new PrintJobWatcher(job);   
+                    PrintJobWatcher pjw = new PrintJobWatcher(job);  
+                      try {
+                          job.print(doc, aset);
+                          pjw.waitForDone();
+                          myBuffer.close();
+                      } catch (PrintException ex) {
+                          gerarLog.logIssue(ex.getMessage());
+                      } catch (IOException ex) {
+                          gerarLog.logIssue(ex.getMessage());
+                      }
                   }
                 });
             }
@@ -184,7 +199,7 @@ public class ImpressaoComponentes {
             pjw = new PrintJobWatcher(jobff);
             jobff.print(docff, null);
             pjw.waitForDone();
-*/
+
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Nenhum arquivo encontrado");
             gerarLog.logIssue(ex.getMessage());
@@ -197,9 +212,64 @@ public class ImpressaoComponentes {
             gerarLog.logIssue(ex.getMessage());
             Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
     
-  
+    public void printTextFile(String caminho){
+           try{
+               //FileInputStream in = new FileInputStream(new File(caminho));
+           BufferedReader myBuffer = new BufferedReader(new InputStreamReader(new FileInputStream(caminho), "UTF-8"));
+           String texto = myBuffer.readLine();
+           String conect="";
+           while(texto!=null){
+               conect+=texto+"\n";
+               texto = myBuffer.readLine();
+           }
+           conect = conect +"\f";
+           InputStream in = new ByteArrayInputStream((conect).getBytes());
+            
+            PrintRequestAttributeSet  printRequestAttributeSet = new HashPrintRequestAttributeSet();
+            PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
+            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE; //("application/octet-stream");
+            Doc doc = new SimpleDoc(in, flavor, null);
+            
+            
+            PrintService impressoraPadrao = PrintServiceLookup.lookupDefaultPrintService();
+            PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);           
+            if (printServices.length == 0) {
+                if (impressoraPadrao == null) {
+                  JOptionPane.showMessageDialog(null, "Não foram encontradas impressoras");
+                } else {
+                  printServiceAttributeSet.add(new PrinterName(impressoraPadrao.getName(), null));
+                  printRequestAttributeSet.add(new Copies(1));
+                  DocPrintJob job = impressoraPadrao.createPrintJob();
+                  PrintJobWatcher pjw = new PrintJobWatcher(job);
+                  job.print(doc, null);
+                  pjw.waitForDone();
+                  myBuffer.close();
+                }
+            } else {
+                SwingUtilities.invokeLater(() -> {
+                  PrintService service = ServiceUI.printDialog(null, 200, 200,
+                      printServices, impressoraPadrao, flavor, new HashPrintRequestAttributeSet()).createPrintJob().getPrintService();
+                  if (service != null) {
+                    DocPrintJob job = service.createPrintJob();
+                    PrintJobWatcher pjw = new PrintJobWatcher(job);  
+                      try {
+                          job.print(doc, null);
+                          pjw.waitForDone();
+                          myBuffer.close();
+                      } catch (PrintException ex) {
+                          gerarLog.logIssue(ex.getMessage());
+                      } catch (IOException ex) {
+                          gerarLog.logIssue(ex.getMessage());
+                      }
+                  }
+                });
+            }
+           }catch(FileNotFoundException erro){}
+           catch(IOException erro){}
+           catch(PrintException erro){}
+    }
 
 
     class PrintJobWatcher {

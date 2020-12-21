@@ -581,13 +581,20 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
-    try {
-        controller.removerAluno();
-    } catch (ParseException ex) {
-        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (Exception ex) {
-        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        int confirmacao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover este aluno?", "Atenção",
+                JOptionPane.YES_NO_OPTION);
+        
+        if(confirmacao == JOptionPane.YES_OPTION){
+            try {
+                controller.removerAluno();
+            } catch (ParseException ex) {
+                Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void tabelaPaisComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaPaisComponentHidden
