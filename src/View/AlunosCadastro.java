@@ -110,7 +110,6 @@ public class AlunosCadastro extends javax.swing.JDialog {
         campoDataUltimoPag = new com.toedter.calendar.JDateChooser();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        impressaoContrato = new javax.swing.JCheckBox();
         jpanelDados = new javax.swing.JPanel();
         descricao = new javax.swing.JPanel();
         btnConfirma = new javax.swing.JButton();
@@ -272,9 +271,6 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setText("Data Cadastro");
         jPanelCadastroFinal.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, -1, -1));
-
-        impressaoContrato.setText("Impressão de Contrato");
-        jPanelCadastroFinal.add(impressaoContrato, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 330, -1, -1));
 
         getContentPane().add(jPanelCadastroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 740, 490));
 
@@ -742,7 +738,6 @@ public class AlunosCadastro extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboPlano;
     private javax.swing.JComboBox<String> comboTurma;
     private javax.swing.JPanel descricao;
-    private javax.swing.JCheckBox impressaoContrato;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -900,10 +895,6 @@ public class AlunosCadastro extends javax.swing.JDialog {
 
     public JDateChooser getCampoDataUltimoPag() {
         return campoDataUltimoPag;
-    }
-
-    public JCheckBox getImpressaoContrato() {
-        return impressaoContrato;
     }
     
     

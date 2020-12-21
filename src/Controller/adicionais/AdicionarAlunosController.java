@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 /**
@@ -199,8 +200,10 @@ public class AdicionarAlunosController {
             }
             view.exibeMensagem("Sucesso!");
             
+            int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja realizar a impressão do contrato?", 
+                    "Nota", JOptionPane.YES_NO_OPTION);
             //Imprimir se Ativada a impressão do contrato
-            if(view.getImpressaoContrato().isSelected()){
+            if(confirmacao == JOptionPane.YES_OPTION){
                 exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, matricula, servicoContratado.getPeriodDays());
                 
                 try {
@@ -235,6 +238,9 @@ public class AdicionarAlunosController {
             view.getComboEstado().setSelectedIndex(0);
             view.getjPanelCadastroFinal().setVisible(false);
             view.getJpanelDados().setVisible(true);
+            view.getCampoNascimentoAluno().setDate(null);
+            view.getCampoDataCadastro().setDate(null);
+            view.getCampoDataUltimoPag().setDate(null);
         }
         
     }
