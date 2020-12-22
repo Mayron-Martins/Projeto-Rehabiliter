@@ -216,8 +216,7 @@ public class ImpressaoComponentes {
     
     public void printTextFile(String caminho){
            try{
-               //FileInputStream in = new FileInputStream(new File(caminho));
-           BufferedReader myBuffer = new BufferedReader(new InputStreamReader(new FileInputStream(caminho), "UTF-8"));
+           BufferedReader myBuffer = new BufferedReader(new InputStreamReader(new FileInputStream(caminho), "UTF-16"));
            String texto = myBuffer.readLine();
            String conect="";
            while(texto!=null){
@@ -225,27 +224,26 @@ public class ImpressaoComponentes {
                texto = myBuffer.readLine();
            }
            conect = conect +"\f";
-           InputStream in = new ByteArrayInputStream((conect).getBytes());
+           InputStream in = new ByteArrayInputStream(conect.getBytes()); 
+           
+           PrintService impressoraPadrao = PrintServiceLookup.lookupDefaultPrintService();
+           PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);   
             
-            PrintRequestAttributeSet  printRequestAttributeSet = new HashPrintRequestAttributeSet();
-            PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
-            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE; //("application/octet-stream");
+            //PrintRequestAttributeSet  printRequestAttributeSet = new HashPrintRequestAttributeSet();
+            //PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
+            DocFlavor flavor = DocFlavor.INPUT_STREAM.POSTSCRIPT; //("application/octet-stream");
             Doc doc = new SimpleDoc(in, flavor, null);
-            
-            
-            PrintService impressoraPadrao = PrintServiceLookup.lookupDefaultPrintService();
-            PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);           
+                    
             if (printServices.length == 0) {
                 if (impressoraPadrao == null) {
                   JOptionPane.showMessageDialog(null, "Não foram encontradas impressoras");
                 } else {
-                  printServiceAttributeSet.add(new PrinterName(impressoraPadrao.getName(), null));
-                  printRequestAttributeSet.add(new Copies(1));
                   DocPrintJob job = impressoraPadrao.createPrintJob();
                   PrintJobWatcher pjw = new PrintJobWatcher(job);
                   job.print(doc, null);
                   pjw.waitForDone();
                   myBuffer.close();
+                  in.close();
                 }
             } else {
                 SwingUtilities.invokeLater(() -> {
@@ -258,6 +256,7 @@ public class ImpressaoComponentes {
                           job.print(doc, null);
                           pjw.waitForDone();
                           myBuffer.close();
+                          in.close();
                       } catch (PrintException ex) {
                           gerarLog.logIssue(ex.getMessage());
                       } catch (IOException ex) {

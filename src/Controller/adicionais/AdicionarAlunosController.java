@@ -211,7 +211,8 @@ public class AdicionarAlunosController {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(CaixaController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx", "Word.Application");
+                //exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx", "Word.Application");
+                exportarContrato.ConvertToPDF("C:/Rehabiliter/ContratoEditado.docx");
                 view.exibeMensagem("Exportando Arquivo para Impressão.");
                 imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");
             }
