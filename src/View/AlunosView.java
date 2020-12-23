@@ -29,6 +29,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -133,6 +134,7 @@ public class AlunosView extends javax.swing.JDialog {
         campoAvisoDataVencimento = new javax.swing.JTextArea();
         campoDataFimPlano = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         painelAlunos = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
         painelPlanos = new javax.swing.JScrollPane();
@@ -236,6 +238,8 @@ public class AlunosView extends javax.swing.JDialog {
 
         getContentPane().add(painelConfiguracoesAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 530, 250));
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -284,7 +288,7 @@ public class AlunosView extends javax.swing.JDialog {
         });
         painelAlunos.setViewportView(tabelaAlunos);
 
-        getContentPane().add(painelAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+        jPanel1.add(painelAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 340));
 
         tabelaPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaPlanos.setModel(new javax.swing.table.DefaultTableModel(
@@ -334,7 +338,7 @@ public class AlunosView extends javax.swing.JDialog {
         });
         painelPlanos.setViewportView(tabelaPlanos);
 
-        getContentPane().add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+        jPanel1.add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 340));
 
         tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaPais.setModel(new javax.swing.table.DefaultTableModel(
@@ -377,7 +381,7 @@ public class AlunosView extends javax.swing.JDialog {
         });
         painelPais.setViewportView(tabelaPais);
 
-        getContentPane().add(painelPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+        jPanel1.add(painelPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 340));
 
         tabelaEnderecos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaEnderecos.setModel(new javax.swing.table.DefaultTableModel(
@@ -420,7 +424,9 @@ public class AlunosView extends javax.swing.JDialog {
         });
         painelEnderecos.setViewportView(tabelaEnderecos);
 
-        getContentPane().add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+        jPanel1.add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 340));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
 
         botaoConfigAdicionais.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnConfiguracoes.png"))); // NOI18N
         botaoConfigAdicionais.addActionListener(new java.awt.event.ActionListener() {
@@ -743,20 +749,19 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_comboTurmasExistentesActionPerformed
 
     private void botaoConfigAdicionaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfigAdicionaisActionPerformed
-        
-        
-        
+        try {
+            controller.setarDatasConfiguracoesAd();
+        } catch (SQLException | ParseException ex) {
+            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         
         Component[] frameComponents = this.getContentPane().getComponents();
         for(Component componente:frameComponents){
             componente.setEnabled(false);
         }
         
-        try {
-            controller.setarDatasConfiguracoesAd();
-        } catch (SQLException | ParseException ex) {
-            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.bloquearLiberarPaineis(jPanel1, false);
+        
         
         painelConfiguracoesAdicionais.setEnabled(true);
         painelConfiguracoesAdicionais.setVisible(true);
@@ -765,23 +770,13 @@ public class AlunosView extends javax.swing.JDialog {
     private void botaoFecharConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharConfActionPerformed
         // TODO add your handling code here:
         
-        for(int linhas=0; linhas<painelAlunos.getComponentCount(); linhas++){
-            painelAlunos.getComponent(linhas).setEnabled(true);
-        }
-        for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
-            painelPlanos.getComponent(linhas).setEnabled(true);
-        }
-        for(int linhas=0; linhas<painelPais.getComponentCount(); linhas++){
-            painelPais.getComponent(linhas).setEnabled(true);
-        }
-        for(int linhas=0; linhas<painelEnderecos.getComponentCount(); linhas++){
-            painelEnderecos.getComponent(linhas).setEnabled(true);
-        }
-        
         Component[] frameComponents = this.getContentPane().getComponents();
         for(Component componente:frameComponents){
             componente.setEnabled(true);
         }
+        
+        
+            this.bloquearLiberarPaineis(jPanel1, true);
         
         
         painelConfiguracoesAdicionais.setEnabled(false);
@@ -866,6 +861,7 @@ public class AlunosView extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane painelAlunos;
     private javax.swing.JPanel painelConfiguracoesAdicionais;
@@ -1107,5 +1103,12 @@ public class AlunosView extends javax.swing.JDialog {
         tabelaEnderecos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboEstado));
         tabelaEnderecos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cep));
         
+    }
+    
+    private void bloquearLiberarPaineis(javax.swing.JPanel painel, boolean acao){
+        Component[] componentes = painel.getRootPane().getComponents();
+        for (Component componente : componentes) {
+            componente.setEnabled(acao);
+        }
     }
 }
