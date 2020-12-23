@@ -248,11 +248,6 @@ public class AlunosCadastro extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        campoTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoTelefoneActionPerformed(evt);
-            }
-        });
         jpanelDados.add(campoTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 160, 32));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -305,6 +300,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jpanelDados.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, -1, -1));
 
         comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RO", "RN", "RR", "RS", "SC", "SE", "SP", "TO" }));
+        comboEstado.setSelectedItem("MA");
         jpanelDados.add(comboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 140, 30));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -601,10 +597,6 @@ public class AlunosCadastro extends javax.swing.JDialog {
             Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_comboPlanoActionPerformed
-
-    private void campoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTelefoneActionPerformed
 
     private void btnAntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAntActionPerformed
         // TODO add your handling code here:

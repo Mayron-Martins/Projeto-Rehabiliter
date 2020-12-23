@@ -51,7 +51,6 @@ public class Caixa extends javax.swing.JDialog {
         
         controller = new CaixaController(this);
         botaoBuscarCliente.setBackground(new Color(0,0,0,0));
-        impressaoComprovante.setBackground(new Color(0,0,0,0));
         botaoBuscarProdutos.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
         botaoPagamentoMensalidade.setBackground(new Color(0,0,0,0));
@@ -96,7 +95,6 @@ public class Caixa extends javax.swing.JDialog {
         campoDinheiro = new JMoneyField();
         jLabel1 = new javax.swing.JLabel();
         btnFechar = new javax.swing.JButton();
-        impressaoComprovante = new javax.swing.JCheckBox();
         campoCliente = new FormatacaoCamposRestritosLetras();
         quantParcelas = new javax.swing.JTextField();
         botaoBuscarCliente = new javax.swing.JButton();
@@ -248,10 +246,6 @@ public class Caixa extends javax.swing.JDialog {
             }
         });
         jPanelFormaDePagamento.add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
-
-        impressaoComprovante.setSelected(true);
-        impressaoComprovante.setText("Imprimir Comprovante");
-        jPanelFormaDePagamento.add(impressaoComprovante, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, -1, -1));
 
         getContentPane().add(jPanelFormaDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 460, 410, 300));
 
@@ -844,7 +838,6 @@ public class Caixa extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField campoVPago;
     private javax.swing.JFormattedTextField campoVTotal;
     private javax.swing.JFormattedTextField campoVTroco;
-    private javax.swing.JCheckBox impressaoComprovante;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -961,10 +954,6 @@ public class Caixa extends javax.swing.JDialog {
 
     public int getNumeroTela() {
         return numeroTela;
-    }
-
-    public JCheckBox getImpressaoComprovante() {
-        return impressaoComprovante;
     }
 
     public JTextField getCampoParcelas() {

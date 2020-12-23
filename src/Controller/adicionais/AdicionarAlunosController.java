@@ -236,7 +236,7 @@ public class AdicionarAlunosController {
             view.getCampoBairro().setText("");
             view.getCampoCidade().setText("Santa Inês");
             view.getCampoCEP().setText("");
-            view.getComboEstado().setSelectedIndex(0);
+            view.getComboEstado().setSelectedItem("MA");
             view.getjPanelCadastroFinal().setVisible(false);
             view.getJpanelDados().setVisible(true);
             view.getCampoNascimentoAluno().setDate(null);

@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -457,7 +458,9 @@ public class CaixaController {
             BigDecimal valorDesconto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVDesconto().getText()).toString());
             view.exibeMensagem("Venda Concluída!");
             
-            if(view.getImpressaoComprovante().isSelected()){
+            int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja realizar a impressão do comprovante?", 
+                    "Nota", JOptionPane.YES_NO_OPTION);
+            if(confirmacao == JOptionPane.YES_OPTION){
                String subtotalVenda = valorTotal.add(valorDesconto).toString();
                String desconto = view.getCampoVDesconto().getText();
                this.imprimirComprovanteVenda(venda, subtotalVenda, desconto);
@@ -639,10 +642,9 @@ public class CaixaController {
         } catch (InterruptedException ex) {
             Logger.getLogger(CaixaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        imprimirComprovante.printTextFile("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
-        //exportarComprovante.gerarPDF("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt", "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".pdf");
-        //exportarComprovante.convertDocx2pdf("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt", ".txt", "ACTIVEX.ActiveXCtrl.1");
-        //imprimirComprovante.imprimirString("C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
+        exportarComprovante.ConvertTxtToPDF("C:/Rehabiliter/Info/Comprovantes/documento.pdf", "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
+        imprimirComprovante.impressao("C:/Rehabiliter/Info/Comprovantes/documento.pdf");
+        
         
         novaVenda();
     }

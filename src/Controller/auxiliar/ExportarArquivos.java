@@ -31,11 +31,16 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import com.jacob.activeX.ActiveXComponent;
-import com.jacob.com.ComThread;
-import com.jacob.com.Dispatch;
-import com.jacob.com.Variant;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -300,9 +305,45 @@ public class ExportarArquivos {
             OutputStream out = new FileOutputStream(new File(pdfPath));
             PdfConverter.getInstance().convert(document, out, options);
         } catch (IOException | NoClassDefFoundError ex) {
+            LogsSystem gerarLog = new LogsSystem();
+            gerarLog.gravarErro(ex);
+            gerarLog.close();
         }
-    }    
-        
+    }
+
+    public void ConvertTxtToPDF(String pathPDF, String txtPath){
+        try{
+            Document pdfDoc = new Document(PageSize.A4);
+            PdfWriter.getInstance(pdfDoc, new FileOutputStream(pathPDF))
+                    .setPdfVersion(PdfWriter.PDF_VERSION_1_7);
+            pdfDoc.open();
+
+            Font myFont = new Font();
+            myFont.setStyle(Font.NORMAL);
+            myFont.setSize(11);
+            pdfDoc.add(new Paragraph("\n"));
+
+            BufferedReader myBuffer = new BufferedReader(new FileReader(txtPath));
+            String conect="";
+            while((conect = myBuffer.readLine())!=null){
+                Paragraph para = new Paragraph(conect + "\n", myFont);
+                System.out.println(conect);
+                para.setAlignment(Element.ALIGN_CENTER);
+                pdfDoc.add(para);
+            }
+            pdfDoc.close();
+            myBuffer.close();
+        } catch (FileNotFoundException ex) {
+            LogsSystem gerarLog = new LogsSystem();
+            gerarLog.gravarErro(ex);
+            gerarLog.close();
+        } catch (DocumentException | IOException ex) {
+            LogsSystem gerarLog = new LogsSystem();
+            gerarLog.gravarErro(ex);
+            gerarLog.close();
+        }
+    }
+    /*    
     public void convertDocx2pdf(String docxFilePath, String extensao, String idAplicacao) {
         File docxFile = new File(docxFilePath);
         String pdfFile = docxFilePath.substring(0, docxFilePath.lastIndexOf(extensao)) + ".pdf";
@@ -334,7 +375,7 @@ public class ExportarArquivos {
             }
         }
     }
-    
+    */
     public void geraArquivoTxt(String conteudo, String caminho) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(caminho, true));  
