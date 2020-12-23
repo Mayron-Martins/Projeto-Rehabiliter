@@ -597,8 +597,14 @@ public class AlunosController {
             int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
             Aluno aluno = this.alunoAnterior(codAluno);
             Planos plano = this.planoAnterior(codAluno);
+            Servicos servico = this.pegarServico(plano.getCodServico());
+            
+            Date dataConvertida = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
+            LocalDate dataFimPlano = converterData.conversaoLocalforDate(dataConvertida);
+            
             view.getCampoDataCadastro().setDate(aluno.getDataCadastro());
             view.getCampoDataPagamento().setDate(plano.getDataPagamento());
+            view.getCampoDataFimPlano().setDate(converterData.conversaoLocalforDate(dataFimPlano.plusDays(servico.getPeriodDays())));
             
             if(plano.getDataVencimento()!=null){
                 view.getCampoDataVencimento().setDate(plano.getDataVencimento());
@@ -614,7 +620,7 @@ public class AlunosController {
     
     public void setarDataVencimento() throws SQLException, ParseException, Exception{
         int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
-        if(linhaSelecionada>-1 && view.getCampoDataVencimento().getDate()==null){
+        if(linhaSelecionada>-1){
             Date dataCadastro = view.getCampoDataCadastro().getDate();
             System.out.println(dataCadastro);
             Date dataPagamento = view.getCampoDataPagamento().getDate();

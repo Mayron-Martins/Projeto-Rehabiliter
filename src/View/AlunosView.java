@@ -28,7 +28,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -85,10 +84,10 @@ public class AlunosView extends javax.swing.JDialog {
         botaoConfigAdicionais.setVisible(false);
         painelConfiguracoesAdicionais.setVisible(false);
         campoDataVencimento.setEnabled(false);
+        campoDataFimPlano.setEnabled(false);
         this.setInicialBotoes();
         fecharTelaESC();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
-        
         
         
         comboServicos.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +130,8 @@ public class AlunosView extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         campoAvisoDataVencimento = new javax.swing.JTextArea();
+        campoDataFimPlano = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
         painelAlunos = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
         painelPlanos = new javax.swing.JScrollPane();
@@ -224,9 +225,15 @@ public class AlunosView extends javax.swing.JDialog {
         campoAvisoDataVencimento.setRows(5);
         jScrollPane1.setViewportView(campoAvisoDataVencimento);
 
-        painelConfiguracoesAdicionais.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 270, 70));
+        painelConfiguracoesAdicionais.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 330, 70));
+        painelConfiguracoesAdicionais.add(campoDataFimPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 140, 30));
 
-        getContentPane().add(painelConfiguracoesAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 530, 200));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Data de Fim do Plano");
+        painelConfiguracoesAdicionais.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
+
+        getContentPane().add(painelConfiguracoesAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 530, 250));
 
         tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
@@ -737,13 +744,13 @@ public class AlunosView extends javax.swing.JDialog {
     private void botaoConfigAdicionaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfigAdicionaisActionPerformed
         try {
             controller.setarDatasConfiguracoesAd();
-        } catch (SQLException ex) {
-            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for(int linhas=0; linhas<this.getComponentCount(); linhas++){
-                this.getComponent(linhas).setEnabled(false);
+         System.out.println(this.getComponents().length);
+        for(int linhas=0; linhas<this.getComponents().length; linhas++){
+            
+                this.getComponents()[linhas].setEnabled(false);
             }
             painelConfiguracoesAdicionais.setEnabled(true);
             painelConfiguracoesAdicionais.setVisible(true);
@@ -751,8 +758,8 @@ public class AlunosView extends javax.swing.JDialog {
 
     private void botaoFecharConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharConfActionPerformed
         // TODO add your handling code here:
-        for(int linhas=0; linhas<this.getComponentCount(); linhas++){
-            this.getComponent(linhas).setEnabled(true);
+        for(int linhas=0; linhas<this.getComponents().length; linhas++){
+            this.getComponents()[linhas].setEnabled(true);
         }
         painelConfiguracoesAdicionais.setEnabled(false);
         painelConfiguracoesAdicionais.setVisible(false);
@@ -825,6 +832,7 @@ public class AlunosView extends javax.swing.JDialog {
     private javax.swing.JButton botaobuscar;
     private javax.swing.JTextArea campoAvisoDataVencimento;
     private com.toedter.calendar.JDateChooser campoDataCadastro;
+    private com.toedter.calendar.JDateChooser campoDataFimPlano;
     private com.toedter.calendar.JDateChooser campoDataPagamento;
     private com.toedter.calendar.JDateChooser campoDataVencimento;
     private javax.swing.JTextField campoPesquisa;
@@ -834,6 +842,7 @@ public class AlunosView extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane painelAlunos;
     private javax.swing.JPanel painelConfiguracoesAdicionais;
@@ -961,6 +970,11 @@ public class AlunosView extends javax.swing.JDialog {
     public JTextArea getCampoAvisoDataVencimento() {
         return campoAvisoDataVencimento;
     }
+
+    public JDateChooser getCampoDataFimPlano() {
+        return campoDataFimPlano;
+    }
+    
     
     
     private void selecionarTabelas(int opcao){
