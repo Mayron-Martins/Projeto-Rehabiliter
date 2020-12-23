@@ -10,6 +10,7 @@ import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Point;
@@ -742,25 +743,47 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_comboTurmasExistentesActionPerformed
 
     private void botaoConfigAdicionaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfigAdicionaisActionPerformed
+        
+        
+        
+        
+        Component[] frameComponents = this.getContentPane().getComponents();
+        for(Component componente:frameComponents){
+            componente.setEnabled(false);
+        }
+        
         try {
             controller.setarDatasConfiguracoesAd();
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
         }
-         System.out.println(this.getComponents().length);
-        for(int linhas=0; linhas<this.getComponents().length; linhas++){
-            
-                this.getComponents()[linhas].setEnabled(false);
-            }
-            painelConfiguracoesAdicionais.setEnabled(true);
-            painelConfiguracoesAdicionais.setVisible(true);
+        
+        painelConfiguracoesAdicionais.setEnabled(true);
+        painelConfiguracoesAdicionais.setVisible(true);
     }//GEN-LAST:event_botaoConfigAdicionaisActionPerformed
 
     private void botaoFecharConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharConfActionPerformed
         // TODO add your handling code here:
-        for(int linhas=0; linhas<this.getComponents().length; linhas++){
-            this.getComponents()[linhas].setEnabled(true);
+        
+        for(int linhas=0; linhas<painelAlunos.getComponentCount(); linhas++){
+            painelAlunos.getComponent(linhas).setEnabled(true);
         }
+        for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
+            painelPlanos.getComponent(linhas).setEnabled(true);
+        }
+        for(int linhas=0; linhas<painelPais.getComponentCount(); linhas++){
+            painelPais.getComponent(linhas).setEnabled(true);
+        }
+        for(int linhas=0; linhas<painelEnderecos.getComponentCount(); linhas++){
+            painelEnderecos.getComponent(linhas).setEnabled(true);
+        }
+        
+        Component[] frameComponents = this.getContentPane().getComponents();
+        for(Component componente:frameComponents){
+            componente.setEnabled(true);
+        }
+        
+        
         painelConfiguracoesAdicionais.setEnabled(false);
         painelConfiguracoesAdicionais.setVisible(false);
     }//GEN-LAST:event_botaoFecharConfActionPerformed

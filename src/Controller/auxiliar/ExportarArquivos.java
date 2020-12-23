@@ -300,9 +300,6 @@ public class ExportarArquivos {
             OutputStream out = new FileOutputStream(new File(pdfPath));
             PdfConverter.getInstance().convert(document, out, options);
         } catch (IOException | NoClassDefFoundError ex) {
-            LogsSystem gerarLog = new LogsSystem(); 
-            LOGGER.info(null, ex);
-            gerarLog.logIssue(ex.toString());
         }
     }    
         

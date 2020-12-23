@@ -46,7 +46,6 @@ import org.apache.pdfbox.printing.PDFPageable;
  * @author Mayro
  */
 public class ImpressaoComponentes {
-    private final LogsSystem gerarLog = new LogsSystem();
     
     
     public ImpressaoComponentes() {
@@ -257,10 +256,10 @@ public class ImpressaoComponentes {
                           pjw.waitForDone();
                           myBuffer.close();
                           in.close();
-                      } catch (PrintException ex) {
-                          gerarLog.logIssue(ex.getMessage());
-                      } catch (IOException ex) {
-                          gerarLog.logIssue(ex.getMessage());
+                      } catch (PrintException | IOException ex) {
+                          LogsSystem gerarLog = new LogsSystem();
+                          gerarLog.gravarErro(ex);
+                          gerarLog.close();
                       }
                   }
                 });
