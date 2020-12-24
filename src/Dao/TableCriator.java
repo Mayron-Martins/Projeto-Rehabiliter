@@ -69,7 +69,7 @@ public class TableCriator {
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblAlunos("
                 + "codAluno INT PRIMARY KEY,"   //É gerado um código único no banco para cada aluno.
-                + "nome VARCHAR(50) NOT NULL,"
+                + "nome VARCHAR(MAX) NOT NULL,"
                 + "cpf VARCHAR(15) NULL,"
                 + "rg VARCHAR(20) NULL,"
                 + "telefone VARCHAR(20) NULL,"
@@ -77,8 +77,8 @@ public class TableCriator {
                 + "email VARCHAR(50) NULL,"
                 + "dataNascimento DATE NOT NULL,"
                 + "codEndereco INT NOT NULL,"     //O endereço de cada aluno é cadastrado numa tabela à parte.
-                + "nomeMae VARCHAR(50) NULL,"
-                + "nomePai VARCHAR(50) NULL,"
+                + "nomeMae VARCHAR(MAX) NULL,"
+                + "nomePai VARCHAR(MAX) NULL,"
                 + "telefoneMae VARCHAR(20) NULL,"
                 + "telefonePai VARCHAR(20) NULL,"
                 + "cpfMae VARCHAR(15) NULL,"
@@ -103,12 +103,12 @@ public class TableCriator {
         this.gerarStatement().execute("CREATE TABLE tblEndAlunoseClientes("
                 + "codEndAlunoseClientes INT PRIMARY KEY," //É gerado um endereço único para cada aluno.
                 + "codAluno INT NOT NULL," //Abstrai o código de um aluno para que exista.
-                + "logradouro VARCHAR(50) NULL,"
-                + "bairro VARCHAR(25) NULL,"
+                + "logradouro VARCHAR(MAX) NULL,"
+                + "bairro VARCHAR(MAX) NULL,"
                 + "numero VARCHAR(10) NULL,"
                 + "complemento VARCHAR(50) NULL,"
                 + "referencia VARCHAR(50) NULL,"
-                + "cidade VARCHAR(20) NULL,"
+                + "cidade VARCHAR(MAX) NULL,"
                 + "estado CHAR(2) NULL,"
                 + "CEP VARCHAR(10) NULL"
                 + ") ON [AlunoseClientes];");
