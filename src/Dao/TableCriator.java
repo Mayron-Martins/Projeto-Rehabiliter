@@ -284,7 +284,7 @@ public class TableCriator {
                 + "codTurma INT NOT NULL," //A turma a qual a matrícula é relacionada.
                 + "codAluno INT NOT NULL," //O aluno ao qual a matrícula é relacionada.
                 + "anoMatricula INT NOT NULL," //O ano da matrícula.
-                + "matricula VARCHAR(12) NOT NULL" //String gerada por função que utiliza código da turma, código do aluno e ano.
+                + "matricula VARCHAR(MAX) NOT NULL" //String gerada por função que utiliza código da turma, código do aluno e ano.
                 + ") ON [AlunoseClientes];");
     }
     

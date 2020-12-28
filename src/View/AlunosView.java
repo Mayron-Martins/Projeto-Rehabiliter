@@ -99,12 +99,8 @@ public class AlunosView extends javax.swing.JDialog {
             private void comboServicosActionPerformed(ActionEvent evt) {
             int linhaSelecionada = tabelaPlanos.getSelectedRow();
                 if(tabelaPlanos.isRowSelected(linhaSelecionada)){
-                    try {
-                        selecionarTabelas(2); 
-                        controller.setarValorContrato();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    selecionarTabelas(2); 
+                    controller.setarValorContrato();
                 }
         
     }
@@ -569,13 +565,7 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_formMouseDragged
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
-    try {
         controller.editarAlunos();
-    } catch (ParseException ex) {
-        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (Exception ex) {
-        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-    }
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void tabelaAlunosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosComponentHidden
@@ -599,13 +589,7 @@ public class AlunosView extends javax.swing.JDialog {
                 JOptionPane.YES_NO_OPTION);
         
         if(confirmacao == JOptionPane.YES_OPTION){
-            try {
-                controller.removerAluno();
-            } catch (ParseException ex) {
-                Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            controller.removerAluno();
         }
         
         
@@ -635,19 +619,10 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoAlunosActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-    try {
-        controller.verificacaoDeTurmaEServico();
-    } catch (SQLException ex) {
-        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-    }
+
+    controller.verificacaoDeTurmaEServico();
+    controller.listarAlunos();
     
-    try {
-        controller.listarAlunos();
-    } catch (ParseException ex) {
-        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (Exception ex) {
-        Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-    }
     }//GEN-LAST:event_formWindowOpened
 
     private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
@@ -739,28 +714,19 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_tabelaEnderecosKeyReleased
 
     private void comboTurmasExistentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmasExistentesActionPerformed
-        try {
-            controller.listarAlunos();
-        } catch (ParseException ex) {
-            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.listarAlunos();
     }//GEN-LAST:event_comboTurmasExistentesActionPerformed
 
     private void botaoConfigAdicionaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfigAdicionaisActionPerformed
-        try {
-            controller.setarDatasConfiguracoesAd();
-        } catch (SQLException | ParseException ex) {
-            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+
+        controller.setarDatasConfiguracoesAd();
         
         Component[] frameComponents = this.getContentPane().getComponents();
         for(Component componente:frameComponents){
             componente.setEnabled(false);
         }
         
-        this.bloquearLiberarPaineis(jPanel1, false);
+        this.bloquearLiberarPaineis(false);
         
         
         painelConfiguracoesAdicionais.setEnabled(true);
@@ -776,7 +742,7 @@ public class AlunosView extends javax.swing.JDialog {
         }
         
         
-            this.bloquearLiberarPaineis(jPanel1, true);
+            this.bloquearLiberarPaineis(true);
         
         
         painelConfiguracoesAdicionais.setEnabled(false);
@@ -784,13 +750,7 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoFecharConfActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            controller.setarDataVencimento();
-        } catch (ParseException ex) {
-            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarDataVencimento();
     }//GEN-LAST:event_jButton1ActionPerformed
      
     /**
@@ -1034,6 +994,7 @@ public class AlunosView extends javax.swing.JDialog {
     
     
     public void fecharTelaESC() {
+        //sair
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
@@ -1043,6 +1004,32 @@ public class AlunosView extends javax.swing.JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+            }
+        });
+        
+        //atualizar
+        JRootPane meurootpane1 = getRootPane();
+        meurootpane1.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), "F5");
+        meurootpane1.getRootPane().getActionMap().put("F5", new AbstractAction("F5") {
+
+            
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.listarAlunos();
+            }
+        });
+        
+        //editar
+        JRootPane meurootpane2 = getRootPane();
+        meurootpane2.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "F1");
+        meurootpane2.getRootPane().getActionMap().put("F1", new AbstractAction("F1") {
+
+            
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.editarAluno();
             }
         });
     }
@@ -1105,10 +1092,34 @@ public class AlunosView extends javax.swing.JDialog {
         
     }
     
-    private void bloquearLiberarPaineis(javax.swing.JPanel painel, boolean acao){
-        Component[] componentes = painel.getRootPane().getComponents();
-        for (Component componente : componentes) {
-            componente.setEnabled(acao);
-        }
+    private void bloquearLiberarPaineis(boolean acao){
+        painelAlunos.getRootPane().setEnabled(acao);
+        painelAlunos.getHorizontalScrollBar().setEnabled(acao);
+        painelAlunos.getVerticalScrollBar().setEnabled(acao);
+        painelAlunos.getViewport().getView().setEnabled(acao);
+        
+        painelPlanos.getRootPane().setEnabled(acao);
+        painelPlanos.getHorizontalScrollBar().setEnabled(acao);
+        painelPlanos.getVerticalScrollBar().setEnabled(acao);
+        painelPlanos.getViewport().getView().setEnabled(acao);
+        
+        painelPais.getRootPane().setEnabled(acao);
+        painelPais.getHorizontalScrollBar().setEnabled(acao);
+        painelPais.getVerticalScrollBar().setEnabled(acao);
+        painelPais.getViewport().getView().setEnabled(acao);
+        
+        painelEnderecos.getRootPane().setEnabled(acao);
+        painelEnderecos.getHorizontalScrollBar().setEnabled(acao);
+        painelEnderecos.getVerticalScrollBar().setEnabled(acao);
+        painelEnderecos.getViewport().getView().setEnabled(acao);
+        
+        jPanel1.setEnabled(acao);
+        //jPanel1.setVisible(acao);
+        tabelaAlunos.getTableHeader().setEnabled(acao);
+        tabelaPlanos.getTableHeader().setEnabled(acao);
+        tabelaPais.getTableHeader().setEnabled(acao);
+        tabelaEnderecos.getTableHeader().setEnabled(acao);
+        comboTurmas.setVisible(acao);
+        comboServicos.setVisible(acao);
     }
 }

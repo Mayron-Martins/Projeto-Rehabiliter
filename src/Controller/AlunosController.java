@@ -7,6 +7,7 @@ package Controller;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.LogsSystem;
 import Dao.AlunosDao;
 import Dao.EnderecoAlunosDao;
 import Dao.FuncionarioDao;
@@ -32,6 +33,8 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -76,238 +79,394 @@ public class AlunosController {
     
     
     //Lista todas as turmas 
-    public void listarAlunos() throws SQLException, ParseException, Exception {
-        if(view.getComboTurmasExistentes().getSelectedIndex()>=0){
-        String nomeTurmaAtual = view.getComboTurmasExistentes().getSelectedItem().toString();
-        int codTurmaAtual = Integer.parseInt(nomeTurmaAtual.split("\\.")[0]);
-        
-        ArrayList <Aluno> alunos = this.alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codTurma = "+codTurmaAtual);
-        this.buscas(alunos);   
-        }
-    }
-    
-    public void editarAlunos() throws SQLException, ParseException, Exception{
-        if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
-            //Dados Alunos
-            int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
-            int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
-            String nome = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
-            String nomeTurmaAtual = view.getComboTurmas().getSelectedItem().toString();
+    public void listarAlunos() {
+        try{
+            if(view.getComboTurmasExistentes().getSelectedIndex()>=0){
+            String nomeTurmaAtual = view.getComboTurmasExistentes().getSelectedItem().toString();
             int codTurmaAtual = Integer.parseInt(nomeTurmaAtual.split("\\.")[0]);
-            BigDecimal valorDebito = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 3).toString()).toString());
-            int renovacaoAutomatica = 0;
-            if(tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString().equals("true")){
-                renovacaoAutomatica = 1;
-            }
-            
-            //Dados Planos
-            int chavePlano = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
-            String nomeServico = view.getComboServicos().getSelectedItem().toString();
-            int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
-            BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 2).toString()).toString());
-            BigDecimal valorMensal = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 3).toString()).toString());
-            int diaVencimento = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 4).toString());
-            String situacao = this.tabelaDePlanos.getValueAt(linhaSelecionada, 5).toString();
-            
-            
-            
-            //Dados Pais
-            String nomePai = this.tabelaDePais.getValueAt(linhaSelecionada, 0).toString();
-            String cpfPai = this.tabelaDePais.getValueAt(linhaSelecionada, 1).toString();
-            String telefonePai = this.tabelaDePais.getValueAt(linhaSelecionada, 2).toString();
-            String nomeMae = this.tabelaDePais.getValueAt(linhaSelecionada, 3).toString();
-            String cpfMae = this.tabelaDePais.getValueAt(linhaSelecionada, 4).toString();
-            String telefoneMae = this.tabelaDePais.getValueAt(linhaSelecionada, 5).toString();
-            
-            //Dados Endereço
-            String logradouro = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 0).toString();
-            String numero = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 1).toString();
-            String bairro = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 2).toString();
-            String cidade = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 3).toString();
-            String estado = view.getComboEstado().getSelectedItem().toString();
-            String cep = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 5).toString();
-            
-            //Dados matrícula
-            int anoAtual = converterData.obterAnoAtual();
-            String nomeMatricula = this.converterMatricula(anoAtual, codTurmaAtual, codAluno, codServico);
-            Aluno alunoAnterior = this.alunoAnterior(codAluno);
-            Planos planoAnterior = this.planoAnterior(codAluno);
-            
-            Date dataValidade = planoAnterior.getDataVencimento();
-            if(view.getCampoDataVencimento().getDate()!= null){
-                dataValidade = view.getCampoDataVencimento().getDate();
-            }
-            
-            Date dataPagamento = planoAnterior.getDataPagamento();
-            if(view.getCampoDataPagamento().getDate() != null){
-                dataPagamento = view.getCampoDataPagamento().getDate();
-            }
 
-            Date dataCadastro = alunoAnterior.getDataCadastro();
-            if(view.getCampoDataCadastro().getDate() != null){
-                dataCadastro = view.getCampoDataCadastro().getDate();
-
+            ArrayList <Aluno> alunos = this.alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codTurma = "+codTurmaAtual);
+            this.buscas(alunos);   
             }
-
-            
-            Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
-                    alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
-                    nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurmaAtual, codServico, alunoAnterior.getDescricao(), 
-                    valorDebito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
-            
-            Matriculas matricula = new Matriculas(codAluno, codTurmaAtual, codAluno, anoAtual, nomeMatricula);
-            EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);
-            Planos planoAluno = new Planos(codAluno, codTurmaAtual, codServico, diaVencimento, 
-                    dataValidade, dataPagamento, planoAnterior.getDataCancelamento(), 
-                    planoAnterior.getDataRenovacao(), situacao);
-            
-            
-            //Verificar se a turma atual possui vagas
-            Turmas turmaAnterior = this.pegarTurma(alunoAnterior.getTurma());
-            Turmas turmaAtual = this.pegarTurma(codTurmaAtual);
-            boolean verificarVagasTurma = false;
-            
-            if(turmaAnterior.getCodBanco()!=turmaAtual.getCodBanco()){
-                verificarVagasTurma = this.verificarQuantidadeLimiteAlunos(codTurmaAtual);
-            }
-            
-        //Inserindo Dados
-        if(verificarVagasTurma==true){
-            view.exibeMensagem("Quantidade de Vagas Limite para a Turma Atingida!");
-            listarAlunos();
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
         }
-        else{
-            if(nome.equals("")|| logradouro.equals("") || numero.equals("")|| bairro.equals("")|| cidade.equals("")||
-        estado.equals("[Nenhum]")|| cep.equals("  .   -   ")){
-         view.exibeMensagem("Campos Preenchidos Incorretamente");
-        } else{
-            alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno, anoAtual);
-            turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
-            turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
-            
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                String acao = "Edição de Dados de Aluno";
-                String descricao = "Editou os dados do aluno "+nome;
-                this.setarLog(funcionarios, acao, descricao);
-            }
-            view.exibeMensagem("Sucesso!");
-            //Limpando Campos
-            listarAlunos();
-        }
-        }
-        }
-        
-        else{this.view.exibeMensagem("Erro, Nenhum Aluno Selecionado!");}
-        
+    }
     
+    //Editar todos os alunos
+    public void editarAlunos(){
+        try{
+            if(this.view.getTabelaAlunos().getRowCount()>0){
+                //Dados Alunos
+                int totalLinhas = this.view.getTabelaAlunos().getRowCount();
+                for(int linhaSelecionada=0; linhaSelecionada<totalLinhas; linhaSelecionada++){
+                    int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+                    String nome = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
+                    String nomeTurmaAtual = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 2).toString();
+                    int codTurmaAtual = Integer.parseInt(nomeTurmaAtual.split("\\.")[0]);
+                    BigDecimal valorDebito = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 3).toString()).toString());
+                    int renovacaoAutomatica = 0;
+                    if(tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString().equals("true")){
+                        renovacaoAutomatica = 1;
+                    }
+
+                    //Dados Planos
+                    int chavePlano = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
+                    String nomeServico = this.tabelaDePlanos.getValueAt(linhaSelecionada, 1).toString();
+                    int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
+                    BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 2).toString()).toString());
+                    BigDecimal valorMensal = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 3).toString()).toString());
+                    int diaVencimento = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 4).toString());
+                    String situacao = this.tabelaDePlanos.getValueAt(linhaSelecionada, 5).toString();
+
+
+
+                    //Dados Pais
+                    String nomePai = this.tabelaDePais.getValueAt(linhaSelecionada, 0).toString();
+                    String cpfPai = this.tabelaDePais.getValueAt(linhaSelecionada, 1).toString();
+                    String telefonePai = this.tabelaDePais.getValueAt(linhaSelecionada, 2).toString();
+                    String nomeMae = this.tabelaDePais.getValueAt(linhaSelecionada, 3).toString();
+                    String cpfMae = this.tabelaDePais.getValueAt(linhaSelecionada, 4).toString();
+                    String telefoneMae = this.tabelaDePais.getValueAt(linhaSelecionada, 5).toString();
+
+                    //Dados Endereço
+                    String logradouro = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 0).toString();
+                    String numero = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 1).toString();
+                    String bairro = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 2).toString();
+                    String cidade = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 3).toString();
+                    String estado = view.getComboEstado().getSelectedItem().toString();
+                    String cep = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 5).toString();
+
+                    //Dados matrícula
+                    int anoAtual = converterData.obterAnoAtual();
+                    String nomeMatricula = this.converterMatricula(anoAtual, codTurmaAtual, codAluno, codServico);
+                    Aluno alunoAnterior = this.alunoAnterior(codAluno);
+                    Planos planoAnterior = this.planoAnterior(codAluno);
+
+                    Date dataValidade = planoAnterior.getDataVencimento();
+                    if(view.getCampoDataVencimento().getDate()!= null){
+                        dataValidade = view.getCampoDataVencimento().getDate();
+                    }
+
+                    Date dataPagamento = planoAnterior.getDataPagamento();
+                    if(view.getCampoDataPagamento().getDate() != null){
+                        dataPagamento = view.getCampoDataPagamento().getDate();
+                    }
+
+                    Date dataCadastro = alunoAnterior.getDataCadastro();
+                    if(view.getCampoDataCadastro().getDate() != null){
+                        dataCadastro = view.getCampoDataCadastro().getDate();
+
+                    }
+
+
+                    Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
+                            alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
+                            nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurmaAtual, codServico, alunoAnterior.getDescricao(), 
+                            valorDebito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
+
+                    Matriculas matricula = new Matriculas(codAluno, codTurmaAtual, codAluno, anoAtual, nomeMatricula);
+                    EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);
+                    Planos planoAluno = new Planos(codAluno, codTurmaAtual, codServico, diaVencimento, 
+                            dataValidade, dataPagamento, planoAnterior.getDataCancelamento(), 
+                            planoAnterior.getDataRenovacao(), situacao);
+
+
+                    //Verificar se a turma atual possui vagas
+                    Turmas turmaAnterior = this.pegarTurma(alunoAnterior.getTurma());
+                    Turmas turmaAtual = this.pegarTurma(codTurmaAtual);
+                    boolean verificarVagasTurma = false;
+
+                    if(turmaAnterior.getCodBanco()!=turmaAtual.getCodBanco()){
+                        verificarVagasTurma = this.verificarQuantidadeLimiteAlunos(codTurmaAtual);
+                    }
+
+                //Inserindo Dados
+                if(verificarVagasTurma==true){
+                    view.exibeMensagem("Quantidade de Vagas Limite para a Turma Atingida!\nVerifique a linha "+linhaSelecionada+1);
+                }
+                else{
+                    if(nome.equals("")|| logradouro.equals("") || numero.equals("")|| bairro.equals("")|| cidade.equals("")||
+                estado.equals("[Nenhum]")|| cep.equals("  .   -   ")){
+                 view.exibeMensagem("Campos Preenchidos Incorretamente na linha "+linhaSelecionada+1);
+                } else{
+                    alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno, anoAtual);
+                    turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
+                    turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
+
+                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                    if(funcionarios!=null){
+                        String acao = "Edição de Dados de Aluno";
+                        String descricao = "Editou os dados do aluno "+nome;
+                        this.setarLog(funcionarios, acao, descricao);
+                    }
+                    }
+                }
+                }
+                view.exibeMensagem("Sucesso!");
+                //Limpando Campos
+                listarAlunos();
+                }
+                
+            else{this.view.exibeMensagem("Erro, Sem dados na tabela!");}
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
+        }
+        
     }
     
     
-    public void removerAluno() throws SQLException, ParseException, Exception{
-        if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
-            int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
-            int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
-            String nomeAluno = tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
-            String nomeTurma = view.getComboTurmas().getSelectedItem().toString();
-            int codTurma = Integer.parseInt(nomeTurma.split("\\.")[0]);
-            Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+codTurma).get(0);
-            
-            turmasDao.atualizarQuantAunos(codTurma, turma.getQuantidadeAlunos()-1);
-            alunosDao.removerAluno(codAluno);
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                String acao = "Remoção de Aluno";
-                String descricao = "Removeu o aluno "+nomeAluno;
-                this.setarLog(funcionarios, acao, descricao);
-            }
-            this.view.exibeMensagem("Sucesso");
-            listarAlunos();
+    //Editar apenas um Aluno
+    public void editarAluno(){
+        try{
+            if(this.view.getTabelaAlunos().getSelectedRow()>=0){
+                //Dados Alunos
+                int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
+                
+                    int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+                    String nome = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
+                    String nomeTurmaAtual = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 2).toString();
+                    int codTurmaAtual = Integer.parseInt(nomeTurmaAtual.split("\\.")[0]);
+                    BigDecimal valorDebito = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 3).toString()).toString());
+                    int renovacaoAutomatica = 0;
+                    if(tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString().equals("true")){
+                        renovacaoAutomatica = 1;
+                    }
+
+                    //Dados Planos
+                    int chavePlano = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
+                    String nomeServico = this.tabelaDePlanos.getValueAt(linhaSelecionada, 1).toString();
+                    int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
+                    BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 2).toString()).toString());
+                    BigDecimal valorMensal = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 3).toString()).toString());
+                    int diaVencimento = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 4).toString());
+                    String situacao = this.tabelaDePlanos.getValueAt(linhaSelecionada, 5).toString();
+
+
+
+                    //Dados Pais
+                    String nomePai = this.tabelaDePais.getValueAt(linhaSelecionada, 0).toString();
+                    String cpfPai = this.tabelaDePais.getValueAt(linhaSelecionada, 1).toString();
+                    String telefonePai = this.tabelaDePais.getValueAt(linhaSelecionada, 2).toString();
+                    String nomeMae = this.tabelaDePais.getValueAt(linhaSelecionada, 3).toString();
+                    String cpfMae = this.tabelaDePais.getValueAt(linhaSelecionada, 4).toString();
+                    String telefoneMae = this.tabelaDePais.getValueAt(linhaSelecionada, 5).toString();
+
+                    //Dados Endereço
+                    String logradouro = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 0).toString();
+                    String numero = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 1).toString();
+                    String bairro = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 2).toString();
+                    String cidade = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 3).toString();
+                    String estado = view.getComboEstado().getSelectedItem().toString();
+                    String cep = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 5).toString();
+
+                    //Dados matrícula
+                    int anoAtual = converterData.obterAnoAtual();
+                    String nomeMatricula = this.converterMatricula(anoAtual, codTurmaAtual, codAluno, codServico);
+                    Aluno alunoAnterior = this.alunoAnterior(codAluno);
+                    Planos planoAnterior = this.planoAnterior(codAluno);
+
+                    Date dataValidade = planoAnterior.getDataVencimento();
+                    if(view.getCampoDataVencimento().getDate()!= null){
+                        dataValidade = view.getCampoDataVencimento().getDate();
+                    }
+
+                    Date dataPagamento = planoAnterior.getDataPagamento();
+                    if(view.getCampoDataPagamento().getDate() != null){
+                        dataPagamento = view.getCampoDataPagamento().getDate();
+                    }
+
+                    Date dataCadastro = alunoAnterior.getDataCadastro();
+                    if(view.getCampoDataCadastro().getDate() != null){
+                        dataCadastro = view.getCampoDataCadastro().getDate();
+
+                    }
+
+
+                    Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
+                            alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
+                            nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurmaAtual, codServico, alunoAnterior.getDescricao(), 
+                            valorDebito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
+
+                    Matriculas matricula = new Matriculas(codAluno, codTurmaAtual, codAluno, anoAtual, nomeMatricula);
+                    EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);
+                    Planos planoAluno = new Planos(codAluno, codTurmaAtual, codServico, diaVencimento, 
+                            dataValidade, dataPagamento, planoAnterior.getDataCancelamento(), 
+                            planoAnterior.getDataRenovacao(), situacao);
+
+
+                    //Verificar se a turma atual possui vagas
+                    Turmas turmaAnterior = this.pegarTurma(alunoAnterior.getTurma());
+                    Turmas turmaAtual = this.pegarTurma(codTurmaAtual);
+                    boolean verificarVagasTurma = false;
+
+                    if(turmaAnterior.getCodBanco()!=turmaAtual.getCodBanco()){
+                        verificarVagasTurma = this.verificarQuantidadeLimiteAlunos(codTurmaAtual);
+                    }
+
+                //Inserindo Dados
+                if(verificarVagasTurma==true){
+                    view.exibeMensagem("Quantidade de Vagas Limite para a Turma Atingida!\nVerifique a linha "+linhaSelecionada+1);
+                }
+                else{
+                    if(nome.equals("")|| logradouro.equals("") || numero.equals("")|| bairro.equals("")|| cidade.equals("")||
+                estado.equals("[Nenhum]")|| cep.equals("  .   -   ")){
+                 view.exibeMensagem("Campos Preenchidos Incorretamente na linha "+linhaSelecionada+1);
+                } else{
+                    alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno, anoAtual);
+                    turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
+                    turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
+
+                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                    if(funcionarios!=null){
+                        String acao = "Edição de Dados de Aluno";
+                        String descricao = "Editou os dados do aluno "+nome;
+                        this.setarLog(funcionarios, acao, descricao);
+                    }
+                    }
+                
+                }
+                view.exibeMensagem("Sucesso!");
+            } 
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
         }
-        else{this.view.exibeMensagem("Erro, Nenhum Aluno Selecionado!");}
+        
+    }
+    
+    public void removerAluno(){
+        try{
+            if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
+                int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
+                int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+                String nomeAluno = tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
+                String nomeTurma = view.getComboTurmas().getSelectedItem().toString();
+                int codTurma = Integer.parseInt(nomeTurma.split("\\.")[0]);
+                Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+codTurma).get(0);
+
+                turmasDao.atualizarQuantAunos(codTurma, turma.getQuantidadeAlunos()-1);
+                alunosDao.removerAluno(codAluno);
+                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                if(funcionarios!=null){
+                    String acao = "Remoção de Aluno";
+                    String descricao = "Removeu o aluno "+nomeAluno;
+                    this.setarLog(funcionarios, acao, descricao);
+                }
+                this.view.exibeMensagem("Sucesso");
+                listarAlunos();
+            }
+            else{this.view.exibeMensagem("Erro, Nenhum Aluno Selecionado!");}
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
+        }
+        
     }
     
     //Buscar turmas no campo de busca
-    public void buscarAlunos() throws Exception{
-        String alunoPesquisa = view.getCampoPesquisa().getText();
-        ArrayList <Aluno> alunos = alunosDao.pesquisarPorNome(alunoPesquisa);
-        if(alunoPesquisa.equals("")){listarAlunos();}
-        else{this.buscas(alunos);}        
+    public void buscarAlunos(){
+        try{
+            String alunoPesquisa = view.getCampoPesquisa().getText();
+            ArrayList <Aluno> alunos = alunosDao.pesquisarPorNome(alunoPesquisa);
+            if(alunoPesquisa.equals("")){listarAlunos();}
+            else{this.buscas(alunos);}   
+        } catch (Exception ex) {
+            this.gerarLog(ex);
+        }
+             
     }
     
     //Buscar Aniversariantes
-    private void buscarAniversariantes() throws SQLException, ParseException, Exception{
-        ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
-        ArrayList <Aluno> alunosAniversariantes = new ArrayList<>();
-        Date aniversario;
-        for(int linhas = 0; linhas<alunos.size(); linhas++){
-            aniversario = alunos.get(linhas).getDatadenascimento();
-            
-            if(converterData.aniversarianteDoDia(aniversario)){
-                alunosAniversariantes.add(alunos.get(linhas));
+    private void buscarAniversariantes(){
+        try{
+            ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
+            ArrayList <Aluno> alunosAniversariantes = new ArrayList<>();
+            Date aniversario;
+            for(int linhas = 0; linhas<alunos.size(); linhas++){
+                aniversario = alunos.get(linhas).getDatadenascimento();
+
+                if(converterData.aniversarianteDoDia(aniversario)){
+                    alunosAniversariantes.add(alunos.get(linhas));
+                }
             }
+            this.buscas(alunosAniversariantes);
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
         }
-        this.buscas(alunosAniversariantes);
     }
     
     //Buscar Débito existentes
-    private void buscarDebitos(char opcao) throws SQLException, ParseException, Exception{
-        ArrayList <Aluno> alunosComDebito = new ArrayList<>();
-        ArrayList <Aluno> alunosSemDebito = new ArrayList<>();        
+    private void buscarDebitos(char opcao){
+        try{
+            ArrayList <Aluno> alunosComDebito = new ArrayList<>();
+            ArrayList <Aluno> alunosSemDebito = new ArrayList<>();        
 
-        switch(opcao){
-            case 'C':
-                ArrayList <Planos> planosPendentes = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pendente' OR situacao = 'Vencido'");
-                if(planosPendentes!=null){
-                    for(int linhas=0; linhas<planosPendentes.size(); linhas++){
-                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planosPendentes.get(linhas).getCodAluno()).get(0);
-                        alunosComDebito.add(aluno);
+            switch(opcao){
+                case 'C':
+                    ArrayList <Planos> planosPendentes = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pendente' OR situacao = 'Vencido'");
+                    if(planosPendentes!=null){
+                        for(int linhas=0; linhas<planosPendentes.size(); linhas++){
+                            Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planosPendentes.get(linhas).getCodAluno()).get(0);
+                            alunosComDebito.add(aluno);
+                        }
+                        this.buscas(alunosComDebito);
+                    }else{
+                        view.exibeMensagem("Sem Dados");
                     }
-                    this.buscas(alunosComDebito);
-                }else{
-                    view.exibeMensagem("Sem Dados");
-                }
-                
-            break;
 
-            case 'S':
-                ArrayList <Planos> planosPagos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pago'");
-                if(planosPagos!=null){
-                    for(int linhas=0; linhas<planosPagos.size(); linhas++){
-                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planosPagos.get(linhas).getCodAluno()).get(0);
-                        alunosSemDebito.add(aluno);
+                break;
+
+                case 'S':
+                    ArrayList <Planos> planosPagos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pago'");
+                    if(planosPagos!=null){
+                        for(int linhas=0; linhas<planosPagos.size(); linhas++){
+                            Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planosPagos.get(linhas).getCodAluno()).get(0);
+                            alunosSemDebito.add(aluno);
+                        }
+                        this.buscas(alunosSemDebito);
+                    }else{
+                        view.exibeMensagem("Sem Dados");
                     }
-                    this.buscas(alunosSemDebito);
-                }else{
-                    view.exibeMensagem("Sem Dados");
-                }
-            break;
+                break;
+            }
+
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
         }
         
     }
     
     //Buscar alunos com contrato encerrado
-    private void buscarEncerrados() throws SQLException, ParseException, Exception{
-        ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Encerrado'");
-        ArrayList <Aluno> alunosEncerrados = new ArrayList<>();
-        if(planos !=null){
-            for(int linhas=0; linhas< planos.size(); linhas++){
-            Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
-            alunosEncerrados.add(aluno);
+    private void buscarEncerrados() {
+        try{
+            ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Encerrado'");
+            ArrayList <Aluno> alunosEncerrados = new ArrayList<>();
+            if(planos !=null){
+                for(int linhas=0; linhas< planos.size(); linhas++){
+                Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
+                alunosEncerrados.add(aluno);
+                }
+                this.buscas(alunosEncerrados);
+            }else{
+                view.exibeMensagem("Sem Dados.");
             }
-            this.buscas(alunosEncerrados);
-        }else{
-            view.exibeMensagem("Sem Dados.");
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
         }
+        
     }
     
-    private void buscarTodos() throws SQLException, ParseException, Exception{
-        ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
-        this.buscas(alunos);
+    private void buscarTodos(){
+        try{
+            ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
+            this.buscas(alunos);
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
+        }
+        
     }
     
     //Listar
-    public void listar() throws ParseException, Exception{
+    public void listar(){
         String comboListar = view.getComboListar().getSelectedItem().toString();
         switch(comboListar){
             case "Todos":
@@ -332,64 +491,74 @@ public class AlunosController {
         }
     }
 
-    public void verificacaoDeTurmaEServico() throws SQLException {
-        ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
-        ArrayList <Servicos> servicos = servicosDao.selecionarTodosServicos();
+    public void verificacaoDeTurmaEServico(){
+        try{
+            ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
+            ArrayList <Servicos> servicos = servicosDao.selecionarTodosServicos();
 
+
+            if(turmas==null){
+                view.exibeMensagem("Sem Turmas Cadastradas! Adicione Alguma Para Entrar Nessa Tela!");
+                if(view.isVisible()){
+                   view.dispose(); 
+                }
+            }
+            else{
+                view.getComboTurmas().removeAllItems();
+                view.getComboTurmasExistentes().removeAllItems();
+                for(int linhas=0; linhas<turmas.size(); linhas++){
+
+                view.getComboTurmas().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma());
+                view.getComboTurmasExistentes().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma());
+                }
+                view.getComboTurmasExistentes().setSelectedIndex(0);
+            }
+
+            if(servicos==null){
+                view.exibeMensagem("Sem Serviços Cadastrados! Adicione Algum Para Entrar Nessa Tela!");
+                if(view.isVisible()){
+                   view.dispose(); 
+                }
+            }
+            else{
+                view.getComboServicos().removeAllItems();
+                for(int linhas=0; linhas<servicos.size(); linhas++){ 
+                view.getComboServicos().addItem(servicos.get(linhas).getCodBanco()+"."+servicos.get(linhas).getNome()+"-"+servicos.get(linhas).getPeriodo());
+                }
+            }
+        } catch (SQLException ex) {
+            this.gerarLog(ex);
+        }
         
-        if(turmas==null){
-            view.exibeMensagem("Sem Turmas Cadastradas! Adicione Alguma Para Entrar Nessa Tela!");
-            if(view.isVisible()){
-               view.dispose(); 
-            }
-        }
-        else{
-            view.getComboTurmas().removeAllItems();
-            view.getComboTurmasExistentes().removeAllItems();
-            for(int linhas=0; linhas<turmas.size(); linhas++){
-            
-            view.getComboTurmas().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma());
-            view.getComboTurmasExistentes().addItem(turmas.get(linhas).getCodBanco()+"."+turmas.get(linhas).getNomeTurma());
-            }
-            view.getComboTurmasExistentes().setSelectedIndex(0);
-        }
-        
-        if(servicos==null){
-            view.exibeMensagem("Sem Serviços Cadastrados! Adicione Algum Para Entrar Nessa Tela!");
-            if(view.isVisible()){
-               view.dispose(); 
-            }
-        }
-        else{
-            view.getComboServicos().removeAllItems();
-            for(int linhas=0; linhas<servicos.size(); linhas++){ 
-            view.getComboServicos().addItem(servicos.get(linhas).getCodBanco()+"."+servicos.get(linhas).getNome()+"-"+servicos.get(linhas).getPeriodo());
-            }
-        }
     }
     
-    public void setarValorContrato() throws SQLException{
-        if(view.getComboServicos().getSelectedIndex()>0){
-            int linhaSelecionada = view.getTabelaPlanos().getSelectedRow();
-            String nomeServico = view.getComboServicos().getSelectedItem().toString();
-            int diaVencimento = Integer.parseInt(tabelaDePlanos.getValueAt(linhaSelecionada, 4).toString());
-            int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
-            Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
-            
-            String metodoDePagamento = servico.getFormaPagamento();
-            
-            BigDecimal valorContrato = null;
-            if(metodoDePagamento.equals("[Nenhuma]")){valorContrato = new BigDecimal(servico.getValor().toString());}
-            if(metodoDePagamento.equals("Dinheiro")){valorContrato = new BigDecimal(servico.getValorVista().toString());}
-            if(metodoDePagamento.equals("Boleto")){valorContrato = new BigDecimal(servico.getValorBoleto().toString());}
-            if(metodoDePagamento.equals("Cartão de Crédito")){valorContrato = new BigDecimal(servico.getValorPrazoCredito().toString());}
-            if(metodoDePagamento.equals("Cartão de Débito")){valorContrato = new BigDecimal(servico.getValorPrazoDebito().toString());}   
-            
-            view.getTabelaPlanos().setValueAt(valorContrato.toString(), linhaSelecionada, 2);
-            view.getTabelaPlanos().setValueAt(nomeServico, linhaSelecionada, 1);
-            this.setarValorMensal(servico, linhaSelecionada, codServico);
-            view.getTabelaPlanos().setValueAt(this.diaVencimento(servico.getPeriodDays(), linhaSelecionada,diaVencimento), linhaSelecionada, 4);
+    public void setarValorContrato(){
+        try{
+            if(view.getComboServicos().getSelectedIndex()>=0){
+                int linhaSelecionada = view.getTabelaPlanos().getSelectedRow();
+                String nomeServico = view.getComboServicos().getSelectedItem().toString();
+                int diaVencimento = Integer.parseInt(tabelaDePlanos.getValueAt(linhaSelecionada, 4).toString());
+                int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
+                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
+
+                String metodoDePagamento = servico.getFormaPagamento();
+
+                BigDecimal valorContrato = null;
+                if(metodoDePagamento.equals("[Nenhuma]")){valorContrato = new BigDecimal(servico.getValor().toString());}
+                if(metodoDePagamento.equals("Dinheiro")){valorContrato = new BigDecimal(servico.getValorVista().toString());}
+                if(metodoDePagamento.equals("Boleto")){valorContrato = new BigDecimal(servico.getValorBoleto().toString());}
+                if(metodoDePagamento.equals("Cartão de Crédito")){valorContrato = new BigDecimal(servico.getValorPrazoCredito().toString());}
+                if(metodoDePagamento.equals("Cartão de Débito")){valorContrato = new BigDecimal(servico.getValorPrazoDebito().toString());}   
+
+                view.getTabelaPlanos().setValueAt(valorContrato.toString(), linhaSelecionada, 2);
+                view.getTabelaPlanos().setValueAt(nomeServico, linhaSelecionada, 1);
+                this.setarValorMensal(servico, linhaSelecionada, codServico);
+                view.getTabelaPlanos().setValueAt(this.diaVencimento(servico.getPeriodDays(), linhaSelecionada,diaVencimento), linhaSelecionada, 4);
+            }
+        } catch (SQLException ex) {
+            this.gerarLog(ex);
         }
+        
     }
     
     private String converterMatricula(int anoAtual, int codTurma, int codAluno, int codPlano) {
@@ -406,78 +575,83 @@ public class AlunosController {
          return  planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codAluno).get(0);
     }
     
-    private void buscas(ArrayList <Aluno> listar) throws Exception{
-        ArrayList<Turmas> turmas = new ArrayList<>();
-        ArrayList<Servicos> servicos = new ArrayList<>();
-        ArrayList <EnderecoAlunos> enderecos = new ArrayList<>();
-        ArrayList <Planos> planos;
-        ArrayList <Aluno> alunos = listar;
-        
-        removerSelecaoBox();
-        if(alunos==null){view.exibeMensagem("Sem dados!"); limparTabela();}
-        else{
-            limparTabela();
-            for(int linhas = 0; linhas<alunos.size(); linhas++){
-            enderecos = this.enderecoDao.pesquisarEndereco("SELECT * FROM tblEndAlunoseClientes WHERE codAluno = "+
-                    alunos.get(linhas).getCodBanco());
-            turmas = this.turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+
-                    alunos.get(linhas).getTurma());
-            servicos = this.servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+
-                    alunos.get(linhas).getPlano());
-            planos = this.planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+alunos.get(linhas).getCodBanco());
-            
-            boolean renovacaoAutomatica = false;
-            if(alunos.get(linhas).getRenovacaoAutomatica()==1){
-                renovacaoAutomatica = true;
+    private void buscas(ArrayList <Aluno> listar){
+        try{
+            ArrayList<Turmas> turmas = new ArrayList<>();
+            ArrayList<Servicos> servicos = new ArrayList<>();
+            ArrayList <EnderecoAlunos> enderecos = new ArrayList<>();
+            ArrayList <Planos> planos;
+            ArrayList <Aluno> alunos = listar;
+
+            removerSelecaoBox();
+            if(alunos==null){view.exibeMensagem("Sem dados!"); limparTabela();}
+            else{
+                limparTabela();
+                for(int linhas = 0; linhas<alunos.size(); linhas++){
+                enderecos = this.enderecoDao.pesquisarEndereco("SELECT * FROM tblEndAlunoseClientes WHERE codAluno = "+
+                        alunos.get(linhas).getCodBanco());
+                turmas = this.turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+
+                        alunos.get(linhas).getTurma());
+                servicos = this.servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+
+                        alunos.get(linhas).getPlano());
+                planos = this.planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+alunos.get(linhas).getCodBanco());
+
+                boolean renovacaoAutomatica = false;
+                if(alunos.get(linhas).getRenovacaoAutomatica()==1){
+                    renovacaoAutomatica = true;
+                }
+
+                //Inserindo dados na tabela de alunos
+                Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getCodBanco(), 
+                alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma(), 
+                alunos.get(linhas).getDebito(), new Boolean(renovacaoAutomatica)};
+                this.tabelaDeAlunos.addRow(dadosDaTabelaAlunos);
+                this.view.getComboTurmas().setSelectedItem(turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma());
+
+
+
+                //Inserindo dados na tabela de Planos
+                int chavePlano = planos.get(0).getChavePlano();
+                int diaVencimento = planos.get(0).getDiaVencimento();
+                String situacao = planos.get(0).getSituacao();
+
+                Object[] dadosDaTabelaPlanos = {chavePlano, servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+
+                        "-"+servicos.get(0).getPeriodo(), alunos.get(linhas).getValorContrato(), alunos.get(linhas).getValorMensal(),
+                        diaVencimento, situacao};
+                this.tabelaDePlanos.addRow(dadosDaTabelaPlanos);
+                Component tableCellEditorComponent = this.view.getTabelaPlanos().getColumnModel().getColumn(4).getCellEditor().getTableCellEditorComponent(view.getTabelaPlanos(), diaVencimento, true, linhas, 4);
+                tableCellEditorComponent.setEnabled(false);
+                this.view.getComboServicos().setSelectedItem(servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getPeriodo());
+
+
+
+                //Inserino dados na tabela de Pais
+                String telefonePai = alunos.get(linhas).getTelefonedopai();
+                String telefoneMae = alunos.get(linhas).getTelefonedamae();
+                String cpfPai = alunos.get(linhas).getCpfdopai();
+                String cpfMae = alunos.get(linhas).getCpfdamae();
+
+                Object[] dadosDaTabelaPais = {alunos.get(linhas).getNomedopai(), 
+                cpfPai,telefonePai, 
+                alunos.get(linhas).getNomedamae(),cpfMae,
+                telefoneMae};
+                this.tabelaDePais.addRow(dadosDaTabelaPais);
+
+                //Inserindo dados na tabela Endereços
+                String cep = enderecos.get(0).getCep();
+                Object[] dadosDaTabelaEnderecos  = {enderecos.get(0).getLogradouro(), 
+                enderecos.get(0).getNumero(),enderecos.get(0).getBairro(), 
+                enderecos.get(0).getCidade(),enderecos.get(0).getEstado(), cep};
+                this.tabelaDeEnderecos.addRow(dadosDaTabelaEnderecos);
+                this.view.getComboEstado().setSelectedItem(enderecos.get(0).getEstado());
+
+                }
             }
-            
-            //Inserindo dados na tabela de alunos
-            Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getCodBanco(), 
-            alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma(), 
-            alunos.get(linhas).getDebito(), new Boolean(renovacaoAutomatica)};
-            this.tabelaDeAlunos.addRow(dadosDaTabelaAlunos);
-            this.view.getComboTurmas().setSelectedItem(turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma());
-            
-            
-            
-            //Inserindo dados na tabela de Planos
-            int chavePlano = planos.get(0).getChavePlano();
-            int diaVencimento = planos.get(0).getDiaVencimento();
-            String situacao = planos.get(0).getSituacao();
-            
-            Object[] dadosDaTabelaPlanos = {chavePlano, servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+
-                    "-"+servicos.get(0).getPeriodo(), alunos.get(linhas).getValorContrato(), alunos.get(linhas).getValorMensal(),
-                    diaVencimento, situacao};
-            this.tabelaDePlanos.addRow(dadosDaTabelaPlanos);
-            Component tableCellEditorComponent = this.view.getTabelaPlanos().getColumnModel().getColumn(4).getCellEditor().getTableCellEditorComponent(view.getTabelaPlanos(), diaVencimento, true, linhas, 4);
-            tableCellEditorComponent.setEnabled(false);
-            this.view.getComboServicos().setSelectedItem(servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getPeriodo());
-            
-            
-            
-            //Inserino dados na tabela de Pais
-            String telefonePai = alunos.get(linhas).getTelefonedopai();
-            String telefoneMae = alunos.get(linhas).getTelefonedamae();
-            String cpfPai = alunos.get(linhas).getCpfdopai();
-            String cpfMae = alunos.get(linhas).getCpfdamae();
-
-            Object[] dadosDaTabelaPais = {alunos.get(linhas).getNomedopai(), 
-            cpfPai,telefonePai, 
-            alunos.get(linhas).getNomedamae(),cpfMae,
-            telefoneMae};
-            this.tabelaDePais.addRow(dadosDaTabelaPais);
-
-            //Inserindo dados na tabela Endereços
-            String cep = enderecos.get(0).getCep();
-            Object[] dadosDaTabelaEnderecos  = {enderecos.get(0).getLogradouro(), 
-            enderecos.get(0).getNumero(),enderecos.get(0).getBairro(), 
-            enderecos.get(0).getCidade(),enderecos.get(0).getEstado(), cep};
-            this.tabelaDeEnderecos.addRow(dadosDaTabelaEnderecos);
-            this.view.getComboEstado().setSelectedItem(enderecos.get(0).getEstado());
-
-            }
+           ativarSelecaoBox();
+        } catch (SQLException ex) {
+            this.gerarLog(ex);
         }
-       ativarSelecaoBox();
+        
     }
     
     public void removerSelecaoBox(){
@@ -591,120 +765,127 @@ public class AlunosController {
         }
     }
     
-    public void setarDatasConfiguracoesAd() throws SQLException, ParseException{
-        int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
-        if(linhaSelecionada>-1){
-            int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
-            Aluno aluno = this.alunoAnterior(codAluno);
-            Planos plano = this.planoAnterior(codAluno);
-            Servicos servico = this.pegarServico(plano.getCodServico());
-            
-            Date dataConvertida = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
-            LocalDate dataFimPlano = converterData.conversaoLocalforDate(dataConvertida);
-            
-            view.getCampoDataCadastro().setDate(aluno.getDataCadastro());
-            view.getCampoDataPagamento().setDate(plano.getDataPagamento());
-            view.getCampoDataFimPlano().setDate(converterData.conversaoLocalforDate(dataFimPlano.plusDays(servico.getPeriodDays())));
-            
-            if(plano.getDataVencimento()!=null){
-                view.getCampoDataVencimento().setDate(plano.getDataVencimento());
-                view.getCampoAvisoDataVencimento().setVisible(false);
-            }
-            else{
-                view.getCampoAvisoDataVencimento().setText("");
-                view.getCampoAvisoDataVencimento().append("Não há uma Data de Validade Mensal no Sistema.\nPor favor, pressionar o botão Setar Vencimento.");
-                view.getCampoAvisoDataVencimento().setVisible(true);
-            }
-        }
-    }
-    
-    public void setarDataVencimento() throws SQLException, ParseException, Exception{
-        int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
-        if(linhaSelecionada>-1){
-            Date dataCadastro = view.getCampoDataCadastro().getDate();
-            System.out.println(dataCadastro);
-            Date dataPagamento = view.getCampoDataPagamento().getDate();
-            System.out.println(dataPagamento);
-            int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
-            
-            editarAlunos();
-            Aluno aluno = this.alunoAnterior(codAluno);
-            Planos plano = this.planoAnterior(codAluno);
-            Servicos servico = this.pegarServico(plano.getCodServico());
-            BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
-            LocalDate dataVencimento;
-            
+    public void setarDatasConfiguracoesAd(){
+        try{
+            int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
+            if(linhaSelecionada>-1){
+                int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+                Aluno aluno = this.alunoAnterior(codAluno);
+                Planos plano = this.planoAnterior(codAluno);
+                Servicos servico = this.pegarServico(plano.getCodServico());
 
-            int renovacaoAutomatica = aluno.getRenovacaoAutomatica();
+                Date dataConvertida = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
+                LocalDate dataFimPlano = converterData.conversaoLocalforDate(dataConvertida);
 
+                view.getCampoDataCadastro().setDate(aluno.getDataCadastro());
+                view.getCampoDataPagamento().setDate(plano.getDataPagamento());
+                view.getCampoDataFimPlano().setDate(converterData.conversaoLocalforDate(dataFimPlano.plusDays(servico.getPeriodDays())));
 
-            Date dataPag = converterData.parseDate(converterData.parseDate(dataPagamento));
-            Date dataPrimaria = converterData.parseDate(converterData.parseDate(dataCadastro));
-            LocalDate dataBanco = converterData.conversaoLocalforDate(dataPag);
-            LocalDate dataCad = converterData.conversaoLocalforDate(dataPrimaria);
-
-            BigDecimal valorMensal = aluno.getValorMensal();
-
-            String mensal = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
-            String anual = periodDays.divide(new BigDecimal(365), 3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
-
-
-            boolean resultadoMensal = mensal.matches("[1-9]*");
-            boolean resultadoAnual = anual.matches("[1-9]*");
-
-            
-            Planos novoPlano;
-            Date dataAVencer;
-            if(resultadoMensal||resultadoAnual){
-               if(dataPagamento==null){
-                   dataVencimento = LocalDate.of(dataCad.getYear(), dataCad.plusMonths(1).getMonthValue(), plano.getDiaVencimento());
-                   dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
-                   view.getCampoDataVencimento().setDate(dataAVencer);
-                   novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
-                           dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
-                   planosDao.atualizarSituacao(plano);
-               }
-               else{
-                   dataVencimento = LocalDate.of(dataBanco.getYear(), dataBanco.plusMonths(1).getMonthValue(), plano.getDiaVencimento());
-                   dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
-                   view.getCampoDataVencimento().setDate(dataAVencer);
-                   novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
-                           dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
-                   planosDao.atualizarSituacao(plano);
-               }
-            }
-            else{
-                if(renovacaoAutomatica == 1){
-                    if(dataPagamento==null){
-                        dataVencimento = dataCad.plusDays(servico.getPeriodDays());
-                        dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
-                        view.getCampoDataVencimento().setDate(dataAVencer);
-                        novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
-                           dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
-                        planosDao.atualizarSituacao(plano);
-                    }
-                    else{
-                        dataVencimento = dataBanco.plusDays(servico.getPeriodDays());
-                        dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
-                        view.getCampoDataVencimento().setDate(dataAVencer);
-                        novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
-                           dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
-                        planosDao.atualizarSituacao(plano);
-                    }   
+                if(plano.getDataVencimento()!=null){
+                    view.getCampoDataVencimento().setDate(plano.getDataVencimento());
+                    view.getCampoAvisoDataVencimento().setVisible(false);
                 }
                 else{
-                   dataVencimento = dataCad.plusDays(servico.getPeriodDays());
-                   dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
-                   view.getCampoDataVencimento().setDate(dataAVencer);
-                   novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
-                           dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
-                   planosDao.atualizarSituacao(plano);
-                }           
+                    view.getCampoAvisoDataVencimento().setText("");
+                    view.getCampoAvisoDataVencimento().append("Não há uma Data de Validade Mensal no Sistema.\nPor favor, pressionar o botão Setar Vencimento.");
+                    view.getCampoAvisoDataVencimento().setVisible(true);
+                }
             }
-            
-            
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
         }
         
+    }
+    
+    public void setarDataVencimento(){
+        try{
+            int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
+            if(linhaSelecionada>-1){
+                Date dataCadastro = view.getCampoDataCadastro().getDate();
+                Date dataPagamento = view.getCampoDataPagamento().getDate();
+                int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+
+                editarAluno();
+                Aluno aluno = this.alunoAnterior(codAluno);
+                Planos plano = this.planoAnterior(codAluno);
+                Servicos servico = this.pegarServico(plano.getCodServico());
+                BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
+                LocalDate dataVencimento;
+
+
+                int renovacaoAutomatica = aluno.getRenovacaoAutomatica();
+
+
+                Date dataPag = converterData.parseDate(converterData.parseDate(dataPagamento));
+                Date dataPrimaria = converterData.parseDate(converterData.parseDate(dataCadastro));
+                LocalDate dataBanco = converterData.conversaoLocalforDate(dataPag);
+                LocalDate dataCad = converterData.conversaoLocalforDate(dataPrimaria);
+
+                BigDecimal valorMensal = aluno.getValorMensal();
+
+                String mensal = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+                String anual = periodDays.divide(new BigDecimal(365), 3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
+
+
+                boolean resultadoMensal = mensal.matches("[1-9]*");
+                boolean resultadoAnual = anual.matches("[1-9]*");
+
+
+                Planos novoPlano;
+                Date dataAVencer;
+                if(resultadoMensal||resultadoAnual){
+                   if(dataPagamento==null){
+                       dataVencimento = LocalDate.of(dataCad.getYear(), dataCad.plusMonths(1).getMonthValue(), plano.getDiaVencimento());
+                       dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
+                       view.getCampoDataVencimento().setDate(dataAVencer);
+                       novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
+                               dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
+                       planosDao.atualizarSituacao(plano);
+                   }
+                   else{
+                       dataVencimento = LocalDate.of(dataBanco.getYear(), dataBanco.plusMonths(1).getMonthValue(), plano.getDiaVencimento());
+                       dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
+                       view.getCampoDataVencimento().setDate(dataAVencer);
+                       novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
+                               dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
+                       planosDao.atualizarSituacao(plano);
+                   }
+                }
+                else{
+                    if(renovacaoAutomatica == 1){
+                        if(dataPagamento==null){
+                            dataVencimento = dataCad.plusDays(servico.getPeriodDays());
+                            dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
+                            view.getCampoDataVencimento().setDate(dataAVencer);
+                            novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
+                               dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
+                            planosDao.atualizarSituacao(plano);
+                        }
+                        else{
+                            dataVencimento = dataBanco.plusDays(servico.getPeriodDays());
+                            dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
+                            view.getCampoDataVencimento().setDate(dataAVencer);
+                            novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
+                               dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
+                            planosDao.atualizarSituacao(plano);
+                        }   
+                    }
+                    else{
+                       dataVencimento = dataCad.plusDays(servico.getPeriodDays());
+                       dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
+                       view.getCampoDataVencimento().setDate(dataAVencer);
+                       novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
+                               dataAVencer, plano.getDataPagamento(), plano.getDataCancelamento(), plano.getDataRenovacao(), plano.getSituacao());
+                       planosDao.atualizarSituacao(plano);
+                    }           
+                }
+
+
+            }
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
+        }
+
     }
     
     public void selecionarTabela(){
@@ -715,5 +896,11 @@ public class AlunosController {
         else{
             view.getBotaoConfigAdicionais().setVisible(false);
         }
+    }
+    
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
     }
 }

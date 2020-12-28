@@ -200,13 +200,7 @@ public class BackupView extends javax.swing.JDialog {
     }//GEN-LAST:event_painelNuvemMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
             controller.inserirUltimoBackup();
-        } catch (SQLException ex) {
-            Logger.getLogger(BackupView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(BackupView.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_formWindowOpened
 
     private void btnExportarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarLocalActionPerformed

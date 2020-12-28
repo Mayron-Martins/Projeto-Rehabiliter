@@ -100,7 +100,8 @@ public class AdicionarAlunosController {
         }
     }
     
-    public void adicionarAlunos() throws SQLException, ParseException, InvalidFormatException, IOException, PrinterException{
+    public void adicionarAlunos() {
+        try{
         Date dataCadastro = converterData.getSqlDate(new Date());
         if(view.getCampoDataCadastro().getDate()!=null){
             dataCadastro = view.getCampoDataCadastro().getDate();
@@ -242,6 +243,35 @@ public class AdicionarAlunosController {
             view.getCampoNascimentoAluno().setDate(null);
             view.getCampoDataCadastro().setDate(null);
             view.getCampoDataUltimoPag().setDate(null);
+        }
+        } catch (SQLException | ParseException | InvalidFormatException ex) {
+            view.exibeMensagem("Não foi possível Salvar o Aluno corretamente.");
+            //Limpando Campos
+            view.getCampoNomeAluno().setText("");
+            view.getCampoCPFAluno().setText("");
+            view.getCampoTelefone().setText("");
+            view.getCampoCelular().setText("");
+            view.getCampoNomePai().setText("");
+            view.getCampoNomeMae().setText("");
+            view.getCampoContatoPai().setText("");
+            view.getCampoContatoMae().setText("");
+            view.getCampoCPFPai().setText("");
+            view.getCampoCPFMae().setText("");
+            view.getComboPlano().setSelectedIndex(0);
+            view.getComboTurma().setSelectedIndex(0);
+            view.getCampoValor().setText("");
+            view.getCampoRua().setText("");
+            view.getCampoNum().setText("");
+            view.getCampoBairro().setText("");
+            view.getCampoCidade().setText("Santa Inês");
+            view.getCampoCEP().setText("");
+            view.getComboEstado().setSelectedItem("MA");
+            view.getjPanelCadastroFinal().setVisible(false);
+            view.getJpanelDados().setVisible(true);
+            view.getCampoNascimentoAluno().setDate(null);
+            view.getCampoDataCadastro().setDate(null);
+            view.getCampoDataUltimoPag().setDate(null);
+            
         }
         
     }

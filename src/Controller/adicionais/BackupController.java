@@ -6,6 +6,7 @@
 package Controller.adicionais;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.LogsSystem;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.BackupBancoDao;
 import Dao.BackupDao;
@@ -34,23 +35,28 @@ public class BackupController {
         this.view = view;
     }
     
-    public void inserirUltimoBackup() throws SQLException, ParseException{
-        ArrayList <Backup> backups = backupBancoDao.selecionarTodosBackups();
-        view.getCampoDataLocal().setText("");
-        view.getCampoHoraLocal().setText("");
-        view.getCampoLocalizacaoLocal().setText("");
-        if(backups!=null){
-            String data = converterData.parseDateAndTime(converterData.parseDateAndTime(backups.get(backups.size()-1).getData()));
-            String[] split = data.split(" ");
-            view.getCampoDataLocal().setText(split[0]);
-            view.getCampoHoraLocal().setText(split[1]);
-            view.getCampoLocalizacaoLocal().setText(backups.get(backups.size()-1).getEnderecoBackup());
+    public void inserirUltimoBackup(){
+        try{
+            ArrayList <Backup> backups = backupBancoDao.selecionarTodosBackups();
+            view.getCampoDataLocal().setText("");
+            view.getCampoHoraLocal().setText("");
+            view.getCampoLocalizacaoLocal().setText("");
+            if(backups!=null){
+                String data = converterData.parseDateAndTime(converterData.parseDateAndTime(backups.get(backups.size()-1).getData()));
+                String[] split = data.split(" ");
+                view.getCampoDataLocal().setText(split[0]);
+                view.getCampoHoraLocal().setText(split[1]);
+                view.getCampoLocalizacaoLocal().setText(backups.get(backups.size()-1).getEnderecoBackup());
+            }
+            else{
+                view.getCampoDataLocal().setText("Sem Dados");
+                view.getCampoHoraLocal().setText("Sem Dados");
+                view.getCampoLocalizacaoLocal().setText("Sem Dados");
+            }
+        } catch (SQLException | ParseException ex) {
+            this.gerarLog(ex);
         }
-        else{
-            view.getCampoDataLocal().setText("Sem Dados");
-            view.getCampoHoraLocal().setText("Sem Dados");
-            view.getCampoLocalizacaoLocal().setText("Sem Dados");
-        }
+        
     }
     
     public void adicionarDadosnoBanco(){
@@ -67,9 +73,7 @@ public class BackupController {
             view.exibeMensagem("Sucesso!");
             inserirUltimoBackup();
         } catch (SQLException ex) {
-            view.exibeMensagem("Não foi Possível Gravar os Dados por um erro de Sistema");
-        } catch (ParseException ex) {
-            Logger.getLogger(BackupController.class.getName()).log(Level.SEVERE, null, ex);
+            this.gerarLog(ex);
         }
         
     }
@@ -79,10 +83,16 @@ public class BackupController {
         if(file.exists()){
             backupDao.importarBanco();
             view.exibeMensagem("Sucesso!");
+            inserirUltimoBackup();
         }
         else{
             view.exibeMensagem("Realize um Backup Primeiro");
         }
     }
     
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
+    }
 }

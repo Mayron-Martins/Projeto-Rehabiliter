@@ -583,11 +583,9 @@ public class AlunosCadastro extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoDescricaoActionPerformed
 
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
-        try {
+
             controller.adicionarAlunos();
-        } catch (SQLException | ParseException | InvalidFormatException | IOException | PrinterException ex) {
-            Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     private void comboPlanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPlanoActionPerformed
