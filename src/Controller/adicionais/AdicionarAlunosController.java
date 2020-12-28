@@ -193,7 +193,7 @@ public class AdicionarAlunosController {
         }
         
         else{
-            alunosDao.inserirDados(aluno, endereco, matricula, planoAluno, codTurma, codTurma);
+            alunosDao.inserirDados(aluno, endereco, matricula, planoAluno, codTurma);
             turmasDao.atualizarQuantAunos(codTurma, quantAlunosPresentes);
             ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
             if(funcionarios!=null){

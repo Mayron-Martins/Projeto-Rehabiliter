@@ -35,7 +35,7 @@ public class AlunosDao extends Conexao{
     
     
     //Inserir dados na tabela Alunos
-    public void inserirDados (Aluno aluno, EnderecoAlunos endereco, Matriculas matricula, Planos plano, int diasDaSemana, int codServico) throws SQLException{
+    public void inserirDados (Aluno aluno, EnderecoAlunos endereco, Matriculas matricula, Planos plano, int diasDaSemana) throws SQLException{
         LocalDate dataAtual = LocalDate.now();
         //Adicionando aluno
         String inAluno = inserir.concat("tblAlunos("
@@ -64,7 +64,7 @@ public class AlunosDao extends Conexao{
         statement.setString(16, matricula.getMatricula());
         statement.setInt(17, aluno.getTurma());
         statement.setInt(18, diasDaSemana);
-        statement.setInt(19, codServico);
+        statement.setInt(19, aluno.getPlano());
         statement.setString(20, aluno.getDescricao());
         statement.setBigDecimal(21, new BigDecimal(aluno.getDebito().toString()));
         statement.setBigDecimal(22, new BigDecimal(aluno.getValorContrato().toString()));
