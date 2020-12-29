@@ -34,8 +34,6 @@ public class HistoricoRehab extends javax.swing.JDialog {
     private void initComponents() {
 
         comboTurmas = new javax.swing.JComboBox<>();
-        botaoSalvar = new javax.swing.JButton();
-        botaoAdicionar = new javax.swing.JButton();
         comboPeriodo = new javax.swing.JComboBox<>();
         botaoFechar = new javax.swing.JButton();
         painelderolagem = new javax.swing.JScrollPane();
@@ -46,6 +44,8 @@ public class HistoricoRehab extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         comboTurmas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
@@ -55,24 +55,6 @@ public class HistoricoRehab extends javax.swing.JDialog {
             }
         });
         getContentPane().add(comboTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 200, 40));
-
-        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/salvar.png"))); // NOI18N
-        botaoSalvar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia/salvarHover.png"))); // NOI18N
-        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 230, 40));
-
-        botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
-        botaoAdicionar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverAdicionar.png"))); // NOI18N
-        botaoAdicionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAdicionarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 230, 40));
 
         comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Última Semana", "Último Mês", "Último Semestre", "Último Ano" }));
         comboPeriodo.addActionListener(new java.awt.event.ActionListener() {
@@ -152,15 +134,8 @@ public class HistoricoRehab extends javax.swing.JDialog {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-      
-    }//GEN-LAST:event_botaoSalvarActionPerformed
-
-    private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
-        
-    }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void tabelaAlunosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosComponentHidden
         // TODO add your handling code here:
@@ -226,9 +201,7 @@ public class HistoricoRehab extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoFechar;
-    private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextArea campoAviso;
     private javax.swing.JComboBox<String> comboIntervalo;
     private javax.swing.JComboBox<String> comboPeriodo;
