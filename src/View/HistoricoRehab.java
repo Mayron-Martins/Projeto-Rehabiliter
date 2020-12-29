@@ -19,9 +19,9 @@ public class HistoricoRehab extends javax.swing.JDialog {
     public HistoricoRehab(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        botaoAdicionar.setBackground(new Color(0,0,0,0));
+ 
         botaoFechar.setBackground(new Color(0,0,0,0));
-        botaoSalvar.setBackground(new Color(0,0,0,0));
+        
     }
 
     /**
