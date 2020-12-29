@@ -11,12 +11,15 @@ import java.awt.Color;
  *
  * @author 55989
  */
-public class ReposicaoView extends javax.swing.JFrame {
+public class ReposicaoView extends javax.swing.JDialog {
 
     /**
      * Creates new form ReposicaoView
+     * @param parent
+     * @param modal
      */
-    public ReposicaoView() {
+    public ReposicaoView(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
@@ -46,7 +49,7 @@ public class ReposicaoView extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -180,7 +183,14 @@ public class ReposicaoView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReposicaoView().setVisible(true);
+                ReposicaoView dialog = new ReposicaoView(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
