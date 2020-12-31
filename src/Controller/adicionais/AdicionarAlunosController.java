@@ -220,15 +220,15 @@ public class AdicionarAlunosController {
             
             //Limpando Campos
             view.getCampoNomeAluno().setText("");
-            view.getCampoCPFAluno().setText("");
-            view.getCampoTelefone().setText("");
-            view.getCampoCelular().setText("");
+            view.getCampoCPFAluno().setValue(null);
+            view.getCampoTelefone().setValue(null);
+            view.getCampoCelular().setValue(null);
             view.getCampoNomePai().setText("");
             view.getCampoNomeMae().setText("");
-            view.getCampoContatoPai().setText("");
-            view.getCampoContatoMae().setText("");
-            view.getCampoCPFPai().setText("");
-            view.getCampoCPFMae().setText("");
+            view.getCampoContatoPai().setValue(null);
+            view.getCampoContatoMae().setValue(null);
+            view.getCampoCPFPai().setValue(null);
+            view.getCampoCPFMae().setValue(null);
             view.getComboPlano().setSelectedIndex(0);
             view.getComboTurma().setSelectedIndex(0);
             view.getCampoValor().setText("");
@@ -236,7 +236,7 @@ public class AdicionarAlunosController {
             view.getCampoNum().setText("");
             view.getCampoBairro().setText("");
             view.getCampoCidade().setText("Santa Inês");
-            view.getCampoCEP().setText("");
+            view.getCampoCEP().setValue(null);
             view.getComboEstado().setSelectedItem("MA");
             view.getjPanelCadastroFinal().setVisible(false);
             view.getJpanelDados().setVisible(true);
@@ -248,15 +248,15 @@ public class AdicionarAlunosController {
             view.exibeMensagem("Não foi possível Salvar o Aluno corretamente.");
             //Limpando Campos
             view.getCampoNomeAluno().setText("");
-            view.getCampoCPFAluno().setText("");
-            view.getCampoTelefone().setText("");
-            view.getCampoCelular().setText("");
+            view.getCampoCPFAluno().setValue(null);
+            view.getCampoTelefone().setValue(null);
+            view.getCampoCelular().setValue(null);
             view.getCampoNomePai().setText("");
             view.getCampoNomeMae().setText("");
-            view.getCampoContatoPai().setText("");
-            view.getCampoContatoMae().setText("");
-            view.getCampoCPFPai().setText("");
-            view.getCampoCPFMae().setText("");
+            view.getCampoContatoPai().setValue(null);
+            view.getCampoContatoMae().setValue(null);
+            view.getCampoCPFPai().setValue(null);
+            view.getCampoCPFMae().setValue(null);
             view.getComboPlano().setSelectedIndex(0);
             view.getComboTurma().setSelectedIndex(0);
             view.getCampoValor().setText("");
@@ -264,7 +264,7 @@ public class AdicionarAlunosController {
             view.getCampoNum().setText("");
             view.getCampoBairro().setText("");
             view.getCampoCidade().setText("Santa Inês");
-            view.getCampoCEP().setText("");
+            view.getCampoCEP().setValue(null);
             view.getComboEstado().setSelectedItem("MA");
             view.getjPanelCadastroFinal().setVisible(false);
             view.getJpanelDados().setVisible(true);
