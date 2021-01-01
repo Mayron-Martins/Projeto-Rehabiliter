@@ -170,6 +170,10 @@ public class AdicionarAlunosController {
         if(view.getRenovacaoAuto().isSelected()){
         renovacaoAutomatica = 1;
         }
+        String situacao = "Pendente";
+        if(view.getCampoDataUltimoPag().getDate()!= null){
+            situacao = "Pago";
+        }
 
         //Cria os tipos Aluno, Endereco e Matricula com os dados
         
@@ -179,7 +183,7 @@ public class AdicionarAlunosController {
         Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
         
         Date dataVencimento = this.dataVencimento(aluno, servicoContratado, dataUltimoPag, diaVencimento);
-        Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, dataVencimento, dataUltimoPag, null, null, "Pendente");
+        Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, dataVencimento, dataUltimoPag, null, null, situacao);
         
         
         //Obtem a quantidade de alunos presentes na turma

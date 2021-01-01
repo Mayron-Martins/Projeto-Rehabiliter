@@ -134,6 +134,7 @@ public class AlunosDao extends Conexao{
         statement.close();
     }
     
+    
     //Remover Dados
     public void removerAluno(int codAluno) throws SQLException{
         //Removendo endereço e matricula do aluno

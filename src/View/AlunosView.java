@@ -183,6 +183,7 @@ public class AlunosView extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         painelConfiguracoesAdicionais.setBackground(new java.awt.Color(116, 174, 159));
+        painelConfiguracoesAdicionais.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.white, java.awt.Color.lightGray));
         painelConfiguracoesAdicionais.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFecharConf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharPeq.png"))); // NOI18N
@@ -232,7 +233,7 @@ public class AlunosView extends javax.swing.JDialog {
         jLabel4.setText("Data de Fim do Plano");
         painelConfiguracoesAdicionais.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
 
-        getContentPane().add(painelConfiguracoesAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 530, 250));
+        getContentPane().add(painelConfiguracoesAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(342, 350, 530, 340));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -718,8 +719,13 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_comboTurmasExistentesActionPerformed
 
     private void botaoConfigAdicionaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfigAdicionaisActionPerformed
-
+        //Mantém sempre na tabela de alunos
+        this.trocarTabelas(4);
+        this.selecionarTabelas(4);
+        
+        //Adiciona as informações aos campos
         controller.setarDatasConfiguracoesAd();
+        
         
         Component[] frameComponents = this.getContentPane().getComponents();
         for(Component componente:frameComponents){
@@ -838,29 +844,64 @@ public class AlunosView extends javax.swing.JDialog {
     private void trocarTabelas(int opcao){
         switch(opcao){
             case 1:
+                //Desativar visibilidade dos outros botões dos paineis
+                this.botaoAlunos.setVisible(false);
                 this.botaoPlanos.setVisible(false);
+                this.botaoEndereco.setVisible(false);
+                //Desativa vibilidades dos outros paineis
                 this.painelAlunos.setVisible(false);
+                this.painelEnderecos.setVisible(false);
+                this.painelPais.setVisible(false);
+                
+                //Ativa o botão pais e o painel de planos
                 this.botaoPais.setVisible(true);
                 this.painelPlanos.setVisible(true);
             break;
             
             case 2:
+                //Desativa os outros botões dos paineis
+                this.botaoAlunos.setVisible(false);
+                this.botaoPlanos.setVisible(false);
                 this.botaoPais.setVisible(false);
+                
+                //Desativa os outros painéis
+                this.painelAlunos.setVisible(false);
                 this.painelPlanos.setVisible(false);
+                this.painelEnderecos.setVisible(false);
+                
+                //Ativa o botão de endereço e o painel de pais
                 this.botaoEndereco.setVisible(true);
                 this.painelPais.setVisible(true);
             break;
             
             case 3:
+                //Desativa os outros botões dos paineis
+                this.botaoPlanos.setVisible(false);
+                this.botaoPais.setVisible(false);
                 this.botaoEndereco.setVisible(false);
+                
+                //Desativa os outros paineis
+                this.painelAlunos.setVisible(false);
+                this.painelPlanos.setVisible(false);
                 this.painelPais.setVisible(false);
+                
+                //Ativa o botão de alunos e o painel de endereços
                 this.botaoAlunos.setVisible(true);
                 this.painelEnderecos.setVisible(true);
             break;
             
             case 4:
+                //Desativa os outros botões dos paineis
                 this.botaoAlunos.setVisible(false);
+                this.botaoPais.setVisible(false);
+                this.botaoEndereco.setVisible(false);
+                
+                //Desativa os outros paineis
+                this.painelPlanos.setVisible(false);
+                this.painelPais.setVisible(false);
                 this.painelEnderecos.setVisible(false);
+                
+                //Ativa o botão de planos e o painel de alunos
                 this.botaoPlanos.setVisible(true);
                 this.painelAlunos.setVisible(true);
             break;
@@ -1032,6 +1073,31 @@ public class AlunosView extends javax.swing.JDialog {
                 controller.editarAluno();
             }
         });
+        
+        //passar paineis direita
+        JRootPane meurootpane3 = getRootPane();
+        meurootpane3.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "RIGHT");
+        meurootpane3.getRootPane().getActionMap().put("RIGHT", new AbstractAction("RIGHT") {
+
+            
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                atalhosPaineis(0);
+            }
+        });
+        //passar paineis direita
+        JRootPane meurootpane4 = getRootPane();
+        meurootpane4.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LEFT");
+        meurootpane4.getRootPane().getActionMap().put("LEFT", new AbstractAction("LEFT") {
+
+            
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                atalhosPaineis(1);
+            }
+        });
     }
 
     public Frame getParent() {
@@ -1114,12 +1180,55 @@ public class AlunosView extends javax.swing.JDialog {
         painelEnderecos.getViewport().getView().setEnabled(acao);
         
         jPanel1.setEnabled(acao);
-        //jPanel1.setVisible(acao);
+
         tabelaAlunos.getTableHeader().setEnabled(acao);
         tabelaPlanos.getTableHeader().setEnabled(acao);
         tabelaPais.getTableHeader().setEnabled(acao);
         tabelaEnderecos.getTableHeader().setEnabled(acao);
         comboTurmas.setVisible(acao);
         comboServicos.setVisible(acao);
+    }
+    
+    private void atalhosPaineis(int leftOrRight){
+        //0 - Direita
+        //1 - Esquerda
+        switch(leftOrRight){
+            case 0:
+                if(painelAlunos.isVisible()){
+                    for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
+                        painelPlanos.getComponent(linhas).setVisible(true);
+                    }
+                    this.trocarTabelas(1);
+                }else if(painelPlanos.isVisible()){
+                    this.trocarTabelas(2);
+                }else if(painelPais.isVisible()){
+                    this.trocarTabelas(3);
+                }else if(painelEnderecos.isVisible()){
+                    for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
+                        painelPlanos.getComponent(linhas).setVisible(false);
+                    }
+                    this.trocarTabelas(4);
+                }
+            break;
+            
+            case 1:
+                if(painelAlunos.isVisible()){
+                    this.trocarTabelas(3);
+                }else if(painelPlanos.isVisible()){
+                    for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
+                        painelPlanos.getComponent(linhas).setVisible(false);
+                    }
+                    this.trocarTabelas(4);
+                }else if(painelPais.isVisible()){
+                    for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
+                        painelPlanos.getComponent(linhas).setVisible(true);
+                    }
+                    this.trocarTabelas(1);
+                }else if(painelEnderecos.isVisible()){
+                    this.trocarTabelas(2);
+                }
+            break;
+        }
+        
     }
 }

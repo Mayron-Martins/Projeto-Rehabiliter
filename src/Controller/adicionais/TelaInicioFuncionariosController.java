@@ -58,6 +58,7 @@ public class TelaInicioFuncionariosController {
 
     public void inicializarTabela() throws SQLException, ParseException{
         ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
+        
         ArrayList <Aluno> alunosAniversariantes = new ArrayList<>();
         Date aniversario;
         if(alunos != null){
