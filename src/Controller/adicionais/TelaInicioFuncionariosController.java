@@ -27,6 +27,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -57,6 +59,7 @@ public class TelaInicioFuncionariosController {
     }
 
     public void inicializarTabela() throws SQLException, ParseException{
+        this.turmasAlterar();
         ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
         
         ArrayList <Aluno> alunosAniversariantes = new ArrayList<>();
@@ -234,6 +237,22 @@ public class TelaInicioFuncionariosController {
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Saída do Sistema", null);
         return logAcao;
     } 
+    
+    private void turmasAlterar(){
+        try{
+            ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
+            ArrayList <Aluno> alunos = new ArrayList<>();
+            
+            for(int linhas=0; linhas<turmas.size(); linhas++){
+                int codTurma = turmas.get(linhas).getCodBanco();
+                int quantidade = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codTurma = "+codTurma).size();
+                turmasDao.atualizarQuantAunos(codTurma, quantidade);
+            }
+        } catch (SQLException | ParseException ex) {
+            Logger.getLogger(TelaInicioFuncionariosController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+    }
 }
 
 
