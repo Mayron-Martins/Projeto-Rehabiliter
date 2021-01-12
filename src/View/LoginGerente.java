@@ -8,6 +8,7 @@ package View;
 import Controller.adicionais.LoginGerenteController;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import static java.lang.Thread.sleep;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -77,7 +78,18 @@ public class LoginGerente extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        campoCpfFuncionario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoCpfFuncionarioKeyPressed(evt);
+            }
+        });
         getContentPane().add(campoCpfFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 206, 300, 26));
+
+        campoSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoSenhaKeyPressed(evt);
+            }
+        });
         getContentPane().add(campoSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 248, 300, 26));
 
         botaoentrarGerente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -159,6 +171,18 @@ public class LoginGerente extends javax.swing.JFrame {
         RegistrodeGerente abrir= new RegistrodeGerente();
         abrir.setVisible(true);
     }//GEN-LAST:event_botaoCadastrarActionPerformed
+
+    private void campoCpfFuncionarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCpfFuncionarioKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaoentrarGerente);
+        }
+    }//GEN-LAST:event_campoCpfFuncionarioKeyPressed
+
+    private void campoSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSenhaKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaoentrarGerente);
+        }
+    }//GEN-LAST:event_campoSenhaKeyPressed
 
     /**
      * @param args the command line arguments

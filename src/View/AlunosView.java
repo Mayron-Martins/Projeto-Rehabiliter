@@ -740,7 +740,7 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoConfigAdicionaisActionPerformed
 
     private void botaoFecharConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharConfActionPerformed
-        // TODO add your handling code here:
+        controller.setarDataPagCadastro();
         
         Component[] frameComponents = this.getContentPane().getComponents();
         for(Component componente:frameComponents){
@@ -1057,6 +1057,9 @@ public class AlunosView extends javax.swing.JDialog {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(comboTurmasExistentes.getItemCount()==0){
+                    controller.verificacaoDeTurmaEServico();
+                }
                 controller.listarAlunos();
             }
         });
