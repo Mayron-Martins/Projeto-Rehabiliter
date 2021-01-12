@@ -12,13 +12,14 @@ import java.awt.Color;
  * @author 55989
  */
 public class HistoricoRehab extends javax.swing.JDialog {
-
+    private final java.awt.Frame parent;
     /**
      * Creates new form HistoricoRehab
      */
     public HistoricoRehab(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.parent = parent;
  
         botaoFechar.setBackground(new Color(0,0,0,0));
         

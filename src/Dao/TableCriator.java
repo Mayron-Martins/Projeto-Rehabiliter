@@ -55,6 +55,7 @@ public class TableCriator {
         this.tablePlanos();
         this.tableBackups();
         this.tableFreqFuncionarios();
+        this.tableReposicaoAulas();
         
         /*
         //Referenciação das tabelas.
@@ -436,6 +437,19 @@ public class TableCriator {
                 + "codFuncionario INT NOT NULL," //Associa a frequência ao código do funcionário.
                 + "situacao CHAR(1) NOT NULL" //P-presente (quando loga) ou A-ausente (quando deixa de logar o dia todo)
                 + ")ON [Funcionarios];");
+    }
+    
+    //Criação da tabela de Reposição de Aulas
+    private void tableReposicaoAulas() throws SQLException{
+        telaDeInicio.mudartexto("Criando tabela de Reposição de Aulas");
+        telaDeInicio.mudarPercentual();    
+        this.gerarStatement().execute("CREATE TABLE tblReposicaoAulas("
+                + "codBanco INT PRIMARY KEY,"
+                + "data DATE NOT NULL," //Data em que ocorreu a entrada no sistema.
+                + "codTurma INT NOT NULL,"
+                + "codAluno INT NOT NULL," //Associa a frequência ao código do funcionário.
+                + "situacao CHAR(2) NOT NULL" //Pr-presente, Au-ausente ou [P - Pendente.
+                + ")ON [AlunoseClientes];");
     }
 
 }

@@ -12,7 +12,8 @@ import java.awt.Color;
  * @author 55989
  */
 public class ReposicaoView extends javax.swing.JDialog {
-
+    private final java.awt.Frame parent;
+    private final HistoricoRehab telaHistorico;
     /**
      * Creates new form ReposicaoView
      * @param parent
@@ -21,6 +22,10 @@ public class ReposicaoView extends javax.swing.JDialog {
     public ReposicaoView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        this.parent = parent;
+        this.telaHistorico = new HistoricoRehab(parent, false);
+        
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
         btnAdicionar.setBackground(new Color(0,0,0,0));
@@ -91,6 +96,11 @@ public class ReposicaoView extends javax.swing.JDialog {
         getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 170, 35));
 
         btnHist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/reposicao/btnHisto.png"))); // NOI18N
+        btnHist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnHist, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 150, -1, 40));
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
@@ -152,6 +162,12 @@ public class ReposicaoView extends javax.swing.JDialog {
     private void campoPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoPesquisaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoPesquisaActionPerformed
+
+    private void btnHistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistActionPerformed
+        telaHistorico.setModal(true);
+        telaHistorico.setLocationRelativeTo(null);
+        telaHistorico.setVisible(true);
+    }//GEN-LAST:event_btnHistActionPerformed
 
     /**
      * @param args the command line arguments

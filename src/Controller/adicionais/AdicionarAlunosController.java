@@ -11,6 +11,7 @@ import Controller.auxiliar.ConversaoDiasDaSemana;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.ExportarArquivos;
 import Controller.auxiliar.ImpressaoComponentes;
+import Controller.auxiliar.LogsSystem;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
 import Dao.EnderecoAlunosDao;
@@ -249,6 +250,7 @@ public class AdicionarAlunosController {
             view.getCampoDataUltimoPag().setDate(null);
         }
         } catch (SQLException | ParseException | InvalidFormatException ex) {
+            this.gerarLog(ex);
             view.exibeMensagem("Não foi possível Salvar o Aluno corretamente.");
             //Limpando Campos
             view.getCampoNomeAluno().setText("");
@@ -471,5 +473,11 @@ public class AdicionarAlunosController {
                return converterData.conversaoLocalforDate(dataVencimento);
             }           
         } 
+    }
+    
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
     }
 }
