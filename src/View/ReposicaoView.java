@@ -44,14 +44,19 @@ public class ReposicaoView extends javax.swing.JDialog {
         botaoFechar = new javax.swing.JButton();
         campoPesquisa = new javax.swing.JTextField();
         botaobuscar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        comboDiaDaSemana = new javax.swing.JComboBox<>();
+        comboTurma = new javax.swing.JComboBox<>();
         btnHist = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        campoDataInicio = new com.toedter.calendar.JDateChooser();
+        campoDataFim = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaAgendamento = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tabelaAgendados = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -78,7 +83,7 @@ public class ReposicaoView extends javax.swing.JDialog {
                 campoPesquisaKeyPressed(evt);
             }
         });
-        getContentPane().add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 190, 35));
+        getContentPane().add(campoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 320, 35));
 
         botaobuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaobuscar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
@@ -87,13 +92,11 @@ public class ReposicaoView extends javax.swing.JDialog {
                 botaobuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 50, 35));
+        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 50, 35));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 170, 35));
+        getContentPane().add(comboDiaDaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 220, 190, 35));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 170, 35));
+        getContentPane().add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 220, 35));
 
         btnHist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/reposicao/btnHisto.png"))); // NOI18N
         btnHist.addActionListener(new java.awt.event.ActionListener() {
@@ -101,40 +104,78 @@ public class ReposicaoView extends javax.swing.JDialog {
                 btnHistActionPerformed(evt);
             }
         });
-        getContentPane().add(btnHist, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 150, -1, 40));
+        getContentPane().add(btnHist, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 150, -1, 40));
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
-        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 250, 50));
+        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 560, 250, 50));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Data Início");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
+        getContentPane().add(campoDataInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 150, 30));
+        getContentPane().add(campoDataFim, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 150, 30));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Data Fim");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, -1, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, 220, 35));
+
+        tabelaAgendamento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "CodBanco", "Nome", "Turma Atual"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 370, 400));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaAgendamento.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tabelaAgendamento);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 370, 120));
+
+        tabelaAgendados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "CodBanco", "Data", "Aluno", "Situação"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true
+            };
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 270, 370, 400));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tabelaAgendados);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 420, 400));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/reposicao/fundo.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -216,13 +257,18 @@ public class ReposicaoView extends javax.swing.JDialog {
     private javax.swing.JButton botaobuscar;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnHist;
+    private com.toedter.calendar.JDateChooser campoDataFim;
+    private com.toedter.calendar.JDateChooser campoDataInicio;
     private javax.swing.JTextField campoPesquisa;
+    private javax.swing.JComboBox<String> comboDiaDaSemana;
+    private javax.swing.JComboBox<String> comboTurma;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tabelaAgendados;
+    private javax.swing.JTable tabelaAgendamento;
     // End of variables declaration//GEN-END:variables
 }
