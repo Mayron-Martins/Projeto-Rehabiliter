@@ -5,7 +5,15 @@
  */
 package View;
 
+import Controller.adicionais.ReposicaoController;
+import Controller.auxiliar.FormatacaoCamposRestritosLetras;
+import com.sun.glass.events.KeyEvent;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -14,6 +22,7 @@ import java.awt.Color;
 public class ReposicaoView extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final HistoricoRehab telaHistorico;
+    private final ReposicaoController controller;
     /**
      * Creates new form ReposicaoView
      * @param parent
@@ -26,10 +35,14 @@ public class ReposicaoView extends javax.swing.JDialog {
         this.parent = parent;
         this.telaHistorico = new HistoricoRehab(parent, false);
         
+        controller = new ReposicaoController(this);
+        
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
-        btnAdicionar.setBackground(new Color(0,0,0,0));
+        botaoAdicionar.setBackground(new Color(0,0,0,0));
         btnHist.setBackground(new Color(0,0,0,0));
+        
+        ativarDesabilitarComponentes(false);
     }
 
     /**
@@ -42,17 +55,17 @@ public class ReposicaoView extends javax.swing.JDialog {
     private void initComponents() {
 
         botaoFechar = new javax.swing.JButton();
-        campoPesquisa = new javax.swing.JTextField();
+        campoPesquisa = new FormatacaoCamposRestritosLetras();
         botaobuscar = new javax.swing.JButton();
         comboDiaDaSemana = new javax.swing.JComboBox<>();
         comboTurma = new javax.swing.JComboBox<>();
         btnHist = new javax.swing.JButton();
-        btnAdicionar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        botaoAdicionar = new javax.swing.JButton();
+        jLabelDInicio = new javax.swing.JLabel();
         campoDataInicio = new com.toedter.calendar.JDateChooser();
         campoDataFim = new com.toedter.calendar.JDateChooser();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabelDFim = new javax.swing.JLabel();
+        comboTurmasExistentes = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaAgendamento = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -62,6 +75,11 @@ public class ReposicaoView extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
@@ -73,11 +91,6 @@ public class ReposicaoView extends javax.swing.JDialog {
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
 
-        campoPesquisa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoPesquisaActionPerformed(evt);
-            }
-        });
         campoPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 campoPesquisaKeyPressed(evt);
@@ -94,9 +107,19 @@ public class ReposicaoView extends javax.swing.JDialog {
         });
         getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 50, 35));
 
-        getContentPane().add(comboDiaDaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 220, 190, 35));
+        comboDiaDaSemana.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboDiaDaSemanaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(comboDiaDaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 220, 90, 35));
 
-        getContentPane().add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 220, 35));
+        comboTurma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTurmaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 320, 35));
 
         btnHist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/reposicao/btnHisto.png"))); // NOI18N
         btnHist.addActionListener(new java.awt.event.ActionListener() {
@@ -106,21 +129,26 @@ public class ReposicaoView extends javax.swing.JDialog {
         });
         getContentPane().add(btnHist, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 150, -1, 40));
 
-        btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
-        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 560, 250, 50));
+        botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
+        botaoAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAdicionarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 560, 250, 50));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Data Início");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
+        jLabelDInicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelDInicio.setText("Data Início");
+        getContentPane().add(jLabelDInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
         getContentPane().add(campoDataInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 150, 30));
         getContentPane().add(campoDataFim, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 150, 30));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Data Fim");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, -1, -1));
+        jLabelDFim.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelDFim.setText("Data Fim");
+        getContentPane().add(jLabelDFim, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, 220, 35));
+        comboTurmasExistentes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
+        getContentPane().add(comboTurmasExistentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, 220, 35));
 
         tabelaAgendamento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -145,7 +173,18 @@ public class ReposicaoView extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabelaAgendamento.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaAgendamento.getTableHeader().setReorderingAllowed(false);
+        tabelaAgendamento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tabelaAgendamentoFocusLost(evt);
+            }
+        });
+        tabelaAgendamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaAgendamentoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaAgendamento);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 370, 120));
@@ -173,6 +212,7 @@ public class ReposicaoView extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabelaAgendados.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(tabelaAgendados);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 420, 400));
@@ -190,25 +230,48 @@ public class ReposicaoView extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoFecharActionPerformed
 
     private void campoPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisaKeyPressed
-        
+    if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        getRootPane().setDefaultButton(botaobuscar);
+    }
         
     }//GEN-LAST:event_campoPesquisaKeyPressed
 
     private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
-
-       
-        
+        controller.pesquisarAluno();
     }//GEN-LAST:event_botaobuscarActionPerformed
-
-    private void campoPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoPesquisaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoPesquisaActionPerformed
 
     private void btnHistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistActionPerformed
         telaHistorico.setModal(true);
         telaHistorico.setLocationRelativeTo(null);
         telaHistorico.setVisible(true);
     }//GEN-LAST:event_btnHistActionPerformed
+
+    private void tabelaAgendamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAgendamentoMouseClicked
+        controller.selecionarTabelaAgendamento();
+    }//GEN-LAST:event_tabelaAgendamentoMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        controller.listarTurmas();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void tabelaAgendamentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelaAgendamentoFocusLost
+        controller.selecionarTabelaAgendamento();
+    }//GEN-LAST:event_tabelaAgendamentoFocusLost
+
+    private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
+        controller.adicionarAgendamento();
+    }//GEN-LAST:event_botaoAdicionarActionPerformed
+
+    private void comboTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmaActionPerformed
+        if(comboTurma.getSelectedIndex()==0){
+            comboDiaDaSemana.removeAllItems();
+        }
+        controller.listarHorarios();
+    }//GEN-LAST:event_comboTurmaActionPerformed
+
+    private void comboDiaDaSemanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDiaDaSemanaActionPerformed
+        controller.setarTabelaAgendados();
+    }//GEN-LAST:event_comboDiaDaSemanaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,22 +316,67 @@ public class ReposicaoView extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaobuscar;
-    private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnHist;
     private com.toedter.calendar.JDateChooser campoDataFim;
     private com.toedter.calendar.JDateChooser campoDataInicio;
     private javax.swing.JTextField campoPesquisa;
     private javax.swing.JComboBox<String> comboDiaDaSemana;
     private javax.swing.JComboBox<String> comboTurma;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> comboTurmasExistentes;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelDFim;
+    private javax.swing.JLabel jLabelDInicio;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tabelaAgendados;
     private javax.swing.JTable tabelaAgendamento;
     // End of variables declaration//GEN-END:variables
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    public JDateChooser getCampoDataFim() {
+        return campoDataFim;
+    }
+
+    public JDateChooser getCampoDataInicio() {
+        return campoDataInicio;
+    }
+
+    public JTextField getCampoPesquisa() {
+        return campoPesquisa;
+    }
+
+    public JComboBox<String> getComboDiaDaSemana() {
+        return comboDiaDaSemana;
+    }
+
+    public JComboBox<String> getComboTurma() {
+        return comboTurma;
+    }
+
+    public JComboBox<String> getComboTurmasExistentes() {
+        return comboTurmasExistentes;
+    }
+
+    public JTable getTabelaAgendados() {
+        return tabelaAgendados;
+    }
+
+    public JTable getTabelaAgendamento() {
+        return tabelaAgendamento;
+    }
+    
+    public void ativarDesabilitarComponentes(boolean opcao){
+        this.jLabelDInicio.setVisible(opcao);
+        this.jLabelDFim.setVisible(opcao);
+        this.campoDataFim.setVisible(opcao);
+        this.campoDataInicio.setVisible(opcao);
+        this.comboTurmasExistentes.setVisible(opcao);
+        this.botaoAdicionar.setVisible(opcao);
+    }
 }

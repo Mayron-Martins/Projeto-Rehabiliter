@@ -351,9 +351,11 @@ public class AlunosController {
     public void buscarAlunos(){
         try{
             String alunoPesquisa = view.getCampoPesquisa().getText();
-            ArrayList <Aluno> alunos = alunosDao.pesquisarPorNome(alunoPesquisa);
             if(alunoPesquisa.equals("")){listarAlunos();}
-            else{this.buscas(alunos);}   
+            else{
+                ArrayList <Aluno> alunos = alunosDao.pesquisarPorNome(alunoPesquisa);
+                this.buscas(alunos);
+            }   
         } catch (Exception ex) {
             this.gerarLog(ex);
         }
@@ -917,6 +919,7 @@ public class AlunosController {
         }
     }
     
+    //Gerar arquivo com o log de erro, caso haja
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();
         gerarLog.gravarErro(erro);
