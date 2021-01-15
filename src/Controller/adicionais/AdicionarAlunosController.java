@@ -37,6 +37,7 @@ import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -448,12 +449,15 @@ public class AdicionarAlunosController {
         
         
         if(resultadoMensal||resultadoAnual){
+            if(dataCad.plusMonths(1).getMonth().compareTo(Month.FEBRUARY)==0&&diaVencimento>28){
+                           diaVencimento = 28;
+            }
            if(dataPagamento==null){
-               dataVencimento = LocalDate.of(dataCad.getYear(), dataCad.plusMonths(1).getMonthValue(), diaVencimento);
+               dataVencimento = LocalDate.of(dataCad.plusMonths(1).getYear(), dataCad.plusMonths(1).getMonthValue(), diaVencimento);
                return converterData.conversaoLocalforDate(dataVencimento);
            }
            else{
-               dataVencimento = LocalDate.of(dataBanco.getYear(), dataBanco.plusMonths(1).getMonthValue(), diaVencimento);
+               dataVencimento = LocalDate.of(dataBanco.plusMonths(1).getYear(), dataBanco.plusMonths(1).getMonthValue(), diaVencimento);
                return converterData.conversaoLocalforDate(dataVencimento);
            }
         }

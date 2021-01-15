@@ -38,6 +38,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
@@ -703,6 +704,7 @@ public class CaixaController {
         BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
         Date vencimento = converterData.parseDate(converterData.parseDate(plano.getDataVencimento()));
         LocalDate dataVencimento = converterData.conversaoLocalforDate(vencimento);
+        int diaVencimento = plano.getDiaVencimento();
         
         Date dataUsual = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
         if(plano.getDataRenovacao()!=null){
@@ -721,7 +723,10 @@ public class CaixaController {
         
         if(aluno.getRenovacaoAutomatica()==1){
             if(mensal||anual){
-                dataVencimento = dataVencimento.plusMonths(1);
+                if(dataVencimento.plusMonths(1).getMonth().compareTo(Month.FEBRUARY)==0&&diaVencimento>28){
+                    diaVencimento = 28;
+                }
+                dataVencimento = LocalDate.of(dataVencimento.plusMonths(1).getYear(), dataVencimento.plusMonths(1).getMonthValue(), diaVencimento);
                 return converterData.conversaoLocalforDate(dataVencimento);
             }
             else{
@@ -731,14 +736,17 @@ public class CaixaController {
         }
         else{
             if(mensal||anual){
+                if(dataVencimento.plusMonths(1).getMonth().compareTo(Month.FEBRUARY)==0&&diaVencimento>28){
+                    diaVencimento = 28;
+                }
                 LocalDate dataAtual = LocalDate.now();
             
                 if(dataVencimentoFinal.isEqual(dataAtual)||dataVencimentoFinal.isBefore(dataAtual)){
                    return plano.getDataVencimento();
                 }
                 else{
-                   dataVencimento = dataVencimento.plusMonths(1);
-                   if(dataVencimentoFinal.isBefore(dataVencimento)){
+                   dataVencimento = LocalDate.of(dataVencimento.plusMonths(1).getYear(), dataVencimento.plusMonths(1).getMonthValue(), diaVencimento);
+                   if(!dataVencimentoFinal.isBefore(dataVencimento)){
                        return converterData.conversaoLocalforDate(dataVencimento); 
                    }
                    return plano.getDataVencimento();

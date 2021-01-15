@@ -864,7 +864,7 @@ public class AlunosController {
                     }
                    
                    if(dataPagamento==null){
-                       dataVencimento = LocalDate.of(dataCad.getYear(), dataCad.plusMonths(1).getMonthValue(), diaVencimento);
+                       dataVencimento = LocalDate.of(dataCad.plusMonths(1).getYear(), dataCad.plusMonths(1).getMonthValue(), diaVencimento);
                        dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
                        view2.getCampoDataVencimento().setDate(dataAVencer);
                        novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
@@ -872,7 +872,7 @@ public class AlunosController {
                        planosDao.atualizarSituacao(plano);
                    }
                    else{
-                       dataVencimento = LocalDate.of(dataBanco.getYear(), dataBanco.plusMonths(1).getMonthValue(), diaVencimento);
+                       dataVencimento = LocalDate.of(dataBanco.plusMonths(1).getYear(), dataBanco.plusMonths(1).getMonthValue(), diaVencimento);
                        dataAVencer = converterData.conversaoLocalforDate(dataVencimento);
                        view2.getCampoDataVencimento().setDate(dataAVencer);
                        novoPlano = new Planos(codAluno, plano.getCodTurma(), servico.getCodBanco(), plano.getDiaVencimento(), 
