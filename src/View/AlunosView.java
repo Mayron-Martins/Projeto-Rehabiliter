@@ -8,6 +8,7 @@ package View;
 import Controller.AlunosController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
+import View.Paineis.AlunosConfigAdicionais;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Component;
@@ -16,7 +17,6 @@ import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +29,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -45,6 +44,7 @@ public class AlunosView extends javax.swing.JDialog {
     private Point point = new Point();
     private final AlunosController controller;
     private AlunosCadastro telaAlunosCadastro;
+    private final AlunosConfigAdicionais painelConfigAdicionais;
     private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
     private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
     private javax.swing.JComboBox<String> comboEstado = new JComboBox<>();
@@ -61,10 +61,10 @@ public class AlunosView extends javax.swing.JDialog {
         telaAlunosCadastro = new AlunosCadastro(parent, false);
         
         this.setarComposicaoTabelas();
+        this.painelConfigAdicionais = new AlunosConfigAdicionais(parent, false, this);
+        controller = new AlunosController(this, painelConfigAdicionais);
         
-        controller = new AlunosController(this);
-        botaoFecharConf.setBackground(new Color(0,0,0,0));
-        jButton1.setBackground(new Color(0,0,0,0));
+        
         botaoConfigAdicionais.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -82,11 +82,7 @@ public class AlunosView extends javax.swing.JDialog {
         botaoAlunos.setBackground(new Color(0,0,0,0));
         botaoPlanos.setBackground(new Color(0,0,0,0));
         
-        campoAvisoDataVencimento.setVisible(false);
         botaoConfigAdicionais.setVisible(false);
-        painelConfiguracoesAdicionais.setVisible(false);
-        campoDataVencimento.setEnabled(false);
-        campoDataFimPlano.setEnabled(false);
         this.setInicialBotoes();
         fecharTelaESC();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
@@ -118,19 +114,6 @@ public class AlunosView extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        painelConfiguracoesAdicionais = new javax.swing.JPanel();
-        botaoFecharConf = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        campoDataCadastro = new com.toedter.calendar.JDateChooser();
-        jLabel2 = new javax.swing.JLabel();
-        campoDataPagamento = new com.toedter.calendar.JDateChooser();
-        jLabel3 = new javax.swing.JLabel();
-        campoDataVencimento = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        campoAvisoDataVencimento = new javax.swing.JTextArea();
-        campoDataFimPlano = new com.toedter.calendar.JDateChooser();
-        jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         painelAlunos = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
@@ -182,59 +165,6 @@ public class AlunosView extends javax.swing.JDialog {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        painelConfiguracoesAdicionais.setBackground(new java.awt.Color(116, 174, 159));
-        painelConfiguracoesAdicionais.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.white, java.awt.Color.lightGray));
-        painelConfiguracoesAdicionais.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        botaoFecharConf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharPeq.png"))); // NOI18N
-        botaoFecharConf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoFecharConfActionPerformed(evt);
-            }
-        });
-        painelConfiguracoesAdicionais.add(botaoFecharConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Data Cadastro");
-        painelConfiguracoesAdicionais.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
-        painelConfiguracoesAdicionais.add(campoDataCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 140, 30));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Data Último Pagamento");
-        painelConfiguracoesAdicionais.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
-        painelConfiguracoesAdicionais.add(campoDataPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 140, 30));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Data Vencimento");
-        painelConfiguracoesAdicionais.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, -1, -1));
-        painelConfiguracoesAdicionais.add(campoDataVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 140, 30));
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnSet.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        painelConfiguracoesAdicionais.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 180, 30));
-
-        campoAvisoDataVencimento.setEditable(false);
-        campoAvisoDataVencimento.setColumns(20);
-        campoAvisoDataVencimento.setRows(5);
-        jScrollPane1.setViewportView(campoAvisoDataVencimento);
-
-        painelConfiguracoesAdicionais.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 330, 70));
-        painelConfiguracoesAdicionais.add(campoDataFimPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 140, 30));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Data de Fim do Plano");
-        painelConfiguracoesAdicionais.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
-
-        getContentPane().add(painelConfiguracoesAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(342, 350, 530, 340));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -726,39 +656,9 @@ public class AlunosView extends javax.swing.JDialog {
         
         //Adiciona as informações aos campos
         controller.setarDatasConfiguracoesAd();
-        
-        
-        Component[] frameComponents = this.getContentPane().getComponents();
-        for(Component componente:frameComponents){
-            componente.setEnabled(false);
-        }
-        
-        this.bloquearLiberarPaineis(false);
-        
-        
-        painelConfiguracoesAdicionais.setEnabled(true);
-        painelConfiguracoesAdicionais.setVisible(true);
+        painelConfigAdicionais.setModal(true);
+        painelConfigAdicionais.setVisible(true);
     }//GEN-LAST:event_botaoConfigAdicionaisActionPerformed
-
-    private void botaoFecharConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharConfActionPerformed
-        controller.setarDataPagCadastro();
-        
-        Component[] frameComponents = this.getContentPane().getComponents();
-        for(Component componente:frameComponents){
-            componente.setEnabled(true);
-        }
-        
-        
-            this.bloquearLiberarPaineis(true);
-        
-        
-        painelConfiguracoesAdicionais.setEnabled(false);
-        painelConfiguracoesAdicionais.setVisible(false);
-    }//GEN-LAST:event_botaoFecharConfActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        controller.setarDataVencimento();
-    }//GEN-LAST:event_jButton1ActionPerformed
      
     /**
      * @param args the command line arguments
@@ -809,29 +709,16 @@ public class AlunosView extends javax.swing.JDialog {
     private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoEndereco;
     private javax.swing.JButton botaoFechar;
-    private javax.swing.JButton botaoFecharConf;
     private javax.swing.JButton botaoListar;
     private javax.swing.JButton botaoPais;
     private javax.swing.JButton botaoPlanos;
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaobuscar;
-    private javax.swing.JTextArea campoAvisoDataVencimento;
-    private com.toedter.calendar.JDateChooser campoDataCadastro;
-    private com.toedter.calendar.JDateChooser campoDataFimPlano;
-    private com.toedter.calendar.JDateChooser campoDataPagamento;
-    private com.toedter.calendar.JDateChooser campoDataVencimento;
     private javax.swing.JTextField campoPesquisa;
     private javax.swing.JComboBox<String> comboListar;
     private javax.swing.JComboBox<String> comboTurmasExistentes;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane painelAlunos;
-    private javax.swing.JPanel painelConfiguracoesAdicionais;
     private javax.swing.JScrollPane painelEnderecos;
     private javax.swing.JScrollPane painelPais;
     private javax.swing.JScrollPane painelPlanos;
@@ -968,36 +855,10 @@ public class AlunosView extends javax.swing.JDialog {
         return comboTurmasExistentes;
     }
 
-    public JDateChooser getCampoDataCadastro() {
-        return campoDataCadastro;
-    }
-
-    public JDateChooser getCampoDataPagamento() {
-        return campoDataPagamento;
-    }
-
-    public JDateChooser getCampoDataVencimento() {
-        return campoDataVencimento;
-    }
-
-    public JPanel getPainelConfiguracoesAdicionais() {
-        return painelConfiguracoesAdicionais;
-    }
-
     public JButton getBotaoConfigAdicionais() {
         return botaoConfigAdicionais;
     }
-
-    public JTextArea getCampoAvisoDataVencimento() {
-        return campoAvisoDataVencimento;
-    }
-
-    public JDateChooser getCampoDataFimPlano() {
-        return campoDataFimPlano;
-    }
-    
-    
-    
+        
     private void selecionarTabelas(int opcao){
         switch(opcao){
             case 1:
@@ -1238,5 +1099,9 @@ public class AlunosView extends javax.swing.JDialog {
 
     public AlunosController getController() {
         return controller;
+    }
+
+    public AlunosConfigAdicionais getPainelConfigAdicionais() {
+        return painelConfigAdicionais;
     }
 }
