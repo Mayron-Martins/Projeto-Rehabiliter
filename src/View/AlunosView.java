@@ -106,6 +106,7 @@ public class AlunosView extends javax.swing.JDialog {
     }
         });
         
+        
     }
 
     /**
@@ -1233,5 +1234,9 @@ public class AlunosView extends javax.swing.JDialog {
             break;
         }
         
+    }
+
+    public AlunosController getController() {
+        return controller;
     }
 }
