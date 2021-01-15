@@ -29,6 +29,11 @@ public class ReposicaoAulas {
         this.situacao = situacao;
     }
 
+    public ReposicaoAulas(int codBanco, String situacao) {
+        this.codBanco = codBanco;
+        this.situacao = situacao;
+    }
+    
     public int getCodBanco() {
         return codBanco;
     }

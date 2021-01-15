@@ -149,6 +149,26 @@ public class ReposicaoController {
     }
     
     public void adicionarAgendamento(){
+        Date dataInicio = view.getCampoDataInicio().getDate();
+        Date dataFim = view.getCampoDataFim().getDate();
+        if(dataInicio!=null&&dataFim!=null){
+            LocalDate dataInicioConv = converterData.conversaoLocalforDate(dataInicio);
+            LocalDate dataFimConv = converterData.conversaoLocalforDate(dataFim);
+            if(dataFimConv.isAfter(dataInicioConv)){
+                this.setarAgendamento();
+            }else{
+                view.exibeMensagem("Data final menor que inicial");
+                view.getComboTurmasExistentes().setSelectedIndex(0);
+                view.getCampoDataInicio().setDate(null);
+                view.getCampoDataFim().setDate(null);
+            }
+            
+        }else{
+            this.setarAgendamento();
+        }
+    }
+    
+    private void setarAgendamento(){
         int linhaSelecionada = view.getTabelaAgendamento().getSelectedRow();
         if(linhaSelecionada!=-1){
             try{
@@ -194,6 +214,9 @@ public class ReposicaoController {
                         dataFimConv = converterData.conversaoLocalforDate(dataFim);
                     }
                     
+                    if(dataFimConv.isBefore(dataInicioConv)){
+                        
+                    }
                     ArrayList <LocalDate> datasIniciais = new ArrayList<>();
                     int quantDiasAgendados = 0;
                     while(quantDiasAgendados!=horarios.size()){
@@ -234,8 +257,7 @@ public class ReposicaoController {
                 
             } catch (SQLException ex) {
                 gerarLog(ex);
-                view.exibeMensagem("Não foi possível o agendamento!");
-                view.getComboTurma().setSelectedIndex(view.getComboTurmasExistentes().getSelectedIndex()+1);
+                view.exibeMensagem("Não foi possível realizar o agendamento!");
                 view.getComboTurmasExistentes().setSelectedIndex(0);
                 view.getCampoDataInicio().setDate(null);
                 view.getCampoDataFim().setDate(null);
@@ -306,6 +328,65 @@ public class ReposicaoController {
         }
         else{
             limparTabelaAgendados();
+        }
+    }
+    
+    public void removerReposicao(){
+        int linhaSelecionada = view.getTabelaAgendados().getSelectedRow();
+        if(linhaSelecionada!=-1){
+            try{
+                int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhaSelecionada, 0).toString());
+                reposicaoDao.removerReposicao(codBanco);
+                view.exibeMensagem("Removido com sucesso!");
+                setarTabelaAgendados();
+            } catch (SQLException ex) {
+                gerarLog(ex);
+            }
+            
+        }
+    }
+    
+    public void editarAluno(){
+        int linhaSelecionada = view.getTabelaAgendados().getSelectedRow();
+        if(linhaSelecionada!=-1){
+            try{
+                int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhaSelecionada, 0).toString());
+                String situacao = "Au";
+                if(tabelaAgendados.getValueAt(linhaSelecionada, 3).equals(true)){
+                    situacao = "Pr";
+                }
+
+                ReposicaoAulas reposicao = new ReposicaoAulas(codBanco, situacao);
+                reposicaoDao.atualizarDados(reposicao);
+                view.exibeMensagem("Sucesso!");
+                setarTabelaAgendados();
+            } catch (SQLException ex) {
+                gerarLog(ex);
+            }
+            
+        }
+    }
+    
+    public void editarVariosAlunos(){
+        int totalLinhas = tabelaAgendados.getRowCount();
+        if(totalLinhas>0){
+            try{
+                for(int linhas =0; linhas<totalLinhas; linhas++){
+                    int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhas, 0).toString());
+                    String situacao = "Au";
+                    if(tabelaAgendados.getValueAt(linhas, 3).equals(true)){
+                        situacao = "Pr";
+                    }
+
+                    ReposicaoAulas reposicao = new ReposicaoAulas(codBanco, situacao);
+                    reposicaoDao.atualizarDados(reposicao);
+                }
+                view.exibeMensagem("Sucesso!");
+                setarTabelaAgendados();
+            } catch (SQLException ex) {
+                gerarLog(ex);
+            }
+            
         }
     }
     
