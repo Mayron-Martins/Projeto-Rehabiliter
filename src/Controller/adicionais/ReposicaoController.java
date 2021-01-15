@@ -390,6 +390,33 @@ public class ReposicaoController {
         }
     }
     
+    public void exibirFuturasReposicoes(){
+        try{
+            limparTabelaAgendados();
+            LocalDate dataAtualConv = LocalDate.now();
+            Date dataAtual = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtualConv));
+
+            ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE data >= '"+dataAtual+"'");
+            if(reposicoes!=null){
+                for(ReposicaoAulas reposicao : reposicoes){
+                        String dataConvertida = converterData.parseDate(reposicao.getData());
+
+                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+reposicao.getCodAluno()).get(0);
+                        boolean situacao = false;
+                        if(reposicao.getSituacao().equals("Pr")){
+                            situacao = true;
+                        }
+                        Object[] dadosDaTabela = {reposicao.getCodBanco(), dataConvertida, aluno.getNome(), situacao};
+                        tabelaAgendados.addRow(dadosDaTabela);
+                    }
+            }else{
+                view.exibeMensagem("Sem Dados.");
+            }
+        } catch (SQLException | ParseException ex) {
+            gerarLog(ex);
+        }
+    }
+    
     //Gerar arquivo com o log de erro, caso haja
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();

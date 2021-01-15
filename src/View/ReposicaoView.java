@@ -76,6 +76,7 @@ public class ReposicaoView extends javax.swing.JDialog {
         tabelaAgendamento = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaAgendados = new javax.swing.JTable();
+        botaoTodasReposicoes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -221,7 +222,15 @@ public class ReposicaoView extends javax.swing.JDialog {
         tabelaAgendados.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(tabelaAgendados);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 420, 400));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 420, 370));
+
+        botaoTodasReposicoes.setText("Exibir Todas");
+        botaoTodasReposicoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoTodasReposicoesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoTodasReposicoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 660, 220, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/reposicao/fundo.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -279,6 +288,10 @@ public class ReposicaoView extends javax.swing.JDialog {
         controller.setarTabelaAgendados();
     }//GEN-LAST:event_comboDiaDaSemanaActionPerformed
 
+    private void botaoTodasReposicoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTodasReposicoesActionPerformed
+        controller.exibirFuturasReposicoes();
+    }//GEN-LAST:event_botaoTodasReposicoesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -324,6 +337,7 @@ public class ReposicaoView extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoFechar;
+    private javax.swing.JButton botaoTodasReposicoes;
     private javax.swing.JButton botaobuscar;
     private javax.swing.JButton btnHist;
     private com.toedter.calendar.JDateChooser campoDataFim;
