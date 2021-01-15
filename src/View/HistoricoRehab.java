@@ -5,7 +5,13 @@
  */
 package View;
 
+import Controller.adicionais.HistoricoReposicoesController;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -13,6 +19,7 @@ import java.awt.Color;
  */
 public class HistoricoRehab extends javax.swing.JDialog {
     private final java.awt.Frame parent;
+    private final HistoricoReposicoesController controller;
     /**
      * Creates new form HistoricoRehab
      */
@@ -20,8 +27,11 @@ public class HistoricoRehab extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.parent = parent;
+        
+        controller = new HistoricoReposicoesController(this);
  
         botaoFechar.setBackground(new Color(0,0,0,0));
+        this.desativarCombos();
         
     }
 
@@ -38,15 +48,20 @@ public class HistoricoRehab extends javax.swing.JDialog {
         comboPeriodo = new javax.swing.JComboBox<>();
         botaoFechar = new javax.swing.JButton();
         painelderolagem = new javax.swing.JScrollPane();
-        tabelaAlunos = new javax.swing.JTable();
-        scrollPaneAviso = new javax.swing.JScrollPane();
-        campoAviso = new javax.swing.JTextArea();
+        tabelaReposicoes = new javax.swing.JTable();
         comboIntervalo = new javax.swing.JComboBox<>();
+        botaoAplicar = new javax.swing.JButton();
+        campoDataEspecífica = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         comboTurmas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
@@ -74,20 +89,20 @@ public class HistoricoRehab extends javax.swing.JDialog {
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
 
-        tabelaAlunos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaReposicoes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaReposicoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "CodAluno", "Nome", "Confirmação", "Situação"
+                "CodBanco", "Nome", "Situação"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -98,30 +113,21 @@ public class HistoricoRehab extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabelaAlunos.setFocusable(false);
-        tabelaAlunos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaAlunos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaAlunos.setRowHeight(25);
-        tabelaAlunos.setShowVerticalLines(false);
-        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
-        tabelaAlunos.addComponentListener(new java.awt.event.ComponentAdapter() {
+        tabelaReposicoes.setFocusable(false);
+        tabelaReposicoes.setGridColor(new java.awt.Color(255, 255, 255));
+        tabelaReposicoes.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabelaReposicoes.setRowHeight(25);
+        tabelaReposicoes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaReposicoes.setShowVerticalLines(false);
+        tabelaReposicoes.getTableHeader().setReorderingAllowed(false);
+        tabelaReposicoes.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaAlunosComponentHidden(evt);
+                tabelaReposicoesComponentHidden(evt);
             }
         });
-        painelderolagem.setViewportView(tabelaAlunos);
+        painelderolagem.setViewportView(tabelaReposicoes);
 
         getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
-
-        campoAviso.setEditable(false);
-        campoAviso.setColumns(20);
-        campoAviso.setRows(5);
-        campoAviso.setAutoscrolls(false);
-        scrollPaneAviso.setViewportView(campoAviso);
-
-        getContentPane().add(scrollPaneAviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 250, 190, 70));
-        campoAviso.setLineWrap(true);
-        campoAviso.setWrapStyleWord(true);
 
         comboIntervalo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
         comboIntervalo.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +137,16 @@ public class HistoricoRehab extends javax.swing.JDialog {
         });
         getContentPane().add(comboIntervalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 200, 40));
 
+        botaoAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnAplicar.png"))); // NOI18N
+        botaoAplicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicarHover.png"))); // NOI18N
+        botaoAplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAplicarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(698, 225, 60, 20));
+        getContentPane().add(campoDataEspecífica, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 220, 130, 30));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/reposicao/histFundo.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -138,26 +154,34 @@ public class HistoricoRehab extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tabelaAlunosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosComponentHidden
+    private void tabelaReposicoesComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaReposicoesComponentHidden
         // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaAlunosComponentHidden
+    }//GEN-LAST:event_tabelaReposicoesComponentHidden
 
     private void comboIntervaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervaloActionPerformed
-        
+    controller.setarTabelaCombo();
     }//GEN-LAST:event_comboIntervaloActionPerformed
 
     private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
-       
+        controller.ativarComboIntervalo();
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
     private void comboTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmasActionPerformed
-       
+        controller.ativarComboPeriodo();
     }//GEN-LAST:event_comboTurmasActionPerformed
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
+
+    private void botaoAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAplicarActionPerformed
+        controller.setarTabelaCampoData();
+    }//GEN-LAST:event_botaoAplicarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        controller.setarTurmas();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -202,14 +226,49 @@ public class HistoricoRehab extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAplicar;
     private javax.swing.JButton botaoFechar;
-    private javax.swing.JTextArea campoAviso;
+    private com.toedter.calendar.JDateChooser campoDataEspecífica;
     private javax.swing.JComboBox<String> comboIntervalo;
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JComboBox<String> comboTurmas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane painelderolagem;
-    private javax.swing.JScrollPane scrollPaneAviso;
-    private javax.swing.JTable tabelaAlunos;
+    private javax.swing.JTable tabelaReposicoes;
     // End of variables declaration//GEN-END:variables
+
+    public void exibeMensagem(String mensagem) {
+      JOptionPane.showMessageDialog(null, mensagem);
+    }
+
+    public JDateChooser getCampoDataEspecífica() {
+        return campoDataEspecífica;
+    }
+
+    public JComboBox<String> getComboIntervalo() {
+        return comboIntervalo;
+    }
+
+    public JComboBox<String> getComboPeriodo() {
+        return comboPeriodo;
+    }
+
+    public JComboBox<String> getComboTurmas() {
+        return comboTurmas;
+    }
+
+    public JTable getTabelaReposicoes() {
+        return tabelaReposicoes;
+    }
+
+    public JButton getBotaoAplicar() {
+        return botaoAplicar;
+    }
+    
+    private void desativarCombos(){
+        comboPeriodo.setEnabled(false);
+        comboIntervalo.setEnabled(false);
+        campoDataEspecífica.setEnabled(false);
+        botaoAplicar.setEnabled(false);
+    }
 }
