@@ -314,7 +314,8 @@ public class TableCriator {
         this.gerarStatement().execute("CREATE TABLE tblVendas("
                 + "codVenda INT NOT NULL," //Cada venda terá um código único.
                 + "codCliente INT NULL," //Caso a venda ocorra com um cliente.
-                + "codAluno INT NULL," //Caso a venda ocorra com um aluno.
+                + "codAluno INT NULL,"  //Caso a venda ocorra com um aluno.
+                + "codPlano INT NULL," //Caso a venda seja pagamento de plano
                 + "valorVenda DECIMAL(16,2) NOT NULL," //Valor total da venda.
                 + "valorPagoCliente DECIMAL(16,2) NOT NULL," //Valor pago pelo cliente.
                 + "valorTroco DECIMAL(16,2) NOT NULL," //Troco da venda.

@@ -947,6 +947,42 @@ public class AlunosController {
         }
     }
     
+    public void setarTabelaPlanosAdicionais(){
+        limparTabelaPlanosAdicionais();
+        int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
+        if(linhaSelecionada>-1){
+            int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+            try{
+                ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codAluno);
+                if(planos!=null){
+                    String situacao;
+                    for(Planos plano : planos){
+                        situacao = plano.getSituacao();
+                        if(!situacao.equals("Encerrado")){
+                            situacao = "Em Aberto";
+                        }
+                        Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+plano.getCodTurma()).get(0);
+                        Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
+                        Object[] dadosDaTabela = {plano.getChavePlano(), turma.getCodBanco()+"."+turma.getNomeTurma(), servico.getCodBanco()+"."+servico.getNome(),
+                        servico.getValor(), situacao};
+                        
+                        tabelaDePlanosAdicionais.addRow(dadosDaTabela);
+                    }
+                    
+                }
+            }catch (SQLException ex) {
+            this.gerarLog(ex);
+            }
+        }
+    }
+    
+    public void selecionarTabelaPlanosAdicionais(){
+        int linhaSelecionada = view2.getTabelaPlanos().getSelectedRow();
+        if(linhaSelecionada>-1){
+            int chavePlano = Integer.parseInt(tabelaDePlanosAdicionais.getValueAt(linhaSelecionada, 0).toString());
+        }
+    }
+    
     //Gerar arquivo com o log de erro, caso haja
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();

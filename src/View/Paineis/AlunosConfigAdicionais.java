@@ -76,6 +76,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         campoValorTotal = new JMoneyField();
         jLabel7 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        botaoCancelar = new javax.swing.JButton();
         botaoAplicar = new javax.swing.JButton();
         botaoReativarPlano = new javax.swing.JButton();
         botaoCadNvo = new javax.swing.JButton();
@@ -234,8 +235,11 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         jLabel13.setText("Valor Total");
         painelCadTurma.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 144, -1, -1));
 
+        botaoCancelar.setText("Cancelar");
+        painelCadTurma.add(botaoCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+
         botaoAplicar.setText("Aplicar");
-        painelCadTurma.add(botaoAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
+        painelCadTurma.add(botaoAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 70, -1));
 
         jPanel1.add(painelCadTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 660, 210, 250));
 
@@ -269,7 +273,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 701, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -335,6 +339,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAplicar;
     private javax.swing.JButton botaoCadNvo;
+    private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoFecharConf;
     private javax.swing.JButton botaoReativarPlano;
     private javax.swing.JButton botaoSetarVencimento;

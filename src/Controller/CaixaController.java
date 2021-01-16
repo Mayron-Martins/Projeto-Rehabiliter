@@ -30,7 +30,6 @@ import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.Caixa;
-import java.awt.Component;
 import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -39,7 +38,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -346,16 +344,20 @@ public class CaixaController {
             }
             
             
-            Vendas venda = new Vendas(codVenda, codCliente, codAluno, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
+            Vendas venda;
             ArrayList<ItemVendido> itens = new ArrayList<>();
             
-            long chaveVenda = venda.getChaveVenda();
+            long chaveVenda;
             int codProduto;
+            int codPlano=0;
             float quantidade;
             BigDecimal valor;
             BigDecimal subtotal;
             
+            //Venda Comum
             if(view.getPainelTabelaProdutos().isVisible()){
+                venda = new Vendas(codVenda, codCliente, codAluno, codPlano, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
+                chaveVenda = venda.getChaveVenda();
                 int quantLinhas = view.getTabelaDeCarrinho().getRowCount();
                 int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
                 for(int linhas=0; linhas<quantLinhas;linhas++){
@@ -397,6 +399,10 @@ public class CaixaController {
                 Planos planoAntigo = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codAluno).get(0);
                 Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0); 
                 BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
+                
+                codPlano = planoAntigo.getChavePlano();
+                venda = new Vendas(codVenda, codCliente, codAluno, codPlano, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
+                chaveVenda = venda.getChaveVenda();
                 
                 Date dataParaUso = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
                 if(planoAntigo.getDataRenovacao() != null){

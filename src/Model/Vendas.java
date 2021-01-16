@@ -17,6 +17,7 @@ public class Vendas {
     private int codVenda;
     private int codCliente;
     private int codAluno;
+    private int codPlano;
     private BigDecimal valorVenda;
     private BigDecimal valorPago;
     private BigDecimal valorTroco;
@@ -26,10 +27,11 @@ public class Vendas {
     private String plano;
     private int parcelas;
     
-    public Vendas(int codVenda, int codCliente, int codAluno, BigDecimal valorVenda, BigDecimal valorPago, BigDecimal valorTroco, Date dataVenda, String formaPagamento, String plano, int parcelas) {
+    public Vendas(int codVenda, int codCliente, int codAluno, int codPlano, BigDecimal valorVenda, BigDecimal valorPago, BigDecimal valorTroco, Date dataVenda, String formaPagamento, String plano, int parcelas) {
         this.codVenda = codVenda;
         this.codCliente = codCliente;
         this.codAluno = codAluno;
+        this.codPlano = codPlano;
         this.valorVenda = new BigDecimal(valorVenda.toString());
         this.valorPago = new BigDecimal(valorPago.toString());
         this.valorTroco = new BigDecimal(valorTroco.toString());
@@ -42,10 +44,11 @@ public class Vendas {
         this.parcelas = parcelas;
     }
     
-    public Vendas(int codVenda, int codCliente, int codAluno, BigDecimal valorVenda, BigDecimal valorPago, BigDecimal valorTroco, Date dataVenda, String formaPagamento, String plano, long chaveVenda, int parcelas) {
+    public Vendas(int codVenda, int codCliente, int codAluno, int codPlano, BigDecimal valorVenda, BigDecimal valorPago, BigDecimal valorTroco, Date dataVenda, String formaPagamento, String plano, long chaveVenda, int parcelas) {
         this.codVenda = codVenda;
         this.codCliente = codCliente;
         this.codAluno = codAluno;
+        this.codPlano = codPlano;
         this.valorVenda = new BigDecimal(valorVenda.toString());
         this.valorPago = new BigDecimal(valorPago.toString());
         this.valorTroco = new BigDecimal(valorTroco.toString());
@@ -68,6 +71,10 @@ public class Vendas {
 
     public int getCodAluno() {
         return codAluno;
+    }
+
+    public int getCodPlano() {
+        return codPlano;
     }
 
     public BigDecimal getValorVenda() {
