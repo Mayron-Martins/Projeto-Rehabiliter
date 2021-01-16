@@ -9,6 +9,7 @@ import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.ExportarArquivos;
 import Controller.auxiliar.ImpressaoComponentes;
+import Controller.auxiliar.LogsSystem;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
 import Dao.DetOrcamentarioDao;
@@ -120,56 +121,68 @@ public class CaixaController {
         this.buscasClientes(alunos);
     }
     
-    private void buscasClientes(ArrayList <Aluno> listar) throws Exception{
-        ArrayList<Turmas> turmas = new ArrayList<>();
-        ArrayList <Aluno> alunos = listar;
-        
+    private void buscasClientes(ArrayList <Aluno> listar){
+        try{
+            ArrayList<Turmas> turmas;
+            ArrayList <Aluno> alunos = listar;
 
-        if(alunos==null){view.exibeMensagem("Cliente Não Encontrado!"); limparTabelaClientes();}
-        else{
-            limparTabelaClientes();
-            for(int linhas = 0; linhas<alunos.size(); linhas++){
-            turmas = this.turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+
-                    alunos.get(linhas).getTurma());
 
-            //Inserindo dados na tabela de alunos
-            Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getCodBanco(), 
-            alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma()};
-            this.tabelaDeClientes.addRow(dadosDaTabelaAlunos);
+            if(alunos==null){view.exibeMensagem("Cliente Não Encontrado!"); limparTabelaClientes();}
+            else{
+                limparTabelaClientes();
+                for(int linhas = 0; linhas<alunos.size(); linhas++){
+                turmas = this.turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+
+                        alunos.get(linhas).getTurma());
+
+                //Inserindo dados na tabela de alunos
+                Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getCodBanco(), 
+                alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma()};
+                this.tabelaDeClientes.addRow(dadosDaTabelaAlunos);
+                }
             }
-        }
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }  
     }
     
     //Fim das Funções para Clientes
     
     //Funções para Tratamento de Produtos
     //Buscar Produtos no campo de busca
-    public void setarTabelaProdutos() throws Exception{
-        if(view.getCampoProdutoNome().isVisible()){
-            String produtoPesquisa = view.getCampoProdutoNome().getText();
-            if(produtoPesquisa.equals("")){listarProdutos();}
+    public void setarTabelaProdutos(){
+        try{
+            if(view.getCampoProdutoNome().isVisible()){
+                String produtoPesquisa = view.getCampoProdutoNome().getText();
+                if(produtoPesquisa.equals("")){listarProdutos();}
+                else{
+                    ArrayList <Produtos> produtos = produtosDao.pesquisarPorNome(produtoPesquisa);
+                    this.buscasProdutos(produtos);}
+            }
+
             else{
-                ArrayList <Produtos> produtos = produtosDao.pesquisarPorNome(produtoPesquisa);
+                String produtoPesquisa = view.getCampoProdutoCodigo().getText();
+                if(produtoPesquisa.equals("")){listarProdutos();}
+                else{ArrayList <Produtos> produtos = produtosDao.pesquisarPorID(produtoPesquisa);
                 this.buscasProdutos(produtos);}
-        }
-        
-        else{
-            String produtoPesquisa = view.getCampoProdutoCodigo().getText();
-            if(produtoPesquisa.equals("")){listarProdutos();}
-            else{ArrayList <Produtos> produtos = produtosDao.pesquisarPorID(produtoPesquisa);
-            this.buscasProdutos(produtos);}
-        }
-              
+            }
+        } catch (Exception ex) {
+            gerarLog(ex);
+        }     
     }    
     
-    public void listarProdutos() throws SQLException, ParseException, Exception{
-        ArrayList <Produtos> produtos= this.produtosDao.selecionarTodosProdutos();
-        this.buscasProdutos(produtos);
+    public void listarProdutos(){
+        try{
+            ArrayList <Produtos> produtos= this.produtosDao.selecionarTodosProdutos();
+            this.buscasProdutos(produtos);
+        } catch (SQLException | ParseException ex) {
+            gerarLog(ex);
+        }
+        
     }
     
-    private void buscasProdutos(ArrayList <Produtos> listar) throws Exception{
+    private void buscasProdutos(ArrayList <Produtos> listar){
         ArrayList<Produtos> produtos = listar; 
-        
+
         if(produtos==null){view.exibeMensagem("Produto Não Encontrado!"); limparTabelaProdutos();}
         else{
             limparTabelaProdutos();
@@ -298,7 +311,7 @@ public class CaixaController {
         int codBanco = Integer.parseInt(tabelaDeClientes.getValueAt(linhaSelecionada, 0).toString());
         
         Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codBanco).get(0);
-        Planos plano = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codBanco).get(0);
+        Planos plano = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codBanco+" AND situacao != 'Encerrado'").get(0);
         Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
         
         this.mensalidade(aluno, servico, plano);
@@ -349,14 +362,14 @@ public class CaixaController {
             
             long chaveVenda;
             int codProduto;
-            int codPlano=0;
+            int chavePlano=0;
             float quantidade;
             BigDecimal valor;
             BigDecimal subtotal;
             
             //Venda Comum
             if(view.getPainelTabelaProdutos().isVisible()){
-                venda = new Vendas(codVenda, codCliente, codAluno, codPlano, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
+                venda = new Vendas(codVenda, codCliente, codAluno, chavePlano, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
                 chaveVenda = venda.getChaveVenda();
                 int quantLinhas = view.getTabelaDeCarrinho().getRowCount();
                 int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
@@ -377,7 +390,7 @@ public class CaixaController {
                 if(funcionarios!=null){
                     String acao = "Venda Efetuada";
                     String descricao = "Venda no Valor de R$"+valorTotal+" com "+formaDePagamento+" ao cliente "+codAluno;
-                    this.setarLog(funcionarios, acao, descricao);
+                    this.setarLogAcoesFuncionario(funcionarios, acao, descricao);
                 }
                 }
                 
@@ -389,97 +402,111 @@ public class CaixaController {
                     DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario++, "Vendas", formaDePagamento, valorPago, dataVenda, chaveVenda);
                     orcamentarioDao.inserirDados(orcamentario);
                 }
+                
+                this.posVenda(venda, valorTotal);
             }
             
+            //Pagamento Plano
             else{
-                int linhaSelecionada = view.getTabelaMensalidade().getSelectedRow();
-                int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
-                
-                Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
-                Planos planoAntigo = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codAluno).get(0);
-                Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0); 
-                BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
-                
-                codPlano = planoAntigo.getChavePlano();
-                venda = new Vendas(codVenda, codCliente, codAluno, codPlano, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
-                chaveVenda = venda.getChaveVenda();
-                
-                Date dataParaUso = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
-                if(planoAntigo.getDataRenovacao() != null){
-                   dataParaUso = converterData.parseDate(converterData.parseDate(planoAntigo.getDataRenovacao()));
-                }
-                LocalDate dataFim = converterData.conversaoLocalforDate(dataParaUso).plusDays(servico.getPeriodDays());
-                Date dataFimPlano = converterData.conversaoLocalforDate(dataFim);
-                
-                codProduto = 0;
-                quantidade = 1;
-                valor = valorTotal;
-                subtotal = valor;
+                int totalLinhas = view.getTabelaMensalidade().getRowCount();
+                if(totalLinhas>0){
+                    int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
+                    chavePlano = Integer.parseInt(tabelaDeMensalidade.getValueAt(0, 0).toString());
                     
-                ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
-                itens.add(itemVendido);
-                
-                Planos plano;
-                Date dataVencimento = this.dataVencimento(aluno, servico, planoAntigo);
-                if(dataFim.isEqual(dataAtual)||dataFim.isBefore(dataAtual)){
-                    if(aluno.getRenovacaoAutomatica()==1){
-                        plano = new Planos(codAluno, 0, 0, 0, dataVencimento, dataVenda, null, dataFimPlano, "Pago"); 
-                    }
-                    else{
-                        plano = new Planos(codAluno, 0, 0, 0, dataVencimento, dataVenda, null, null, "Encerrado"); 
-                    }
-                   
-                }
-                else{
-                    plano = new Planos(codAluno, 0, 0, 0,dataVencimento, dataVenda, null, planoAntigo.getDataRenovacao(), "Pago"); 
-                }
-                
-                if(debitos.compareTo(BigDecimal.ZERO)!=0){
-                    if(debitos.subtract(valor).compareTo(BigDecimal.ZERO)>=0){
-                        vendasDao.inserirDados(venda, itens);
-                        LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
-                        for(int linhas=0; linhas<parcelas;linhas++){
-                            dataParcelamentos = dataParcelamentos.plusMonths(1);
-                            dataVenda = converterData.conversaoLocalforDate(dataParcelamentos);
-                            DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario++, "Planos", formaDePagamento, valorPago, dataVenda, chaveVenda);
-                            orcamentarioDao.inserirDados(orcamentario);
-                        }
-                        planosDao.atualizarSituacao(plano);
-                        alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
-                        
-                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                    if(funcionarios!=null){
-                        String acao = "Pagamento de Plano";
-                        String descricao = "Pagamento do plano do aluno "+aluno.getNome()+" da turma "+aluno.getTurma()+" no valor de "+valorTotal;
-                        this.setarLog(funcionarios, acao, descricao);
-                    }
-                    }
-                    else{
-                        view.exibeMensagem("Erro, verifique se o Valor Total corresponde ao Contrato!");
-                    }
-                }
-                else{
-                    view.exibeMensagem("Aluno Sem Débitos!");
-                }  
-            }
-            BigDecimal valorDesconto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVDesconto().getText()).toString());
-            view.exibeMensagem("Venda Concluída!");
-            
-            int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja realizar a impressão do comprovante?", 
-                    "Nota", JOptionPane.YES_NO_OPTION);
-            if(confirmacao == JOptionPane.YES_OPTION){
-               String subtotalVenda = valorTotal.add(valorDesconto).toString();
-               String desconto = view.getCampoVDesconto().getText();
-               this.imprimirComprovanteVenda(venda, subtotalVenda, desconto);
-            }
-            else{
-                this.novaVenda();
-            }
+                    //Pegando Informações do Banco
+                    Planos planoAntigo = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE chavePlano = "+chavePlano).get(0);
+                    Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+planoAntigo.getCodServico()).get(0); 
+                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
+                    BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
 
+                    //Construindo a venda
+                    venda = new Vendas(codVenda, codCliente, codAluno, chavePlano, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
+                    chaveVenda = venda.getChaveVenda();
+
+                    
+                    Date dataParaUso = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
+                    if(planoAntigo.getDataRenovacao() != null){
+                       dataParaUso = converterData.parseDate(converterData.parseDate(planoAntigo.getDataRenovacao()));
+                    }
+                    LocalDate dataFim = converterData.conversaoLocalforDate(dataParaUso).plusDays(servico.getPeriodDays());
+                    Date dataFimPlano = converterData.conversaoLocalforDate(dataFim);
+
+                    codProduto = 0;
+                    quantidade = 1;
+                    valor = valorTotal;
+                    subtotal = valor;
+
+                    ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
+                    itens.add(itemVendido);
+
+                    Planos plano;
+                    Date dataVencimento = this.dataVencimento(aluno, servico, planoAntigo);
+                    if(dataFim.isEqual(dataAtual)||dataFim.isBefore(dataAtual)){
+                        if(aluno.getRenovacaoAutomatica()==1){
+                            plano = new Planos(codAluno, 0, 0, 0, dataVencimento, dataVenda, null, dataFimPlano, "Pago"); 
+                        }
+                        else{
+                            plano = new Planos(codAluno, 0, 0, 0, dataVencimento, dataVenda, null, null, "Encerrado"); 
+                        }
+
+                    }
+                    else{
+                        plano = new Planos(codAluno, 0, 0, 0,dataVencimento, dataVenda, null, planoAntigo.getDataRenovacao(), "Pago"); 
+                    }
+
+                    if(debitos.compareTo(BigDecimal.ZERO)!=0){
+                        if(debitos.subtract(valor).compareTo(BigDecimal.ZERO)>=0){
+                            vendasDao.inserirDados(venda, itens);
+                            LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
+                            for(int linhas=0; linhas<parcelas;linhas++){
+                                dataParcelamentos = dataParcelamentos.plusMonths(1);
+                                dataVenda = converterData.conversaoLocalforDate(dataParcelamentos);
+                                DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Planos", formaDePagamento, valorPago, dataVenda, chaveVenda);
+                                codOrcamentario++;
+                                orcamentarioDao.inserirDados(orcamentario);
+                            }
+                            planosDao.atualizarSituacao(plano);
+                            alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
+
+                        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                        if(funcionarios!=null){
+                            String acao = "Pagamento de Plano";
+                            String descricao = "Pagamento do plano do aluno "+aluno.getNome()+" da turma "+aluno.getTurma()+" no valor de "+valorTotal;
+                            this.setarLogAcoesFuncionario(funcionarios, acao, descricao);
+                        }
+                        }
+                        else{
+                            view.exibeMensagem("Erro, verifique se o Valor Total corresponde ao Contrato!");
+                        }
+                    }
+                    else{
+                        view.exibeMensagem("Aluno Sem Débitos!");
+                    }
+                }
+                  
+            }
         }
         else{
             view.exibeMensagem("Adicione uma Forma de Pagamento!");
         }
+    }
+    
+    //Método ao Final da Venda
+    private void posVenda(Vendas venda, BigDecimal valorTotal){
+        //Impressão ou Não do Comprovante e nova venda
+        BigDecimal valorDesconto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVDesconto().getText()).toString());
+        view.exibeMensagem("Venda Concluída!");
+
+        int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja realizar a impressão do comprovante?", 
+                "Nota", JOptionPane.YES_NO_OPTION);
+        if(confirmacao == JOptionPane.YES_OPTION){
+           String subtotalVenda = valorTotal.add(valorDesconto).toString();
+           String desconto = view.getCampoVDesconto().getText();
+           this.imprimirComprovanteVenda(venda, subtotalVenda, desconto);
+        }
+        else{
+            this.novaVenda();
+        }     
     }
     
     private String retornarFormaPagamento(){
@@ -521,40 +548,40 @@ public class CaixaController {
         }
     }
     
-    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
+    private LogAçoesFuncionario setarLogAcoesFuncionario(ArrayList <Funcionario> funcionarios, String acao, String descricao){
         Funcionario funcionario = funcionarios.get(0);
         Date dataEvento = new Date();
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
         return logAcao;
     }
     
-    private void imprimirComprovanteVenda(Vendas venda,String subtotal, String desconto) throws ParseException{
-        //Dados da empresa
-        String nomeEmpresa = "REHABILITER";
-        String endereco = "Rua Botafogo, 150. Centro de Santa Inês-MA";
-        String cnpj = "CNPJ: 30.854.735/0001-43";
-        String contato = "Tel.: 3653-6694";
-        String email= "rehabiliterfintess@gmail.com";
-        String dadosEmpresa = "\t\t   "+nomeEmpresa+"\n\r     "
-                +endereco+"\n\t     "
-                +cnpj+"\n\t\t  "
-                +contato+"\n\t    "
-                +email+"\n\r"
-                + "---------------------------------------------------------\n\r";
-        //String Divisória
-        String divisoria = "\t\t  NOTA NÃO FISCAL\n\r"
-                + "---------------------------------------------------------\n\r";
-        
-        //Dados do Cliente
-        String nomeCliente = "Cliente:";
-        String cpf = "CPF:";
-        if(venda.getCodAluno()==0){
-            nomeCliente+=" Sem Cadastro";
-            cpf+=" Não se Aplica";
-        }
-        else{
-            AlunosDao alunoDao = new AlunosDao();
-            try {
+    private void imprimirComprovanteVenda(Vendas venda,String subtotal, String desconto){
+        try{
+            //Dados da empresa
+            String nomeEmpresa = "REHABILITER";
+            String endereco = "Rua Botafogo, 150. Centro de Santa Inês-MA";
+            String cnpj = "CNPJ: 30.854.735/0001-43";
+            String contato = "Tel.: 3653-6694";
+            String email= "rehabiliterfintess@gmail.com";
+            String dadosEmpresa = "\t\t   "+nomeEmpresa+"\n\r     "
+                    +endereco+"\n\t     "
+                    +cnpj+"\n\t\t  "
+                    +contato+"\n\t    "
+                    +email+"\n\r"
+                    + "---------------------------------------------------------\n\r";
+            //String Divisória
+            String divisoria = "\t\t  NOTA NÃO FISCAL\n\r"
+                    + "---------------------------------------------------------\n\r";
+
+            //Dados do Cliente
+            String nomeCliente = "Cliente:";
+            String cpf = "CPF:";
+            if(venda.getCodAluno()==0){
+                nomeCliente+=" Sem Cadastro";
+                cpf+=" Não se Aplica";
+            }
+            else{
+                AlunosDao alunoDao = new AlunosDao();
                 Aluno aluno = alunoDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+venda.getCodAluno()).get(0);
                 nomeCliente+= " "+aluno.getNome();
                 if(aluno.getCpf()!=null){
@@ -563,97 +590,92 @@ public class CaixaController {
                 else{
                     cpf+=" Não Possui";
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(ImpressaoComponentes.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        
-        String dadosCliente = nomeCliente+"\n\r"+cpf+"\n\r---------------------------------------------------------\n\r";
-        
-        String cabecalho="";
-        String dadosTabela="";
-        
-        if(venda.getPlano().equals("N")){
-           String codHProduto = "COD";
-           String descricaoHProduto = "DESCRIÇÃO";
-           String quantidadeH = "QUANT";
-           String valorH = "VALOR";
-           cabecalho = codHProduto+"\t"+descricaoHProduto+"\t\t  "+quantidadeH+"\t  "+valorH+"\n\r";
-           
-           
-           int linhasTabela = tabelaDeCarrinho.getRowCount();
-           for(int linhas=0; linhas<linhasTabela; linhas++){
-               
-               String produto = tabelaDeCarrinho.getValueAt(linhas, 1).toString();
-               if(produto.length()>20){
-                   produto = produto.substring(0, 19);
-               }
-               else{
-                   while(produto.length()<20){
-                       produto+=" ";
+
+            String dadosCliente = nomeCliente+"\n\r"+cpf+"\n\r---------------------------------------------------------\n\r";
+
+            String cabecalho="";
+            String dadosTabela="";
+
+            if(venda.getPlano().equals("N")){
+               String codHProduto = "COD";
+               String descricaoHProduto = "DESCRIÇÃO";
+               String quantidadeH = "QUANT";
+               String valorH = "VALOR";
+               cabecalho = codHProduto+"\t"+descricaoHProduto+"\t\t  "+quantidadeH+"\t  "+valorH+"\n\r";
+
+
+               int linhasTabela = tabelaDeCarrinho.getRowCount();
+               for(int linhas=0; linhas<linhasTabela; linhas++){
+
+                   String produto = tabelaDeCarrinho.getValueAt(linhas, 1).toString();
+                   if(produto.length()>20){
+                       produto = produto.substring(0, 19);
                    }
-               }
-               dadosTabela+=tabelaDeCarrinho.getValueAt(linhas, 0)+"\t"
-                       +produto+"\t      "
-                       +tabelaDeCarrinho.getValueAt(linhas, 3)+"    R$ "
-                       +tabelaDeCarrinho.getValueAt(linhas, 4)+"\n\r";
-           }
-        }
-        else{
-           String codHAluno = "COD";
-           String descricaoHPlano = "PLANO";
-           String vencimentoH = "VENCIMENTO";
-           String valorH = "VALOR";
-           cabecalho = codHAluno+"\t"+descricaoHPlano+"\t\t"+vencimentoH+"\t  "+valorH+"\n";
-           
-           int linhasTabela = tabelaDeMensalidade.getRowCount();
-           for(int linhas=0; linhas<linhasTabela; linhas++){
-               String servico = tabelaDeMensalidade.getValueAt(linhas, 2).toString();
-               if(servico.length()>20){
-                   servico = servico.substring(0, 19);
-               }
-               else{
-                   while(servico.length()<20){
-                       servico+=" ";
+                   else{
+                       while(produto.length()<20){
+                           produto+=" ";
+                       }
                    }
+                   dadosTabela+=tabelaDeCarrinho.getValueAt(linhas, 0)+"\t"
+                           +produto+"\t      "
+                           +tabelaDeCarrinho.getValueAt(linhas, 3)+"    R$ "
+                           +tabelaDeCarrinho.getValueAt(linhas, 4)+"\n\r";
                }
-               
-               dadosTabela+=tabelaDeMensalidade.getValueAt(linhas, 0).toString()+"\t"
-                       +servico+"\t   "
-                       +tabelaDeMensalidade.getValueAt(linhas, 3).toString()+"  R$ "
-                       +venda.getValorVenda()+"\n\r";
-           }
-        }
-        //Dados Gerais da Venda
-        String valorSubtotal = "SUBTOTAL \t\t\t\t\tR$"+subtotal+"\n\r";
-        String descontot = "DESCONTO \t\t\t\t\tR$"+desconto+"\n\r";
-        String valorTotal = "VALOR TOTAL\t\t\t\t\tR$"+venda.getValorVenda()+"\n\r";
-        String valorPago = "PAGO \t\t\t\t\t     "+venda.getParcelas()+" X R$"+venda.getValorPago()+"\n\r";
-        String valorTroco = "TROCO \t\t\t\t\t\tR$"+venda.getValorTroco()+"\n\r";
-        
-        Date dataComprovante = new Date();
-        String data = "\t\t"+converterData.parseDateAndTime(dataComprovante);
-        String despedida = "\n\n\t\t    VOLTE SEMPRE!";
-        String espaco = "---------------------------------------------------------\n\r";
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-        String dataArquivo = sdf.format(dataComprovante);
-        
-        String comprovante = dadosEmpresa+divisoria+dadosCliente+cabecalho+espaco+dadosTabela+espaco+valorSubtotal+descontot
-        +valorTotal+valorPago+valorTroco+espaco+data+despedida;
-        exportarComprovante.geraArquivoTxt(comprovante, "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
-        try {
+            }
+            else{
+               String codHAluno = "COD";
+               String descricaoHPlano = "PLANO";
+               String vencimentoH = "VENCIMENTO";
+               String valorH = "VALOR";
+               cabecalho = codHAluno+"\t"+descricaoHPlano+"\t\t"+vencimentoH+"\t  "+valorH+"\n";
+
+               int linhasTabela = tabelaDeMensalidade.getRowCount();
+               for(int linhas=0; linhas<linhasTabela; linhas++){
+                   String servico = tabelaDeMensalidade.getValueAt(linhas, 2).toString();
+                   if(servico.length()>20){
+                       servico = servico.substring(0, 19);
+                   }
+                   else{
+                       while(servico.length()<20){
+                           servico+=" ";
+                       }
+                   }
+
+                   dadosTabela+=tabelaDeMensalidade.getValueAt(linhas, 0).toString()+"\t"
+                           +servico+"\t   "
+                           +tabelaDeMensalidade.getValueAt(linhas, 3).toString()+"  R$ "
+                           +venda.getValorVenda()+"\n\r";
+               }
+            }
+            //Dados Gerais da Venda
+            String valorSubtotal = "SUBTOTAL \t\t\t\t\tR$"+subtotal+"\n\r";
+            String descontot = "DESCONTO \t\t\t\t\tR$"+desconto+"\n\r";
+            String valorTotal = "VALOR TOTAL\t\t\t\t\tR$"+venda.getValorVenda()+"\n\r";
+            String valorPago = "PAGO \t\t\t\t\t     "+venda.getParcelas()+" X R$"+venda.getValorPago()+"\n\r";
+            String valorTroco = "TROCO \t\t\t\t\t\tR$"+venda.getValorTroco()+"\n\r";
+
+            Date dataComprovante = new Date();
+            String data = "\t\t"+converterData.parseDateAndTime(dataComprovante);
+            String despedida = "\n\n\t\t    VOLTE SEMPRE!";
+            String espaco = "---------------------------------------------------------\n\r";
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+            String dataArquivo = sdf.format(dataComprovante);
+
+            String comprovante = dadosEmpresa+divisoria+dadosCliente+cabecalho+espaco+dadosTabela+espaco+valorSubtotal+descontot
+            +valorTotal+valorPago+valorTroco+espaco+data+despedida;
+            exportarComprovante.geraArquivoTxt(comprovante, "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
             sleep(15);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(CaixaController.class.getName()).log(Level.SEVERE, null, ex);
+            exportarComprovante.ConvertTxtToPDF("C:/Rehabiliter/Info/Comprovantes/documento.pdf", "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
+            imprimirComprovante.impressao("C:/Rehabiliter/Info/Comprovantes/documento.pdf");
+
+
+            novaVenda();
+        } catch (SQLException | ParseException | InterruptedException ex) {
+            gerarLog(ex);
         }
-        exportarComprovante.ConvertTxtToPDF("C:/Rehabiliter/Info/Comprovantes/documento.pdf", "C:/Rehabiliter/Info/Comprovantes/Comprovante dia "+dataArquivo+".txt");
-        imprimirComprovante.impressao("C:/Rehabiliter/Info/Comprovantes/documento.pdf");
         
-        
-        novaVenda();
     }
     
     private void novaVenda(){
@@ -682,32 +704,32 @@ public class CaixaController {
         }
     }
     
-    private void mensalidade(Aluno aluno, Servicos servico, Planos plano) throws ParseException{
+    private void mensalidade(Aluno aluno, Servicos servico, Planos plano){
         BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
         String nomeServico = plano.getCodServico()+"."+servico.getNome()+"-"+servico.getPeriodo();
         String situacao = plano.getSituacao();
         Date dataVencimento = plano.getDataVencimento();
-        
         if(dataVencimento != null){
-            int renovacaoAutomatica = aluno.getRenovacaoAutomatica();            
+            int renovacaoAutomatica = aluno.getRenovacaoAutomatica();
             BigDecimal valorMensal = aluno.getValorMensal();
             
             if(servico.getPeriodDays()<30){
                 if(renovacaoAutomatica == 1){
                     BigDecimal period = (new BigDecimal(30)).divide(periodDays,4, RoundingMode.UP);
                     valorMensal = valorMensal.divide(period, 4, RoundingMode.UP);
-                    valorMensal = valorMensal.setScale(2, RoundingMode.UP);
-                } 
+                    valorMensal = valorMensal.setScale(2, RoundingMode.UP); 
+                }
             }
-            Object[] dadosTabela = {aluno.getCodBanco(), aluno.getNome(), nomeServico, valorMensal, dataVencimento, situacao};
+            Object[] dadosTabela = {plano.getChavePlano(), aluno.getNome(), nomeServico, valorMensal, dataVencimento, situacao};
             tabelaDeMensalidade.addRow(dadosTabela);
         }else{
             view.exibeMensagem("Adicione uma data de validade ao plano na tela de Alunos.");
         }
     }
     
-    private Date dataVencimento(Aluno aluno, Servicos servico, Planos plano) throws ParseException{
-        BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
+    private Date dataVencimento(Aluno aluno, Servicos servico, Planos plano){
+        try{
+            BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
         Date vencimento = converterData.parseDate(converterData.parseDate(plano.getDataVencimento()));
         LocalDate dataVencimento = converterData.conversaoLocalforDate(vencimento);
         int diaVencimento = plano.getDiaVencimento();
@@ -762,5 +784,15 @@ public class CaixaController {
                 return plano.getDataVencimento();
             }
         }
+        } catch (ParseException ex) {
+            gerarLog(ex);
+            return null;
+        }
+    }
+    
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
     }
 }

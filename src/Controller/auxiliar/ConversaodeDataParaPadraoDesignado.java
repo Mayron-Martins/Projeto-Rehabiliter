@@ -12,18 +12,26 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConversaodeDataParaPadraoDesignado {
-    public Date parseDate(String data) throws ParseException {
-        if(data==null||data.equals("")){
+    //Conversão de data para o formato dd/MM/YYYY
+    public Date parseDate(String data){
+        try{
+            if(data==null||data.equals("")){
+                return null;
+            }
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            sdf.setLenient(false);
+            return sdf.parse(data);
+        } catch (ParseException ex) {
+            gerarLog(ex);
             return null;
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        sdf.setLenient(false);
-        return sdf.parse(data);
+        } 
     }
 
-    public String parseDate(Date data) throws ParseException {
+    public String parseDate(Date data){
         if(data == null){
             return null;
         }
@@ -31,7 +39,7 @@ public class ConversaodeDataParaPadraoDesignado {
         sdf.setLenient(false);
         return sdf.format(data);
     }
-
+    //Conversao de data para o formato do banco
     public java.sql.Date getSqlDate(Date data) {
         if(data == null){
             return null;
@@ -39,16 +47,22 @@ public class ConversaodeDataParaPadraoDesignado {
         return new java.sql.Date(data.getTime());
     }
     
-    public Date parseDateAndTime(Timestamp data) throws ParseException{
-        if(data==null){
+    //Conversão de dia e hora para dd/HH/yyyy HH:mm:ss
+    public Date parseDateAndTime(Timestamp data){
+        try{
+            if(data==null){
+                return null;
+            }
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            sdf.setLenient(false);
+            return sdf.parse(sdf.format(data));
+        } catch (ParseException ex) {
+            gerarLog(ex);
             return null;
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        sdf.setLenient(false);
-        return sdf.parse(sdf.format(data));
+        }    
     }
     
-        public String parseDateAndTime(Date data) throws ParseException{
+        public String parseDateAndTime(Date data){
         if(data==null||data.equals("")){
             return null;
         }
@@ -56,7 +70,8 @@ public class ConversaodeDataParaPadraoDesignado {
         sdf.setLenient(false);
         return sdf.format(data);
     }
-        
+    
+    //Conversão de Data e Hora para o formato do Banco
     public java.sql.Timestamp getSqlDateAndTime(Date data) {
         if(data == null){
             return null;
@@ -64,36 +79,37 @@ public class ConversaodeDataParaPadraoDesignado {
         return new java.sql.Timestamp(data.getTime());
     }
     
-    public String Datadesformatada(Date data) throws ParseException{
+    //Somente Números
+    public String Datadesformatada(Date data){
         String data_desformatada = parseDate(data);
         data_desformatada = data_desformatada.replace("/", "");
         return data_desformatada; 
     }
     
-    public Time parseHour(String hora) throws ParseException{
-      if(hora.equals("")){
-          return null;
-      }
-      DateFormat formato = new SimpleDateFormat("HH:mm");
-      return new java.sql.Time(formato.parse(hora).getTime());
+    //Conversão de hora para o formato HH:mm
+    public Time parseHour(String hora){
+      try{
+          if(hora.equals("")){
+              return null;
+          }
+          DateFormat formato = new SimpleDateFormat("HH:mm");
+          return new java.sql.Time(formato.parse(hora).getTime());
+      } catch (ParseException ex) {
+            gerarLog(ex);
+            return null;
+        }    
     }
     
     public String parseHour (Time hora){
-      /*if(hora == null){
-          return "";
-      }*/
+      if(hora == null){
+          return null;
+      }
       int tamanhoHora = hora.toString().length()-3;
       String formato = hora.toString().substring(0, tamanhoHora);
       
-        return formato;
+      return formato;
     }
     
-    public int obterAnoAtual (){
-        int anoAtual;
-        Calendar calendario = GregorianCalendar.getInstance();
-        anoAtual = calendario.get(Calendar.YEAR);
-        return anoAtual;
-    }
     
     public int idade(Date dataAniversairio){
         return this.periodoEntreDataAtual(dataAniversairio).getYears()*(-1);
@@ -143,6 +159,13 @@ public class ConversaodeDataParaPadraoDesignado {
     dataFormatada = dataFormatada.replaceAll(":", "");
     dataFormatada = dataFormatada.replaceAll(" ", "");
     return Long.valueOf(dataFormatada);
+    }
+    
+    //Gerar arquivo com o log de erro, caso haja
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
     }
    
 }

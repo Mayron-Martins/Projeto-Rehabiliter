@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,6 +37,7 @@ public class LogsSystem {
             out.println(erro);
             out.print("Stacktrace: ");
             erro.printStackTrace(out);
+            JOptionPane.showMessageDialog(null, "Erro do tipo "+erro.getMessage()+", verifique os Logs do Sistema!", "Erro de Sistema", JOptionPane.OK_OPTION);
     }
     
     public void close(){

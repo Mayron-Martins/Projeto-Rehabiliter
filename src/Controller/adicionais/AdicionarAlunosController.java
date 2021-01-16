@@ -148,7 +148,7 @@ public class AdicionarAlunosController {
         
         
         //Dados de dias da semana e ano atual
-        int anoAtual = converterData.obterAnoAtual();
+        int anoAtual = LocalDate.now().getYear();
         
         //Matrícula em String
         String matriculaObtida = this.converterMatricula(anoAtual, codTurma, codAluno, codPlano);

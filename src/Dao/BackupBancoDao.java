@@ -6,6 +6,7 @@
 package Dao;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.LogsSystem;
 import Model.auxiliar.Backup;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,52 +26,70 @@ public class BackupBancoDao extends Conexao{
     private final String selecionarTudo = "SELECT * FROM ";
     private ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     
-    public void inserirDados (Backup backup) throws SQLException{
-        //Adicionando Turma
-        String inBackups = inserir.concat("tblBackups("
-                + "codBackup, nome, data, endArquivo, tabelas)"
-                + "VALUES("
-                + "?,?,?,?,?);");
-        PreparedStatement statement = gerarStatement(inBackups);
-        statement.setInt(1, backup.getCodBackup());
-        statement.setString(2, backup.getNome());
-        statement.setTimestamp(3, backup.getData());
-        statement.setString(4, backup.getEnderecoBackup());
-        statement.setString(5, backup.getTabelasBackup());
-        statement.execute();
-        statement.close();
+    public void inserirDados (Backup backup){
+        try{
+            //Adicionando Turma
+            String inBackups = inserir.concat("tblBackups("
+                    + "codBackup, nome, data, endArquivo, tabelas)"
+                    + "VALUES("
+                    + "?,?,?,?,?);");
+            PreparedStatement statement = gerarStatement(inBackups);
+            statement.setInt(1, backup.getCodBackup());
+            statement.setString(2, backup.getNome());
+            statement.setTimestamp(3, backup.getData());
+            statement.setString(4, backup.getEnderecoBackup());
+            statement.setString(5, backup.getTabelasBackup());
+            statement.execute();
+            statement.close();
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
+        
     }
     
-    public ArrayList <Backup> selecionarTodosBackups() throws SQLException, ParseException{
+    public ArrayList <Backup> selecionarTodosBackups(){
         String inBackups = selecionarTudo.concat("tblBackups");
         return pesquisarBackups(inBackups);
     }
     
-    public ArrayList <Backup> pesquisarBackups(String comando) throws SQLException, ParseException{
-     ArrayList <Backup> backups = new ArrayList();
-     PreparedStatement statement = gerarStatement(comando);
-     statement.execute();
-     ResultSet resultset = statement.getResultSet();
-     boolean next = resultset.next();
-     
-     if(next==false){
-         return null;
-     }
-     
-    do{
-    int codBackup = resultset.getInt("codBackup");
-    String nome = resultset.getString("nome");
-    Date data = converterData.parseDateAndTime(resultset.getTimestamp("data"));
-    String enderecoBackup = resultset.getString("endArquivo");
-    String tabelas = resultset.getString("tabelas");
-    
-    Backup backup = new Backup(codBackup, nome, data, enderecoBackup, tabelas);
-    
+    public ArrayList <Backup> pesquisarBackups(String comando){
+        try{
+            ArrayList <Backup> backups = new ArrayList();
+            PreparedStatement statement = gerarStatement(comando);
+            statement.execute();
+            ResultSet resultset = statement.getResultSet();
+            boolean next = resultset.next();
 
-    backups.add(backup);
-     }while(resultset.next());
+            if(next==false){
+                return null;
+            }
+
+            do{
+            int codBackup = resultset.getInt("codBackup");
+            String nome = resultset.getString("nome");
+            Date data = converterData.parseDateAndTime(resultset.getTimestamp("data"));
+            String enderecoBackup = resultset.getString("endArquivo");
+            String tabelas = resultset.getString("tabelas");
+
+            Backup backup = new Backup(codBackup, nome, data, enderecoBackup, tabelas);
+
+
+            backups.add(backup);
+             }while(resultset.next());
+
+            statement.close();
+            return backups;
+        } catch (SQLException ex) {
+            gerarLog(ex);
+            return null;
+        }
+        
+    }
     
-    statement.close();
-    return backups;
+    //Gerar arquivo com o log de erro, caso haja
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
     }
 }

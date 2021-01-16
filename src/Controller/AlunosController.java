@@ -145,7 +145,7 @@ public class AlunosController {
                     String cep = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 5).toString();
 
                     //Dados matrícula
-                    int anoAtual = converterData.obterAnoAtual();
+                    int anoAtual = LocalDate.now().getYear();
                     String nomeMatricula = this.converterMatricula(anoAtual, codTurmaAtual, codAluno, codServico);
                     Aluno alunoAnterior = this.alunoAnterior(codAluno);
                     Planos planoAnterior = this.planoAnterior(codAluno);
@@ -255,7 +255,7 @@ public class AlunosController {
                     String cep = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 5).toString();
 
                     //Dados matrícula
-                    int anoAtual = converterData.obterAnoAtual();
+                    int anoAtual = LocalDate.now().getYear();
                     String nomeMatricula = this.converterMatricula(anoAtual, codTurmaAtual, codAluno, codServico);
                     Aluno alunoAnterior = this.alunoAnterior(codAluno);
                     Planos planoAnterior = this.planoAnterior(codAluno);

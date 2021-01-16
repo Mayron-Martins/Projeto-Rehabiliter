@@ -32,14 +32,14 @@ public class VendasDao extends Conexao{
     public void inserirDados (Vendas venda, ArrayList<ItemVendido> item) throws SQLException{
         //Adicionando Turma
         String inVendas = inserir.concat("tblVendas("
-                + "codVenda, codCliente, codAluno, codPlano, valorVenda, valorPagoCliente, valorTroco, dataVenda, chaveVenda, formaPagamento, plano, parcelas)"
+                + "codVenda, codCliente, codAluno, chavePlano, valorVenda, valorPagoCliente, valorTroco, dataVenda, chaveVenda, formaPagamento, plano, parcelas)"
                 + "VALUES("
                 + "?,?,?,?,?,?,?,?,?,?,?,?);");
         PreparedStatement statement = gerarStatement(inVendas);
         statement.setInt(1, venda.getCodVenda());
         statement.setInt(2, venda.getCodCliente());
         statement.setInt(3, venda.getCodAluno());
-        statement.setInt(4, venda.getCodPlano());
+        statement.setInt(4, venda.getChavePlano());
         statement.setBigDecimal(5, new BigDecimal(venda.getValorVenda().toString()));
         statement.setBigDecimal(6, new BigDecimal(venda.getValorPago().toString()));
         statement.setBigDecimal(7, new BigDecimal(venda.getValorTroco().toString()));
@@ -76,7 +76,7 @@ public class VendasDao extends Conexao{
     int codVenda = resultset.getInt("codVenda");
     int codCliente = resultset.getInt("codCliente");
     int codAluno = resultset.getInt("codAluno");
-    int codPlano = resultset.getInt("codPlano");
+    int chavePlano = resultset.getInt("chavePlano");
     BigDecimal valorVenda = new BigDecimal(resultset.getBigDecimal("valorVenda").toString());
     BigDecimal valorPago = new BigDecimal(resultset.getBigDecimal("valorPagoCliente").toString());
     BigDecimal valorTroco = new BigDecimal(resultset.getBigDecimal("valorTroco").toString());
@@ -86,7 +86,7 @@ public class VendasDao extends Conexao{
     String plano = resultset.getString("plano");
     int parcelas = resultset.getInt("parcelas");
 
-    Vendas venda = new Vendas(codVenda, codCliente, codAluno, codPlano, valorVenda, valorPago, valorTroco, dataVenda, formaPagamento, plano, chaveVenda, parcelas);
+    Vendas venda = new Vendas(codVenda, codCliente, codAluno, chavePlano, valorVenda, valorPago, valorTroco, dataVenda, formaPagamento, plano, chaveVenda, parcelas);
 
     vendas.add(venda);
      }while(resultset.next());

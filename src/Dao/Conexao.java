@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 package Dao;
+import Controller.auxiliar.LogsSystem;
 import Controller.auxiliar.SQLFiles;
 import View.inicio;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -57,5 +60,6 @@ public abstract class Conexao {
         PreparedStatement statement = this.getConnection().prepareStatement(comando);
         return statement;
     }
+    
     
 }
