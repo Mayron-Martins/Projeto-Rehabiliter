@@ -5,9 +5,12 @@
  */
 package Dao;
 
+import Controller.auxiliar.LogsSystem;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,25 +31,35 @@ public class TableCriatorPosInput extends Conexao{
         //Usadas quando se cria uma turma ou um funcionário
     //_________________________________________________________________________________________
     //Criação da tabela de frequencia turmas.
-    public void tableFreqTurmas() throws SQLException{
-        gerarStatement().execute("CREATE TABLE tblFreqTurma"+this.quantTurmas()+"("
+    public void tableFreqTurmas(){
+        try{
+            gerarStatement().execute("CREATE TABLE tblFreqTurma"+this.quantTurmas()+"("
                 + "codTurma INT NOT NULL," //Associa a turma à frequência.
                 + "codAluno INT NOT NULL," //Associa o código do aluno à frequência.
                 + "data DATE NOT NULL," //Data em que ocorre a chamada.
                 + "situacao CHAR(2) NOT NULL" //P-presente ou A-ausente.
                 + ")ON [AlunoseClientes];");
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
+        
 
     }
     
     
     //Criação da tabela de Log das ações do funcionário.
-    public void tableLogdeAcoesdoFunc() throws SQLException{
+    public void tableLogdeAcoesdoFunc(){
+        try{
             this.gerarStatement().execute("CREATE TABLE tblLogdeAcoesdoFun"+this.quantFuncionarios()+"("
                 + "codFuncionario INT NOT NULL," //Associa o log ao código do funcionário
                 + "data DATETIME NOT NULL," //data e hora do acontecimento.
                 + "acao VARCHAR(MAX) NOT NULL,"
                 + "descricao VARCHAR(MAX) NULL"
                 + ")ON [Funcionarios];");
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
+            
 
     }
     
@@ -57,8 +70,9 @@ public class TableCriatorPosInput extends Conexao{
         while(count.next()){
             contador = count.getInt("quant"); //Como o count possui apenas uma linha então é igualado apenas uma vez.
         }
-        
+
         return contador;
+        
     }
     
     //Função para identificar a quantidade de funcionários dentro do banco.
@@ -68,8 +82,9 @@ public class TableCriatorPosInput extends Conexao{
         while(count.next()){
             contador = count.getInt("quant"); //Como o count possui apenas uma linha então é igualado apenas uma vez.
         }
-        
+
         return contador;
+        
     }
     /*
     
@@ -109,4 +124,11 @@ public class TableCriatorPosInput extends Conexao{
                 +"REFERENCES tblFuncionarios(codFuncionario);");
     }
     */
+    
+    //Gerar arquivo com o log de erro, caso haja
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
+    }
 }

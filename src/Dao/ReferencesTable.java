@@ -5,9 +5,12 @@
  */
 package Dao;
 
+import Controller.auxiliar.LogsSystem;
 import View.inicio;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,18 +29,23 @@ public class ReferencesTable {
     
     
     //Faz a referência das colunas com as tabelas correspondentes, evitando que um item inexistente entre na tabela.
-    public void referencesTables(Statement statement) throws SQLException{
-        this.fkTblAlunos_TblServicos(statement);
-        this.fkTblLoteDeProdutos_TblProdutos(statement);
-        this.fkTblMatriculas_TblTurmas(statement);
-        this.fkTblMatriculas_TblAlunos(statement);
-        this.fkTblItensVendidos_TblVendas(statement);
-        this.fkTblItensVendidos_TblProdutos(statement);
-        this.fkTblItensComprados_TblGastos(statement);
-        this.fkTblPlanos_TblAlunos(statement);
-        this.fkTblPlanos_TblTurmas(statement);
-        this.fkTblPlanos_TblServicos(statement);
-        this.fkTblFreqFuncionarios_TblFuncionarios(statement);
+    public void referencesTables(Statement statement){
+        try{
+            this.fkTblAlunos_TblServicos(statement);
+            this.fkTblLoteDeProdutos_TblProdutos(statement);
+            this.fkTblMatriculas_TblTurmas(statement);
+            this.fkTblMatriculas_TblAlunos(statement);
+            this.fkTblItensVendidos_TblVendas(statement);
+            this.fkTblItensVendidos_TblProdutos(statement);
+            this.fkTblItensComprados_TblGastos(statement);
+            this.fkTblPlanos_TblAlunos(statement);
+            this.fkTblPlanos_TblTurmas(statement);
+            this.fkTblPlanos_TblServicos(statement);
+            this.fkTblFreqFuncionarios_TblFuncionarios(statement);
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
+        
     }
     
     
@@ -150,6 +158,13 @@ public class ReferencesTable {
                 +this.regra+" FK_FreqFuncionarios_Funcionarios "
                 +this.fk+"(codFuncionario) "
                 +"REFERENCES tblFuncionarios(codFuncionario);");
+    }
+    
+    //Gerar arquivo com o log de erro, caso haja
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
     }
     
 }

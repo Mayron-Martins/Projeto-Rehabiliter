@@ -5,9 +5,12 @@
  */
 package Dao;
 
+import Controller.auxiliar.LogsSystem;
 import View.inicio;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,37 +34,37 @@ public class TableCriator {
     
     
     //Criação de todas as tabelas seguindo a ordem em que estão apresentadas abaixo.
-    public void createTables() throws SQLException{
-        this.tableAlunos();
-        this.tableEndAlunoseClientes();
-        this.tableClientes();
-        this.tableFuncionarios();
-        this.tableEndFuncionarios();
-        this.tableEmpresa();
-        this.tableEndEmpresa();
-        this.tableProdutos();
-        this.tableLoteDeProdutos();
-        this.tableFornProdutos();
-        this.tableTurmas();
-        this.tableHorarios();
-        this.tableMatriculas();
-        this.tableServicos();
-        this.tableVendas();
-        this.tableItensVendidos();
-        this.tableEntradas();
-        this.tableGastos();
-        this.tableItensComprados();
-        this.tableDetOrcamentario();
-        this.tablePlanos();
-        this.tableBackups();
-        this.tableFreqFuncionarios();
-        this.tableReposicaoAulas();
+    public void createTables(){
+        try{
+            this.tableAlunos();
+            this.tableEndAlunoseClientes();
+            this.tableClientes();
+            this.tableFuncionarios();
+            this.tableEndFuncionarios();
+            this.tableEmpresa();
+            this.tableEndEmpresa();
+            this.tableProdutos();
+            this.tableLoteDeProdutos();
+            this.tableFornProdutos();
+            this.tableTurmas();
+            this.tableHorarios();
+            this.tableMatriculas();
+            this.tableServicos();
+            this.tableVendas();
+            this.tableItensVendidos();
+            this.tableEntradas();
+            this.tableGastos();
+            this.tableItensComprados();
+            this.tableDetOrcamentario();
+            this.tablePlanos();
+            this.tableBackups();
+            this.tableFreqFuncionarios();
+            this.tableReposicaoAulas();
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
         
-        /*
-        //Referenciação das tabelas.
-        ReferencesTable referencestable = new ReferencesTable(this.telaDeInicio);
-        referencestable.referencesTables(this.gerarStatement());
-        gerarStatement().close();*/
+        
     }
     
     //Criação da tabela de alunos.
@@ -451,6 +454,13 @@ public class TableCriator {
                 + "codAluno INT NOT NULL," //Associa a frequência ao código do funcionário.
                 + "situacao CHAR(2) NOT NULL" //Pr-presente, Au-ausente ou [P - Pendente.
                 + ")ON [AlunoseClientes];");
+    }
+    
+    //Gerar arquivo com o log de erro, caso haja
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
     }
 
 }
