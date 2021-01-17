@@ -318,7 +318,7 @@ public class TableCriator {
                 + "codVenda INT NOT NULL," //Cada venda terá um código único.
                 + "codCliente INT NULL," //Caso a venda ocorra com um cliente.
                 + "codAluno INT NULL,"  //Caso a venda ocorra com um aluno.
-                + "chavePlano INT NULL," //Caso a venda seja pagamento de plano
+                + "chavePlano BIGINT NULL," //Caso a venda seja pagamento de plano
                 + "valorVenda DECIMAL(16,2) NOT NULL," //Valor total da venda.
                 + "valorPagoCliente DECIMAL(16,2) NOT NULL," //Valor pago pelo cliente.
                 + "valorTroco DECIMAL(16,2) NOT NULL," //Troco da venda.
@@ -415,7 +415,7 @@ public class TableCriator {
                 + "dataCancelamento DATE NULL,"
                 + "dataRenovacao DATE NULL," //Caso tenha sido cancelado, então a data em que ocorreu.
                 + "situacao VARCHAR(10) NOT NULL," //Pago, pendente, vencido, cancelado.
-                + "chavePlano INT PRIMARY KEY" //Cada plano terá uma chave única gerada por meio de função codificada aluno-turma-serviço.
+                + "chavePlano BIGINT PRIMARY KEY" //Cada plano terá uma chave única gerada por meio de função codificada aluno-turma-serviço.
                 + ") ON [AlunoseClientes];");
     }
     

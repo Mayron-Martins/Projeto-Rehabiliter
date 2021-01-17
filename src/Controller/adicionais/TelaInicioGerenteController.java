@@ -21,8 +21,6 @@ import Model.auxiliar.Turmas;
 import View.TelaInicialGerenteView;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -126,7 +124,7 @@ public class TelaInicioGerenteController {
                 Planos planoAtual;
                 if(planos.get(linhas).getSituacao().equals("Pago")){
                     Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
-                    Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
+                    Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getServico()).get(0);
                     
                     Date dataUsual = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
                     if(planos.get(linhas).getDataRenovacao()!=null){
@@ -173,7 +171,7 @@ public class TelaInicioGerenteController {
                 if(planos.get(linhas).getSituacao().equals("Pendente")){
                     if(planos.get(linhas).getDataVencimento()!=null){
                         Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
-                        Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
+                        Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getServico()).get(0);
                         Date dataUsual = planos.get(linhas).getDataVencimento();
                         Date dataAux = converterData.parseDate(converterData.parseDate(dataUsual));
                         dataVencimento = converterData.conversaoLocalforDate(dataAux);
@@ -196,7 +194,7 @@ public class TelaInicioGerenteController {
     }
     
     private void setarDebitos(Aluno alunoBanco){
-        Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+alunoBanco.getPlano()).get(0);
+        Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+alunoBanco.getServico()).get(0);
         
         BigDecimal debitos = new BigDecimal(alunoBanco.getDebito().toString());
         BigDecimal valor = new BigDecimal(alunoBanco.getValorMensal().toString());

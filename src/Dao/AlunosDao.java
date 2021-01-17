@@ -65,7 +65,7 @@ public class AlunosDao extends Conexao{
             statement.setString(16, matricula.getMatricula());
             statement.setInt(17, aluno.getTurma());
             statement.setInt(18, diasDaSemana);
-            statement.setInt(19, aluno.getPlano());
+            statement.setInt(19, aluno.getServico());
             statement.setString(20, aluno.getDescricao());
             statement.setBigDecimal(21, new BigDecimal(aluno.getDebito().toString()));
             statement.setBigDecimal(22, new BigDecimal(aluno.getValorContrato().toString()));
@@ -107,7 +107,7 @@ public class AlunosDao extends Conexao{
             statement.setString(8, matricula.getMatricula());
             statement.setInt(9, aluno.getTurma());
             statement.setInt(10, diasDaSemana);
-            statement.setInt(11, aluno.getPlano());
+            statement.setInt(11, aluno.getServico());
             statement.setString(12, aluno.getDescricao());
             statement.setBigDecimal(13, new BigDecimal(aluno.getDebito().toString()));
             statement.setBigDecimal(14, new BigDecimal(aluno.getValorContrato().toString()));
@@ -204,7 +204,7 @@ public class AlunosDao extends Conexao{
             String cpfMae = resultset.getString("cpfMae");
             String cpfPai = resultset.getString("cpfPai");
             int codTurma = resultset.getInt("codTurma");
-            int codPlano = resultset.getInt("codServico");
+            int codServico = resultset.getInt("codServico");
             String descricao = resultset.getString("descricao");
             BigDecimal debito= new BigDecimal(resultset.getBigDecimal("debito").toString());
             BigDecimal valorContrato= new BigDecimal(resultset.getBigDecimal("valorContrato").toString());
@@ -212,7 +212,7 @@ public class AlunosDao extends Conexao{
             BigDecimal valorMensal= new BigDecimal(resultset.getBigDecimal("valorMensal").toString());
             int renovacaoAutomatica = resultset.getInt("renovacaoAutomatica");
 
-            Aluno aluno = new Aluno(codBanco, nome, cpf, rg, telefone, celular, email, dataNascimento, nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato, dataCadastro,
+            Aluno aluno = new Aluno(codBanco, nome, cpf, rg, telefone, celular, email, dataNascimento, nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurma, codServico, descricao, debito, valorContrato, dataCadastro,
             valorMensal, renovacaoAutomatica);
 
             alunos.add(aluno);

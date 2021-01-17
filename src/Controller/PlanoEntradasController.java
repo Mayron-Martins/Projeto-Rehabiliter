@@ -187,7 +187,7 @@ public class PlanoEntradasController {
             String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma();
 
             String situacao = plano.getSituacao();
-            int chavePlano = plano.getChavePlano();
+            long chavePlano = plano.getChavePlano();
             
             Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, parcelamento, situacao, dataVenda};
             tabelaPlanos.addRow(dadosDaTabela);
@@ -599,7 +599,7 @@ public class PlanoEntradasController {
                 String dataPagamento = converterData.parseDate(planos.get(linhas).getDataPagamento());
 
                 Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
-                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
+                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getServico()).get(0);
                 Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
 
                 BigDecimal valorTotal = this.valorMensalidade(aluno, servico);
@@ -607,7 +607,7 @@ public class PlanoEntradasController {
                 String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma();
 
                 String situacao = planos.get(linhas).getSituacao();
-                int chavePlano = planos.get(linhas).getChavePlano();
+                long chavePlano = planos.get(linhas).getChavePlano();
 
                 Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, situacao, dataPagamento};
                 tabelaPlanos.addRow(dadosDaTabela);
@@ -629,7 +629,7 @@ public class PlanoEntradasController {
                 String dataPagamento = converterData.parseDate(planos.get(linhas).getDataPagamento());
 
                 Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
-                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
+                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getServico()).get(0);
                 Turmas turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
 
                 BigDecimal valorTotal = this.valorMensalidade(aluno, servico);
@@ -637,7 +637,7 @@ public class PlanoEntradasController {
                 String turma = turmas.getCodBanco()+"."+turmas.getNomeTurma();
 
                 String situacao = planos.get(linhas).getSituacao();
-                int chavePlano = planos.get(linhas).getChavePlano();
+                long chavePlano = planos.get(linhas).getChavePlano();
 
                 Object[] dadosDaTabela = {chavePlano, aluno.getNome(), turma, valorTotal, situacao, dataPagamento};
                 tabelaPlanos.addRow(dadosDaTabela);

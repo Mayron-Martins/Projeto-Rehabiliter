@@ -16,8 +16,10 @@ import Dao.MatriculasDao;
 import Dao.PlanosDao;
 import Dao.ServicosDao;
 import Dao.TurmasDao;
+import Dao.VendasDao;
 import Model.Aluno;
 import Model.Funcionario;
+import Model.Vendas;
 import Model.auxiliar.EnderecoAlunos;
 import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Matriculas;
@@ -56,6 +58,7 @@ public class AlunosController {
     private final PlanosDao planosDao = new PlanosDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
+    private final VendasDao vendasDao = new VendasDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
@@ -88,9 +91,9 @@ public class AlunosController {
         if(view.getComboTurmasExistentes().getSelectedIndex()>=0){
         String nomeTurmaAtual = view.getComboTurmasExistentes().getSelectedItem().toString();
         int codTurmaAtual = Integer.parseInt(nomeTurmaAtual.split("\\.")[0]);
-
-        ArrayList <Aluno> alunos = this.alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codTurma = "+codTurmaAtual);
-        this.buscas(alunos);   
+        
+        ArrayList<Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codTurma = "+codTurmaAtual+" AND situacao != 'Encerrado'");
+        this.buscas(planos);   
         }
     }
     
@@ -341,39 +344,54 @@ public class AlunosController {
         if(alunoPesquisa.equals("")){listarAlunos();}
         else{
             ArrayList <Aluno> alunos = alunosDao.pesquisarPorNome(alunoPesquisa);
-            this.buscas(alunos);
+            ArrayList <Planos> allPlanos;
+            ArrayList <Planos> planos = new ArrayList<>();
+            
+            for(Aluno aluno : alunos){
+                allPlanos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+aluno.getCodBanco());
+                if(allPlanos.size()>1){
+                    planos.add(allPlanos.get(allPlanos.size()-1));
+                }
+                else{
+                    planos.add(allPlanos.get(0));
+                }
+            }
+            this.buscas(planos);
         }      
     }
     
     //Buscar Aniversariantes
     private void buscarAniversariantes(){
         ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
-        ArrayList <Aluno> alunosAniversariantes = new ArrayList<>();
+        ArrayList <Planos> planos;
+        ArrayList <Planos> planosAniversariantes = new ArrayList<>();
         Date aniversario;
-        for(int linhas = 0; linhas<alunos.size(); linhas++){
-            aniversario = alunos.get(linhas).getDatadenascimento();
+        for(Aluno aluno : alunos){
+            aniversario = aluno.getDatadenascimento();
 
             if(converterData.aniversarianteDoDia(aniversario)){
-                alunosAniversariantes.add(alunos.get(linhas));
+                planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+aluno.getCodBanco()+" AND situacao != 'Encerrado'");
+                if(planos!=null){
+                    planosAniversariantes.add(planos.get(0));
+                }
             }
         }
-        this.buscas(alunosAniversariantes);
+        if(planosAniversariantes.size()==0){
+            view.exibeMensagem("Sem Dados.");
+            limparTabela();
+        }else{
+            this.buscas(planosAniversariantes);
+        }
+        
     }
     
     //Buscar Débito existentes
-    private void buscarDebitos(char opcao){
-        ArrayList <Aluno> alunosComDebito = new ArrayList<>();
-        ArrayList <Aluno> alunosSemDebito = new ArrayList<>();        
-
+    private void buscarDebitos(char opcao){       
         switch(opcao){
             case 'C':
                 ArrayList <Planos> planosPendentes = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pendente' OR situacao = 'Vencido'");
                 if(planosPendentes!=null){
-                    for(int linhas=0; linhas<planosPendentes.size(); linhas++){
-                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planosPendentes.get(linhas).getCodAluno()).get(0);
-                        alunosComDebito.add(aluno);
-                    }
-                    this.buscas(alunosComDebito);
+                    this.buscas(planosPendentes);
                 }else{
                     view.exibeMensagem("Sem Dados");
                 }
@@ -383,11 +401,7 @@ public class AlunosController {
             case 'S':
                 ArrayList <Planos> planosPagos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pago'");
                 if(planosPagos!=null){
-                    for(int linhas=0; linhas<planosPagos.size(); linhas++){
-                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planosPagos.get(linhas).getCodAluno()).get(0);
-                        alunosSemDebito.add(aluno);
-                    }
-                    this.buscas(alunosSemDebito);
+                    this.buscas(planosPagos);
                 }else{
                     view.exibeMensagem("Sem Dados");
                 }
@@ -398,21 +412,12 @@ public class AlunosController {
     //Buscar alunos com contrato encerrado
     private void buscarEncerrados() {
         ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Encerrado'");
-        ArrayList <Aluno> alunosEncerrados = new ArrayList<>();
-        if(planos !=null){
-            for(int linhas=0; linhas< planos.size(); linhas++){
-            Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
-            alunosEncerrados.add(aluno);
-            }
-            this.buscas(alunosEncerrados);
-        }else{
-            view.exibeMensagem("Sem Dados.");
-        }  
+        this.buscas(planos);
     }
     
     private void buscarTodos(){
-        ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
-        this.buscas(alunos);
+        ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao != 'Encerrado'");
+        this.buscas(planos);
     }
     
     //Listar
@@ -516,75 +521,68 @@ public class AlunosController {
          return  planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codAluno).get(0);
     }
     
-    private void buscas(ArrayList <Aluno> listar){
-        ArrayList<Turmas> turmas = new ArrayList<>();
-        ArrayList<Servicos> servicos = new ArrayList<>();
-        ArrayList <EnderecoAlunos> enderecos = new ArrayList<>();
-        ArrayList <Planos> planos;
-        ArrayList <Aluno> alunos = listar;
-
+    private void buscas(ArrayList <Planos> listar){
+        ArrayList <Planos> planos = listar;
         removerSelecaoBox();
-        if(alunos==null){view.exibeMensagem("Sem dados!"); limparTabela();}
+        if(planos==null){view.exibeMensagem("Sem dados!"); limparTabela();}
         else{
             limparTabela();
-            for(int linhas = 0; linhas<alunos.size(); linhas++){
-            enderecos = this.enderecoDao.pesquisarEndereco("SELECT * FROM tblEndAlunoseClientes WHERE codAluno = "+
-                    alunos.get(linhas).getCodBanco());
-            turmas = this.turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+
-                    alunos.get(linhas).getTurma());
-            servicos = this.servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+
-                    alunos.get(linhas).getPlano());
-            planos = this.planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+alunos.get(linhas).getCodBanco());
+            int linhas=0;
+            for(Planos plano : planos){
+                Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+plano.getCodAluno()).get(0);
+                EnderecoAlunos endereco = enderecoDao.pesquisarEndereco("SELECT * FROM tblEndAlunoseClientes WHERE codAluno = "+plano.getCodAluno()).get(0);
+                Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+plano.getCodTurma()).get(0);
+                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
 
-            boolean renovacaoAutomatica = false;
-            if(alunos.get(linhas).getRenovacaoAutomatica()==1){
-                renovacaoAutomatica = true;
-            }
+                boolean renovacaoAutomatica = false;
+                if(aluno.getRenovacaoAutomatica()==1){
+                    renovacaoAutomatica = true;
+                }
 
-            //Inserindo dados na tabela de alunos
-            Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getCodBanco(), 
-            alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma(), 
-            alunos.get(linhas).getDebito(), new Boolean(renovacaoAutomatica)};
-            this.tabelaDeAlunos.addRow(dadosDaTabelaAlunos);
-            this.view.getComboTurmas().setSelectedItem(turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma());
+                //Inserindo dados na tabela de alunos
+                Object[] dadosDaTabelaAlunos = {aluno.getCodBanco(), aluno.getNome(),turma.getCodBanco()+"."+turma.getNomeTurma(), 
+                aluno.getDebito(), renovacaoAutomatica};
+                this.tabelaDeAlunos.addRow(dadosDaTabelaAlunos);
+                this.view.getComboTurmas().setSelectedItem(turma.getCodBanco()+"."+turma.getNomeTurma());
 
 
 
-            //Inserindo dados na tabela de Planos
-            int chavePlano = planos.get(0).getChavePlano();
-            int diaVencimento = planos.get(0).getDiaVencimento();
-            String situacao = planos.get(0).getSituacao();
+                //Inserindo dados na tabela de Planos
+                long chavePlano = plano.getChavePlano();
+                int diaVencimento = plano.getDiaVencimento();
+                String situacao = plano.getSituacao();
 
-            Object[] dadosDaTabelaPlanos = {chavePlano, servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+
-                    "-"+servicos.get(0).getPeriodo(), alunos.get(linhas).getValorContrato(), alunos.get(linhas).getValorMensal(),
-                    diaVencimento, situacao};
-            this.tabelaDePlanos.addRow(dadosDaTabelaPlanos);
-            Component tableCellEditorComponent = this.view.getTabelaPlanos().getColumnModel().getColumn(4).getCellEditor().getTableCellEditorComponent(view.getTabelaPlanos(), diaVencimento, true, linhas, 4);
-            tableCellEditorComponent.setEnabled(false);
-            this.view.getComboServicos().setSelectedItem(servicos.get(0).getCodBanco()+"."+servicos.get(0).getNome()+"-"+servicos.get(0).getPeriodo());
+                Object[] dadosDaTabelaPlanos = {chavePlano, servico.getCodBanco()+"."+servico.getNome()+"-"+servico.getPeriodo(), 
+                    aluno.getValorContrato(), aluno.getValorMensal(),
+                        diaVencimento, situacao};
+                this.tabelaDePlanos.addRow(dadosDaTabelaPlanos);
+                Component tableCellEditorComponent = this.view.getTabelaPlanos().getColumnModel().getColumn(4).getCellEditor().getTableCellEditorComponent(view.getTabelaPlanos(), diaVencimento, true, linhas, 4);
+                tableCellEditorComponent.setEnabled(false);
+                this.view.getComboServicos().setSelectedItem(servico.getCodBanco()+"."+servico.getNome()+"-"+servico.getPeriodo());
 
 
 
-            //Inserino dados na tabela de Pais
-            String telefonePai = alunos.get(linhas).getTelefonedopai();
-            String telefoneMae = alunos.get(linhas).getTelefonedamae();
-            String cpfPai = alunos.get(linhas).getCpfdopai();
-            String cpfMae = alunos.get(linhas).getCpfdamae();
+                //Inserino dados na tabela de Pais
+                String telefonePai = aluno.getTelefonedopai();
+                String telefoneMae = aluno.getTelefonedamae();
+                String cpfPai = aluno.getCpfdopai();
+                String cpfMae = aluno.getCpfdamae();
 
-            Object[] dadosDaTabelaPais = {alunos.get(linhas).getNomedopai(), 
-            cpfPai,telefonePai, 
-            alunos.get(linhas).getNomedamae(),cpfMae,
-            telefoneMae};
-            this.tabelaDePais.addRow(dadosDaTabelaPais);
+                Object[] dadosDaTabelaPais = {aluno.getNomedopai(), 
+                cpfPai,telefonePai, 
+                aluno.getNomedamae(),cpfMae,
+                telefoneMae};
+                this.tabelaDePais.addRow(dadosDaTabelaPais);
 
-            //Inserindo dados na tabela Endereços
-            String cep = enderecos.get(0).getCep();
-            Object[] dadosDaTabelaEnderecos  = {enderecos.get(0).getLogradouro(), 
-            enderecos.get(0).getNumero(),enderecos.get(0).getBairro(), 
-            enderecos.get(0).getCidade(),enderecos.get(0).getEstado(), cep};
-            this.tabelaDeEnderecos.addRow(dadosDaTabelaEnderecos);
-            this.view.getComboEstado().setSelectedItem(enderecos.get(0).getEstado());
-
+                //Inserindo dados na tabela Endereços
+                String cep = endereco.getCep();
+                Object[] dadosDaTabelaEnderecos  = {endereco.getLogradouro(), 
+                endereco.getNumero(),endereco.getBairro(), 
+                endereco.getCidade(),endereco.getEstado(), cep};
+                this.tabelaDeEnderecos.addRow(dadosDaTabelaEnderecos);
+                this.view.getComboEstado().setSelectedItem(endereco.getEstado());
+                
+                linhas++;
             }
         }
        ativarSelecaoBox();
@@ -709,6 +707,8 @@ public class AlunosController {
         if(linhaSelecionada!=-1){
             view.getBotaoConfigAdicionais().setVisible(true);
             setarDatasConfiguracoesAd();
+            setarTabelaPlanosAdicionais();
+            liberarBotoesAdicionais();
         }
         else{
             view.getBotaoConfigAdicionais().setVisible(false);
@@ -750,7 +750,9 @@ public class AlunosController {
             if(plano.getDataVencimento()!=null){
                 view2.getCampoDataVencimento().setDate(plano.getDataVencimento());
             }
-        }     
+        }
+        setarTabelaPlanosAdicionais();
+        liberarBotoesAdicionais();
     }
     
     public void setarDataVencimento(){
@@ -875,7 +877,7 @@ public class AlunosController {
         }
     }
     
-    public void setarTabelaPlanosAdicionais(){
+    private void setarTabelaPlanosAdicionais(){
         limparTabelaPlanosAdicionais();
         int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
         if(linhaSelecionada>-1){
@@ -883,14 +885,14 @@ public class AlunosController {
             ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codAluno);
             if(planos!=null){
                 String situacao;
-                for(Planos plano : planos){
-                    situacao = plano.getSituacao();
+                for(int linhas = planos.size()-1; linhas>=0;linhas--){
+                    situacao = planos.get(linhas).getSituacao();
                     if(!situacao.equals("Encerrado")){
                         situacao = "Em Aberto";
                     }
-                    Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+plano.getCodTurma()).get(0);
-                    Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
-                    Object[] dadosDaTabela = {plano.getChavePlano(), turma.getCodBanco()+"."+turma.getNomeTurma(), servico.getCodBanco()+"."+servico.getNome(),
+                    Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+planos.get(linhas).getCodTurma()).get(0);
+                    Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+planos.get(linhas).getCodServico()).get(0);
+                    Object[] dadosDaTabela = {planos.get(linhas).getChavePlano(), turma.getCodBanco()+"."+turma.getNomeTurma(), servico.getCodBanco()+"."+servico.getNome(),
                     servico.getValor(), situacao};
 
                     tabelaDePlanosAdicionais.addRow(dadosDaTabela);
@@ -901,11 +903,46 @@ public class AlunosController {
     }
     
     public void selecionarTabelaPlanosAdicionais(){
+        limparTabelaPagamentos();
         int linhaSelecionada = view2.getTabelaPlanos().getSelectedRow();
         if(linhaSelecionada>-1){
             int chavePlano = Integer.parseInt(tabelaDePlanosAdicionais.getValueAt(linhaSelecionada, 0).toString());
+            ArrayList<Vendas> vendas = vendasDao.pesquisarVendas("SELECT * FROM tblVendas WHERE chavePlano = "+chavePlano);
+            
+            if(vendas!=null){
+                for(Vendas venda : vendas){
+                    String dataVenda = converterData.parseDate(venda.getDataVenda());                    
+                    Object[] dadosTabela = {venda.getChaveVenda(),dataVenda, venda.getValorVenda()};
+                }
+                
+            }
         }
     }
+    
+    private void liberarBotoesAdicionais(){
+        int quantLinhas = view2.getTabelaPlanos().getRowCount();
+        if(quantLinhas>0){
+            for(int linhas=0; linhas<quantLinhas; linhas++){
+                if(!tabelaDePlanos.getValueAt(linhas, 4).toString().equals("Encerrado")){
+                    view2.getBotaoCadNvo().setVisible(true);
+                    view2.getBotaoReativarPlano().setVisible(true);
+                }
+            }
+        }
+        
+    }
+    
+    public void reativarPlano(){
+        int linhaSelecionadaAlunos = view.getTabelaAlunos().getSelectedRow();
+        int linhaSelecionadaPlanos = view2.getTabelaPlanos().getSelectedRow();
+        if(linhaSelecionadaPlanos>-1){
+            view2.getCampoNovoPlano().setSelected(false);
+            
+            long chavePlano = Long.parseLong(tabelaDePlanos.getValueAt(linhaSelecionadaPlanos, 0).toString());
+        }
+    }
+    
+    
     
     //Gerar arquivo com o log de erro, caso haja
     private void gerarLog(Throwable erro){

@@ -46,7 +46,7 @@ public class PlanosDao extends Conexao{
             statement.setDate(7, (Date) plano.getDataCancelamento());
             statement.setDate(8, (Date) plano.getDataRenovacao());
             statement.setString(9, plano.getSituacao());
-            statement.setInt(10, plano.getChavePlano());
+            statement.setLong(10, plano.getChavePlano());
             statement.execute();
             statement.close();
         }catch (SQLException ex) {
@@ -64,7 +64,7 @@ public class PlanosDao extends Conexao{
             statement.setInt(1, plano.getCodTurma());
             statement.setInt(2, plano.getCodServico());
             statement.setInt(3, plano.getDiaVencimento());
-            statement.setInt(4, plano.getChavePlano());
+            statement.setLong(4, plano.getChavePlano());
             statement.setInt(5, plano.getCodAluno());
 
             statement.execute();
@@ -138,7 +138,7 @@ public class PlanosDao extends Conexao{
             Date dataCancelamento = resultset.getDate("dataCancelamento");
             Date dataRenovacao = resultset.getDate("dataRenovacao");
             String situacao = resultset.getString("situacao");
-            int chavePlano = resultset.getInt("chavePlano");
+            long chavePlano = resultset.getLong("chavePlano");
 
             Planos plano = new Planos(codAluno, codTurma, codServico, diaVencimeto, dataVencimento, dataPagamento, dataCancelamento,dataRenovacao,situacao);
 

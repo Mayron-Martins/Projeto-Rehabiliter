@@ -133,10 +133,10 @@ public class AdicionarAlunosController {
         
         //Dados de Matrícula e Serviços
         int codMatricula = verificar.verificarUltimo("tblMatriculas", "codMatricula")+1;
-        int codPlano = 0;
+        int codServico = 0;
         int codTurma = 0;
         if(!plano.equals("[Nenhum]")||!turma.equals("[Nenhuma]")){
-        codPlano = Integer.parseInt(plano.split("\\.")[0]);
+        codServico = Integer.parseInt(plano.split("\\.")[0]);
         codTurma = Integer.parseInt(turma.split("\\.")[0]);
         }
         
@@ -145,7 +145,7 @@ public class AdicionarAlunosController {
         int anoAtual = LocalDate.now().getYear();
         
         //Matrícula em String
-        String matriculaObtida = this.converterMatricula(anoAtual, codTurma, codAluno, codPlano);
+        String matriculaObtida = this.converterMatricula(anoAtual, codTurma, codAluno, codServico);
         
         //dados do Endereço
         int codEndereco = verificar.verificarUltimo("tblEndAlunoseClientes","codEndAlunoseClientes ")+1;
@@ -158,7 +158,7 @@ public class AdicionarAlunosController {
         String complemento = "";
         String referencia = "";
 
-        Servicos servicoContratado = this.buscarServico(codPlano);
+        Servicos servicoContratado = this.buscarServico(codServico);
         
         //Dados do Plano
         int diaVencimento = this.diaVencimento(servicoContratado.getPeriodDays());
@@ -174,12 +174,12 @@ public class AdicionarAlunosController {
         //Cria os tipos Aluno, Endereco e Matricula com os dados
         
         Aluno aluno = new Aluno(codAluno, nome, cpf, rg, telefone, celular, email, 
-        dataNascimento, nomeMae, nomePai, contatoMae, contatoPai, cpfMae, cpfPai, codTurma, codPlano, descricao, debito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
+        dataNascimento, nomeMae, nomePai, contatoMae, contatoPai, cpfMae, cpfPai, codTurma, codServico, descricao, debito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
         EnderecoAlunos endereco = new EnderecoAlunos(codEndereco, codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
         
         Date dataVencimento = this.dataVencimento(aluno, servicoContratado, dataUltimoPag, diaVencimento);
-        Planos planoAluno = new Planos(codAluno, codTurma, codPlano, diaVencimento, dataVencimento, dataUltimoPag, null, null, situacao);
+        Planos planoAluno = new Planos(codAluno, codTurma, codServico, diaVencimento, dataVencimento, dataUltimoPag, null, null, situacao);
         
         
         //Obtem a quantidade de alunos presentes na turma

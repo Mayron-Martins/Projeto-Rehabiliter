@@ -22,7 +22,7 @@ public class Planos {
     private Date dataCancelamento;
     private Date dataRenovacao;
     private String situacao;
-    private int chavePlano;
+    private long chavePlano;
 
     public Planos(int codAluno, int codTurma, int codServico, int diaVencimento, Date dataVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
         this.codAluno = codAluno;
@@ -38,7 +38,7 @@ public class Planos {
         this.situacao = situacao;
         
         String chave = String.valueOf(codAluno)+String.valueOf(codTurma)+String.valueOf(codServico);
-        this.chavePlano = Integer.parseInt(chave);
+        this.chavePlano = Long.parseLong(chave);
     }
 
     public int getCodAluno() {
@@ -69,7 +69,7 @@ public class Planos {
         return situacao;
     }
 
-    public int getChavePlano() {
+    public long getChavePlano() {
         return chavePlano;
     }
 

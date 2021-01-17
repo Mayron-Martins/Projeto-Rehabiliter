@@ -215,7 +215,7 @@ public class OrcamentarioController {
         if(planos !=null){
             for(int linhas=0; linhas<planos.size(); linhas++){
                 Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
-                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getPlano()).get(0);
+                Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getServico()).get(0);
                 valorPendente = valorPendente.add(this.valorMensalidade(aluno, servico));
             }
             valorPendente = valorPendente.setScale(2, RoundingMode.UP);

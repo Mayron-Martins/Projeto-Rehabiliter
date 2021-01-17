@@ -21,7 +21,7 @@ public class Aluno extends Pessoa {
    private String cpfdamae;
    private String cpfdopai;
    private int turma;
-   private int plano;
+   private int servico;
    private String descricao;
    private BigDecimal debito;
    private BigDecimal valorContrato;
@@ -29,7 +29,7 @@ public class Aluno extends Pessoa {
    private BigDecimal valorMensal;
    private int renovacaoAutomatica;
 
-    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int plano, String descricao, BigDecimal debito, BigDecimal valorContrato, BigDecimal valorMensal, int renovacaoAutomatica) {
+    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int servico, String descricao, BigDecimal debito, BigDecimal valorContrato, BigDecimal valorMensal, int renovacaoAutomatica) {
         super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento);
         this.nomedamae = nomedamae;
         this.nomedopai = nomedopai;
@@ -38,7 +38,7 @@ public class Aluno extends Pessoa {
         this.cpfdamae = cpfdamae;
         this.cpfdopai = cpfdopai;
         this.turma = turma;
-        this.plano = plano;
+        this.servico = servico;
         this.descricao = descricao;
         this.debito = new BigDecimal(debito.toString());
         this.valorContrato = new BigDecimal(valorContrato.toString());
@@ -46,7 +46,7 @@ public class Aluno extends Pessoa {
         this.renovacaoAutomatica = renovacaoAutomatica;
     }
     
-    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int plano, String descricao, BigDecimal debito, BigDecimal valorContrato, Date dataCadastro, BigDecimal valorMensal, int renovacaoAutomatica) {
+    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int servico, String descricao, BigDecimal debito, BigDecimal valorContrato, Date dataCadastro, BigDecimal valorMensal, int renovacaoAutomatica) {
         super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento);
         this.nomedamae = nomedamae;
         this.nomedopai = nomedopai;
@@ -55,7 +55,7 @@ public class Aluno extends Pessoa {
         this.cpfdamae = cpfdamae;
         this.cpfdopai = cpfdopai;
         this.turma = turma;
-        this.plano = plano;
+        this.servico = servico;
         this.descricao = descricao;
         this.debito = new BigDecimal(debito.toString());
         this.valorContrato = new BigDecimal(valorContrato.toString());
@@ -96,8 +96,8 @@ public class Aluno extends Pessoa {
         return turma;
     }
 
-    public int getPlano() {
-        return plano;
+    public int getServico() {
+        return servico;
     }
 
     public String getDescricao() {

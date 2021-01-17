@@ -11,6 +11,7 @@ import View.AlunosView;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -28,6 +29,9 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
     private final AlunosController controller;
     /**
      * Creates new form NewJDialog
+     * @param parent
+     * @param modal
+     * @param view
      */
     public AlunosConfigAdicionais(java.awt.Frame parent, boolean modal, AlunosView view) {
         super(parent, modal);
@@ -78,6 +82,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         jLabel13 = new javax.swing.JLabel();
         botaoCancelar = new javax.swing.JButton();
         botaoAplicar = new javax.swing.JButton();
+        campoNovoPlano = new javax.swing.JCheckBox();
         botaoReativarPlano = new javax.swing.JButton();
         botaoCadNvo = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
@@ -89,12 +94,12 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         setSize(new java.awt.Dimension(237, 750));
 
         jScrollPane3.setBackground(new java.awt.Color(116, 174, 159));
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane3.setHorizontalScrollBar(null);
         jScrollPane3.setMinimumSize(new java.awt.Dimension(237, 701));
         jScrollPane3.setPreferredSize(new java.awt.Dimension(237, 701));
 
         jPanel1.setBackground(new java.awt.Color(116, 174, 159));
-        jPanel1.setAutoscrolls(true);
         jPanel1.setMinimumSize(new java.awt.Dimension(500, 701));
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 920));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -161,6 +166,16 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         tabelaPlanos.setMinimumSize(new java.awt.Dimension(300, 64));
         tabelaPlanos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaPlanos.getTableHeader().setReorderingAllowed(false);
+        tabelaPlanos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaPlanosMouseClicked(evt);
+            }
+        });
+        tabelaPlanos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaPlanosKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaPlanos);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 390, 210, 110));
@@ -215,33 +230,37 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         painelCadTurma.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         comboTurmas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
-        painelCadTurma.add(comboTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 190, 40));
+        painelCadTurma.add(comboTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 190, 40));
 
         comboServicos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
-        painelCadTurma.add(comboServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 190, 40));
+        painelCadTurma.add(comboServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 190, 40));
 
         campoRenovAutomatica.setText("Renovação Automática");
-        painelCadTurma.add(campoRenovAutomatica, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
-        painelCadTurma.add(campoValorMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 90, 30));
-        painelCadTurma.add(campoValorTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 90, 30));
+        painelCadTurma.add(campoRenovAutomatica, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+        painelCadTurma.add(campoValorMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 90, 30));
+        painelCadTurma.add(campoValorTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 90, 30));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Valor Mensal");
-        painelCadTurma.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 144, -1, -1));
+        painelCadTurma.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 166, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Valor Total");
-        painelCadTurma.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 144, -1, -1));
+        painelCadTurma.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 166, -1, -1));
 
         botaoCancelar.setText("Cancelar");
-        painelCadTurma.add(botaoCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        painelCadTurma.add(botaoCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
         botaoAplicar.setText("Aplicar");
-        painelCadTurma.add(botaoAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 70, -1));
+        painelCadTurma.add(botaoAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 70, -1));
 
-        jPanel1.add(painelCadTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 660, 210, 250));
+        campoNovoPlano.setText("Novo Plano");
+        campoNovoPlano.setEnabled(false);
+        painelCadTurma.add(campoNovoPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, -1, -1));
+
+        jPanel1.add(painelCadTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 660, 210, 260));
 
         botaoReativarPlano.setText("Reativar Plano");
         jPanel1.add(botaoReativarPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 670, 110, -1));
@@ -267,13 +286,13 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 701, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -293,6 +312,14 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
     private void botaoCadNvoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadNvoActionPerformed
 
     }//GEN-LAST:event_botaoCadNvoActionPerformed
+
+    private void tabelaPlanosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPlanosMouseClicked
+        controller.selecionarTabelaPlanosAdicionais();
+    }//GEN-LAST:event_tabelaPlanosMouseClicked
+
+    private void tabelaPlanosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaPlanosKeyReleased
+        controller.selecionarTabelaPlanosAdicionais();
+    }//GEN-LAST:event_tabelaPlanosKeyReleased
 
     /**
      * @param args the command line arguments
@@ -347,6 +374,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
     private com.toedter.calendar.JDateChooser campoDataFimPlano;
     private com.toedter.calendar.JDateChooser campoDataPagamento;
     private com.toedter.calendar.JDateChooser campoDataVencimento;
+    private javax.swing.JCheckBox campoNovoPlano;
     private javax.swing.JCheckBox campoRenovAutomatica;
     private javax.swing.JTextField campoValorMensal;
     private javax.swing.JTextField campoValorTotal;
@@ -437,6 +465,18 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
 
     public JTable getTabelaPlanos() {
         return tabelaPlanos;
+    }
+
+    public JButton getBotaoCadNvo() {
+        return botaoCadNvo;
+    }
+
+    public JButton getBotaoReativarPlano() {
+        return botaoReativarPlano;
+    }
+
+    public JCheckBox getCampoNovoPlano() {
+        return campoNovoPlano;
     }
     
     
