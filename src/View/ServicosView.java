@@ -243,47 +243,23 @@ public class ServicosView extends javax.swing.JDialog {
     }//GEN-LAST:event_metodoPagamentoActionPerformed
 
     private void tabelaServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaServicosMouseClicked
-        try {
-            controller.selecionarTabela();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaServicosMouseClicked
 
     private void tabelaServicosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaServicosKeyReleased
-        try {
-            controller.selecionarTabela();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaServicosKeyReleased
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        try {
-            controller.removerServico();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.removerServico();
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        try {
-            controller.editarServicos();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.editarServicos();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            controller.listarServicos();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.listarServicos();
     }//GEN-LAST:event_formWindowOpened
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -307,11 +283,7 @@ public class ServicosView extends javax.swing.JDialog {
     }//GEN-LAST:event_campoOutroPeriodoMouseClicked
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        try {
-            controller.listarServicos();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServicosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.listarServicos();
     }//GEN-LAST:event_btnListarActionPerformed
 
     /**

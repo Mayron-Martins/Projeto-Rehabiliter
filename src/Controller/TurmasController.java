@@ -53,7 +53,7 @@ public class TurmasController {
     }
     
     //Lista todas as turmas 
-    public void listarTurmas() throws SQLException{
+    public void listarTurmas(){
         ArrayList <Turmas> turmas = new ArrayList<>();
         ArrayList <Horarios> horarios = new ArrayList<>();
         turmas = this.turmasDao.selecionarTodasTurmas();
@@ -81,7 +81,7 @@ public class TurmasController {
         }        
     }
     
-    public void editarTurmas() throws SQLException, ParseException{
+    public void editarTurmas(){
         if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
             int codTurma = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 0).toString());
@@ -141,7 +141,7 @@ public class TurmasController {
     
     }
     
-    public void selecionarTabela() throws SQLException{
+    public void selecionarTabela(){
       if(this.view.getTabelaAlunos().getSelectedRow()!=-1){
           //Número da linha selecionada
           int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
@@ -173,7 +173,7 @@ public class TurmasController {
       }
     }
     
-    public void removerTurma() throws SQLException, ParseException{
+    public void removerTurma(){
         if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
             int codTurma = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 0).toString());
@@ -202,7 +202,7 @@ public class TurmasController {
     }
     
     //Buscar turmas no campo de busca
-    public void buscarTurmas() throws Exception{
+    public void buscarTurmas(){
         String nomeTurma = view.getCampoDePesquisa().getText();
         ArrayList <Turmas> turmas = turmasDao.pesquisarPorNome(nomeTurma);
         
@@ -238,7 +238,7 @@ public class TurmasController {
         return logAcao;
     }
     
-    private boolean retornarAlunosUsando(int codTurma) throws SQLException, ParseException{
+    private boolean retornarAlunosUsando(int codTurma){
         ArrayList <Aluno> alunos = alunoDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codTurma = "+codTurma);
         return alunos ==null;
     }

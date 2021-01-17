@@ -579,13 +579,7 @@ public class Caixa extends javax.swing.JDialog {
         campoProdutoNome.setEnabled(false);
         botaoBuscarProdutos.setEnabled(false);
         
-            try {
-                controller.setarTabelaMensalidade();
-            } catch (SQLException ex) {
-                Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        controller.setarTabelaMensalidade();
         }
         }       
     }//GEN-LAST:event_botaoPagamentoMensalidadeActionPerformed
@@ -598,13 +592,7 @@ public class Caixa extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPlanoDePagamentoActionPerformed
 
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
-        try {
-            controller.setarTotalMensalidade();
-        } catch (SQLException ex) {
-            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarTotalMensalidade();
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     private void alternarClienteCadastradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alternarClienteCadastradoActionPerformed
@@ -725,13 +713,7 @@ public class Caixa extends javax.swing.JDialog {
     }//GEN-LAST:event_alternarProdNomeMouseClicked
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
-        try {
-            controller.finalizarVenda();
-        } catch (SQLException ex) {
-            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.finalizarVenda();
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void campoQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoQuantidadeActionPerformed

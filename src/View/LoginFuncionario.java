@@ -143,13 +143,7 @@ public class LoginFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaosairActionPerformed
 
     private void botaoentrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoentrarFuncionarioActionPerformed
-        try {
-            controller.entrarSistema();
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(LoginFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.entrarSistema();
     }//GEN-LAST:event_botaoentrarFuncionarioActionPerformed
 
     private void botaoDesenvolvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDesenvolvedorActionPerformed

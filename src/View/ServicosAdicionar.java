@@ -48,11 +48,7 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         fecharTelaESC();
         this.setarValores();
-        try {
-            controller.preencherComboPeriodo();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServicosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.preencherComboPeriodo();
         
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
     }
@@ -158,11 +154,7 @@ public class ServicosAdicionar extends javax.swing.JDialog {
     }//GEN-LAST:event_metodoPagamentoActionPerformed
 
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
-        try {
-            controller.adicionarServico();
-        } catch (SQLException | ParseException ex) {
-            Logger.getLogger(ServicosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.adicionarServico();
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     private void comboPeriodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboPeriodoMouseClicked

@@ -37,45 +37,45 @@ public class AdicionarProdutosController {
         this.view = view;
     }
     
-    public void adicionarProduto() throws SQLException, ParseException{
-        //Pegando Dados Da tela
-        int codBanco;
-        if(view.getCampoCodigo().getText().equals("")){codBanco=0;}
-        else{codBanco =Integer.parseInt(view.getCampoCodigo().getText());}
-        String nome = view.getCampoNome().getText();
-        String tipo= "";
-        String unMedida = "";
-        BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
-        float quantidade = quantidadeGrande.floatValue();
-        String descricao = view.getCampoDescricao().getText();
-        BigDecimal valorDeCompra = new BigDecimal("0");
-        String dataCompra = "";
-        BigDecimal valorDeVenda = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
-        int chaveDeLote = 0;
-        
-        Produtos produto = new Produtos(codBanco, nome, tipo, unMedida, quantidade, descricao, valorDeCompra, dataCompra, valorDeVenda,chaveDeLote);
-        //Inserindo Dados
-        if(nome.equals("")|| codBanco<=0 || valorDeVenda.compareTo(BigDecimal.ZERO)<=0||this.verificarExistenciaNoBanco(codBanco)){
-         view.exibeMensagem("Campos Preenchidos Incorretamente");
-        } else{
-            produtosDao.inserirDados(produto);
-            
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                this.setarLog(funcionarios, nome);
+        public void adicionarProduto(){
+            //Pegando Dados Da tela
+            int codBanco;
+            if(view.getCampoCodigo().getText().equals("")){codBanco=0;}
+            else{codBanco =Integer.parseInt(view.getCampoCodigo().getText());}
+            String nome = view.getCampoNome().getText();
+            String tipo= "";
+            String unMedida = "";
+            BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
+            float quantidade = quantidadeGrande.floatValue();
+            String descricao = view.getCampoDescricao().getText();
+            BigDecimal valorDeCompra = new BigDecimal("0");
+            String dataCompra = "";
+            BigDecimal valorDeVenda = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
+            int chaveDeLote = 0;
+
+            Produtos produto = new Produtos(codBanco, nome, tipo, unMedida, quantidade, descricao, valorDeCompra, dataCompra, valorDeVenda,chaveDeLote);
+            //Inserindo Dados
+            if(nome.equals("")|| codBanco<=0 || valorDeVenda.compareTo(BigDecimal.ZERO)<=0||this.verificarExistenciaNoBanco(codBanco)){
+             view.exibeMensagem("Campos Preenchidos Incorretamente");
+            } else{
+                produtosDao.inserirDados(produto);
+
+                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                if(funcionarios!=null){
+                    this.setarLog(funcionarios, nome);
+                }
+                view.exibeMensagem("Sucesso!");
+                //Limpando Campos
+                view.getCampoNome().setText("");
+                view.getCampoDescricao().setText("");
+                view.getCampoQuantidade().setText("");
+                view.getCampoValor().setText("");
+                view.getCampoCodigo().setText("");
             }
-            view.exibeMensagem("Sucesso!");
-            //Limpando Campos
-            view.getCampoNome().setText("");
-            view.getCampoDescricao().setText("");
-            view.getCampoQuantidade().setText("");
-            view.getCampoValor().setText("");
-            view.getCampoCodigo().setText("");
+
         }
-        
-    }
     
-    private boolean verificarExistenciaNoBanco(int codBanco) throws SQLException, ParseException{
+    private boolean verificarExistenciaNoBanco(int codBanco){
         ArrayList <Produtos> produtos = produtosDao.pesquisarProdutos("SELECT * FROM tblProdutos WHERE codProduto = "+codBanco);
         if(produtos==null){return false;}
         int quantidade = produtos.size();

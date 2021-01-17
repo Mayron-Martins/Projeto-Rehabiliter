@@ -7,6 +7,7 @@ package Controller.adicionais;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.LogsSystem;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.DetOrcamentarioDao;
 import Dao.EntradasDao;
@@ -22,6 +23,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,41 +44,46 @@ public class AdicionarEntradasController {
         this.view = view;
     }
     
-    public void adicionarEntrada() throws SQLException, ParseException{
-        //Dados Entrada
-        int codEntrada = verificar.verificarUltimo("tblEntradas", "codEntrada") +1;
-        int codOrcamentario = verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
-        String referencia = view.getCampoReferencia().getText();
-        
-        BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
-        float quantidade = quantidadeGrande.floatValue();
-        
-        String formaPagamento = this.retornarFormaPagamento();
-        BigDecimal valorEntrada = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
-        Date dataCadastro = view.getCampoData().getDate();
-        
-        Entradas entrada = new Entradas(codEntrada, referencia, quantidade, formaPagamento, valorEntrada, dataCadastro);
-        DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Entradas", formaPagamento, valorEntrada, dataCadastro, entrada.getCodBanco());
-        
-        if(referencia.equals("")||quantidade==0||formaPagamento.equals("[Nenhum]")||valorEntrada.compareTo(BigDecimal.ZERO)==0
-                || dataCadastro == null){
-            view.exibeMensagem("Dados Preenchidos Incorretamente!");
-        }
-        else{
-          //Adicionando no Banco
-          entradasDao.inserirDados(entrada);
-          orcamentarioDao.inserirDados(orcamentario);
-          
-          ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                this.setarLog(funcionarios, referencia);
+    public void adicionarEntrada(){
+        try{
+            //Dados Entrada
+            int codEntrada = verificar.verificarUltimo("tblEntradas", "codEntrada") +1;
+            int codOrcamentario = verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
+            String referencia = view.getCampoReferencia().getText();
+
+            BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
+            float quantidade = quantidadeGrande.floatValue();
+
+            String formaPagamento = this.retornarFormaPagamento();
+            BigDecimal valorEntrada = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
+            Date dataCadastro = view.getCampoData().getDate();
+
+            Entradas entrada = new Entradas(codEntrada, referencia, quantidade, formaPagamento, valorEntrada, dataCadastro);
+            DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Entradas", formaPagamento, valorEntrada, dataCadastro, entrada.getCodBanco());
+
+            if(referencia.equals("")||quantidade==0||formaPagamento.equals("[Nenhum]")||valorEntrada.compareTo(BigDecimal.ZERO)==0
+                    || dataCadastro == null){
+                view.exibeMensagem("Dados Preenchidos Incorretamente!");
             }
-          view.exibeMensagem("Sucesso!");
-          view.getCampoFormaPagamento().setSelectedIndex(0);
-          view.getCampoQuantidade().setText("");
-          view.getCampoReferencia().setText("");
-          view.getCampoValor().setText("");
+            else{
+              //Adicionando no Banco
+              entradasDao.inserirDados(entrada);
+              orcamentarioDao.inserirDados(orcamentario);
+
+              ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                if(funcionarios!=null){
+                    this.setarLog(funcionarios, referencia);
+                }
+              view.exibeMensagem("Sucesso!");
+              view.getCampoFormaPagamento().setSelectedIndex(0);
+              view.getCampoQuantidade().setText("");
+              view.getCampoReferencia().setText("");
+              view.getCampoValor().setText("");
+            }
+        } catch (SQLException ex) {
+            gerarLog(ex);
         }
+        
     }
     
     private String retornarFormaPagamento(){
@@ -99,5 +107,11 @@ public class AdicionarEntradasController {
         Date dataEvento = new Date();
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Entrada", "Cadastrou a entrada "+referencia+" aos ganhos");
         return logAcao;
-    } 
+    }
+    
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
+    }
 }

@@ -31,12 +31,7 @@ public class Turmas {
         this.quantidadeMaximaAlunos = quantidadeMaximaAlunos;
         this.diasDaSemana = diasDaSemana;
         ConversaodeDataParaPadraoDesignado converter = new ConversaodeDataParaPadraoDesignado();
-        try {
-            this.horario = converter.parseHour(horario);
-        } catch (ParseException ex) {
-            System.err.println("Erro ao converter hora - classe Horarios");
-            Logger.getLogger(Horarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.horario = converter.parseHour(horario);
     }
 
     public int getCodBanco() {

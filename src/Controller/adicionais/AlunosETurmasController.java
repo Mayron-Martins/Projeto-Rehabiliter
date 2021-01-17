@@ -30,9 +30,8 @@ public class AlunosETurmasController {
         tabelaTurmas = (DefaultTableModel)view.getTabelaTurmas().getModel();
     }
     
-    public void listarTurmas() throws SQLException{
-        ArrayList <Turmas> turmas = new ArrayList<>();
-        turmas = this.turmasDao.selecionarTodasTurmas();
+    public void listarTurmas(){
+        ArrayList <Turmas> turmas = this.turmasDao.selecionarTodasTurmas();
         for(int linhas=0; linhas<turmas.size(); linhas++){
             if(turmas.get(linhas).getQuantidadeMaximaAlunos()==0){
                 Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 

@@ -562,13 +562,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     }//GEN-LAST:event_turmasehorariosActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        //ExportarArquivos exportarContrato = new ExportarArquivos();
-        //exportarContrato.convertDocx2pdf("C:/Rehabiliter/Contrato Editado.docx");
-        try {
-            controller.verificacaoDeTurmaEServico();
-        } catch (SQLException ex) {
-            Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.verificacaoDeTurmaEServico();
     }//GEN-LAST:event_formWindowOpened
 
     private void botaoDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDescricaoActionPerformed
@@ -589,11 +583,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     private void comboPlanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPlanoActionPerformed
-        try {
-            controller.setarValorContrato();
-        } catch (SQLException ex) {
-            Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarValorContrato();
     }//GEN-LAST:event_comboPlanoActionPerformed
 
     private void btnAntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAntActionPerformed
@@ -621,11 +611,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void comboTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmaActionPerformed
-        try {
-            controller.verificarQuantidadeLimiteAlunos();
-        } catch (SQLException ex) {
-            Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.verificarQuantidadeLimiteAlunos();
     }//GEN-LAST:event_comboTurmaActionPerformed
 
     private void btnConfirmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmaActionPerformed
@@ -638,11 +624,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     }//GEN-LAST:event_btnConfirmaActionPerformed
 
     private void renovacaoAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renovacaoAutoActionPerformed
-        try {
-            controller.setarValorContrato();
-        } catch (SQLException ex) {
-            Logger.getLogger(AlunosCadastro.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarValorContrato();
     }//GEN-LAST:event_renovacaoAutoActionPerformed
     private void jpanelDadosActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:

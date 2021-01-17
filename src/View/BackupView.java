@@ -178,11 +178,7 @@ public class BackupView extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoFecharActionPerformed
 
     private void btnImportarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarLocalActionPerformed
-        try {
-            controller.importarBanco();
-        } catch (SQLException ex) {
-            Logger.getLogger(BackupView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.importarBanco();
     }//GEN-LAST:event_btnImportarLocalActionPerformed
 
     private void btnImportarNuvemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarNuvemActionPerformed

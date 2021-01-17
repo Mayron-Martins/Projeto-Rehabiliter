@@ -105,13 +105,7 @@ public class inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        try {
-            controller.setarFrequenciaFuncionarios();
-        } catch (SQLException ex) {
-            Logger.getLogger(inicio.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarFrequenciaFuncionarios();
     }//GEN-LAST:event_formWindowClosed
 
     /**

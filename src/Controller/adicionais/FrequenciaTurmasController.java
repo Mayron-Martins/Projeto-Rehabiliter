@@ -68,7 +68,7 @@ public class FrequenciaTurmasController {
     }
     
     //Adicionar linhas à tabela se for a data correta
-    public void adicionarLinhasATabela() throws SQLException, ParseException{
+    public void adicionarLinhasATabela(){
         view.getPainelderolagem().setVisible(true);
         view.getPainelderolagem1().setVisible(false);
         limparTabela();
@@ -95,7 +95,7 @@ public class FrequenciaTurmasController {
     }
     
     //Seta os novos dados conforme correspondente no Banco
-    public void setarNovosDadosTabela() throws ParseException, SQLException{
+    public void setarNovosDadosTabela(){
     view.getPainelderolagem().setVisible(false);
     view.getPainelderolagem1().setVisible(true);
     limparTabelaBanco();
@@ -107,7 +107,7 @@ public class FrequenciaTurmasController {
     }
     
     //Adiciona a frequencia salva ao banco
-    public void adicionarFrequenciaoBanco() throws ParseException, SQLException{
+    public void adicionarFrequenciaoBanco(){
         for(int linhas=0; linhas<this.tabelaDeAlunos.getRowCount(); linhas++){
             int codTurma = this.retornarCodTurma();
             int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhas, 0).toString());
@@ -132,7 +132,7 @@ public class FrequenciaTurmasController {
     }
     
     //Atualiza a frequência no banco de dados
-    public void atualizarFrequenciaoBanco() throws ParseException, SQLException{
+    public void atualizarFrequenciaoBanco(){
         for(int linhas=0; linhas<this.tabelaDeAlunosBanco.getRowCount(); linhas++){
             int codTurma = this.retornarCodTurma();
             int codAluno = Integer.parseInt(tabelaDeAlunosBanco.getValueAt(linhas, 0).toString());
@@ -156,7 +156,7 @@ public class FrequenciaTurmasController {
     }
     
     //Seta as turmas no combobox de turmas
-    public void setarTurmas() throws SQLException{
+    public void setarTurmas(){
         ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
         
         if(turmas == null){
@@ -176,7 +176,7 @@ public class FrequenciaTurmasController {
     }
     
     //seta a tabela para data de hoje
-    private void setarTabela() throws SQLException, ParseException{
+    private void setarTabela(){
             limparTabela();
             int codTurma = this.retornarCodTurma();
            ArrayList <Aluno> alunos = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codTurma = "+codTurma);
@@ -218,7 +218,7 @@ public class FrequenciaTurmasController {
     }
     
     //Setar campo Intervalo
-    public void setarCampoIntervalo() throws SQLException, ParseException{
+    public void setarCampoIntervalo(){
         if(view.getComboPeriodo().getSelectedIndex()>0){
             int numPeriodo = view.getComboPeriodo().getSelectedIndex();
             LocalDate data = LocalDate.now();
@@ -244,7 +244,7 @@ public class FrequenciaTurmasController {
     }
     
     //Verificar se o dia da semana é o mesmo da turma
-    private boolean verificarNovoDado() throws SQLException{
+    private boolean verificarNovoDado(){
         ArrayList <Horarios> horarios = horariosDao.pesquisarHorarios("SELECT * FROM tblHorarios WHERE codTurma = "+this.retornarCodTurma());
         ArrayList <DayOfWeek> diasDaSemana = new ArrayList<>();
         
@@ -291,7 +291,7 @@ public class FrequenciaTurmasController {
         return verificador>0;
     }
     
-    public boolean verificarPresencaDeDados() throws SQLException, ParseException{
+    public boolean verificarPresencaDeDados(){
         ArrayList <FrequenciaTurmas> frequencias = frequencia.pesquisarFrequencias("SELECT * FROM tblFreqTurma"+this.retornarCodTurma());
         return frequencias == null;
     }
@@ -300,7 +300,7 @@ public class FrequenciaTurmasController {
         return Integer.parseInt(turma.split("\\.")[0]);
     }
     
-    private boolean verificarSeHaDadosNoSistema() throws SQLException, ParseException{
+    private boolean verificarSeHaDadosNoSistema(){
         LocalDate dataAtual = LocalDate.now();
         Date dataInpult = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
         ArrayList <FrequenciaTurmas> frequencias = frequencia.pesquisarFrequencias("SELECT * FROM tblFreqTurma"+this.retornarCodTurma() +" WHERE data = '"+dataInpult+"' AND codTurma = "+this.retornarCodTurma());
@@ -328,7 +328,7 @@ public class FrequenciaTurmasController {
         }
     }
     
-    private void pesquisarPeriodo(LocalDate dataPassada) throws SQLException, ParseException{
+    private void pesquisarPeriodo(LocalDate dataPassada){
         LocalDate dataAtual = LocalDate.now();
         Date dataPassadaSql = converterData.getSqlDate(converterData.conversaoLocalforDate(dataPassada));
         Date dataSql = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
@@ -356,7 +356,7 @@ public class FrequenciaTurmasController {
         
     }
     
-    private void setarDadosDoBanco() throws ParseException, SQLException{
+    private void setarDadosDoBanco(){
             limparTabelaBanco();
            ArrayList <FrequenciaTurmas> frequencias = this.BuscarFrequenciasNaData();
            
@@ -368,7 +368,7 @@ public class FrequenciaTurmasController {
                }
     }
     
-    private ArrayList <FrequenciaTurmas> BuscarFrequenciasNaData() throws ParseException, SQLException{
+    private ArrayList <FrequenciaTurmas> BuscarFrequenciasNaData(){
         int codTurma = this.retornarCodTurma();
             String dataCombo = view.getComboIntervalo().getSelectedItem().toString();
             Date data = converterData.getSqlDate(converterData.parseDate(dataCombo.split("Dia ")[1]));

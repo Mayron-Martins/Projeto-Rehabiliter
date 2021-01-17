@@ -52,7 +52,7 @@ public class PlanoGastosController {
     }
     
     //Setar Tabelas conforme forma Detalha ou Resumida
-    public void setarTabelas() throws SQLException, ParseException{
+    public void setarTabelas(){
         if(view.getBotaoVResumida().isEnabled()){
             this.setarTabelasResumidas();
         }
@@ -62,7 +62,7 @@ public class PlanoGastosController {
     }
     
     //Parte Detalhada
-    private void setarTabelasDetalhadas() throws SQLException, ParseException{
+    private void setarTabelasDetalhadas(){
         int tipoSelecionado = view.getComboTipos().getSelectedIndex();
         ArrayList <Gastos> gastos = this.pegarGastosNoPeriodo();
         
@@ -81,7 +81,7 @@ public class PlanoGastosController {
     }
     
     //Setar Entradas Detalhadas
-    private void setarGastosDetalhados(ArrayList <Gastos> gastos) throws ParseException{
+    private void setarGastosDetalhados(ArrayList <Gastos> gastos){
         limparTabelaGastos();
         for(int linhas=0; linhas<gastos.size(); linhas++){
             int codEntrada = gastos.get(linhas).getCodBanco();
@@ -101,7 +101,7 @@ public class PlanoGastosController {
     
     //Parte Resumida
     //Setar Tabelas Resumidamente
-    private void setarTabelasResumidas() throws SQLException, ParseException{
+    private void setarTabelasResumidas(){
         int tipoSelecionado = view.getComboTipos().getSelectedIndex();
         ArrayList <Gastos> gastos = this.pegarGastosNoPeriodo();
         
@@ -121,7 +121,7 @@ public class PlanoGastosController {
     
     
     //Setar Entradas Resumidamente
-    private void setarGastosResumidos(ArrayList <Gastos> gastos) throws ParseException{
+    private void setarGastosResumidos(ArrayList <Gastos> gastos){
         limparTabelaGastos();
         
         String codGasto = "Diversos";
@@ -168,7 +168,7 @@ public class PlanoGastosController {
     }
     
     //Pega os Gastos em determinado Período
-    private ArrayList <Gastos> pegarGastosNoPeriodo() throws SQLException{
+    private ArrayList <Gastos> pegarGastosNoPeriodo(){
         LocalDate dataAtual = LocalDate.now();
         Date dataBanco = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
         Date dataPassada;
@@ -258,7 +258,7 @@ public class PlanoGastosController {
     
    //Fim das Funções de Setar Tabela
     //Editar Entradas
-    public void editarEntradas() throws SQLException, ParseException{
+    public void editarEntradas(){
         if(view.getBotaoVDetalhada().isEnabled()){
             if(view.getPainelGastos().isVisible()){
                 if(view.getTabelaGastos().getSelectedRow()!=-1){
@@ -295,7 +295,7 @@ public class PlanoGastosController {
     }
     
     //Remover entradas
-    public void removerEntradas() throws SQLException, ParseException{
+    public void removerEntradas(){
         if(view.getBotaoVDetalhada().isEnabled()){
             if(view.getPainelGastos().isVisible()){
                 if(view.getTabelaGastos().getSelectedRow()!=-1){
@@ -337,10 +337,10 @@ public class PlanoGastosController {
         return "[Nenhum]";
     }
         
-        private long chaveGasto(int codGasto) throws SQLException{
-            Gastos gasto = gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE codGasto = "+codGasto).get(0);
-            return gasto.getChaveTransacao();
-        }
+    private long chaveGasto(int codGasto){
+        Gastos gasto = gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE codGasto = "+codGasto).get(0);
+        return gasto.getChaveTransacao();
+    }
         
     private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
         Funcionario funcionario = funcionarios.get(0);

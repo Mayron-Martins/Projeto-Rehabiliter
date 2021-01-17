@@ -294,25 +294,13 @@ public class TurmasView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoRemoverTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverTurmasActionPerformed
-        try {
-            controller.removerTurma();
-        } catch (SQLException ex) {
-            Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.removerTurma();
     }//GEN-LAST:event_botaoRemoverTurmasActionPerformed
 
     private void botaoEditarTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarTurmasActionPerformed
         this.diasDaSemana();
         this.edicaoDeHorario();
-        try {
-            controller.editarTurmas();
-        } catch (SQLException ex) {
-            Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.editarTurmas();
     }//GEN-LAST:event_botaoEditarTurmasActionPerformed
 
     private void botaoAdicionarTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarTurmasActionPerformed
@@ -357,9 +345,7 @@ public class TurmasView extends javax.swing.JDialog {
     }//GEN-LAST:event_barraDeRolagemDiasdaSemanaMousePressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try{
-          controller.listarTurmas();  
-        }catch(SQLException erro){System.out.println("Erro ao listar");}
+        controller.listarTurmas();
         
     }//GEN-LAST:event_formWindowOpened
 
@@ -368,19 +354,11 @@ public class TurmasView extends javax.swing.JDialog {
     }//GEN-LAST:event_formMouseClicked
 
     private void tabelaAlunosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaAlunosKeyReleased
-        try {
-            controller.selecionarTabela();
-        } catch (SQLException ex) {
-            Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaAlunosKeyReleased
 
     private void tabelaAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlunosMouseClicked
-        try {
-            controller.selecionarTabela();
-        } catch (SQLException ex) {
-            Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaAlunosMouseClicked
 
     private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed

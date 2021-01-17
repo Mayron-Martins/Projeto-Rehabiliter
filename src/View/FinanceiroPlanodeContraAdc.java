@@ -112,13 +112,7 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoFecharActionPerformed
 
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
-        try {
-            controller.adicionarEntrada();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroPlanodeContraAdc.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroPlanodeContraAdc.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.adicionarEntrada();
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     /**

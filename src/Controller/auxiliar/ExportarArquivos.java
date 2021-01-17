@@ -290,8 +290,6 @@ public class ExportarArquivos {
             JOptionPane.showMessageDialog(null, "Arquivo Contrato.docx não encontrado em C:/Rehabiliter");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
-        } catch (ParseException ex) {
-            Logger.getLogger(ExportarArquivos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -305,9 +303,7 @@ public class ExportarArquivos {
             OutputStream out = new FileOutputStream(new File(pdfPath));
             PdfConverter.getInstance().convert(document, out, options);
         } catch (IOException | NoClassDefFoundError ex) {
-            LogsSystem gerarLog = new LogsSystem();
-            gerarLog.gravarErro(ex);
-            gerarLog.close();
+            gerarLog(ex);
         }
     }
 
@@ -334,13 +330,9 @@ public class ExportarArquivos {
             pdfDoc.close();
             myBuffer.close();
         } catch (FileNotFoundException ex) {
-            LogsSystem gerarLog = new LogsSystem();
-            gerarLog.gravarErro(ex);
-            gerarLog.close();
+            gerarLog(ex);
         } catch (DocumentException | IOException ex) {
-            LogsSystem gerarLog = new LogsSystem();
-            gerarLog.gravarErro(ex);
-            gerarLog.close();
+            gerarLog(ex);
         }
     }
     /*    
@@ -386,5 +378,12 @@ public class ExportarArquivos {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+    }
+    
+    //Gerar arquivo com o log de erro, caso haja
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
     }
 }

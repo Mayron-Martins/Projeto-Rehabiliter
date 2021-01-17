@@ -389,53 +389,23 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
     }//GEN-LAST:event_tabelaEntradasComponentHidden
 
     private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
-        try {
-            controller.setarTabelas();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarTabelas();
     }//GEN-LAST:event_btnAplicarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        try {
-            controller.editarEntradas();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.editarEntradas();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        try {
-            controller.removerEntradas();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.removerEntradas();
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnContasRecebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContasRecebidasActionPerformed
-        try {
-            controller.setarTabelaPlanosPagos();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarTabelaPlanosPagos();
     }//GEN-LAST:event_btnContasRecebidasActionPerformed
 
     private void btnMensalidadesAReceberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensalidadesAReceberActionPerformed
-        try {
-            controller.setarTabelaPlanosPendentes();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroPlanodeEntradas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarTabelaPlanosPendentes();
     }//GEN-LAST:event_btnMensalidadesAReceberActionPerformed
 
     /**

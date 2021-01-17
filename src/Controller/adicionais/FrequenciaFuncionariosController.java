@@ -44,7 +44,7 @@ public class FrequenciaFuncionariosController {
 
 
     //Adicionar Frequencia na Tabela
-    public void adicionarDadosNaTabela() throws SQLException, ParseException{
+    public void adicionarDadosNaTabela(){
         limparTabela();
         if(view.getComboPeriodo().isEnabled()){
           if(view.getComboIntervalo().getSelectedIndex()>0){
@@ -53,14 +53,14 @@ public class FrequenciaFuncionariosController {
         }
     }
     
-    public void notificacaoInicial() throws SQLException, ParseException{
+    public void notificacaoInicial(){
         if(this.verificarPresencaDeDados()){
             view.exibeMensagem("Sem Dados Disponíveis");
         }
     }
     
     //Setar campo Intervalo
-    public void setarCampoIntervalo() throws SQLException, ParseException{
+    public void setarCampoIntervalo(){
         if(view.getComboPeriodo().getSelectedIndex()>0){
             int numPeriodo = view.getComboPeriodo().getSelectedIndex();
             LocalDate data = LocalDate.now();
@@ -86,7 +86,7 @@ public class FrequenciaFuncionariosController {
     }
     
     
-    private boolean verificarPresencaDeDados() throws SQLException, ParseException{
+    private boolean verificarPresencaDeDados(){
         ArrayList <FrequenciaFuncionarios> frequencias = frequencia.pesquisarFrequencias("SELECT * FROM tblFreqFuncionarios");
         return frequencias == null;
     }
@@ -103,7 +103,7 @@ public class FrequenciaFuncionariosController {
         }
     }
     
-    private void pesquisarPeriodo(LocalDate dataPassada) throws SQLException, ParseException{
+    private void pesquisarPeriodo(LocalDate dataPassada){
         LocalDate dataAtual = LocalDate.now();
         Date dataPassadaSql = converterData.getSqlDate(converterData.conversaoLocalforDate(dataPassada));
         Date dataSql = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
@@ -130,7 +130,7 @@ public class FrequenciaFuncionariosController {
         }
     }
     
-    private void setarDadosDoBanco() throws ParseException, SQLException{
+    private void setarDadosDoBanco(){
            limparTabela();
            ArrayList <FrequenciaFuncionarios> frequencias = this.BuscarFrequenciasNaData();
            String situacao;
@@ -143,7 +143,7 @@ public class FrequenciaFuncionariosController {
            }
     }
     
-    private ArrayList <FrequenciaFuncionarios> BuscarFrequenciasNaData() throws ParseException, SQLException{
+    private ArrayList <FrequenciaFuncionarios> BuscarFrequenciasNaData(){
     String dataCombo = view.getComboIntervalo().getSelectedItem().toString();
     Date data = converterData.getSqlDate(converterData.parseDate(dataCombo.split("Dia ")[1]));
     ArrayList <FrequenciaFuncionarios> frequencias = this.frequencia.pesquisarFrequencias("SELECT * FROM tblFreqFuncionarios WHERE data = '"+data+"'");

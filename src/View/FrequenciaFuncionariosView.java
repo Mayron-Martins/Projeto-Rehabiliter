@@ -158,33 +158,15 @@ public class FrequenciaFuncionariosView extends javax.swing.JDialog {
 
     private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
         controller.ativarComboIntervalo();
-        try {
-            controller.setarCampoIntervalo();
-        } catch (SQLException ex) {
-            Logger.getLogger(FrequenciaFuncionariosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FrequenciaFuncionariosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarCampoIntervalo();
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
     private void comboIntervaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervaloActionPerformed
-        try {
-            controller.adicionarDadosNaTabela();
-        } catch (SQLException ex) {
-            Logger.getLogger(FrequenciaFuncionariosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FrequenciaFuncionariosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.adicionarDadosNaTabela();
     }//GEN-LAST:event_comboIntervaloActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            controller.notificacaoInicial();
-        } catch (SQLException ex) {
-            Logger.getLogger(FrequenciaFuncionariosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FrequenciaFuncionariosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.notificacaoInicial();
     }//GEN-LAST:event_formWindowOpened
 
     /**

@@ -312,33 +312,15 @@ public class turmasFrequencia extends javax.swing.JDialog {
 
     private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
         controller.ativarComboIntervalo();
-        try {
-            controller.setarCampoIntervalo();
-        } catch (SQLException ex) {
-            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarCampoIntervalo();
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         if(painelderolagem.isVisible()){
-            try {
             controller.adicionarFrequenciaoBanco();
-        } catch (ParseException ex) {
-            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
         }
         else{
-            try {
-                controller.atualizarFrequenciaoBanco();
-            } catch (ParseException ex) {
-                Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            controller.atualizarFrequenciaoBanco();
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
@@ -347,29 +329,15 @@ public class turmasFrequencia extends javax.swing.JDialog {
     }//GEN-LAST:event_comboTurmasActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            controller.setarTurmas();
-        } catch (SQLException ex) {
-            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarTurmas();
     }//GEN-LAST:event_formWindowOpened
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
-        try {
-            controller.adicionarLinhasATabela();
-        } catch (SQLException | ParseException ex) {
-            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.adicionarLinhasATabela();
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void comboIntervaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervaloActionPerformed
-        try {
-            controller.setarNovosDadosTabela();
-        } catch (ParseException ex) {
-            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(turmasFrequencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarNovosDadosTabela();
     }//GEN-LAST:event_comboIntervaloActionPerformed
 
     private void tabelaAlunosBancoComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaAlunosBancoComponentHidden

@@ -53,7 +53,7 @@ public class ServicosController {
     }
     
     //Lista todas as turmas 
-    public void listarServicos() throws SQLException{
+    public void listarServicos(){
         ArrayList <Servicos> servicos = new ArrayList<>();
         servicos = this.servicosDao.selecionarTodosServicos();
         if(servicos==null){
@@ -100,7 +100,7 @@ public class ServicosController {
         }        
     }
     
-    public void editarServicos() throws SQLException, ParseException{
+    public void editarServicos(){
         if(this.view.getTabelaServicos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaServicos().getSelectedRow();
             int codServico = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
@@ -183,7 +183,7 @@ public class ServicosController {
         else{this.view.exibeMensagem("Erro, Nenhum Servio Selecionado!");}
     }
     
-    public void selecionarTabela() throws SQLException{
+    public void selecionarTabela(){
       if(this.view.getTabelaServicos().getSelectedRow()!=-1){
         view.setarValores();
         //Número da linha selecionada
@@ -207,7 +207,7 @@ public class ServicosController {
       }
     }
     
-    public void removerServico() throws SQLException, ParseException{
+    public void removerServico(){
         if(this.view.getTabelaServicos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaServicos().getSelectedRow();
             int codServico = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
@@ -244,7 +244,7 @@ public class ServicosController {
         }
     }
     
-    public void preencherComboPeriodo() throws SQLException{
+    public void preencherComboPeriodo(){
         ArrayList <Servicos> servicos = servicosDao.selecionarTodosServicos();
         
         String periodoServicoAnterior="";
@@ -301,13 +301,9 @@ public class ServicosController {
                 case "Anual":
                     return 365;
             }
-            try {
-                ArrayList <Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE periodo = '"+tipo+"'");
-                if(servicos!=null){
-                    return servicos.get(0).getPeriodDays();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(AdicionarServicosController.class.getName()).log(Level.SEVERE, null, ex);
+            ArrayList <Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE periodo = '"+tipo+"'");
+            if(servicos!=null){
+                return servicos.get(0).getPeriodDays();
             }
         }
         else{
@@ -333,11 +329,11 @@ public class ServicosController {
         return dias;
     }
     
-    private Servicos retornarServicoAnterior(int codServico) throws SQLException{
+    private Servicos retornarServicoAnterior(int codServico){
         return servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
     }
     
-    private boolean retornarAlunosUsando(int codServico) throws SQLException, ParseException{
+    private boolean retornarAlunosUsando(int codServico){
         ArrayList <Aluno> alunos = alunoDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codServico = "+codServico);
         return alunos ==null;
     }

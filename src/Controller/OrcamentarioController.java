@@ -20,8 +20,6 @@ import Model.auxiliar.Servicos;
 import View.FinanceiroAnaliseFinanceira;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,7 +54,7 @@ public class OrcamentarioController {
         }
     }
     
-    public void setarTabelas() throws SQLException, ParseException{
+    public void setarTabelas(){
         ArrayList <DetOrcamentario> orcamentarios = this.pegarOrcamentarioNoPeriodo();
         
         if(orcamentarios!=null){
@@ -83,7 +81,7 @@ public class OrcamentarioController {
         
     }
     
-    private void setarTabelaDetalhada(ArrayList<DetOrcamentario> orcamentarios) throws SQLException, ParseException{
+    private void setarTabelaDetalhada(ArrayList<DetOrcamentario> orcamentarios){
         limparTabelaOrcamentaria();
         limparCampos();
         
@@ -113,7 +111,7 @@ public class OrcamentarioController {
         
     }
     
-    private void setarTabelaResumida(ArrayList<DetOrcamentario> orcamentarios) throws SQLException, ParseException{
+    private void setarTabelaResumida(ArrayList<DetOrcamentario> orcamentarios){
         limparTabelaOrcamentaria();
         limparCampos();
         
@@ -173,7 +171,7 @@ public class OrcamentarioController {
         view.getCampoDespesaTotal().setText(gastoTotal.toString());
     }
     //Pega as Entradas em determinado Período
-    private ArrayList <DetOrcamentario> pegarOrcamentarioNoPeriodo() throws SQLException{
+    private ArrayList <DetOrcamentario> pegarOrcamentarioNoPeriodo(){
         LocalDate dataAtual = LocalDate.now();
         Date dataBanco = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
         Date dataPassada;
@@ -210,7 +208,7 @@ public class OrcamentarioController {
         return orcamentarioDao.selecionarTodosOrcamentarios();
     }
     
-    private void setarCampoPendentes() throws SQLException, ParseException{
+    private void setarCampoPendentes(){
         ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pendente' OR situacao = 'Vencido'");
         BigDecimal valorPendente = new BigDecimal("0");
         
@@ -229,8 +227,8 @@ public class OrcamentarioController {
     }
     
     private void setarCamposTotais(){
-        BigDecimal totalParcial = new BigDecimal("0");
-        BigDecimal totalRelativo = new BigDecimal("0");
+        BigDecimal totalParcial;
+        BigDecimal totalRelativo;
         BigDecimal ganhoTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoGanhoTotal().getText()).toString());
         BigDecimal gastoTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoDespesaTotal().getText()).toString());
         BigDecimal pendentes = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoPendente().getText()).toString());
@@ -268,7 +266,7 @@ public class OrcamentarioController {
         }
     }
     
-    public void imprimirDados() throws ParseException{
+    public void imprimirDados(){
         int numLinhas = tabelaOrcamentaria.getRowCount();
         if(numLinhas>0){
             String titulo = "Relatorio Orçamentário";

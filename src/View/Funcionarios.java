@@ -424,13 +424,8 @@ public class Funcionarios extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoRemover1ActionPerformed
 
     private void botaoEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditar1ActionPerformed
-        try {
-            controller.editarFuncionarios();
-        } catch (ParseException ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.editarFuncionarios();
+
     }//GEN-LAST:event_botaoEditar1ActionPerformed
 
     private void tabelaFuncionariosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaFuncionariosComponentHidden
@@ -438,21 +433,11 @@ public class Funcionarios extends javax.swing.JDialog {
     }//GEN-LAST:event_tabelaFuncionariosComponentHidden
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            controller.listarFuncionarios();
-        } catch (ParseException ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.listarFuncionarios();
     }//GEN-LAST:event_formWindowOpened
 
     private void botaoListar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListar1ActionPerformed
-        try {
-            controller.listar();
-        } catch (Exception ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.listar();
     }//GEN-LAST:event_botaoListar1ActionPerformed
 
     private void botaobuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscar1ActionPerformed
@@ -484,13 +469,7 @@ public class Funcionarios extends javax.swing.JDialog {
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         this.setarTelasPermitidas();
         
-        try {
-            controller.atualizarTelasPermitidas();
-        } catch (SQLException ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.atualizarTelasPermitidas();
         panelPerm.setVisible(false);
     }//GEN-LAST:event_btnFecharActionPerformed
 
@@ -575,23 +554,11 @@ public class Funcionarios extends javax.swing.JDialog {
     }//GEN-LAST:event_radioCaixaNaoActionPerformed
 
     private void tabelaFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFuncionariosMouseClicked
-        try {
-            controller.selecionarTabela();
-        } catch (SQLException ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaFuncionariosMouseClicked
 
     private void tabelaFuncionariosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaFuncionariosKeyReleased
-        try {
-            controller.selecionarTabela();
-        } catch (SQLException ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.selecionarTabela();
     }//GEN-LAST:event_tabelaFuncionariosKeyReleased
 
     /**

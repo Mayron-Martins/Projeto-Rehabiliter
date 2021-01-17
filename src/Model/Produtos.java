@@ -42,12 +42,8 @@ public class Produtos {
         this.quantidade = quantidade;
         this.descricao = descricao;
         this.valorDeCompra = valorDeCompra;
-        try{
-            ConversaodeDataParaPadraoDesignado converter_data = new ConversaodeDataParaPadraoDesignado();
-            this.dataDeCompra = converter_data.getSqlDate(converter_data.parseDate(dataDeCompra));
-        }catch (ParseException erro){
-            System.err.println("Erro em converter data de compra");
-        }
+        ConversaodeDataParaPadraoDesignado converter_data = new ConversaodeDataParaPadraoDesignado();
+        this.dataDeCompra = converter_data.getSqlDate(converter_data.parseDate(dataDeCompra));
         this.valorDeVenda = valorDeVenda;
         this.chaveDeLote = chaveDeLote;
     }

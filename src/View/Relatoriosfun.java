@@ -201,21 +201,11 @@ public class Relatoriosfun extends javax.swing.JDialog {
     private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
        controller.ativarComboIntervalo();
        
-        try {
-            controller.setarCampoIntervalo();
-        } catch (SQLException | ParseException ex) {
-            Logger.getLogger(Relatoriosfun.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       controller.setarCampoIntervalo();
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
     private void comboIntervaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIntervaloActionPerformed
-        try {
-            controller.setarDadosTabela();
-        } catch (ParseException ex) {
-            Logger.getLogger(Relatoriosfun.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Relatoriosfun.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarDadosTabela();
     }//GEN-LAST:event_comboIntervaloActionPerformed
 
     private void comboFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFuncionariosActionPerformed
@@ -236,13 +226,7 @@ public class Relatoriosfun extends javax.swing.JDialog {
     }//GEN-LAST:event_tabelaLogsMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            controller.setarLogs();
-        } catch (SQLException ex) {
-            Logger.getLogger(Relatoriosfun.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Relatoriosfun.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarLogs();
     }//GEN-LAST:event_formWindowOpened
 
     private void tabelaLogsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaLogsKeyReleased

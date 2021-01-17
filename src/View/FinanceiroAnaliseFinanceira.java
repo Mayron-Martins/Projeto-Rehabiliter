@@ -270,13 +270,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
         if(comboPeriodo.getSelectedIndex()>0){
             campoDataEspecífica.setDate(null);
             campoDataEspecífica.setEnabled(false);
-            try {
-                controller.setarTabelas();
-            } catch (SQLException ex) {
-                Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            controller.setarTabelas();
         }
         else{
             campoDataEspecífica.setDate(null);
@@ -285,11 +279,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
     }//GEN-LAST:event_comboPeriodoActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        try {
-            controller.imprimirDados();
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.imprimirDados();
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
@@ -297,13 +287,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExportarActionPerformed
 
     private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
-    try {
-            controller.setarTabelas();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroAnaliseFinanceira.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        controller.setarTabelas();
     }//GEN-LAST:event_btnAplicarActionPerformed
 
     /**

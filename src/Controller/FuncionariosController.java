@@ -47,12 +47,12 @@ public class FuncionariosController {
     }
     
     //Lista todas as turmas 
-    public void listarFuncionarios() throws SQLException, ParseException, Exception {
+    public void listarFuncionarios() {
         ArrayList <Funcionario> funcionarios = this.funcionarioDao.selecionarTodosFuncionarios();
         this.buscas(funcionarios);
     }
     
-    public void editarFuncionarios() throws SQLException, ParseException, Exception{
+    public void editarFuncionarios(){
         if(this.view.getTabelaFuncionarios().getSelectedRow()!= -1){
             //Dados Alunos
             int linhaSelecionada = this.view.getTabelaFuncionarios().getSelectedRow();
@@ -114,7 +114,7 @@ public class FuncionariosController {
     }
     
     //Buscar Funcionários no campo de busca
-    public void buscarFuncionarios() throws Exception{
+    public void buscarFuncionarios(){
         String funcionarioPesquisa = view.getCampoBuscar().getText();
         System.out.println(funcionarioPesquisa);
         ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarPorNome(funcionarioPesquisa);
@@ -123,7 +123,7 @@ public class FuncionariosController {
     }
     
     //Buscar Aniversariantes
-    private void buscarAniversariantes() throws SQLException, ParseException, Exception{
+    private void buscarAniversariantes(){
         ArrayList <Funcionario> funcionarios = funcionarioDao.selecionarTodosFuncionarios();
         ArrayList <Funcionario> funcionariosAniversariantes = new ArrayList<>();
         Date aniversario;
@@ -138,7 +138,7 @@ public class FuncionariosController {
     }
     
     //Listar
-    public void listar() throws ParseException, Exception{
+    public void listar(){
         String comboListar = view.getComboListar().getSelectedItem().toString();
         switch(comboListar){
             case "Todos":
@@ -153,11 +153,11 @@ public class FuncionariosController {
     }
 
     
-    private Funcionario funcionarioAnterior(int codFuncionario) throws SQLException, ParseException{
+    private Funcionario funcionarioAnterior(int codFuncionario){
          return  funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE codFuncionario = "+codFuncionario).get(0);
     }
     
-    private void buscas(ArrayList <Funcionario> listar) throws Exception{
+    private void buscas(ArrayList <Funcionario> listar){
         ArrayList<Funcionario> funcionarios = listar; 
         
         if(funcionarios==null){view.exibeMensagem("Funcionário Não Encontrado!"); limparTabela();}
@@ -174,7 +174,7 @@ public class FuncionariosController {
         }
     }
     
-    public void selecionarTabela() throws SQLException, ParseException{
+    public void selecionarTabela(){
         int linhaSelecionada = view.getTabelaFuncionarios().getSelectedRow();
         
         if(linhaSelecionada!=-1){
@@ -188,7 +188,7 @@ public class FuncionariosController {
         }
     }
     
-    private void pegarTelasPermitidas(int codFuncionario) throws SQLException, ParseException{
+    private void pegarTelasPermitidas(int codFuncionario){
         Funcionario funcionario = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE codFuncionario = "+codFuncionario).get(0);
         String[] telas = funcionario.getTelasPermitidas().split(",");
         for(int linhas=0; linhas<telas.length; linhas++){
@@ -225,7 +225,7 @@ public class FuncionariosController {
         
     }
     
-    public void atualizarTelasPermitidas() throws SQLException, ParseException{
+    public void atualizarTelasPermitidas(){
         int linhaSelecionada = view.getTabelaFuncionarios().getSelectedRow();
         
         if(linhaSelecionada!=-1){

@@ -95,11 +95,7 @@ public class RegistrodeGerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        try {
-            controller.adicionarGerente();
-        } catch (SQLException ex) {
-            Logger.getLogger(RegistrodeGerente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.adicionarGerente();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**

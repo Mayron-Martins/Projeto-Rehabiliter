@@ -284,33 +284,15 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     }//GEN-LAST:event_comboTiposActionPerformed
 
     private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
-        try {
-            controller.setarTabelas();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroPlanodeContra.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroPlanodeContra.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarTabelas();
     }//GEN-LAST:event_btnAplicarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        try {
-            controller.removerEntradas();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroPlanodeContra.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroPlanodeContra.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.removerEntradas();
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        try {
-            controller.editarEntradas();
-        } catch (SQLException ex) {
-            Logger.getLogger(FinanceiroPlanodeContra.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FinanceiroPlanodeContra.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.editarEntradas();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed

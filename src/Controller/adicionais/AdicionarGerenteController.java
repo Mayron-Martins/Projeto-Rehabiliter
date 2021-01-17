@@ -35,7 +35,7 @@ public class AdicionarGerenteController {
         this.view = view;
     }
     
-    public void adicionarGerente() throws SQLException{
+    public void adicionarGerente(){
         //Dados do Gerente
         int codGerente = 1;
         String nome = view.getCampoNome().getText();

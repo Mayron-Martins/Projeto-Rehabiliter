@@ -58,7 +58,7 @@ public class TelaInicioGerenteController {
         }
     }
 
-    public void inicializarTabela() throws SQLException, ParseException{
+    public void inicializarTabela(){
         ArrayList <Aluno> alunos = alunosDao.selecionarTodosAlunos();
         ArrayList <Aluno> alunosAniversariantes = new ArrayList<>();
         Date aniversario;
@@ -75,7 +75,7 @@ public class TelaInicioGerenteController {
         } 
     }
     
-        public void sairTela() throws SQLException, ParseException{
+        public void sairTela(){
         funcionarioDao.atualizarStatusAll();
         
         ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
@@ -87,7 +87,7 @@ public class TelaInicioGerenteController {
         
         
     
-    private void buscas(ArrayList <Aluno> listar) throws SQLException, ParseException{
+    private void buscas(ArrayList <Aluno> listar){
         ArrayList<Turmas> turmas = new ArrayList<>();
         ArrayList <Aluno> alunos = listar;
 
@@ -107,14 +107,14 @@ public class TelaInicioGerenteController {
         }
     }
     
-        public void setarPlanos() throws SQLException, ParseException{
+        public void setarPlanos(){
         if(alunosDao.selecionarTodosAlunos()!=null){
             this.setarVencimentoPlanos();
             this.setarPendenciaPlanos();
         }
     }
     
-    private void setarPendenciaPlanos() throws SQLException, ParseException{
+    private void setarPendenciaPlanos(){
         LocalDate dataAtual = LocalDate.now();
         
         if(dataAtual.getDayOfMonth()==1){
@@ -161,7 +161,7 @@ public class TelaInicioGerenteController {
      }
   }
     
-    private void setarVencimentoPlanos() throws SQLException, ParseException{
+    private void setarVencimentoPlanos(){
         LocalDate dataAtual = LocalDate.now();
         LocalDate dataVencimento;
         Period periodo;
@@ -195,7 +195,7 @@ public class TelaInicioGerenteController {
         }
     }
     
-    private void setarDebitos(Aluno alunoBanco) throws SQLException, ParseException{
+    private void setarDebitos(Aluno alunoBanco){
         Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+alunoBanco.getPlano()).get(0);
         
         BigDecimal debitos = new BigDecimal(alunoBanco.getDebito().toString());
@@ -213,7 +213,7 @@ public class TelaInicioGerenteController {
         
     }
     
-    public boolean permissaoDeAcessoATela(String tela) throws SQLException, ParseException{
+    public boolean permissaoDeAcessoATela(String tela){
         ArrayList<Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
         
         if(funcionarios!=null){

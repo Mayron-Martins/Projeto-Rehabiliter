@@ -6,6 +6,7 @@
 package Controller;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.LogsSystem;
 import Dao.Conexao;
 import Model.Funcionario;
 import Dao.FrequenciaFuncionariosDao;
@@ -37,7 +38,7 @@ public class InicioController {
         conexao.testConnection(telaDeInicio);
     }
     
-    public void setarFrequenciaFuncionarios() throws SQLException, ParseException{
+    public void setarFrequenciaFuncionarios(){
         if(!this.verificarFuncionarios()){
             if(this.verificarSeHaDadosNoSistema()){
             ArrayList <Funcionario> funcionarios = funcionariosDao.selecionarTodosFuncionarios();
@@ -52,15 +53,16 @@ public class InicioController {
         }
         }
     }
-    private boolean verificarSeHaDadosNoSistema() throws SQLException, ParseException{
+    private boolean verificarSeHaDadosNoSistema(){
         LocalDate dataAtual = LocalDate.now();
         Date dataInpult = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
         ArrayList <FrequenciaFuncionarios> frequencias = frequencia.pesquisarFrequencias("SELECT * FROM tblFreqFuncionarios WHERE data = '"+dataInpult+"'");
         return frequencias==null;
     }
     
-    private boolean verificarFuncionarios() throws SQLException, ParseException{
+    private boolean verificarFuncionarios(){
         ArrayList <Funcionario> funcionarios = funcionariosDao.selecionarTodosFuncionarios();
         return funcionarios == null;
     }
+    
 }

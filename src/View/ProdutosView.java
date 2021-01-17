@@ -220,23 +220,11 @@ public class ProdutosView extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
-        try {
-            controller.removerProduto();
-        } catch (ParseException ex) {
-            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.removerProduto();
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
-        try {
-            controller.editarProdutos();
-        } catch (ParseException ex) {
-            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.editarProdutos();
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void tabelaProdutosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaProdutosComponentHidden
@@ -244,29 +232,15 @@ public class ProdutosView extends javax.swing.JDialog {
     }//GEN-LAST:event_tabelaProdutosComponentHidden
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            controller.listarProdutos();
-        } catch (ParseException ex) {
-            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.listarProdutos();
     }//GEN-LAST:event_formWindowOpened
 
     private void botaoListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarActionPerformed
-        try {
-            controller.listar();
-        } catch (Exception ex) {
-            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.listar();
     }//GEN-LAST:event_botaoListarActionPerformed
 
     private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
-        try {
-            controller.buscarProdutos();
-        } catch (Exception ex) {
-            Logger.getLogger(ProdutosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       controller.buscarProdutos();
     }//GEN-LAST:event_botaobuscarActionPerformed
 
     private void campoPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisaKeyPressed

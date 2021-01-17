@@ -222,13 +222,7 @@ public class TurmasAdicionar extends javax.swing.JDialog {
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
         this.diasDaSemana();
         this.edicaoDeHorario();
-        try {
-            controller.adicionarTurma();
-        } catch (SQLException ex) {
-            Logger.getLogger(TurmasAdicionar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(TurmasAdicionar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.adicionarTurma();
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

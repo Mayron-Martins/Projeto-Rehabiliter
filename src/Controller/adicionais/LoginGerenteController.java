@@ -34,7 +34,7 @@ public class LoginGerenteController {
         this.view = view;
     }
     
-    public void entrarSistema() throws SQLException, ParseException{
+    public void entrarSistema(){
         ArrayList<Funcionario> gerente = this.gerenteDoBanco();
         String usuario = view.getCampoCpfFuncionario().getText();
         String senha = new String(view.getCampoSenha().getPassword());
@@ -61,12 +61,12 @@ public class LoginGerenteController {
     }
     
     
-    private ArrayList<Funcionario> gerenteDoBanco() throws SQLException, ParseException{
+    private ArrayList<Funcionario> gerenteDoBanco(){
         String cargo = "Gerente"; 
         return funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE cargo = 'Gerente'");
     }
     
-    private void setarPresencaFuncionario(String usuario) throws SQLException, ParseException{
+    private void setarPresencaFuncionario(String usuario){
         Funcionario funcionario = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE usuario = '"+usuario+"'").get(0);
         LocalDate dataAtual = LocalDate.now();
         String dataInput = converterData.parseDate(converterData.conversaoLocalforDate(dataAtual));
@@ -74,7 +74,7 @@ public class LoginGerenteController {
         frequencia.atualizarDados(frequenciaFuncionarios);
     }
     
-    private LogAçoesFuncionario setarLog(String usuario) throws SQLException, ParseException{
+    private LogAçoesFuncionario setarLog(String usuario){
         Funcionario funcionario = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE usuario = '"+usuario+"'").get(0);
         Date dataEvento = new Date();
         

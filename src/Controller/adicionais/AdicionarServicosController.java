@@ -6,6 +6,7 @@
 package Controller.adicionais;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
+import Controller.auxiliar.LogsSystem;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
@@ -39,54 +40,58 @@ public class AdicionarServicosController {
         this.view = view;
     }
     
-    public void adicionarServico() throws SQLException, ParseException{
-        //Pegando Dados Da tela
-        int codBancoServico = verificar.verificarUltimo("tblServicos", "codServico")+1;
-        String nomeServico = view.getNomeServico().getText();
-        String periodo= this.retornarPeriodo();
-        String metodoDePagamento = view.getMetodoPagamento().getSelectedItem().toString();
-        
-        BigDecimal valor = new BigDecimal(0);
-        BigDecimal valorAVista= new BigDecimal(0);
-        BigDecimal valorBoleto= new BigDecimal(0);
-        BigDecimal valorAPrazoCredito= new BigDecimal(0);
-        BigDecimal valorAPrazoDebito= new BigDecimal(0);
-        
-        String valorDinheiro = converterDinheiro.converterParaBigDecimal(view.getValorDinheiro().getText()).toString();
-        if(metodoDePagamento.equals("[Nenhuma]")){valor = new BigDecimal(valorDinheiro);}
-        if(metodoDePagamento.equals("Dinheiro")){valorAVista = new BigDecimal(valorDinheiro);}
-        if(metodoDePagamento.equals("Boleto")){valorBoleto = new BigDecimal(valorDinheiro);}
-        if(metodoDePagamento.equals("Cartão de Crédito")){valorAPrazoCredito = new BigDecimal(valorDinheiro);}
-        if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
-        int periodDays = this.periodDays();
-        
-        Servicos servico = new Servicos(codBancoServico, nomeServico, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays);
-        //Inserindo Dados
-        if(nomeServico.equals("")|| periodo.equals("[Nenhum]")||periodDays==0){
-         view.exibeMensagem("Campos Preenchidos Incorretamente");
-        } else{
-            
-            if(this.verificarPeriodo(periodDays)){
-                servicosDao.inserirDados(servico);
+    public void adicionarServico(){
+        try{
+            //Pegando Dados Da tela
+            int codBancoServico = verificar.verificarUltimo("tblServicos", "codServico")+1;
+            String nomeServico = view.getNomeServico().getText();
+            String periodo= this.retornarPeriodo();
+            String metodoDePagamento = view.getMetodoPagamento().getSelectedItem().toString();
 
-                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    this.setarLog(funcionarios, nomeServico);
+            BigDecimal valor = new BigDecimal(0);
+            BigDecimal valorAVista= new BigDecimal(0);
+            BigDecimal valorBoleto= new BigDecimal(0);
+            BigDecimal valorAPrazoCredito= new BigDecimal(0);
+            BigDecimal valorAPrazoDebito= new BigDecimal(0);
+
+            String valorDinheiro = converterDinheiro.converterParaBigDecimal(view.getValorDinheiro().getText()).toString();
+            if(metodoDePagamento.equals("[Nenhuma]")){valor = new BigDecimal(valorDinheiro);}
+            if(metodoDePagamento.equals("Dinheiro")){valorAVista = new BigDecimal(valorDinheiro);}
+            if(metodoDePagamento.equals("Boleto")){valorBoleto = new BigDecimal(valorDinheiro);}
+            if(metodoDePagamento.equals("Cartão de Crédito")){valorAPrazoCredito = new BigDecimal(valorDinheiro);}
+            if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
+            int periodDays = this.periodDays();
+
+            Servicos servico = new Servicos(codBancoServico, nomeServico, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays);
+            //Inserindo Dados
+            if(nomeServico.equals("")|| periodo.equals("[Nenhum]")||periodDays==0){
+             view.exibeMensagem("Campos Preenchidos Incorretamente");
+            } else{
+
+                if(this.verificarPeriodo(periodDays)){
+                    servicosDao.inserirDados(servico);
+
+                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                    if(funcionarios!=null){
+                        this.setarLog(funcionarios, nomeServico);
+                    }
+                    view.exibeMensagem("Sucesso!");
+                    //Limpando Campos
+                    view.getNomeServico().setText("");
+                    preencherComboPeriodo();
+                    view.getComboPeriodo().setSelectedIndex(0);
+                    view.getMetodoPagamento().setSelectedIndex(0);
+                    view.getValorDinheiro().setText("");
+                    view.getCampoOutroTipo().setText("Outro");
+                    view.getCampoDias().setText("");
                 }
-                view.exibeMensagem("Sucesso!");
-                //Limpando Campos
-                view.getNomeServico().setText("");
-                preencherComboPeriodo();
-                view.getComboPeriodo().setSelectedIndex(0);
-                view.getMetodoPagamento().setSelectedIndex(0);
-                view.getValorDinheiro().setText("");
-                view.getCampoOutroTipo().setText("Outro");
-                view.getCampoDias().setText("");
+                else{
+                    view.exibeMensagem("Por motivos de compatibilidade, esse período de dias não pôde ser aceito!");
+                }
+
             }
-            else{
-                view.exibeMensagem("Por motivos de compatibilidade, esse período de dias não pôde ser aceito!");
-            }
-            
+        } catch (SQLException ex) {
+            gerarLog(ex);
         }
         
     }
@@ -100,7 +105,7 @@ public class AdicionarServicosController {
         }
     }
     
-    public void preencherComboPeriodo() throws SQLException{
+    public void preencherComboPeriodo(){
         ArrayList <Servicos> servicos = servicosDao.selecionarTodosServicos();
         
         String periodoServicoAnterior="";
@@ -157,13 +162,9 @@ public class AdicionarServicosController {
                 case "Anual":
                     return 365;
             }
-            try {
-                ArrayList <Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE periodo = "+tipo);
-                if(servicos!=null){
-                    return servicos.get(0).getPeriodDays();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(AdicionarServicosController.class.getName()).log(Level.SEVERE, null, ex);
+            ArrayList <Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE periodo = "+tipo);
+            if(servicos!=null){
+                return servicos.get(0).getPeriodDays();
             }
         }
         else{
@@ -205,5 +206,11 @@ public class AdicionarServicosController {
         else{
             return period<30;
         }
+    }
+    
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
     }
 }

@@ -30,8 +30,6 @@ import Model.auxiliar.Turmas;
 import View.FinanceiroPlanodeEntradas;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -89,7 +87,7 @@ public class PlanoEntradasController {
     }
     
     //Setar Tabelas conforme forma Detalha ou Resumida
-    public void setarTabelas() throws SQLException, ParseException{
+    public void setarTabelas(){
         if(view.getBotaoVResumida().isEnabled()){
             this.setarTabelasResumidas();
         }
@@ -100,7 +98,7 @@ public class PlanoEntradasController {
     
     //Parte Detalhada___________________________________________________________
     //Setar as tabelas detalhadamente
-    private void setarTabelasDetalhadas() throws SQLException, ParseException{
+    private void setarTabelasDetalhadas(){
         int tipoSelecionado = view.getComboTipos().getSelectedIndex();
         ArrayList <Vendas> vendas = this.pegarVendasNoPeriodo();
         ArrayList<Entradas> entradas = this.pegarEntradasNoPeriodo();
@@ -143,7 +141,7 @@ public class PlanoEntradasController {
     }
     
     //Setar Vendas Detalhadas
-    private void setarVendasDetalhadas(ArrayList <Vendas> vendas) throws ParseException, SQLException{
+    private void setarVendasDetalhadas(ArrayList <Vendas> vendas){
         limparTabelaVendas();
         for(int linhas=0; linhas<vendas.size(); linhas++){
             int codVenda = vendas.get(linhas).getCodVenda();
@@ -173,7 +171,7 @@ public class PlanoEntradasController {
     }
     
     //setar Planos Detalhados
-    private void setarPlanosDetalhados(ArrayList <Vendas> vendas) throws SQLException, ParseException{
+    private void setarPlanosDetalhados(ArrayList <Vendas> vendas){
         limparTabelaPlanos();
         for(int linhas=0; linhas<vendas.size(); linhas++){
             //Dados Aluno
@@ -197,7 +195,7 @@ public class PlanoEntradasController {
     }
     
     //Setar Entradas Detalhadas
-    private void setarEntradasDetalhadas(ArrayList <Entradas> entradas) throws ParseException{
+    private void setarEntradasDetalhadas(ArrayList <Entradas> entradas){
         limparTabelaEntradas();
         for(int linhas=0; linhas<entradas.size(); linhas++){
             int codEntrada = entradas.get(linhas).getCodBanco();
@@ -217,7 +215,7 @@ public class PlanoEntradasController {
     
     //Parte Resumida
     //Setar Tabelas Resumidamente
-    private void setarTabelasResumidas() throws SQLException, ParseException{
+    private void setarTabelasResumidas(){
         int tipoSelecionado = view.getComboTipos().getSelectedIndex();
         ArrayList <Vendas> vendas = this.pegarVendasNoPeriodo();
         ArrayList<Entradas> entradas = this.pegarEntradasNoPeriodo();
@@ -260,7 +258,7 @@ public class PlanoEntradasController {
     }
     
     //Setar Vendas de Forma Resumida
-    private void setarVendasResumidas(ArrayList <Vendas> vendas) throws SQLException, ParseException{
+    private void setarVendasResumidas(ArrayList <Vendas> vendas){
         limparTabelaVendas();
         String produtos="Diversos";
         String codAluno = "Diversos";
@@ -313,7 +311,7 @@ public class PlanoEntradasController {
     }
     
     //Setar Planos Resumidamente
-    private void setarPlanosResumidos(ArrayList <Vendas> vendas) throws SQLException, ParseException{
+    private void setarPlanosResumidos(ArrayList <Vendas> vendas){
         limparTabelaPlanos();
         String chavePlano = "Diversas";
         String nomeAluno = "Diversos";
@@ -354,7 +352,7 @@ public class PlanoEntradasController {
     }
     
     //Setar Entradas Resumidamente
-    private void setarEntradasResumidas(ArrayList <Entradas> entradas) throws ParseException{
+    private void setarEntradasResumidas(ArrayList <Entradas> entradas){
         limparTabelaEntradas();
         
         String codEntrada = "Diversos";
@@ -401,7 +399,7 @@ public class PlanoEntradasController {
     }
     
     //Pega As Vendas em determinado período
-    private ArrayList <Vendas> pegarVendasNoPeriodo() throws SQLException{
+    private ArrayList <Vendas> pegarVendasNoPeriodo(){
         LocalDate dataAtual = LocalDate.now();
         Date dataBanco = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
         Date dataPassada;
@@ -467,7 +465,7 @@ public class PlanoEntradasController {
     }
     
     //Pega as Entradas em determinado Período
-    private ArrayList <Entradas> pegarEntradasNoPeriodo() throws SQLException{
+    private ArrayList <Entradas> pegarEntradasNoPeriodo(){
         LocalDate dataAtual = LocalDate.now();
         Date dataBanco = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
         Date dataPassada;
@@ -590,7 +588,7 @@ public class PlanoEntradasController {
     //__________________________________________________________________________
     
     //Setar Tabela de Planos Pendentes
-    public void setarTabelaPlanosPendentes() throws SQLException, ParseException{
+    public void setarTabelaPlanosPendentes(){
         this.alternarPaineis(2);
         ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pendente' OR situacao = 'Vencido'");
         if(planos!=null){
@@ -620,7 +618,7 @@ public class PlanoEntradasController {
         }
     }
     
-    public void setarTabelaPlanosPagos() throws SQLException, ParseException{
+    public void setarTabelaPlanosPagos(){
         this.alternarPaineis(2);
         ArrayList <Planos> planos = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE situacao = 'Pago'");
         if(planos!=null){
@@ -652,7 +650,7 @@ public class PlanoEntradasController {
     //Fim das Funções de Setar Tabela
     
     //Editar Entradas
-    public void editarEntradas() throws SQLException, ParseException{
+    public void editarEntradas(){
         if(view.getBotaoVDetalhada().isEnabled()){
             if(view.getPainelEntradas().isVisible()){
                 if(view.getTabelaEntradas().getSelectedRow()!=-1){
@@ -689,7 +687,7 @@ public class PlanoEntradasController {
     }
     
     //Remover entradas
-    public void removerEntradas() throws SQLException, ParseException{
+    public void removerEntradas(){
         if(view.getBotaoVDetalhada().isEnabled()){
             if(view.getPainelEntradas().isVisible()){
                 if(view.getTabelaEntradas().getSelectedRow()!=-1){

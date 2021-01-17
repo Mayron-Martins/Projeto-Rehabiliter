@@ -26,11 +26,7 @@ public class FrequenciaFuncionarios {
         this.situacao = situacao;
         
         ConversaodeDataParaPadraoDesignado converter = new ConversaodeDataParaPadraoDesignado();
-        try {
-             this.dataInsert = converter.getSqlDate(converter.parseDate(dataInsert));
-        } catch (ParseException ex) {
-            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.dataInsert = converter.getSqlDate(converter.parseDate(dataInsert));
 
     }
 

@@ -115,11 +115,7 @@ public class AlunosCadastroTurmasEHorarios extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         controller.limparTabela();
-        try {
-            controller.listarTurmas();
-        } catch (SQLException ex) {
-            Logger.getLogger(AlunosCadastroTurmasEHorarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.listarTurmas();
     }//GEN-LAST:event_formWindowOpened
 
     /**

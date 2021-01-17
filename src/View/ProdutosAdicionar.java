@@ -126,13 +126,7 @@ public class ProdutosAdicionar extends javax.swing.JDialog {
     }//GEN-LAST:event_campoNomeActionPerformed
 
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
-        try {
-            controller.adicionarProduto();
-        } catch (SQLException ex) {
-            Logger.getLogger(ProdutosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(ProdutosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.adicionarProduto();
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     /**

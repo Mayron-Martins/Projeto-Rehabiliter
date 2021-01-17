@@ -36,25 +36,21 @@ public class BackupController {
     }
     
     public void inserirUltimoBackup(){
-        try{
-            ArrayList <Backup> backups = backupBancoDao.selecionarTodosBackups();
-            view.getCampoDataLocal().setText("");
-            view.getCampoHoraLocal().setText("");
-            view.getCampoLocalizacaoLocal().setText("");
-            if(backups!=null){
-                String data = converterData.parseDateAndTime(converterData.parseDateAndTime(backups.get(backups.size()-1).getData()));
-                String[] split = data.split(" ");
-                view.getCampoDataLocal().setText(split[0]);
-                view.getCampoHoraLocal().setText(split[1]);
-                view.getCampoLocalizacaoLocal().setText(backups.get(backups.size()-1).getEnderecoBackup());
-            }
-            else{
-                view.getCampoDataLocal().setText("Sem Dados");
-                view.getCampoHoraLocal().setText("Sem Dados");
-                view.getCampoLocalizacaoLocal().setText("Sem Dados");
-            }
-        } catch (SQLException | ParseException ex) {
-            this.gerarLog(ex);
+        ArrayList <Backup> backups = backupBancoDao.selecionarTodosBackups();
+        view.getCampoDataLocal().setText("");
+        view.getCampoHoraLocal().setText("");
+        view.getCampoLocalizacaoLocal().setText("");
+        if(backups!=null){
+            String data = converterData.parseDateAndTime(converterData.parseDateAndTime(backups.get(backups.size()-1).getData()));
+            String[] split = data.split(" ");
+            view.getCampoDataLocal().setText(split[0]);
+            view.getCampoHoraLocal().setText(split[1]);
+            view.getCampoLocalizacaoLocal().setText(backups.get(backups.size()-1).getEnderecoBackup());
+        }
+        else{
+            view.getCampoDataLocal().setText("Sem Dados");
+            view.getCampoHoraLocal().setText("Sem Dados");
+            view.getCampoLocalizacaoLocal().setText("Sem Dados");
         }
         
     }
@@ -78,7 +74,7 @@ public class BackupController {
         
     }
     
-    public void importarBanco() throws SQLException{
+    public void importarBanco(){
         File file = new File(System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bak");
         if(file.exists()){
             backupDao.importarBanco();

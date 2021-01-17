@@ -135,13 +135,7 @@ public class LoginGerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoentrarGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoentrarGerenteActionPerformed
-        try {
-            controller.entrarSistema();
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginGerente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(LoginGerente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.entrarSistema();
     }//GEN-LAST:event_botaoentrarGerenteActionPerformed
 
     private void botaoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionarioActionPerformed

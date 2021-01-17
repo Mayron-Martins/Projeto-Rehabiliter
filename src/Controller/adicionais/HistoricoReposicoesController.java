@@ -6,7 +6,6 @@
 package Controller.adicionais;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
-import Controller.auxiliar.LogsSystem;
 import Dao.AlunosDao;
 import Dao.ReposicaoDao;
 import Dao.TurmasDao;
@@ -14,8 +13,6 @@ import Model.Aluno;
 import Model.auxiliar.ReposicaoAulas;
 import Model.auxiliar.Turmas;
 import View.HistoricoRehab;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,19 +43,15 @@ public class HistoricoReposicoesController {
     }
     
     public void setarTurmas(){
-        try{
-            ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
-            view.getComboTurmas().removeAllItems();
-            view.getComboTurmas().addItem("[Nenhuma]");
-            if(turmas!=null){
-                for(Turmas turma : turmas){
-                    view.getComboTurmas().addItem(turma.getCodBanco()+"."+turma.getNomeTurma());
-                }
-            }else{
-                view.exibeMensagem("Sem Turmas Cadastradas!");
+        ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
+        view.getComboTurmas().removeAllItems();
+        view.getComboTurmas().addItem("[Nenhuma]");
+        if(turmas!=null){
+            for(Turmas turma : turmas){
+                view.getComboTurmas().addItem(turma.getCodBanco()+"."+turma.getNomeTurma());
             }
-        } catch (SQLException ex) {
-            gerarLog(ex);
+        }else{
+            view.exibeMensagem("Sem Turmas Cadastradas!");
         }
         
     }
@@ -113,28 +106,15 @@ public class HistoricoReposicoesController {
     }
     
     private void pesquisarIntervalo(LocalDate dataAnterior){
-        try{
-            view.getComboIntervalo().removeAllItems();
-            view.getComboIntervalo().addItem("[Nenhum]");
-            LocalDate dataAtual = LocalDate.now();
-            Date dataAnteriorSQL = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAnterior));
-            Date dataAtualSQL = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
+        view.getComboIntervalo().removeAllItems();
+        view.getComboIntervalo().addItem("[Nenhum]");
+        LocalDate dataAtual = LocalDate.now();
+        Date dataAnteriorSQL = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAnterior));
+        Date dataAtualSQL = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
 
-            ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE data BETWEEN '"+dataAnteriorSQL+"' AND '"+dataAtualSQL+"'");
-            if(reposicoes!=null){
-                String dataAntiga = "", dataBanco;
-                for(ReposicaoAulas reposicao : reposicoes){
-                    dataBanco = converterData.parseDate(reposicao.getData());
-                    if(!dataBanco.equals(dataAntiga)){
-                        view.getComboIntervalo().addItem(dataBanco);
-                    }
-                    dataAntiga = dataBanco;
-                }
-            }
-            view.getComboIntervalo().setSelectedIndex(0);
-        } catch (SQLException | ParseException ex) {
-            gerarLog(ex);
-        }
+        ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE data BETWEEN '"+dataAnteriorSQL+"' AND '"+dataAtualSQL+"'");
+        if(reposicoes!=null)
+        view.getComboIntervalo().setSelectedIndex(0);
         
     }
     
@@ -148,44 +128,29 @@ public class HistoricoReposicoesController {
     public void setarTabelaCampoData(){
         Date dataCampo = view.getCampoDataEspecífica().getDate();
         if(dataCampo!=null){
-            try{
-                String data = converterData.parseDate(dataCampo);
-                this.setarTabela(data);
-                view.getCampoDataEspecífica().setDate(null);
-            }catch (ParseException ex) {
-            gerarLog(ex);
-        }
+            String data = converterData.parseDate(dataCampo);
+            this.setarTabela(data);
+            view.getCampoDataEspecífica().setDate(null);
             
         }
     }
     
     private void setarTabela(String data){
-        try{
-            Date dataSQL = converterData.getSqlDate(converterData.parseDate(data));
-            ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE data = '"+dataSQL+"'");
-            if(reposicoes!=null){
-                for(ReposicaoAulas reposicao : reposicoes){
-                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+reposicao.getCodAluno()).get(0);
-                    String situacao = "Ausente";
-                    if(reposicao.getSituacao().equals("Pr")){
-                        situacao = "Presente";
-                    }
-                    Object[] dadosDaTabela = {reposicao.getCodBanco(), aluno.getNome(), situacao};
-                    tabelaReposicoes.addRow(dadosDaTabela);
+        Date dataSQL = converterData.getSqlDate(converterData.parseDate(data));
+        ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE data = '"+dataSQL+"'");
+        if(reposicoes!=null){
+            for(ReposicaoAulas reposicao : reposicoes){
+                Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+reposicao.getCodAluno()).get(0);
+                String situacao = "Ausente";
+                if(reposicao.getSituacao().equals("Pr")){
+                    situacao = "Presente";
                 }
-
-            }else{
-                view.exibeMensagem("Sem Dados.");
+                Object[] dadosDaTabela = {reposicao.getCodBanco(), aluno.getNome(), situacao};
+                tabelaReposicoes.addRow(dadosDaTabela);
             }
-        } catch (ParseException | SQLException ex) {
-            gerarLog(ex);
+            
+        }else{
+            view.exibeMensagem("Sem Dados.");
         }
-    }
-    
-    //Gerar arquivo com o log de erro, caso haja
-    private void gerarLog(Throwable erro){
-        LogsSystem gerarLog = new LogsSystem();
-        gerarLog.gravarErro(erro);
-        gerarLog.close();
     }
 }

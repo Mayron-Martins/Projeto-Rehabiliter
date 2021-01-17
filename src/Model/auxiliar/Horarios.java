@@ -29,12 +29,7 @@ public class Horarios {
         this.codBanco = codBanco;
         this.diaDaSemana = diaDaSemana;
         ConversaodeDataParaPadraoDesignado converter = new ConversaodeDataParaPadraoDesignado();
-        try {
-            this.horario = converter.parseHour(horario);
-        } catch (ParseException ex) {
-            System.err.println("Erro ao converter hora - classe Horarios");
-            Logger.getLogger(Horarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.horario = converter.parseHour(horario);
         this.codCliente = codCliente;
         this.codTurma = codTurma;
     }

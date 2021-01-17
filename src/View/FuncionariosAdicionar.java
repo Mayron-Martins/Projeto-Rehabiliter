@@ -140,13 +140,7 @@ public class FuncionariosAdicionar extends javax.swing.JDialog {
     }//GEN-LAST:event_botaofecharActionPerformed
 
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
-        try {
-            controller.adicionarFuncionario();
-        } catch (SQLException ex) {
-            Logger.getLogger(FuncionariosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FuncionariosAdicionar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.adicionarFuncionario();
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     /**

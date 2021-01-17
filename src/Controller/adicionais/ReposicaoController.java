@@ -62,27 +62,23 @@ public class ReposicaoController {
     
     //Inserir as turmas nos combos ao iniciar a tela
     public void listarTurmas(){
-        try{
-            ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
-            view.getComboTurma().removeAllItems();
-            view.getComboTurmasExistentes().removeAllItems();
-            view.getComboTurma().addItem("[Nenhuma]");
-            if(turmas!=null){
-                for (Turmas turma : turmas) {
-                    view.getComboTurma().addItem(turma.getCodBanco()+"."+turma.getNomeTurma());
-                    view.getComboTurmasExistentes().addItem(turma.getCodBanco()+"."+turma.getNomeTurma());
-                }
+        ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
+        view.getComboTurma().removeAllItems();
+        view.getComboTurmasExistentes().removeAllItems();
+        view.getComboTurma().addItem("[Nenhuma]");
+        if(turmas!=null){
+            for (Turmas turma : turmas) {
+                view.getComboTurma().addItem(turma.getCodBanco()+"."+turma.getNomeTurma());
+                view.getComboTurmasExistentes().addItem(turma.getCodBanco()+"."+turma.getNomeTurma());
+            }
             view.getComboTurma().setSelectedIndex(0);
             view.getComboTurmasExistentes().setSelectedIndex(0);
             listarHorarios();
-            }
-            else{
-                view.exibeMensagem("Não há turmas disponíveis, adicione pelo menos uma para continuar!");
-                view.dispose();
-                view.setModal(false);
-            }
-        } catch (SQLException ex) {
-            gerarLog(ex);
+        }
+        else{
+            view.exibeMensagem("Não há turmas disponíveis, adicione pelo menos uma para continuar!");
+            view.dispose();
+            view.setModal(false);
         } 
     }
     
@@ -90,17 +86,13 @@ public class ReposicaoController {
         if(view.getComboTurma().getSelectedIndex()>0){
             String nomeTurma = view.getComboTurma().getSelectedItem().toString().split("\\.")[0];
             int codTurma = Integer.parseInt(nomeTurma);
-            try{
-                 ArrayList <Horarios> horarios = horariosDao.pesquisarHorarios("SELECT * FROM tblHorarios WHERE codHorario = "+codTurma);
-                 view.getComboDiaDaSemana().removeAllItems();
-                 view.getComboDiaDaSemana().addItem("[Dia]");
-                 for(Horarios horario: horarios){
-                     view.getComboDiaDaSemana().addItem(horario.getDiaDaSemana());
-                 }
-                 view.getComboDiaDaSemana().setSelectedIndex(0);
-            }catch (SQLException ex) {
-                gerarLog(ex);
-            } 
+            ArrayList <Horarios> horarios = horariosDao.pesquisarHorarios("SELECT * FROM tblHorarios WHERE codHorario = "+codTurma);
+            view.getComboDiaDaSemana().removeAllItems();
+            view.getComboDiaDaSemana().addItem("[Dia]");
+            for(Horarios horario: horarios){
+                view.getComboDiaDaSemana().addItem(horario.getDiaDaSemana());
+            }
+            view.getComboDiaDaSemana().setSelectedIndex(0); 
         }
     }
     
@@ -110,24 +102,19 @@ public class ReposicaoController {
         
         view.ativarDesabilitarComponentes(false);
         if(!nomePesquisado.trim().equals("")){
-            try{
-                ArrayList <Aluno> alunos = alunosDao.pesquisarPorNome(nomePesquisado);
-                
-                if(alunos!=null){
-                    limparTabelaDeAgendamento();
-                    for (Aluno aluno : alunos) {
-                        Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
-                        Object[] dadosTabela = {aluno.getCodBanco(), turma.getCodBanco()+"."+turma.getNomeTurma(), aluno.getNome()};
-                        tabelaDeAgendamento.addRow(dadosTabela);
-                    }
-                }else{
-                    view.exibeMensagem("Aluno não encontrado!");
-                    limparTabelaDeAgendamento();
+            ArrayList <Aluno> alunos = alunosDao.pesquisarPorNome(nomePesquisado);
+
+            if(alunos!=null){
+                limparTabelaDeAgendamento();
+                for (Aluno aluno : alunos) {
+                    Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+aluno.getTurma()).get(0);
+                    Object[] dadosTabela = {aluno.getCodBanco(), turma.getCodBanco()+"."+turma.getNomeTurma(), aluno.getNome()};
+                    tabelaDeAgendamento.addRow(dadosTabela);
                 }
-            } catch (Exception ex) {
-                gerarLog(ex);
-            }
-            
+            }else{
+                view.exibeMensagem("Aluno não encontrado!");
+                limparTabelaDeAgendamento();
+            } 
         }
         else{
             view.exibeMensagem("Insira um nome válido!");
@@ -302,26 +289,22 @@ public class ReposicaoController {
                 }
                 dataAtual = dataAtual.plusDays(1);
             }
-            try{
-                Date data = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
-                ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE data = '"+data+"'");
-                if(reposicoes!=null){
-                    for(ReposicaoAulas reposicao : reposicoes){
-                        String dataConvertida = converterData.parseDate(reposicao.getData());
-
-                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+reposicao.getCodAluno()).get(0);
-                        boolean situacao = false;
-                        if(reposicao.getSituacao().equals("Pr")){
-                            situacao = true;
-                        }
-                        Object[] dadosDaTabela = {reposicao.getCodBanco(), dataConvertida, aluno.getNome(), situacao};
-                        tabelaAgendados.addRow(dadosDaTabela);
+            Date data = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
+            ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE data = '"+data+"'");
+            if(reposicoes!=null){
+                for(ReposicaoAulas reposicao : reposicoes){
+                    String dataConvertida = converterData.parseDate(reposicao.getData());
+                    
+                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+reposicao.getCodAluno()).get(0);
+                    boolean situacao = false;
+                    if(reposicao.getSituacao().equals("Pr")){
+                        situacao = true;
                     }
-                }else{
-                    view.exibeMensagem("Sem dados.");
+                    Object[] dadosDaTabela = {reposicao.getCodBanco(), dataConvertida, aluno.getNome(), situacao};
+                    tabelaAgendados.addRow(dadosDaTabela);
                 }
-            } catch (SQLException | ParseException ex) {
-                gerarLog(ex);
+            }else{
+                view.exibeMensagem("Sem dados.");
             }   
         }
         else{
@@ -332,14 +315,10 @@ public class ReposicaoController {
     public void removerReposicao(){
         int linhaSelecionada = view.getTabelaAgendados().getSelectedRow();
         if(linhaSelecionada!=-1){
-            try{
-                int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhaSelecionada, 0).toString());
-                reposicaoDao.removerReposicao(codBanco);
-                view.exibeMensagem("Removido com sucesso!");
-                setarTabelaAgendados();
-            } catch (SQLException ex) {
-                gerarLog(ex);
-            }
+            int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhaSelecionada, 0).toString());
+            reposicaoDao.removerReposicao(codBanco);
+            view.exibeMensagem("Removido com sucesso!");
+            setarTabelaAgendados();
             
         }
     }
@@ -347,20 +326,15 @@ public class ReposicaoController {
     public void editarAluno(){
         int linhaSelecionada = view.getTabelaAgendados().getSelectedRow();
         if(linhaSelecionada!=-1){
-            try{
-                int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhaSelecionada, 0).toString());
-                String situacao = "Au";
-                if(tabelaAgendados.getValueAt(linhaSelecionada, 3).equals(true)){
-                    situacao = "Pr";
-                }
-
-                ReposicaoAulas reposicao = new ReposicaoAulas(codBanco, situacao);
-                reposicaoDao.atualizarDados(reposicao);
-                view.exibeMensagem("Sucesso!");
-                setarTabelaAgendados();
-            } catch (SQLException ex) {
-                gerarLog(ex);
+            int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhaSelecionada, 0).toString());
+            String situacao = "Au";
+            if(tabelaAgendados.getValueAt(linhaSelecionada, 3).equals(true)){
+                situacao = "Pr";
             }
+            ReposicaoAulas reposicao = new ReposicaoAulas(codBanco, situacao);
+            reposicaoDao.atualizarDados(reposicao);
+            view.exibeMensagem("Sucesso!");
+            setarTabelaAgendados();
             
         }
     }
@@ -368,50 +342,41 @@ public class ReposicaoController {
     public void editarVariosAlunos(){
         int totalLinhas = tabelaAgendados.getRowCount();
         if(totalLinhas>0){
-            try{
-                for(int linhas =0; linhas<totalLinhas; linhas++){
-                    int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhas, 0).toString());
-                    String situacao = "Au";
-                    if(tabelaAgendados.getValueAt(linhas, 3).equals(true)){
-                        situacao = "Pr";
-                    }
-
-                    ReposicaoAulas reposicao = new ReposicaoAulas(codBanco, situacao);
-                    reposicaoDao.atualizarDados(reposicao);
+            for(int linhas =0; linhas<totalLinhas; linhas++){
+                int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhas, 0).toString());
+                String situacao = "Au";
+                if(tabelaAgendados.getValueAt(linhas, 3).equals(true)){
+                    situacao = "Pr";
                 }
-                view.exibeMensagem("Sucesso!");
-                setarTabelaAgendados();
-            } catch (SQLException ex) {
-                gerarLog(ex);
+                
+                ReposicaoAulas reposicao = new ReposicaoAulas(codBanco, situacao);
+                reposicaoDao.atualizarDados(reposicao);
             }
+            view.exibeMensagem("Sucesso!");
+            setarTabelaAgendados();
             
         }
     }
     
     public void exibirFuturasReposicoes(){
-        try{
-            limparTabelaAgendados();
-            LocalDate dataAtualConv = LocalDate.now();
-            Date dataAtual = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtualConv));
-
-            ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE data >= '"+dataAtual+"'");
-            if(reposicoes!=null){
-                for(ReposicaoAulas reposicao : reposicoes){
-                        String dataConvertida = converterData.parseDate(reposicao.getData());
-
-                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+reposicao.getCodAluno()).get(0);
-                        boolean situacao = false;
-                        if(reposicao.getSituacao().equals("Pr")){
-                            situacao = true;
-                        }
-                        Object[] dadosDaTabela = {reposicao.getCodBanco(), dataConvertida, aluno.getNome(), situacao};
-                        tabelaAgendados.addRow(dadosDaTabela);
-                    }
-            }else{
-                view.exibeMensagem("Sem Dados.");
+        limparTabelaAgendados();
+        LocalDate dataAtualConv = LocalDate.now();
+        Date dataAtual = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtualConv));
+        ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE data >= '"+dataAtual+"'");
+        if(reposicoes!=null){
+            for(ReposicaoAulas reposicao : reposicoes){
+                String dataConvertida = converterData.parseDate(reposicao.getData());
+                
+                Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+reposicao.getCodAluno()).get(0);
+                boolean situacao = false;
+                if(reposicao.getSituacao().equals("Pr")){
+                    situacao = true;
+                }
+                Object[] dadosDaTabela = {reposicao.getCodBanco(), dataConvertida, aluno.getNome(), situacao};
+                tabelaAgendados.addRow(dadosDaTabela);
             }
-        } catch (SQLException | ParseException ex) {
-            gerarLog(ex);
+        }else{
+            view.exibeMensagem("Sem Dados.");
         }
     }
     

@@ -109,40 +109,36 @@ public class CaixaController {
     }
     
     //Funções para Tratamento de Clientes
-    public void setarTabelaClientes() throws Exception{
+    public void setarTabelaClientes(){
         String alunoPesquisa = view.getCampoCliente().getText();
         ArrayList <Aluno> alunos = alunosDao.pesquisarPorNome(alunoPesquisa);
         if(alunoPesquisa.equals("")){listarAlunos();}
         else{this.buscasClientes(alunos);}        
     }
     
-    public void listarAlunos() throws Exception{
+    public void listarAlunos(){
         ArrayList <Aluno> alunos = this.alunosDao.selecionarTodosAlunos();
         this.buscasClientes(alunos);
     }
     
     private void buscasClientes(ArrayList <Aluno> listar){
-        try{
-            ArrayList<Turmas> turmas;
-            ArrayList <Aluno> alunos = listar;
+        ArrayList<Turmas> turmas;
+        ArrayList <Aluno> alunos = listar;
 
 
-            if(alunos==null){view.exibeMensagem("Cliente Não Encontrado!"); limparTabelaClientes();}
-            else{
-                limparTabelaClientes();
-                for(int linhas = 0; linhas<alunos.size(); linhas++){
-                turmas = this.turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+
-                        alunos.get(linhas).getTurma());
+        if(alunos==null){view.exibeMensagem("Cliente Não Encontrado!"); limparTabelaClientes();}
+        else{
+            limparTabelaClientes();
+            for(int linhas = 0; linhas<alunos.size(); linhas++){
+            turmas = this.turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+
+                    alunos.get(linhas).getTurma());
 
-                //Inserindo dados na tabela de alunos
-                Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getCodBanco(), 
-                alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma()};
-                this.tabelaDeClientes.addRow(dadosDaTabelaAlunos);
-                }
+            //Inserindo dados na tabela de alunos
+            Object[] dadosDaTabelaAlunos = {alunos.get(linhas).getCodBanco(), 
+            alunos.get(linhas).getNome(),turmas.get(0).getCodBanco()+"."+turmas.get(0).getNomeTurma()};
+            this.tabelaDeClientes.addRow(dadosDaTabelaAlunos);
             }
-        } catch (SQLException ex) {
-            gerarLog(ex);
-        }  
+        } 
     }
     
     //Fim das Funções para Clientes
@@ -150,34 +146,25 @@ public class CaixaController {
     //Funções para Tratamento de Produtos
     //Buscar Produtos no campo de busca
     public void setarTabelaProdutos(){
-        try{
-            if(view.getCampoProdutoNome().isVisible()){
-                String produtoPesquisa = view.getCampoProdutoNome().getText();
-                if(produtoPesquisa.equals("")){listarProdutos();}
-                else{
-                    ArrayList <Produtos> produtos = produtosDao.pesquisarPorNome(produtoPesquisa);
-                    this.buscasProdutos(produtos);}
-            }
-
+        if(view.getCampoProdutoNome().isVisible()){
+            String produtoPesquisa = view.getCampoProdutoNome().getText();
+            if(produtoPesquisa.equals("")){listarProdutos();}
             else{
-                String produtoPesquisa = view.getCampoProdutoCodigo().getText();
-                if(produtoPesquisa.equals("")){listarProdutos();}
-                else{ArrayList <Produtos> produtos = produtosDao.pesquisarPorID(produtoPesquisa);
+                ArrayList <Produtos> produtos = produtosDao.pesquisarPorNome(produtoPesquisa);
                 this.buscasProdutos(produtos);}
-            }
-        } catch (Exception ex) {
-            gerarLog(ex);
+        }
+
+        else{
+            String produtoPesquisa = view.getCampoProdutoCodigo().getText();
+            if(produtoPesquisa.equals("")){listarProdutos();}
+            else{ArrayList <Produtos> produtos = produtosDao.pesquisarPorID(produtoPesquisa);
+            this.buscasProdutos(produtos);}
         }     
     }    
     
     public void listarProdutos(){
-        try{
-            ArrayList <Produtos> produtos= this.produtosDao.selecionarTodosProdutos();
-            this.buscasProdutos(produtos);
-        } catch (SQLException | ParseException ex) {
-            gerarLog(ex);
-        }
-        
+        ArrayList <Produtos> produtos= this.produtosDao.selecionarTodosProdutos();
+        this.buscasProdutos(produtos);
     }
     
     private void buscasProdutos(ArrayList <Produtos> listar){
@@ -305,7 +292,7 @@ public class CaixaController {
     }
     
     //Setar Tabela de Mensalidade
-    public void setarTabelaMensalidade() throws SQLException, ParseException{
+    public void setarTabelaMensalidade(){
         limparTabelaMensalidade();
         int linhaSelecionada = view.getTabelaDeClientes().getSelectedRow();
         int codBanco = Integer.parseInt(tabelaDeClientes.getValueAt(linhaSelecionada, 0).toString());
@@ -317,7 +304,7 @@ public class CaixaController {
         this.mensalidade(aluno, servico, plano);
     }
     
-    public void setarTotalMensalidade() throws SQLException, ParseException{
+    public void setarTotalMensalidade(){
         int linhaSelecionada = view.getTabelaMensalidade().getSelectedRow();
         BigDecimal valorMensal = converterDinheiro.converterParaBigDecimal(tabelaDeMensalidade.getValueAt(linhaSelecionada, 3).toString());
         
@@ -337,158 +324,163 @@ public class CaixaController {
         }
     }
     
-    public void finalizarVenda() throws SQLException, Exception{
-        BigDecimal valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVPago().getText()).toString());
-        if(valorPago.compareTo(BigDecimal.ZERO)!=0 && this.retornarCliente()!=-1){
-            int codVenda = verificador.verificarUltimo("tblVendas", "codVenda")+1;
-            int codCliente = 0;
-            BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
-            BigDecimal valorTroco = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTroco().getText()).toString());
-            
-            LocalDate dataAtual = LocalDate.now();
-            Date dataVenda = converterData.conversaoLocalforDate(dataAtual);
-            
-            String formaDePagamento = this.retornarFormaPagamento();
-            int codAluno = this.retornarCliente();
-            
-            int parcelas =1;
-            if(view.getCampoParcelas().isEnabled()){
-                parcelas = Integer.parseInt(view.getCampoParcelas().getText());
-            }
-            
-            
-            Vendas venda;
-            ArrayList<ItemVendido> itens = new ArrayList<>();
-            
-            long chaveVenda;
-            int codProduto;
-            int chavePlano=0;
-            float quantidade;
-            BigDecimal valor;
-            BigDecimal subtotal;
-            
-            //Venda Comum
-            if(view.getPainelTabelaProdutos().isVisible()){
-                venda = new Vendas(codVenda, codCliente, codAluno, chavePlano, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
-                chaveVenda = venda.getChaveVenda();
-                int quantLinhas = view.getTabelaDeCarrinho().getRowCount();
-                int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
-                for(int linhas=0; linhas<quantLinhas;linhas++){
-                    codProduto = Integer.parseInt(tabelaDeCarrinho.getValueAt(linhas, 0).toString());
-                    quantidade = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 3).toString()).floatValue();
-                    valor = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 2).toString());
-                    subtotal = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 4).toString());
-                    
-                    Produtos produto = produtosDao.pesquisarPorID(String.valueOf(codProduto)).get(0);
-                    
-                    
-                    ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
-                    itens.add(itemVendido);
-                    produtosDao.atualizarEstoque(codProduto, produto.getQuantidade()-quantidade);
-                    
-                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    String acao = "Venda Efetuada";
-                    String descricao = "Venda no Valor de R$"+valorTotal+" com "+formaDePagamento+" ao cliente "+codAluno;
-                    this.setarLogAcoesFuncionario(funcionarios, acao, descricao);
-                }
-                }
-                
-                vendasDao.inserirDados(venda, itens);
-                LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
-                for(int linhas=0; linhas<parcelas;linhas++){
-                    dataParcelamentos = dataParcelamentos.plusMonths(1);
-                    dataVenda = converterData.conversaoLocalforDate(dataParcelamentos);
-                    DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario++, "Vendas", formaDePagamento, valorPago, dataVenda, chaveVenda);
-                    orcamentarioDao.inserirDados(orcamentario);
-                }
-                
-                this.posVenda(venda, valorTotal);
-            }
-            
-            //Pagamento Plano
-            else{
-                int totalLinhas = view.getTabelaMensalidade().getRowCount();
-                if(totalLinhas>0){
-                    int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
-                    chavePlano = Integer.parseInt(tabelaDeMensalidade.getValueAt(0, 0).toString());
-                    
-                    //Pegando Informações do Banco
-                    Planos planoAntigo = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE chavePlano = "+chavePlano).get(0);
-                    Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+planoAntigo.getCodServico()).get(0); 
-                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
-                    BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
+    public void finalizarVenda(){
+        try{
+            BigDecimal valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVPago().getText()).toString());
+            if(valorPago.compareTo(BigDecimal.ZERO)!=0 && this.retornarCliente()!=-1){
+                int codVenda = verificador.verificarUltimo("tblVendas", "codVenda")+1;
+                int codCliente = 0;
+                BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
+                BigDecimal valorTroco = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTroco().getText()).toString());
 
-                    //Construindo a venda
+                LocalDate dataAtual = LocalDate.now();
+                Date dataVenda = converterData.conversaoLocalforDate(dataAtual);
+
+                String formaDePagamento = this.retornarFormaPagamento();
+                int codAluno = this.retornarCliente();
+
+                int parcelas =1;
+                if(view.getCampoParcelas().isEnabled()){
+                    parcelas = Integer.parseInt(view.getCampoParcelas().getText());
+                }
+
+
+                Vendas venda;
+                ArrayList<ItemVendido> itens = new ArrayList<>();
+
+                long chaveVenda;
+                int codProduto;
+                int chavePlano=0;
+                float quantidade;
+                BigDecimal valor;
+                BigDecimal subtotal;
+
+                //Venda Comum
+                if(view.getPainelTabelaProdutos().isVisible()){
                     venda = new Vendas(codVenda, codCliente, codAluno, chavePlano, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
                     chaveVenda = venda.getChaveVenda();
+                    int quantLinhas = view.getTabelaDeCarrinho().getRowCount();
+                    int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
+                    for(int linhas=0; linhas<quantLinhas;linhas++){
+                        codProduto = Integer.parseInt(tabelaDeCarrinho.getValueAt(linhas, 0).toString());
+                        quantidade = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 3).toString()).floatValue();
+                        valor = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 2).toString());
+                        subtotal = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 4).toString());
 
-                    
-                    Date dataParaUso = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
-                    if(planoAntigo.getDataRenovacao() != null){
-                       dataParaUso = converterData.parseDate(converterData.parseDate(planoAntigo.getDataRenovacao()));
+                        Produtos produto = produtosDao.pesquisarPorID(String.valueOf(codProduto)).get(0);
+
+
+                        ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
+                        itens.add(itemVendido);
+                        produtosDao.atualizarEstoque(codProduto, produto.getQuantidade()-quantidade);
+
+                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                    if(funcionarios!=null){
+                        String acao = "Venda Efetuada";
+                        String descricao = "Venda no Valor de R$"+valorTotal+" com "+formaDePagamento+" ao cliente "+codAluno;
+                        this.setarLogAcoesFuncionario(funcionarios, acao, descricao);
                     }
-                    LocalDate dataFim = converterData.conversaoLocalforDate(dataParaUso).plusDays(servico.getPeriodDays());
-                    Date dataFimPlano = converterData.conversaoLocalforDate(dataFim);
-
-                    codProduto = 0;
-                    quantidade = 1;
-                    valor = valorTotal;
-                    subtotal = valor;
-
-                    ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
-                    itens.add(itemVendido);
-
-                    Planos plano;
-                    Date dataVencimento = this.dataVencimento(aluno, servico, planoAntigo);
-                    if(dataFim.isEqual(dataAtual)||dataFim.isBefore(dataAtual)){
-                        if(aluno.getRenovacaoAutomatica()==1){
-                            plano = new Planos(codAluno, 0, 0, 0, dataVencimento, dataVenda, null, dataFimPlano, "Pago"); 
-                        }
-                        else{
-                            plano = new Planos(codAluno, 0, 0, 0, dataVencimento, dataVenda, null, null, "Encerrado"); 
-                        }
-
-                    }
-                    else{
-                        plano = new Planos(codAluno, 0, 0, 0,dataVencimento, dataVenda, null, planoAntigo.getDataRenovacao(), "Pago"); 
                     }
 
-                    if(debitos.compareTo(BigDecimal.ZERO)!=0){
-                        if(debitos.subtract(valor).compareTo(BigDecimal.ZERO)>=0){
-                            vendasDao.inserirDados(venda, itens);
-                            LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
-                            for(int linhas=0; linhas<parcelas;linhas++){
-                                dataParcelamentos = dataParcelamentos.plusMonths(1);
-                                dataVenda = converterData.conversaoLocalforDate(dataParcelamentos);
-                                DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Planos", formaDePagamento, valorPago, dataVenda, chaveVenda);
-                                codOrcamentario++;
-                                orcamentarioDao.inserirDados(orcamentario);
-                            }
-                            planosDao.atualizarSituacao(plano);
-                            alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
+                    vendasDao.inserirDados(venda, itens);
+                    LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
+                    for(int linhas=0; linhas<parcelas;linhas++){
+                        dataParcelamentos = dataParcelamentos.plusMonths(1);
+                        dataVenda = converterData.conversaoLocalforDate(dataParcelamentos);
+                        DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario++, "Vendas", formaDePagamento, valorPago, dataVenda, chaveVenda);
+                        orcamentarioDao.inserirDados(orcamentario);
+                    }
 
-                        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                        if(funcionarios!=null){
-                            String acao = "Pagamento de Plano";
-                            String descricao = "Pagamento do plano do aluno "+aluno.getNome()+" da turma "+aluno.getTurma()+" no valor de "+valorTotal;
-                            this.setarLogAcoesFuncionario(funcionarios, acao, descricao);
-                        }
-                        }
-                        else{
-                            view.exibeMensagem("Erro, verifique se o Valor Total corresponde ao Contrato!");
-                        }
-                    }
-                    else{
-                        view.exibeMensagem("Aluno Sem Débitos!");
-                    }
+                    this.posVenda(venda, valorTotal);
                 }
-                  
+
+                //Pagamento Plano
+                else{
+                    int totalLinhas = view.getTabelaMensalidade().getRowCount();
+                    if(totalLinhas>0){
+                        int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
+                        chavePlano = Integer.parseInt(tabelaDeMensalidade.getValueAt(0, 0).toString());
+
+                        //Pegando Informações do Banco
+                        Planos planoAntigo = planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE chavePlano = "+chavePlano).get(0);
+                        Servicos servico = servicos.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+planoAntigo.getCodServico()).get(0); 
+                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
+                        BigDecimal debitos = new BigDecimal(aluno.getDebito().toString());
+
+                        //Construindo a venda
+                        venda = new Vendas(codVenda, codCliente, codAluno, chavePlano, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
+                        chaveVenda = venda.getChaveVenda();
+
+
+                        Date dataParaUso = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
+                        if(planoAntigo.getDataRenovacao() != null){
+                           dataParaUso = converterData.parseDate(converterData.parseDate(planoAntigo.getDataRenovacao()));
+                        }
+                        LocalDate dataFim = converterData.conversaoLocalforDate(dataParaUso).plusDays(servico.getPeriodDays());
+                        Date dataFimPlano = converterData.conversaoLocalforDate(dataFim);
+
+                        codProduto = 0;
+                        quantidade = 1;
+                        valor = valorTotal;
+                        subtotal = valor;
+
+                        ItemVendido itemVendido = new ItemVendido(chaveVenda, codProduto, quantidade, valor, subtotal);
+                        itens.add(itemVendido);
+
+                        Planos plano;
+                        Date dataVencimento = this.dataVencimento(aluno, servico, planoAntigo);
+                        if(dataFim.isEqual(dataAtual)||dataFim.isBefore(dataAtual)){
+                            if(aluno.getRenovacaoAutomatica()==1){
+                                plano = new Planos(codAluno, 0, 0, 0, dataVencimento, dataVenda, null, dataFimPlano, "Pago"); 
+                            }
+                            else{
+                                plano = new Planos(codAluno, 0, 0, 0, dataVencimento, dataVenda, null, null, "Encerrado"); 
+                            }
+
+                        }
+                        else{
+                            plano = new Planos(codAluno, 0, 0, 0,dataVencimento, dataVenda, null, planoAntigo.getDataRenovacao(), "Pago"); 
+                        }
+
+                        if(debitos.compareTo(BigDecimal.ZERO)!=0){
+                            if(debitos.subtract(valor).compareTo(BigDecimal.ZERO)>=0){
+                                vendasDao.inserirDados(venda, itens);
+                                LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
+                                for(int linhas=0; linhas<parcelas;linhas++){
+                                    dataParcelamentos = dataParcelamentos.plusMonths(1);
+                                    dataVenda = converterData.conversaoLocalforDate(dataParcelamentos);
+                                    DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Planos", formaDePagamento, valorPago, dataVenda, chaveVenda);
+                                    codOrcamentario++;
+                                    orcamentarioDao.inserirDados(orcamentario);
+                                }
+                                planosDao.atualizarSituacao(plano);
+                                alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
+
+                            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                            if(funcionarios!=null){
+                                String acao = "Pagamento de Plano";
+                                String descricao = "Pagamento do plano do aluno "+aluno.getNome()+" da turma "+aluno.getTurma()+" no valor de "+valorTotal;
+                                this.setarLogAcoesFuncionario(funcionarios, acao, descricao);
+                            }
+                            }
+                            else{
+                                view.exibeMensagem("Erro, verifique se o Valor Total corresponde ao Contrato!");
+                            }
+                        }
+                        else{
+                            view.exibeMensagem("Aluno Sem Débitos!");
+                        }
+                    }
+
+                }
             }
+            else{
+                view.exibeMensagem("Adicione uma Forma de Pagamento!");
+            }
+        } catch (SQLException ex) {
+            gerarLog(ex);
         }
-        else{
-            view.exibeMensagem("Adicione uma Forma de Pagamento!");
-        }
+        
     }
     
     //Método ao Final da Venda
@@ -672,7 +664,7 @@ public class CaixaController {
 
 
             novaVenda();
-        } catch (SQLException | ParseException | InterruptedException ex) {
+        } catch (InterruptedException ex) {
             gerarLog(ex);
         }
         
@@ -728,8 +720,7 @@ public class CaixaController {
     }
     
     private Date dataVencimento(Aluno aluno, Servicos servico, Planos plano){
-        try{
-            BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
+        BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
         Date vencimento = converterData.parseDate(converterData.parseDate(plano.getDataVencimento()));
         LocalDate dataVencimento = converterData.conversaoLocalforDate(vencimento);
         int diaVencimento = plano.getDiaVencimento();
@@ -783,10 +774,6 @@ public class CaixaController {
             else{
                 return plano.getDataVencimento();
             }
-        }
-        } catch (ParseException ex) {
-            gerarLog(ex);
-            return null;
         }
     }
     

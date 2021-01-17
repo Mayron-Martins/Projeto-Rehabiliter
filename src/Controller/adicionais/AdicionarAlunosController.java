@@ -5,7 +5,6 @@
  */
 package Controller.adicionais;
 
-import Controller.CaixaController;
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaoDiasDaSemana;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
@@ -29,19 +28,14 @@ import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.AlunosCadastro;
-import java.awt.print.PrinterException;
-import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
@@ -69,7 +63,7 @@ public class AdicionarAlunosController {
         this.view = view;
     }
     
-    public void verificacaoDeTurmaEServico() throws SQLException{
+    public void verificacaoDeTurmaEServico(){
         ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
         ArrayList <Servicos> servicos = servicosDao.selecionarTodosServicos();
         limparCombos();
@@ -213,11 +207,7 @@ public class AdicionarAlunosController {
             if(confirmacao == JOptionPane.YES_OPTION){
                 exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, matricula, servicoContratado.getPeriodDays());
                 
-                try {
-                    sleep(10);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(CaixaController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                sleep(10);
                 //exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx", "Word.Application");
                 exportarContrato.ConvertToPDF("C:/Rehabiliter/ContratoEditado.docx");
                 view.exibeMensagem("Exportando Arquivo para Impressão.");
@@ -250,7 +240,7 @@ public class AdicionarAlunosController {
             view.getCampoDataCadastro().setDate(null);
             view.getCampoDataUltimoPag().setDate(null);
         }
-        } catch (SQLException | ParseException | InvalidFormatException ex) {
+        } catch (SQLException | InvalidFormatException | InterruptedException ex) {
             this.gerarLog(ex);
             view.exibeMensagem("Não foi possível Salvar o Aluno corretamente.");
             //Limpando Campos
@@ -286,7 +276,7 @@ public class AdicionarAlunosController {
     
 
     //Pega o código da turma e retorna os dias que ela se aplica
-    private String diasDaSemana(int codTurma) throws SQLException{
+    private String diasDaSemana(int codTurma){
         String diasDaSemana;
         ArrayList<Turmas> turmas = turmasDao.pesquisarTurmas("SELECT diasDaSemana FROM tblTurmas WHERE codTurma = "+codTurma);
         diasDaSemana = converterDias.converterDiasDaSemana(turmas.get(0).getDiasDaSemana());
@@ -300,7 +290,7 @@ public class AdicionarAlunosController {
                 return  matricula; 
     }
     
-    public void setarValorContrato() throws SQLException{
+    public void setarValorContrato() {
         if(view.getComboPlano().getSelectedIndex()>0){
             String nomeServico = view.getComboPlano().getSelectedItem().toString();
             int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
@@ -327,7 +317,7 @@ public class AdicionarAlunosController {
         view.getComboPlano().addItem("[Nenhum]");
     }
     
-    public void verificarQuantidadeLimiteAlunos() throws SQLException{
+    public void verificarQuantidadeLimiteAlunos() {
         int linhaSelecionada = view.getComboTurma().getSelectedIndex();
         if(linhaSelecionada>0){
             String nomeTurma = view.getComboTurma().getSelectedItem().toString();
@@ -350,7 +340,7 @@ public class AdicionarAlunosController {
         return logAcao;
     }
     
-    private Servicos buscarServico(int codServico) throws SQLException{
+    private Servicos buscarServico(int codServico){
         return servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
     }
     
@@ -427,7 +417,7 @@ public class AdicionarAlunosController {
         }
     }
     
-    private Date dataVencimento(Aluno aluno, Servicos servico, Date dataPagamento, int diaVencimento) throws ParseException{
+    private Date dataVencimento(Aluno aluno, Servicos servico, Date dataPagamento, int diaVencimento){
         BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
         LocalDate dataVencimento;
         

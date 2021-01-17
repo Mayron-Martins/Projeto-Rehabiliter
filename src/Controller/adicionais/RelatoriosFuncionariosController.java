@@ -47,7 +47,7 @@ public class RelatoriosFuncionariosController {
     
     
     //Seta os novos dados conforme correspondente no Banco
-    public void setarDadosTabela() throws ParseException, SQLException{
+    public void setarDadosTabela(){
     limparTabela();
         if(view.getComboPeriodo().isEnabled()){
             if(view.getComboIntervalo().getSelectedIndex()>0){
@@ -57,7 +57,7 @@ public class RelatoriosFuncionariosController {
     }
     
     //Seta os funcionários no combobox de funcionários
-    public void setarLogs() throws SQLException, ParseException{
+    public void setarLogs(){
         ArrayList <Funcionario> funcionarios = funcionarioDao.selecionarTodosFuncionarios();
         
         if(funcionarios == null){
@@ -77,7 +77,7 @@ public class RelatoriosFuncionariosController {
     }
     
     //Setar campo Intervalo
-    public void setarCampoIntervalo() throws SQLException, ParseException{
+    public void setarCampoIntervalo(){
         if(view.getComboPeriodo().getSelectedIndex()>0){
             int numPeriodo = view.getComboPeriodo().getSelectedIndex();
             LocalDate data = LocalDate.now();
@@ -103,7 +103,7 @@ public class RelatoriosFuncionariosController {
     }
     
     
-    public boolean verificarPresencaDeDados() throws SQLException, ParseException{
+    public boolean verificarPresencaDeDados(){
         ArrayList <LogAçoesFuncionario> logs = logDao.pesquisarLogs("SELECT * FROM tblLogdeAcoesdoFun"+this.retornarCodFuncionario());
         return logs == null;
     }
@@ -134,7 +134,7 @@ public class RelatoriosFuncionariosController {
         }
     }
     
-    private void pesquisarPeriodo(LocalDate dataPassada) throws SQLException, ParseException{
+    private void pesquisarPeriodo(LocalDate dataPassada){
         LocalDate dataAtual = LocalDate.now();
         String dataPassadaSql = converterData.getSqlDate(converterData.conversaoLocalforDate(dataPassada)).toString().replace("-", "");
         String dataSql = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual)).toString().replace("-", "");
@@ -161,7 +161,7 @@ public class RelatoriosFuncionariosController {
         
     }
     
-    private void setarDados() throws ParseException, SQLException{
+    private void setarDados(){
            limparTabela();
            ArrayList <LogAçoesFuncionario> logs = this.BuscarLogsNaData();
            
@@ -172,7 +172,7 @@ public class RelatoriosFuncionariosController {
                }
     }
     
-    private ArrayList <LogAçoesFuncionario> BuscarLogsNaData() throws ParseException, SQLException{
+    private ArrayList <LogAçoesFuncionario> BuscarLogsNaData(){
         int codFuncionario = this.retornarCodFuncionario();
             String dataCombo = view.getComboIntervalo().getSelectedItem().toString();
             Date data;

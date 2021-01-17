@@ -51,12 +51,12 @@ public class ProdutosController {
     }
         
     //Lista todas as turmas 
-    public void listarProdutos() throws SQLException, ParseException, Exception{
+    public void listarProdutos(){
         ArrayList <Produtos> produtos= this.produtosDao.selecionarTodosProdutos();
         this.buscas(produtos);
     }
     
-    public void editarProdutos() throws SQLException, ParseException, Exception{
+    public void editarProdutos(){
         if(this.view.getTabelaProdutos().getSelectedRow()!= -1){
             //Dados Alunos
             int linhaSelecionada = this.view.getTabelaProdutos().getSelectedRow();
@@ -94,7 +94,7 @@ public class ProdutosController {
     }
     
     
-    public void removerProduto() throws SQLException, ParseException, Exception{
+    public void removerProduto(){
         if(this.view.getTabelaProdutos().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaProdutos().getSelectedRow();
                 int codProduto = Integer.parseInt(tabelaDeProdutos.getValueAt(linhaSelecionada, 0).toString());
@@ -114,7 +114,7 @@ public class ProdutosController {
     }
     
     //Buscar Produtos no campo de busca
-    public void buscarProdutos() throws Exception{
+    public void buscarProdutos(){
         String produtoPesquisa = view.getCampoPesquisa().getText();
         ArrayList <Produtos> produtos = produtosDao.pesquisarPorNome(produtoPesquisa);
         if(produtoPesquisa.equals("")){listarProdutos();}
@@ -123,7 +123,7 @@ public class ProdutosController {
         
     
     //Listar
-    public void listar() throws ParseException, Exception{
+    public void listar(){
         String comboListar = view.getComboListar().getSelectedItem().toString();
         switch(comboListar){
             case "Todos":
@@ -133,11 +133,11 @@ public class ProdutosController {
     }
 
     
-    private Produtos produtoAnterior(int codProduto) throws SQLException, ParseException{
+    private Produtos produtoAnterior(int codProduto){
          return  produtosDao.pesquisarProdutos("SELECT * FROM tblProdutos WHERE codProduto = "+codProduto).get(0);
     }
     
-    private void buscas(ArrayList <Produtos> listar) throws Exception{
+    private void buscas(ArrayList <Produtos> listar){
         ArrayList<Produtos> produtos = listar; 
         
         if(produtos==null){view.exibeMensagem("Produto Não Encontrado!"); limparTabela();}
