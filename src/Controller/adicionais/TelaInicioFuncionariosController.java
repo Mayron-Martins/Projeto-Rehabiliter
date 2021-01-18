@@ -112,46 +112,46 @@ public class TelaInicioFuncionariosController {
         LocalDate dataAtual = LocalDate.now();
         
         if(dataAtual.getDayOfMonth()==1){
-            ArrayList <Planos> planos = new ArrayList<>();
-            
-            planos = planosDao.selecionarTodosPlanos();
-            
-            for(int linhas=0; linhas<planos.size(); linhas++){
-                Planos planoAtual;
-                if(planos.get(linhas).getSituacao().equals("Pago")){
-                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
-                    Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getServico()).get(0);
-                    
-                    Date dataUsual = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
-                    if(planos.get(linhas).getDataRenovacao()!=null){
-                        dataUsual = converterData.parseDate(converterData.parseDate(planos.get(linhas).getDataRenovacao()));
-                    }
-                    LocalDate dataVencimentoFinal = converterData.conversaoLocalforDate(dataUsual).plusDays(servico.getPeriodDays());
-                    
-                    
-                    
-                    if(aluno.getRenovacaoAutomatica()==1){
-                        planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0,planos.get(linhas).getDataVencimento(),
-                            planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
-                            planos.get(linhas).getDataRenovacao(),"Pendente");
-                    }
-                    else{
-                        if(dataVencimentoFinal.isEqual(dataAtual)){
-                            planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, planos.get(linhas).getDataVencimento(),
-                            planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
-                            planos.get(linhas).getDataRenovacao(),"Encerrado"); 
+            ArrayList <Planos> planos = planosDao.selecionarTodosPlanos();
+            if(planos!=null){
+                for(Planos plano : planos){
+                    Planos planoAtual;
+                    if(plano.getSituacao().equals("Pago")){
+                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+plano.getCodAluno()).get(0);
+                        Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
+
+                        Date dataUsual = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
+                        if(plano.getDataRenovacao()!=null){
+                            dataUsual = converterData.parseDate(converterData.parseDate(plano.getDataRenovacao()));
+                        }
+                        LocalDate dataVencimentoFinal = converterData.conversaoLocalforDate(dataUsual).plusDays(servico.getPeriodDays());
+
+
+
+                        if(aluno.getRenovacaoAutomatica()==1){
+                            planoAtual = new Planos(plano.getChavePlano(), plano.getCodAluno(), 0, 0, 0,plano.getDataVencimento(),
+                                plano.getDataPagamento(), plano.getDataCancelamento(), 
+                                plano.getDataRenovacao(),"Pendente");
                         }
                         else{
-                            planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, planos.get(linhas).getDataVencimento(),
-                            planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
-                            planos.get(linhas).getDataRenovacao(),"Pendente");
+                            if(dataVencimentoFinal.isEqual(dataAtual)){
+                                planoAtual = new Planos(plano.getChavePlano(), plano.getCodAluno(), 0, 0, 0, plano.getDataVencimento(),
+                                plano.getDataPagamento(), plano.getDataCancelamento(), 
+                                plano.getDataRenovacao(),"Encerrado"); 
+                            }
+                            else{
+                                planoAtual = new Planos(plano.getChavePlano(), plano.getCodAluno(), 0, 0, 0, plano.getDataVencimento(),
+                                plano.getDataPagamento(), plano.getDataCancelamento(), 
+                                plano.getDataRenovacao(),"Pendente");
+                            }
+
                         }
-                        
-                    }
-                    planosDao.atualizarSituacao(planoAtual);
-                    this.setarDebitos(aluno);
-                 }
-         }
+                        planosDao.atualizarSituacao(planoAtual);
+                        this.setarDebitos(aluno);
+                     }
+             }
+            }
+
      }
   }
     
@@ -163,26 +163,27 @@ public class TelaInicioFuncionariosController {
         Planos planoAtual;
             
         int verificadorExistencia =0;
-            for(int linhas=0; linhas<planos.size(); linhas++){
-                if(planos.get(linhas).getSituacao().equals("Pendente")){
-                    if(planos.get(linhas).getDataVencimento()!=null){
-                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+planos.get(linhas).getCodAluno()).get(0);
-                        Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+aluno.getServico()).get(0);
-                        Date dataUsual = planos.get(linhas).getDataVencimento();
+        if(planos!=null){
+            for(Planos plano : planos){
+                if(plano.getSituacao().equals("Pendente")){
+                    if(plano.getDataVencimento()!=null){
+                        Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+plano.getCodAluno()).get(0);
+                        Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
+                        Date dataUsual = plano.getDataVencimento();
                         Date dataAux = converterData.parseDate(converterData.parseDate(dataUsual));
                         dataVencimento = converterData.conversaoLocalforDate(dataAux);
 
                         periodo = Period.between(dataVencimento, dataAtual);
                         if(periodo.getDays()>=1){
-                        planoAtual = new Planos(planos.get(linhas).getCodAluno(), 0, 0, 0, planos.get(linhas).getDataVencimento(),
-                                planos.get(linhas).getDataPagamento(), planos.get(linhas).getDataCancelamento(), 
-                                planos.get(linhas).getDataRenovacao(),"Vencido");
+                        planoAtual = new Planos(plano.getChavePlano(), plano.getCodAluno(), 0, 0, 0, plano.getDataVencimento(),
+                                plano.getDataPagamento(), plano.getDataCancelamento(), 
+                                plano.getDataRenovacao(),"Vencido");
                         planosDao.atualizarSituacao(planoAtual);
                         verificadorExistencia++;
                             }
                     }
-                      
-                    }
+                }        
+            }
             }
         if(verificadorExistencia>0){
             view.exibeMensagem("A mensalidade de alguns alunos vence hoje. Verifique a tela de Alunos!");

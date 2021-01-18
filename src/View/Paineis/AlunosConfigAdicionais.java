@@ -9,6 +9,7 @@ import Controller.AlunosController;
 import Controller.auxiliar.JMoneyField;
 import View.AlunosView;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JDayChooser;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -83,6 +84,8 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         botaoCancelar = new javax.swing.JButton();
         botaoAplicar = new javax.swing.JButton();
         campoNovoPlano = new javax.swing.JCheckBox();
+        comboDiaVencimento = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
         botaoReativarPlano = new javax.swing.JButton();
         botaoCadNvo = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
@@ -91,7 +94,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         setLocation(new java.awt.Point(0, 0));
         setMinimumSize(new java.awt.Dimension(237, 701));
         setUndecorated(true);
-        setSize(new java.awt.Dimension(237, 750));
+        setSize(new java.awt.Dimension(237, 701));
 
         jScrollPane3.setBackground(new java.awt.Color(116, 174, 159));
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -101,7 +104,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(116, 174, 159));
         jPanel1.setMinimumSize(new java.awt.Dimension(500, 701));
-        jPanel1.setPreferredSize(new java.awt.Dimension(500, 920));
+        jPanel1.setPreferredSize(new java.awt.Dimension(500, 1010));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFecharConf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharPeq.png"))); // NOI18N
@@ -233,9 +236,21 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         painelCadTurma.add(comboTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 190, 40));
 
         comboServicos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
+        comboServicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboServicosActionPerformed(evt);
+            }
+        });
         painelCadTurma.add(comboServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 190, 40));
 
+        campoRenovAutomatica.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        campoRenovAutomatica.setForeground(new java.awt.Color(255, 255, 255));
         campoRenovAutomatica.setText("Renovação Automática");
+        campoRenovAutomatica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoRenovAutomaticaActionPerformed(evt);
+            }
+        });
         painelCadTurma.add(campoRenovAutomatica, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
         painelCadTurma.add(campoValorMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 90, 30));
         painelCadTurma.add(campoValorTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 90, 30));
@@ -247,22 +262,43 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Valor Total");
-        painelCadTurma.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 166, -1, -1));
+        jLabel13.setText("Dia Vencimento");
+        painelCadTurma.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 224, -1, -1));
 
         botaoCancelar.setText("Cancelar");
-        painelCadTurma.add(botaoCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
+            }
+        });
+        painelCadTurma.add(botaoCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
 
         botaoAplicar.setText("Aplicar");
-        painelCadTurma.add(botaoAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 70, -1));
+        painelCadTurma.add(botaoAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 70, -1));
 
         campoNovoPlano.setText("Novo Plano");
         campoNovoPlano.setEnabled(false);
-        painelCadTurma.add(campoNovoPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, -1, -1));
+        painelCadTurma.add(campoNovoPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jPanel1.add(painelCadTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 660, 210, 260));
+        painelCadTurma.add(comboDiaVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 60, 30));
+        comboDiaVencimento.removeAllItems();
+        for(int dia=1; dia<=30;dia++){
+            comboDiaVencimento.addItem(dia+"");
+        }
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Valor Total");
+        painelCadTurma.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 166, -1, -1));
+
+        jPanel1.add(painelCadTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 660, 210, 330));
 
         botaoReativarPlano.setText("Reativar Plano");
+        botaoReativarPlano.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoReativarPlanoActionPerformed(evt);
+            }
+        });
         jPanel1.add(botaoReativarPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 670, 110, -1));
 
         botaoCadNvo.setText("Cadastrar Novo");
@@ -310,7 +346,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoFecharConfActionPerformed
 
     private void botaoCadNvoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadNvoActionPerformed
-
+        controller.novoPlano();
     }//GEN-LAST:event_botaoCadNvoActionPerformed
 
     private void tabelaPlanosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPlanosMouseClicked
@@ -320,6 +356,23 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
     private void tabelaPlanosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaPlanosKeyReleased
         controller.selecionarTabelaPlanosAdicionais();
     }//GEN-LAST:event_tabelaPlanosKeyReleased
+
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        painelCadTurma.setVisible(false);
+        controller.cancelarReativacaoPlano();
+    }//GEN-LAST:event_botaoCancelarActionPerformed
+
+    private void botaoReativarPlanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoReativarPlanoActionPerformed
+        controller.reativarPlano();
+    }//GEN-LAST:event_botaoReativarPlanoActionPerformed
+
+    private void comboServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboServicosActionPerformed
+        controller.selecionarComboServicosPlanosAdicional();
+    }//GEN-LAST:event_comboServicosActionPerformed
+
+    private void campoRenovAutomaticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoRenovAutomaticaActionPerformed
+        controller.selecionarComboServicosPlanosAdicional();
+    }//GEN-LAST:event_campoRenovAutomaticaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -378,12 +431,14 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
     private javax.swing.JCheckBox campoRenovAutomatica;
     private javax.swing.JTextField campoValorMensal;
     private javax.swing.JTextField campoValorTotal;
+    private javax.swing.JComboBox<String> comboDiaVencimento;
     private javax.swing.JComboBox<String> comboServicos;
     private javax.swing.JComboBox<String> comboTurmas;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -478,6 +533,9 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
     public JCheckBox getCampoNovoPlano() {
         return campoNovoPlano;
     }
-    
-    
+
+    public JComboBox<String> getComboDiaVencimento() {
+        return comboDiaVencimento;
+    }
+
 }

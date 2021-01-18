@@ -148,7 +148,7 @@ public class AdicionarAlunosController {
         String matriculaObtida = this.converterMatricula(anoAtual, codTurma, codAluno, codServico);
         
         //dados do Endereço
-        int codEndereco = verificar.verificarUltimo("tblEndAlunoseClientes","codEndAlunoseClientes ")+1;
+        int codEndereco = verificar.verificarUltimo("tblEndAlunoseClientes","codEndAlunoseClientes")+1;
         String logradouro = view.getCampoRua().getText();
         String bairro = view.getCampoBairro().getText();
         String numero = view.getCampoNum().getText();
@@ -161,6 +161,7 @@ public class AdicionarAlunosController {
         Servicos servicoContratado = this.buscarServico(codServico);
         
         //Dados do Plano
+        long chavePlano = verificar.verificarUltimo("tblPlanos","chavePlano")+1;
         int diaVencimento = this.diaVencimento(servicoContratado.getPeriodDays());
         int renovacaoAutomatica =0;
         if(view.getRenovacaoAuto().isSelected()){
@@ -179,7 +180,7 @@ public class AdicionarAlunosController {
         Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
         
         Date dataVencimento = this.dataVencimento(aluno, servicoContratado, dataUltimoPag, diaVencimento);
-        Planos planoAluno = new Planos(codAluno, codTurma, codServico, diaVencimento, dataVencimento, dataUltimoPag, null, null, situacao);
+        Planos planoAluno = new Planos(chavePlano, codAluno, codTurma, codServico, diaVencimento, dataVencimento, dataUltimoPag, null, null, situacao);
         
         
         //Obtem a quantidade de alunos presentes na turma

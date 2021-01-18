@@ -24,7 +24,7 @@ public class Planos {
     private String situacao;
     private long chavePlano;
 
-    public Planos(int codAluno, int codTurma, int codServico, int diaVencimento, Date dataVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
+    public Planos(long chavePlano, int codAluno, int codTurma, int codServico, int diaVencimento, Date dataVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
         this.codAluno = codAluno;
         this.codTurma = codTurma;
         this.codServico = codServico;
@@ -36,9 +36,7 @@ public class Planos {
         this.dataRenovacao = converterData.getSqlDate(dataRenovacao);
         this.dataVencimento = converterData.getSqlDate(dataVencimento);
         this.situacao = situacao;
-        
-        String chave = String.valueOf(codAluno)+String.valueOf(codTurma)+String.valueOf(codServico);
-        this.chavePlano = Long.parseLong(chave);
+        this.chavePlano = chavePlano;
     }
 
     public int getCodAluno() {

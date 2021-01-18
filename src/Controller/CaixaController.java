@@ -431,15 +431,15 @@ public class CaixaController {
                         Date dataVencimento = this.dataVencimento(aluno, servico, planoAntigo);
                         if(dataFim.isEqual(dataAtual)||dataFim.isBefore(dataAtual)){
                             if(aluno.getRenovacaoAutomatica()==1){
-                                plano = new Planos(codAluno, 0, 0, 0, dataVencimento, dataVenda, null, dataFimPlano, "Pago"); 
+                                plano = new Planos(chavePlano, codAluno, 0, 0, 0, dataVencimento, dataVenda, null, dataFimPlano, "Pago"); 
                             }
                             else{
-                                plano = new Planos(codAluno, 0, 0, 0, dataVencimento, dataVenda, null, null, "Encerrado"); 
+                                plano = new Planos(chavePlano, codAluno, 0, 0, 0, dataVencimento, dataVenda, null, null, "Encerrado"); 
                             }
 
                         }
                         else{
-                            plano = new Planos(codAluno, 0, 0, 0,dataVencimento, dataVenda, null, planoAntigo.getDataRenovacao(), "Pago"); 
+                            plano = new Planos(chavePlano, codAluno, 0, 0, 0,dataVencimento, dataVenda, null, planoAntigo.getDataRenovacao(), "Pago"); 
                         }
 
                         if(debitos.compareTo(BigDecimal.ZERO)!=0){

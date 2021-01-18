@@ -58,14 +58,13 @@ public class PlanosDao extends Conexao{
     public void atualizarDados(Planos plano){
         try{
             String inPlanos = atualizar.concat("tblPlanos "
-                    + "SET codTurma = ?, codServico = ?, diaVencimento = ?, chavePlano = ? where codAluno = ?");
+                    + "SET codTurma = ?, codServico = ?, diaVencimento = ? where chavePlano = ?");
 
             PreparedStatement statement = gerarStatement(inPlanos);
             statement.setInt(1, plano.getCodTurma());
             statement.setInt(2, plano.getCodServico());
             statement.setInt(3, plano.getDiaVencimento());
             statement.setLong(4, plano.getChavePlano());
-            statement.setInt(5, plano.getCodAluno());
 
             statement.execute();
             statement.close();
@@ -78,7 +77,7 @@ public class PlanosDao extends Conexao{
     public void atualizarSituacao(Planos plano){
         try{
             String inPlanos = atualizar.concat("tblPlanos "
-                    + "SET dataVencimento = ?, dataPagamento = ?, dataCancelamento = ?, dataRenovacao=?, situacao = ?  WHERE codAluno = ?");
+                    + "SET dataVencimento = ?, dataPagamento = ?, dataCancelamento = ?, dataRenovacao=?, situacao = ?  WHERE chavePlano = ?");
 
             PreparedStatement statement = gerarStatement(inPlanos);
             statement.setDate(1, (Date) plano.getDataVencimento());
@@ -86,7 +85,7 @@ public class PlanosDao extends Conexao{
             statement.setDate(3, (Date) plano.getDataCancelamento());
             statement.setDate(4, (Date) plano.getDataRenovacao());
             statement.setString(5, plano.getSituacao());
-            statement.setInt(6, plano.getCodAluno());
+            statement.setLong(6, plano.getChavePlano());
 
             statement.execute();
             statement.close();
@@ -129,6 +128,7 @@ public class PlanosDao extends Conexao{
             }
 
             do{
+            long chavePlano = resultset.getLong("chavePlano");
             int codAluno = resultset.getInt("codAluno");
             int codTurma = resultset.getInt("codTurma");
             int codServico = resultset.getInt("codServico");
@@ -138,9 +138,9 @@ public class PlanosDao extends Conexao{
             Date dataCancelamento = resultset.getDate("dataCancelamento");
             Date dataRenovacao = resultset.getDate("dataRenovacao");
             String situacao = resultset.getString("situacao");
-            long chavePlano = resultset.getLong("chavePlano");
+            
 
-            Planos plano = new Planos(codAluno, codTurma, codServico, diaVencimeto, dataVencimento, dataPagamento, dataCancelamento,dataRenovacao,situacao);
+            Planos plano = new Planos(chavePlano, codAluno, codTurma, codServico, diaVencimeto, dataVencimento, dataPagamento, dataCancelamento,dataRenovacao,situacao);
 
             planos.add(plano);
              }while(resultset.next());
