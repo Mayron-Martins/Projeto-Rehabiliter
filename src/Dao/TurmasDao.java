@@ -34,7 +34,7 @@ public class TurmasDao extends Conexao{
         try{
             //Adicionando Turma
             String inTurmas = inserir.concat("tblTurmas("
-                    + "codTurma, nome, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario)"
+                    + "codTurma, nome, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario, situacao)"
                     + "VALUES("
                     + "?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inTurmas);
@@ -44,6 +44,7 @@ public class TurmasDao extends Conexao{
             statement.setInt(4, turma.getQuantidadeMaximaAlunos());
             statement.setString(5, turma.getDiasDaSemana());
             statement.setTime(6, turma.getHorario());
+            statement.setString(7, turma.getSituacao());
             statement.execute();
             statement.close();
 
@@ -98,8 +99,23 @@ public class TurmasDao extends Conexao{
         } catch (SQLException ex) {
             gerarLog(ex);
         }
-        
-        
+    }
+    
+    public void atualizarSituacao(int codBanco, String situacao){
+        try{
+            //atualizando a tabela de turmas
+            String inTurmas = atualizar.concat("tblTurmas "
+                    + "SET situacao = ? where codTurma = ?");
+
+            PreparedStatement statement = gerarStatement(inTurmas);
+            statement.setString(1, situacao);
+            statement.setInt(2, codBanco);
+
+            statement.execute();
+            statement.close();
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
     }
     
     //Remover Dados
@@ -147,8 +163,9 @@ public class TurmasDao extends Conexao{
 
             int tamanhoHora = resultset.getTime("horario").toString().length()-3;
             String horario = resultset.getTime("horario").toString().substring(0, tamanhoHora);
+            String situacao = resultset.getString("situacao");
 
-            Turmas turma = new Turmas(codBanco, nome, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario);
+            Turmas turma = new Turmas(codBanco, nome, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario, situacao);
 
             turmas.add(turma);
              }while(resultset.next());

@@ -47,6 +47,7 @@ public class AdicionarServicosController {
             String nomeServico = view.getNomeServico().getText();
             String periodo= this.retornarPeriodo();
             String metodoDePagamento = view.getMetodoPagamento().getSelectedItem().toString();
+            String situacao = "Aberto";
 
             BigDecimal valor = new BigDecimal(0);
             BigDecimal valorAVista= new BigDecimal(0);
@@ -62,7 +63,7 @@ public class AdicionarServicosController {
             if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
             int periodDays = this.periodDays();
 
-            Servicos servico = new Servicos(codBancoServico, nomeServico, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays);
+            Servicos servico = new Servicos(codBancoServico, nomeServico, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays, situacao);
             //Inserindo Dados
             if(nomeServico.equals("")|| periodo.equals("[Nenhum]")||periodDays==0){
              view.exibeMensagem("Campos Preenchidos Incorretamente");

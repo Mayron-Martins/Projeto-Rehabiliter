@@ -99,19 +99,21 @@ public class TurmasController {
             diasDaSemanaUnitarios = this.view.getDiasDaSemanaUnitarios();
             
             String horario = this.view.getCampoHorario();
+            String situacao = "Aberta";
             
             Turmas turma = null;
             ArrayList <Horarios> horarios = new ArrayList <>();
             if(!view.getCampoHorario().equals("")){
-            turma = new Turmas(codTurma, nome, quantAlunos, quantidadeMax, diasDaSemana, horario);    
+                
+                turma = new Turmas(codTurma, nome, quantAlunos, quantidadeMax, diasDaSemana, horario, situacao);    
 
-        
-        int diferenca, contador = diasDaSemanaUnitarios.size();
-        while(contador>0){
-        diferenca = diasDaSemanaUnitarios.size()-contador;
-        Horarios auxiliar = new Horarios(codTurma, diasDaSemanaUnitarios.get(diferenca), horario, 0, codTurma);
-        horarios.add(auxiliar);
-        contador--;
+
+                int diferenca, contador = diasDaSemanaUnitarios.size();
+                while(contador>0){
+                diferenca = diasDaSemanaUnitarios.size()-contador;
+                Horarios auxiliar = new Horarios(codTurma, diasDaSemanaUnitarios.get(diferenca), horario, 0, codTurma);
+                horarios.add(auxiliar);
+                contador--;
         }
         }
         

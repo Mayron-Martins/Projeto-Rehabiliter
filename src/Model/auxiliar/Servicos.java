@@ -23,8 +23,9 @@ public class Servicos {
     private final BigDecimal valorPrazoCredito;
     private final BigDecimal valorPrazoDebito;
     private int periodDays;
+    private String situacao;
 
-    public Servicos(int codBanco, String nome, String periodo, String formaPagamento,BigDecimal valor, BigDecimal valorVista, BigDecimal valorBoleto, BigDecimal valorPrazoCredito, BigDecimal valorPrazoDebito, int periodDays) {
+    public Servicos(int codBanco, String nome, String periodo, String formaPagamento,BigDecimal valor, BigDecimal valorVista, BigDecimal valorBoleto, BigDecimal valorPrazoCredito, BigDecimal valorPrazoDebito, int periodDays, String situacao) {
         this.codBanco = codBanco;
         this.nome = nome;
         this.periodo = periodo;
@@ -35,6 +36,7 @@ public class Servicos {
         this.valorPrazoCredito = new BigDecimal(valorPrazoCredito.toString());
         this.valorPrazoDebito = new BigDecimal (valorPrazoDebito.toString());
         this.periodDays = periodDays;
+        this.situacao = situacao;
     }
 
     public int getCodBanco() {
@@ -78,5 +80,10 @@ public class Servicos {
     public int getPeriodDays() {
         return periodDays;
     }
+
+    public String getSituacao() {
+        return situacao;
+    }
+    
 
 }

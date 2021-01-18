@@ -240,14 +240,14 @@ public class TurmasView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "CodBanco", "Nome", "Quant(Max)", "Quant Presente", "Dias da Semana", "Horário"
+                "CodBanco", "Nome", "Quant(Max)", "Quant Presente", "Dias da Semana", "Horário", "Situação"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, false, false, false
+                false, true, true, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

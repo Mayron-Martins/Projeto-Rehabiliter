@@ -262,7 +262,8 @@ public class TableCriator {
                 + "quantAlunos INT NULL," //Caso queira colocar a quantidade presente de alunos.
                 + "quantLimiteDeAlunos INT NULL," //Caso queira definir um valor máximo de alunos para uma turma.
                 + "diasDaSemana VARCHAR(MAX) NOT NULL,"
-                + "horario TIME NOT NULL" //Dias da semana que a turma irá utilizar.
+                + "horario TIME NOT NULL,"
+                + "situacao VARCHAR(15) NULL" //Dias da semana que a turma irá utilizar.
                 + ") ON [AlunoseClientes];");
     }
     
@@ -306,7 +307,8 @@ public class TableCriator {
                 + "valorBoleto DECIMAL(16,2) NULL,"
                 + "valorCartaoDeCredito DECIMAL(16,2) NULL,"
                 + "valorCartaoDeDebito DECIMAL(16,2) NULL,"
-                + "periodDays INT NULL"
+                + "periodDays INT NULL,"
+                + "situacao VARCHAR(15) NULL"
                 + ") ON [AlunoseClientes];");
     }
     

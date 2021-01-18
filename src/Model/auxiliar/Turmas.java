@@ -22,9 +22,10 @@ public class Turmas {
     private int quantidadeMaximaAlunos;
     private String diasDaSemana;
     private Time horario;
+    private String situacao;
 
     
-    public Turmas(int codBanco, String nomeTurma, int quantidadeAlunos, int quantidadeMaximaAlunos, String diasDaSemana, String horario) {
+    public Turmas(int codBanco, String nomeTurma, int quantidadeAlunos, int quantidadeMaximaAlunos, String diasDaSemana, String horario, String situacao) {
         this.codBanco = codBanco;
         this.nomeTurma = nomeTurma;
         this.quantidadeAlunos = quantidadeAlunos;
@@ -32,6 +33,7 @@ public class Turmas {
         this.diasDaSemana = diasDaSemana;
         ConversaodeDataParaPadraoDesignado converter = new ConversaodeDataParaPadraoDesignado();
         this.horario = converter.parseHour(horario);
+        this.situacao = situacao;
     }
 
     public int getCodBanco() {
@@ -56,6 +58,10 @@ public class Turmas {
 
     public Time getHorario() {
         return horario;
+    }
+
+    public String getSituacao() {
+        return situacao;
     }
     
     

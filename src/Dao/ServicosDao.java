@@ -34,9 +34,9 @@ public class ServicosDao extends Conexao{
         try{
             //Adicionando Turma
             String inServicos = inserir.concat("tblServicos("
-                    + "codServico, nome, periodo, formaPagamento, valor, valorAVista, valorBoleto, valorCartaoDeCredito, valorCartaoDeDebito, periodDays)"
+                    + "codServico, nome, periodo, formaPagamento, valor, valorAVista, valorBoleto, valorCartaoDeCredito, valorCartaoDeDebito, periodDays, situacao)"
                     + "VALUES("
-                    + "?,?,?,?,?,?,?,?,?, ?);");
+                    + "?,?,?,?,?,?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inServicos);
             statement.setInt(1, servico.getCodBanco());
             statement.setString(2, servico.getNome());
@@ -48,6 +48,7 @@ public class ServicosDao extends Conexao{
             statement.setBigDecimal(8, servico.getValorPrazoCredito());
             statement.setBigDecimal(9, servico.getValorPrazoDebito());
             statement.setInt(10, servico.getPeriodDays());
+            statement.setString(11, servico.getSituacao());
             statement.execute();
             statement.close();
         } catch (SQLException ex) {
@@ -82,7 +83,23 @@ public class ServicosDao extends Conexao{
         } catch (SQLException ex) {
             gerarLog(ex);
         }
-        
+    }
+    
+    public void atualizarSituacao(int codServico, String situacao){
+        try{
+            //atualizando a tabela de turmas
+            String inServicos = atualizar.concat("tblServicos "
+                    + "SET situacao = ? where codServico = ?");
+
+            PreparedStatement statement = gerarStatement(inServicos);
+            statement.setString(1, situacao);
+            statement.setInt(2, codServico);
+
+            statement.execute();
+            statement.close();
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
     }
     
     //Remover Dados
@@ -130,8 +147,9 @@ public class ServicosDao extends Conexao{
             BigDecimal valorAPrazoCredito = new BigDecimal(resultset.getBigDecimal("valorCartaoDeCredito").toString());
             BigDecimal valorAPrazoDebito = new BigDecimal (resultset.getBigDecimal("valorCartaoDeDebito").toString());
             int periodDays = resultset.getInt("periodDays");
+            String situacao = resultset.getString("situacao");
 
-            Servicos servico = new Servicos(codBanco, nome, periodo, formaPagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays);
+            Servicos servico = new Servicos(codBanco, nome, periodo, formaPagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays, situacao);
 
             servicos.add(servico);
              }while(resultset.next());

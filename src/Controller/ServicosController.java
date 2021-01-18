@@ -61,41 +61,26 @@ public class ServicosController {
             limparTabela();
         } else{
             limparTabela();
-            for(int linhas=0; linhas<servicos.size(); linhas++){
-                    String formaPagamento = servicos.get(linhas).getFormaPagamento();
-                    if(formaPagamento.equals("[Nenhuma]")){
-                        Object[] dadosDaTabela = {servicos.get(linhas).getCodBanco(), 
-                        servicos.get(linhas).getNome(),servicos.get(linhas).getPeriodo(),
-                        servicos.get(linhas).getFormaPagamento(),servicos.get(linhas).getValor()};
-                        this.tabelaDeServicos.addRow(dadosDaTabela);
-                    }
+            for(Servicos servico : servicos){
+                    String formaPagamento = servico.getFormaPagamento();
+                    BigDecimal valor = servico.getValor();
+
                     if(formaPagamento.equals("Dinheiro")){
-                        Object[] dadosDaTabela = {servicos.get(linhas).getCodBanco(), 
-                        servicos.get(linhas).getNome(),servicos.get(linhas).getPeriodo(),
-                        servicos.get(linhas).getFormaPagamento(),servicos.get(linhas).getValorVista()};
-                        this.tabelaDeServicos.addRow(dadosDaTabela);
+                        valor = servico.getValorVista();
                     }
-                    
                     if(formaPagamento.equals("Boleto")){
-                        Object[] dadosDaTabela = {servicos.get(linhas).getCodBanco(), 
-                        servicos.get(linhas).getNome(),servicos.get(linhas).getPeriodo(),
-                        servicos.get(linhas).getFormaPagamento(),servicos.get(linhas).getValorBoleto()};
-                        this.tabelaDeServicos.addRow(dadosDaTabela);
+                        valor = servico.getValorBoleto();
                     }
-                    
                     if(formaPagamento.equals("Cartão de Crédito")){
-                        Object[] dadosDaTabela = {servicos.get(linhas).getCodBanco(), 
-                        servicos.get(linhas).getNome(),servicos.get(linhas).getPeriodo(),
-                        servicos.get(linhas).getFormaPagamento(),servicos.get(linhas).getValorPrazoCredito()};
-                        this.tabelaDeServicos.addRow(dadosDaTabela);
+                        valor = servico.getValorPrazoCredito();
                     }
                     if(formaPagamento.equals("Cartão de Débito")){
-                        Object[] dadosDaTabela = {servicos.get(linhas).getCodBanco(), 
-                        servicos.get(linhas).getNome(),servicos.get(linhas).getPeriodo(),
-                        servicos.get(linhas).getFormaPagamento(),servicos.get(linhas).getValorPrazoDebito()};
-                        this.tabelaDeServicos.addRow(dadosDaTabela);
+                        valor = servico.getValorPrazoDebito();
                     }
-
+                    
+                    Object[] dadosDaTabela = {servico.getCodBanco(), servico.getNome(),servico.getPeriodo(),
+                        servico.getFormaPagamento(), valor, servico.getSituacao()};
+                        this.tabelaDeServicos.addRow(dadosDaTabela);
             }
         }        
     }
@@ -108,6 +93,7 @@ public class ServicosController {
             
             String periodo = this.retornarPeriodo();
             String metodoDePagamento = view.getMetodoPagamento().getSelectedItem().toString();
+            String situacao = tabelaDeServicos.getValueAt(linhaSelecionada, 5).toString();
             
             BigDecimal valor = new BigDecimal("0");
             BigDecimal valorAVista = new BigDecimal("0");
@@ -125,7 +111,7 @@ public class ServicosController {
             if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
             
             int periodDays = this.periodDays();
-            Servicos servico = new Servicos(codServico, nome, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays);
+            Servicos servico = new Servicos(codServico, nome, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays, situacao);
             Servicos servicoAnterior = this.retornarServicoAnterior(codServico);
         //Inserindo Dados
         if(nome.equals("")){
