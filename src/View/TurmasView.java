@@ -93,9 +93,9 @@ public class TurmasView extends javax.swing.JDialog {
         campoDePesquisa = new javax.swing.JTextField();
         campoEdicaoHoras = new javax.swing.JFormattedTextField();
         campoEdicaoMinutos = new javax.swing.JFormattedTextField();
-        painelderolagem = new javax.swing.JScrollPane();
-        tabelaTurmas = new javax.swing.JTable();
         comboSituacao = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaTurmas = new javax.swing.JTable();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -230,9 +230,9 @@ public class TurmasView extends javax.swing.JDialog {
             erroMinutos.printStackTrace();}
         getContentPane().add(campoEdicaoMinutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, 50, -1));
 
-        painelderolagem.setAutoscrolls(true);
+        comboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abertas", "Encerradas" }));
+        getContentPane().add(comboSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 210, 30));
 
-        tabelaTurmas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaTurmas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -242,7 +242,7 @@ public class TurmasView extends javax.swing.JDialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, true, true, false, false, false, false
@@ -256,21 +256,10 @@ public class TurmasView extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabelaTurmas.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaTurmas.setMinimumSize(new java.awt.Dimension(1000, 0));
-        tabelaTurmas.setPreferredSize(new java.awt.Dimension(1000, 0));
-        tabelaTurmas.setRowHeight(25);
-        tabelaTurmas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tabelaTurmas.setShowVerticalLines(false);
         tabelaTurmas.getTableHeader().setReorderingAllowed(false);
         tabelaTurmas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaTurmasMouseClicked(evt);
-            }
-        });
-        tabelaTurmas.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaTurmasComponentHidden(evt);
             }
         });
         tabelaTurmas.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -278,12 +267,9 @@ public class TurmasView extends javax.swing.JDialog {
                 tabelaTurmasKeyReleased(evt);
             }
         });
-        painelderolagem.setViewportView(tabelaTurmas);
+        jScrollPane1.setViewportView(tabelaTurmas);
 
-        getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
-
-        comboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abertas", "Encerradas" }));
-        getContentPane().add(comboSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 210, 30));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/fundo.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -312,10 +298,6 @@ public class TurmasView extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
-
-    private void tabelaTurmasComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaTurmasComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaTurmasComponentHidden
 
     private void botaoListarTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarTurmasActionPerformed
         // TODO add your handling code here:
@@ -351,14 +333,6 @@ public class TurmasView extends javax.swing.JDialog {
         desabilitarVisibilidadeComponente();
     }//GEN-LAST:event_formMouseClicked
 
-    private void tabelaTurmasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaTurmasKeyReleased
-        controller.selecionarTabela();
-    }//GEN-LAST:event_tabelaTurmasKeyReleased
-
-    private void tabelaTurmasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaTurmasMouseClicked
-        controller.selecionarTabela();
-    }//GEN-LAST:event_tabelaTurmasMouseClicked
-
     private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
         try {
             controller.buscarTurmas();
@@ -372,6 +346,14 @@ public class TurmasView extends javax.swing.JDialog {
             getRootPane().setDefaultButton(botaobuscar);
         }
     }//GEN-LAST:event_campoDePesquisaKeyPressed
+
+    private void tabelaTurmasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaTurmasMouseClicked
+        controller.selecionarTabela();
+    }//GEN-LAST:event_tabelaTurmasMouseClicked
+
+    private void tabelaTurmasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaTurmasKeyReleased
+        controller.selecionarTabela();
+    }//GEN-LAST:event_tabelaTurmasKeyReleased
    
     /**
      * @param args the command line arguments
@@ -437,7 +419,7 @@ public class TurmasView extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField campoEdicaoHoras;
     private javax.swing.JFormattedTextField campoEdicaoMinutos;
     private javax.swing.JComboBox<String> comboSituacao;
-    private javax.swing.JScrollPane painelderolagem;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JTable tabelaTurmas;
     // End of variables declaration//GEN-END:variables
@@ -603,12 +585,49 @@ private void diasDaSemana(){
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+            }
+        });
+        
+        //Atualizar tabela
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), "F5");
+        meurootpane.getRootPane().getActionMap().put("F5", new AbstractAction("F5") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.listarTurmas();
+            }
+        });
+        
+        //Remover Turma
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "DELETE");
+        meurootpane.getRootPane().getActionMap().put("DELETE", new AbstractAction("DELETE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.removerTurma();
+            }
+        });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Editar Turma
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl E"), "EDITARTURMA");
+        meurootpane.getRootPane().getActionMap().put("EDITARTURMA", new AbstractAction("EDITARTURMA") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.editarTurmas();
+            }
+        });
+        
+        //Encerrar ou Reabrir Turma
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl F"), "ENCERRARREABRIR");
+        meurootpane.getRootPane().getActionMap().put("ENCERRARREABRIR", new AbstractAction("ENCERRARREABRIR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.encerrarReabrirServico();
             }
         });
     }

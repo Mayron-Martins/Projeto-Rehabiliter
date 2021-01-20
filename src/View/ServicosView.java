@@ -411,6 +411,15 @@ public class ServicosView extends javax.swing.JDialog {
             }
         });
         
+        //Remover Turma
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "DELETE");
+        meurootpane.getRootPane().getActionMap().put("DELETE", new AbstractAction("DELETE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.removerServico();
+            }
+        });
+        
         this.conjuntoTeclasAtalho(meurootpane);
     }
     

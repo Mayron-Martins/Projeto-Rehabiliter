@@ -130,7 +130,6 @@ public class TurmasController {
             }
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
-            limparTabela();
             listarTurmas();
         }
             //Turmas 
@@ -143,6 +142,7 @@ public class TurmasController {
     
     public void selecionarTabela(){
       if(this.view.getTabelaTurmas().getSelectedRow()!=-1){
+          this.limparDias();
           //Número da linha selecionada
           int linhaSelecionada = this.view.getTabelaTurmas().getSelectedRow();
           //Habilita itens que ficam acima da tabela
@@ -152,7 +152,7 @@ public class TurmasController {
           String hora = String.valueOf(horario.charAt(0))+horario.charAt(1);
           String minutos = String.valueOf(horario.charAt(3))+horario.charAt(4);
           //Coloca os valores nos campos edithoras e editminutos
-          view.getCampoEdicaoHoras().setText(horario);
+          view.getCampoEdicaoHoras().setText(hora);
           view.getCampoEdicaoMinutos().setText(minutos);
           //Pega o valor dos dias da semana
           ArrayList <Horarios> horarios;
@@ -189,7 +189,6 @@ public class TurmasController {
                     this.setarLog(funcionarios, acao, descricao);
                 }
                 this.view.exibeMensagem("Sucesso");
-                limparTabela();
                 this.view.desabilitarVisibilidadeComponente();
                 listarTurmas(); 
             }
@@ -263,5 +262,15 @@ public class TurmasController {
                 listarTurmas();
             }
         }
+    }
+
+    private void limparDias() {
+        view.getCaixaSegunda().setSelected(false);
+        view.getCaixaTerca().setSelected(false);
+        view.getCaixaQuarta().setSelected(false);
+        view.getCaixaQuinta().setSelected(false);
+        view.getCaixaSexta().setSelected(false);
+        view.getCaixaSabado().setSelected(false);
+        view.getCaixaDomingo().setSelected(false);
     }
 }

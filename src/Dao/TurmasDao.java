@@ -34,7 +34,7 @@ public class TurmasDao extends Conexao{
             String inTurmas = inserir.concat("tblTurmas("
                     + "codTurma, nome, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario, situacao)"
                     + "VALUES("
-                    + "?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inTurmas);
             statement.setInt(1, turma.getCodBanco());
             statement.setString(2, turma.getNomeTurma());
