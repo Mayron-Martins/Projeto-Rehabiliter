@@ -112,96 +112,101 @@ public class AlunosController {
             //Dados Alunos
             int totalLinhas = this.view.getTabelaAlunos().getRowCount();
             for(int linhaSelecionada=0; linhaSelecionada<totalLinhas; linhaSelecionada++){
-                int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
-                String nome = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
-                String nomeTurmaAtual = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 2).toString();
-                int codTurmaAtual = Integer.parseInt(nomeTurmaAtual.split("\\.")[0]);
-                BigDecimal valorDebito = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 3).toString()).toString());
-                int renovacaoAutomatica = 0;
-                if(tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString().equals("true")){
-                    renovacaoAutomatica = 1;
-                }
-
-                //Dados Planos
                 int chavePlano = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
-                String nomeServico = this.tabelaDePlanos.getValueAt(linhaSelecionada, 1).toString();
-                int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
-                BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 2).toString()).toString());
-                BigDecimal valorMensal = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 3).toString()).toString());
-                int diaVencimento = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 4).toString());
-                String situacao = this.tabelaDePlanos.getValueAt(linhaSelecionada, 5).toString();
+                Planos planoAnterior = this.planoAnterior(chavePlano);
+                if(!planoAnterior.getSituacao().equals("Encerrado")){
+                    int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+                    String nome = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
+                    String nomeTurmaAtual = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 2).toString();
+                    int codTurmaAtual = Integer.parseInt(nomeTurmaAtual.split("\\.")[0]);
+                    BigDecimal valorDebito = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeAlunos.getValueAt(linhaSelecionada, 3).toString()).toString());
+                    int renovacaoAutomatica = 0;
+                    if(tabelaDeAlunos.getValueAt(linhaSelecionada, 4).toString().equals("true")){
+                        renovacaoAutomatica = 1;
+                    }
+
+                    //Dados Planos
+                    String nomeServico = this.tabelaDePlanos.getValueAt(linhaSelecionada, 1).toString();
+                    int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
+                    BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 2).toString()).toString());
+                    BigDecimal valorMensal = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 3).toString()).toString());
+                    int diaVencimento = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 4).toString());
+                    String situacao = this.tabelaDePlanos.getValueAt(linhaSelecionada, 5).toString();
 
 
 
-                //Dados Pais
-                String nomePai = this.tabelaDePais.getValueAt(linhaSelecionada, 0).toString();
-                String cpfPai = this.tabelaDePais.getValueAt(linhaSelecionada, 1).toString();
-                String telefonePai = this.tabelaDePais.getValueAt(linhaSelecionada, 2).toString();
-                String nomeMae = this.tabelaDePais.getValueAt(linhaSelecionada, 3).toString();
-                String cpfMae = this.tabelaDePais.getValueAt(linhaSelecionada, 4).toString();
-                String telefoneMae = this.tabelaDePais.getValueAt(linhaSelecionada, 5).toString();
+                    //Dados Pais
+                    String nomePai = this.tabelaDePais.getValueAt(linhaSelecionada, 0).toString();
+                    String cpfPai = this.tabelaDePais.getValueAt(linhaSelecionada, 1).toString();
+                    String telefonePai = this.tabelaDePais.getValueAt(linhaSelecionada, 2).toString();
+                    String nomeMae = this.tabelaDePais.getValueAt(linhaSelecionada, 3).toString();
+                    String cpfMae = this.tabelaDePais.getValueAt(linhaSelecionada, 4).toString();
+                    String telefoneMae = this.tabelaDePais.getValueAt(linhaSelecionada, 5).toString();
 
-                //Dados Endereço
-                String logradouro = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 0).toString();
-                String numero = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 1).toString();
-                String bairro = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 2).toString();
-                String cidade = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 3).toString();
-                String estado = view.getComboEstado().getSelectedItem().toString();
-                String cep = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 5).toString();
+                    //Dados Endereço
+                    String logradouro = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 0).toString();
+                    String numero = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 1).toString();
+                    String bairro = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 2).toString();
+                    String cidade = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 3).toString();
+                    String estado = view.getComboEstado().getSelectedItem().toString();
+                    String cep = this.tabelaDeEnderecos.getValueAt(linhaSelecionada, 5).toString();
 
-                //Dados matrícula
-                int anoAtual = LocalDate.now().getYear();
-                String nomeMatricula = this.converterMatricula(anoAtual, codTurmaAtual, codAluno, codServico);
-                Aluno alunoAnterior = this.alunoAnterior(codAluno);
-                Planos planoAnterior = this.planoAnterior(codAluno);
-
-                Date dataValidade = planoAnterior.getDataVencimento();
-                Date dataPagamento = planoAnterior.getDataPagamento();
-                Date dataCadastro = alunoAnterior.getDataCadastro();
-
-                Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
-                        alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
-                        nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurmaAtual, codServico, alunoAnterior.getDescricao(), 
-                        valorDebito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
-
-                Matriculas matricula = new Matriculas(codAluno, codTurmaAtual, codAluno, anoAtual, nomeMatricula);
-                EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);
-                Planos planoAluno = new Planos(chavePlano, codAluno, codTurmaAtual, codServico, diaVencimento, 
-                        dataValidade, dataPagamento, planoAnterior.getDataCancelamento(), 
-                        planoAnterior.getDataRenovacao(), situacao);
+                    //Dados matrícula
+                    int anoAtual = LocalDate.now().getYear();
+                    String nomeMatricula = this.converterMatricula(anoAtual, codTurmaAtual, codAluno, codServico);
+                    Aluno alunoAnterior = this.alunoAnterior(codAluno);
 
 
-                //Verificar se a turma atual possui vagas
-                Turmas turmaAnterior = this.pegarTurma(alunoAnterior.getTurma());
-                Turmas turmaAtual = this.pegarTurma(codTurmaAtual);
-                boolean verificarVagasTurma = false;
+                    Date dataValidade = planoAnterior.getDataVencimento();
+                    Date dataPagamento = planoAnterior.getDataPagamento();
+                    Date dataCadastro = alunoAnterior.getDataCadastro();
 
-                if(turmaAnterior.getCodBanco()!=turmaAtual.getCodBanco()){
-                    verificarVagasTurma = this.verificarQuantidadeLimiteAlunos(codTurmaAtual);
+                    Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
+                            alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
+                            nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, codTurmaAtual, codServico, alunoAnterior.getDescricao(), 
+                            valorDebito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
+
+                    Matriculas matricula = new Matriculas(codAluno, codTurmaAtual, codAluno, anoAtual, nomeMatricula);
+                    EnderecoAlunos endereco = new EnderecoAlunos(codAluno, codAluno, logradouro, bairro, numero, nomeMae, telefoneMae, cidade, estado, cep);
+                    Planos planoAluno = new Planos(chavePlano, codAluno, codTurmaAtual, codServico, diaVencimento, 
+                            dataValidade, dataPagamento, planoAnterior.getDataCancelamento(), 
+                            planoAnterior.getDataRenovacao(), situacao);
+
+
+                    //Verificar se a turma atual possui vagas
+                    Turmas turmaAnterior = this.pegarTurma(alunoAnterior.getTurma());
+                    Turmas turmaAtual = this.pegarTurma(codTurmaAtual);
+                    boolean verificarVagasTurma = false;
+
+                    if(turmaAnterior.getCodBanco()!=turmaAtual.getCodBanco()){
+                        verificarVagasTurma = this.verificarQuantidadeLimiteAlunos(codTurmaAtual);
+                    }
+
+                //Inserindo Dados
+                if(verificarVagasTurma==true){
+                    view.exibeMensagem("Quantidade de Vagas Limite para a Turma Atingida!\nVerifique a linha "+linhaSelecionada+1);
                 }
+                else{
+                    if(nome.equals("")|| logradouro.equals("") || numero.equals("")|| bairro.equals("")|| cidade.equals("")||
+                estado.equals("[Nenhum]")|| cep.equals("  .   -   ")){
+                 view.exibeMensagem("Campos Preenchidos Incorretamente na linha "+linhaSelecionada+1);
+                } else{
+                    alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno);
+                    turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
+                    turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
 
-            //Inserindo Dados
-            if(verificarVagasTurma==true){
-                view.exibeMensagem("Quantidade de Vagas Limite para a Turma Atingida!\nVerifique a linha "+linhaSelecionada+1);
-            }
-            else{
-                if(nome.equals("")|| logradouro.equals("") || numero.equals("")|| bairro.equals("")|| cidade.equals("")||
-            estado.equals("[Nenhum]")|| cep.equals("  .   -   ")){
-             view.exibeMensagem("Campos Preenchidos Incorretamente na linha "+linhaSelecionada+1);
-            } else{
-                alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno);
-                turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
-                turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
-
-                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    String acao = "Edição de Dados de Aluno";
-                    String descricao = "Editou os dados do aluno "+nome;
-                    this.setarLog(funcionarios, acao, descricao);
+                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                    if(funcionarios!=null){
+                        String acao = "Edição de Dados de Aluno";
+                        String descricao = "Editou os dados do aluno "+nome;
+                        this.setarLog(funcionarios, acao, descricao);
+                    }
+                    }
                 }
                 }
             }
-            }
+                
+                
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             listarAlunos();
@@ -214,9 +219,11 @@ public class AlunosController {
     //Editar apenas um Aluno
     public void editarAluno(){
         if(this.view.getTabelaAlunos().getSelectedRow()>=0){
-            //Dados Alunos
             int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
-
+            int chavePlano = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
+            Planos planoAnterior = this.planoAnterior(chavePlano);
+            if(!planoAnterior.getSituacao().equals("Encerrado")){
+                //Dados Alunos
                 int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
                 String nome = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
                 String nomeTurmaAtual = this.tabelaDeAlunos.getValueAt(linhaSelecionada, 2).toString();
@@ -228,7 +235,6 @@ public class AlunosController {
                 }
 
                 //Dados Planos
-                int chavePlano = Integer.parseInt(this.tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
                 String nomeServico = this.tabelaDePlanos.getValueAt(linhaSelecionada, 1).toString();
                 int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
                 BigDecimal valorContrato = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDePlanos.getValueAt(linhaSelecionada, 2).toString()).toString());
@@ -258,7 +264,6 @@ public class AlunosController {
                 int anoAtual = LocalDate.now().getYear();
                 String nomeMatricula = this.converterMatricula(anoAtual, codTurmaAtual, codAluno, codServico);
                 Aluno alunoAnterior = this.alunoAnterior(codAluno);
-                Planos planoAnterior = this.planoAnterior(codAluno);
 
                 Date dataValidade = planoAnterior.getDataVencimento();
                 if(view2.getCampoDataVencimento().getDate()!= null){
@@ -275,7 +280,7 @@ public class AlunosController {
                     dataCadastro = view2.getCampoDataCadastro().getDate();
 
                 }
-                
+
                 String descricao = view3.getCampoObservacao().getText();
 
                 Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
@@ -299,30 +304,35 @@ public class AlunosController {
                     verificarVagasTurma = this.verificarQuantidadeLimiteAlunos(codTurmaAtual);
                 }
 
-            //Inserindo Dados
-            if(verificarVagasTurma==true){
-                view.exibeMensagem("Quantidade de Vagas Limite para a Turma Atingida!\nVerifique a linha "+linhaSelecionada+1);
+                //Inserindo Dados
+                if(verificarVagasTurma==true){
+                    view.exibeMensagem("Quantidade de Vagas Limite para a Turma Atingida!\nVerifique a linha "+linhaSelecionada+1);
+                }
+                else{
+                    if(nome.equals("")|| logradouro.equals("") || numero.equals("")|| bairro.equals("")|| cidade.equals("")||
+                estado.equals("[Nenhum]")|| cep.equals("  .   -   ")){
+                 view.exibeMensagem("Campos Preenchidos Incorretamente na linha "+linhaSelecionada+1);
+                } else{
+                    alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno);
+                    turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
+                    turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
+
+                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                    if(funcionarios!=null){
+                        String acao = "Edição de Dados de Aluno";
+                        String descricaoAcao = "Editou os dados do aluno "+nome;
+                        this.setarLog(funcionarios, acao, descricaoAcao);
+                    }
+                        view.exibeMensagem("Sucesso!"); 
+                    }
+
+                }
+
             }
             else{
-                if(nome.equals("")|| logradouro.equals("") || numero.equals("")|| bairro.equals("")|| cidade.equals("")||
-            estado.equals("[Nenhum]")|| cep.equals("  .   -   ")){
-             view.exibeMensagem("Campos Preenchidos Incorretamente na linha "+linhaSelecionada+1);
-            } else{
-                alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno);
-                turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
-                turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
-
-                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    String acao = "Edição de Dados de Aluno";
-                    String descricaoAcao = "Editou os dados do aluno "+nome;
-                    this.setarLog(funcionarios, acao, descricaoAcao);
-                }
-                    view.exibeMensagem("Sucesso!"); 
-                }
-
+                view.exibeMensagem("Não é possível editar, aluno com Plano Encerrado!");
             }
-                   
+                 
         }
     }
     
@@ -589,8 +599,8 @@ public class AlunosController {
          return  alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+codAluno).get(0);
     }
     
-    private Planos planoAnterior(int codAluno){
-         return  planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codAluno = "+codAluno+" AND situacao != 'Encerrado'").get(0);
+    private Planos planoAnterior(long chavePlano){
+         return  planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE chavePlano = "+chavePlano).get(0);
     }
     
     private void buscas(ArrayList <Planos> listar){
@@ -881,8 +891,9 @@ public class AlunosController {
         int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
         if(linhaSelecionada>-1){
             int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+            long chavePlano = Long.parseLong(tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
             Aluno aluno = this.alunoAnterior(codAluno);
-            Planos plano = this.planoAnterior(codAluno);
+            Planos plano = this.planoAnterior(chavePlano);
             Servicos servico = this.pegarServico(plano.getCodServico());
 
             Date dataConvertida = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
@@ -895,6 +906,14 @@ public class AlunosController {
 
             if(plano.getDataVencimento()!=null){
                 view2.getCampoDataVencimento().setDate(plano.getDataVencimento());
+            }
+            if(!plano.getSituacao().equals("Encerrado")){
+                view2.getCampoDataCadastro().setEnabled(false);
+                view2.getCampoDataPagamento().setEnabled(false);
+            }
+            else{
+                view2.getCampoDataCadastro().setEnabled(true);
+                view2.getCampoDataPagamento().setEnabled(true);
             }
         }
         setarTabelaPlanosAdicionais();
@@ -916,7 +935,7 @@ public class AlunosController {
             }
             editarAluno();
             Aluno aluno = this.alunoAnterior(codAluno);
-            Planos plano = this.planoAnterior(codAluno);
+            Planos plano = this.planoAnterior(chavePlano);
             Servicos servico = this.pegarServico(plano.getCodServico());
             BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
             LocalDate dataVencimento;
@@ -1011,8 +1030,9 @@ public class AlunosController {
             Date dataCadastro = view2.getCampoDataCadastro().getDate();
             Date dataPagamento = view2.getCampoDataPagamento().getDate();
             int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+            long chavePlano = Long.parseLong(tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
             Aluno aluno = this.alunoAnterior(codAluno);
-            Planos plano = this.planoAnterior(codAluno);
+            Planos plano = this.planoAnterior(chavePlano);
 
             //Date dataPag = converterData.parseDate(converterData.parseDate(dataPagamento));
             //Date dataPrimaria = converterData.parseDate(converterData.parseDate(dataCadastro));
