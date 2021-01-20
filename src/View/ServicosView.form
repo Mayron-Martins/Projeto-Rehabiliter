@@ -67,30 +67,6 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JComboBox" name="metodoPagamento">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
-            <StringItem index="0" value="[Nenhuma]"/>
-            <StringItem index="1" value="Dinheiro"/>
-            <StringItem index="2" value="Boleto"/>
-            <StringItem index="3" value="Cart&#xe3;o de Cr&#xe9;dito"/>
-            <StringItem index="4" value="Cart&#xe3;o de D&#xe9;bito"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="metodoPagamentoActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="678" y="295" width="160" height="30"/>
-        </Constraint>
-      </Constraints>
-    </Component>
     <Component class="javax.swing.JComboBox" name="comboDias">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -203,12 +179,12 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="tabelaServicos.getTableHeader().setResizingAllowed(false);&#xa;tabelaServicos.getTableHeader().setReorderingAllowed(false);&#xa;//tabelaServicos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(combo));&#xa;tabelaServicos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorFormatado));">
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="6" rowCount="0">
                 <Column editable="false" title="CodBanco" type="java.lang.Integer"/>
                 <Column editable="true" title="Categoria" type="java.lang.String"/>
                 <Column editable="false" title="Tipo" type="java.lang.Object"/>
-                <Column editable="false" title="Forma de Pagamento" type="java.lang.Object"/>
+                <Column editable="true" title="Forma de Pagamento" type="java.lang.Object"/>
                 <Column editable="true" title="Valor" type="java.lang.String"/>
                 <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
               </Table>
@@ -248,6 +224,24 @@
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="650" y="210" width="210" height="60"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboSituacao">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="Abertos"/>
+            <StringItem index="1" value="Encerrados"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="650" y="280" width="210" height="30"/>
         </Constraint>
       </Constraints>
     </Component>

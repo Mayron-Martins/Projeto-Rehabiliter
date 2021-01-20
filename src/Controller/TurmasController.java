@@ -11,15 +11,15 @@ import Dao.AlunosDao;
 import Dao.FuncionarioDao;
 import Dao.HorariosDao;
 import Dao.LogAçoesFuncionarioDao;
+import Dao.PlanosDao;
 import Dao.TurmasDao;
 import Model.Aluno;
 import Model.Funcionario;
 import Model.auxiliar.Horarios;
 import Model.auxiliar.LogAçoesFuncionario;
+import Model.auxiliar.Planos;
 import Model.auxiliar.Turmas;
 import View.TurmasView;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
@@ -35,18 +35,19 @@ public class TurmasController {
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final AlunosDao alunoDao = new AlunosDao();
+    private final PlanosDao planosDao = new PlanosDao();
     private final ConversaoDiasDaSemana converterDias = new ConversaoDiasDaSemana();
     private final DefaultTableModel tabelaDeTurmas;
     private final ConversaodeDataParaPadraoDesignado converterHora = new ConversaodeDataParaPadraoDesignado();
 
     public TurmasController(TurmasView view) {
         this.view = view;
-        this.tabelaDeTurmas = (DefaultTableModel) view.getTabelaAlunos().getModel();  
+        this.tabelaDeTurmas = (DefaultTableModel) view.getTabelaTurmas().getModel();  
     }
     
     //Limpar tabela
     public void limparTabela(){
-        int quantLinhas = this.view.getTabelaAlunos().getRowCount();    
+        int quantLinhas = this.view.getTabelaTurmas().getRowCount();    
         for(int quant=0; quant<quantLinhas; quant++){
             this.tabelaDeTurmas.removeRow(0);
         }
@@ -54,36 +55,34 @@ public class TurmasController {
     
     //Lista todas as turmas 
     public void listarTurmas(){
-        ArrayList <Turmas> turmas = new ArrayList<>();
-        ArrayList <Horarios> horarios = new ArrayList<>();
-        turmas = this.turmasDao.selecionarTodasTurmas();
-        horarios = this.horariosDao.selecionarTodosHorarios();
+        String situacao = view.getComboSituacao().getSelectedItem().toString();
+        situacao = situacao.substring(0,situacao.length()-1);
+        ArrayList <Turmas> turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE situacao = '"+situacao+"'");
         if(turmas==null){
-            view.exibeMensagem("Sem Turmas Cadastradas");
+            view.exibeMensagem("Sem Dados");
+            limparTabela();
         } else{
-            for(int linhas=0; linhas<turmas.size(); linhas++){
-                if(turmas.get(linhas).getQuantidadeMaximaAlunos()==0){
-                    Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
-                    turmas.get(linhas).getNomeTurma(), "",turmas.get(linhas).getQuantidadeAlunos(),
-                    this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
-                    converterHora.parseHour(turmas.get(linhas).getHorario())};
-                    this.tabelaDeTurmas.addRow(dadosDaTabela);
+            limparTabela();
+            for(Turmas turma : turmas){
+                int quantMaximaAlunos = turma.getQuantidadeMaximaAlunos();
+                String quantidade = quantMaximaAlunos+"";
+                if(quantMaximaAlunos==0){
+                    quantidade="";
                 }
-                else{
-                    Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
-                    turmas.get(linhas).getNomeTurma(),turmas.get(linhas).getQuantidadeMaximaAlunos(),
-                    turmas.get(linhas).getQuantidadeAlunos(),
-                    this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
-                    converterHora.parseHour(turmas.get(linhas).getHorario())};
-                    this.tabelaDeTurmas.addRow(dadosDaTabela);
-                }    
+                
+                Object[] dadosDaTabela = {turma.getCodBanco(), 
+                turma.getNomeTurma(), quantidade ,turma.getQuantidadeAlunos(),
+                this.converterDias.converterDiasDaSemana(turma.getDiasDaSemana()),
+                converterHora.parseHour(turma.getHorario()), turma.getSituacao()};
+                tabelaDeTurmas.addRow(dadosDaTabela);
+                  
             }
         }        
     }
     
     public void editarTurmas(){
-        if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
-            int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
+        if(this.view.getTabelaTurmas().getSelectedRow()!= -1){
+            int linhaSelecionada = this.view.getTabelaTurmas().getSelectedRow();
             int codTurma = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 0).toString());
             String nome = this.tabelaDeTurmas.getValueAt(linhaSelecionada, 1).toString();
                         
@@ -95,11 +94,10 @@ public class TurmasController {
             }
             
             String diasDaSemana = this.view.getDiasDaSemana();
-            ArrayList <String> diasDaSemanaUnitarios = new ArrayList<>();
-            diasDaSemanaUnitarios = this.view.getDiasDaSemanaUnitarios();
+            ArrayList <String> diasDaSemanaUnitarios = view.getDiasDaSemanaUnitarios();
             
             String horario = this.view.getCampoHorario();
-            String situacao = "Aberta";
+            String situacao = tabelaDeTurmas.getValueAt(linhaSelecionada, 6).toString();
             
             Turmas turma = null;
             ArrayList <Horarios> horarios = new ArrayList <>();
@@ -144,13 +142,13 @@ public class TurmasController {
     }
     
     public void selecionarTabela(){
-      if(this.view.getTabelaAlunos().getSelectedRow()!=-1){
+      if(this.view.getTabelaTurmas().getSelectedRow()!=-1){
           //Número da linha selecionada
-          int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
+          int linhaSelecionada = this.view.getTabelaTurmas().getSelectedRow();
           //Habilita itens que ficam acima da tabela
           this.view.habilitarVisibilidadeComponente();
           //Pega o valor da coluna horario
-          String horario = this.view.getTabelaAlunos().getValueAt(linhaSelecionada, 5).toString();
+          String horario = this.view.getTabelaTurmas().getValueAt(linhaSelecionada, 5).toString();
           String hora = String.valueOf(horario.charAt(0))+horario.charAt(1);
           String minutos = String.valueOf(horario.charAt(3))+horario.charAt(4);
           //Coloca os valores nos campos edithoras e editminutos
@@ -158,7 +156,7 @@ public class TurmasController {
           view.getCampoEdicaoMinutos().setText(minutos);
           //Pega o valor dos dias da semana
           ArrayList <Horarios> horarios;
-          int codTurma = Integer.parseInt(this.view.getTabelaAlunos().getValueAt(linhaSelecionada, 0).toString());
+          int codTurma = Integer.parseInt(this.view.getTabelaTurmas().getValueAt(linhaSelecionada, 0).toString());
           horarios = this.horariosDao.pesquisarHorarios("SELECT * FROM tblHorarios WHERE codHorario = "+codTurma);
           for(int cont=0; cont<horarios.size();cont++){
               String dia = horarios.get(cont).getDiaDaSemana();
@@ -176,8 +174,8 @@ public class TurmasController {
     }
     
     public void removerTurma(){
-        if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
-            int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
+        if(this.view.getTabelaTurmas().getSelectedRow()!= -1){
+            int linhaSelecionada = this.view.getTabelaTurmas().getSelectedRow();
             int codTurma = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 0).toString());
             String nomeTurma = tabelaDeTurmas.getValueAt(linhaSelecionada, 1).toString();
             
@@ -206,29 +204,26 @@ public class TurmasController {
     //Buscar turmas no campo de busca
     public void buscarTurmas(){
         String nomeTurma = view.getCampoDePesquisa().getText();
-        ArrayList <Turmas> turmas = turmasDao.pesquisarPorNome(nomeTurma);
         
-        if(nomeTurma.equals("")){limparTabela();listarTurmas();}
+        if(nomeTurma.equals("")){listarTurmas();}
         else{
+            ArrayList <Turmas> turmas = turmasDao.pesquisarPorNome(nomeTurma);
             if(turmas==null){view.exibeMensagem("Turma Não Encontrada!"); limparTabela();}
             else{
                 limparTabela();
-                for(int linhas = 0; linhas<turmas.size(); linhas++){
-                    if(turmas.get(linhas).getQuantidadeMaximaAlunos()==0){
-                        Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
-                        turmas.get(linhas).getNomeTurma(), "",turmas.get(linhas).getQuantidadeAlunos(),
-                        this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
-                        converterHora.parseHour(turmas.get(linhas).getHorario())};
-                        this.tabelaDeTurmas.addRow(dadosDaTabela);
-                    }
-                    else{
-                        Object[] dadosDaTabela = {turmas.get(linhas).getCodBanco(), 
-                        turmas.get(linhas).getNomeTurma(), turmas.get(linhas).getQuantidadeMaximaAlunos(),turmas.get(linhas).getQuantidadeAlunos(),
-                        this.converterDias.converterDiasDaSemana(turmas.get(linhas).getDiasDaSemana()),
-                        converterHora.parseHour(turmas.get(linhas).getHorario())};
-                        this.tabelaDeTurmas.addRow(dadosDaTabela);
-                    }
+                for(Turmas turma : turmas){
+                int quantMaximaAlunos = turma.getQuantidadeMaximaAlunos();
+                String quantidade = quantMaximaAlunos+"";
+                if(quantMaximaAlunos==0){
+                    quantidade="";
                 }
+                Object[] dadosDaTabela = {turma.getCodBanco(), 
+                turma.getNomeTurma(), quantidade ,turma.getQuantidadeAlunos(),
+                this.converterDias.converterDiasDaSemana(turma.getDiasDaSemana()),
+                converterHora.parseHour(turma.getHorario()), turma.getSituacao()};
+                tabelaDeTurmas.addRow(dadosDaTabela);
+                  
+            }
             }
         }
     }
@@ -243,5 +238,30 @@ public class TurmasController {
     private boolean retornarAlunosUsando(int codTurma){
         ArrayList <Aluno> alunos = alunoDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codTurma = "+codTurma);
         return alunos ==null;
+    }
+    
+    public void encerrarReabrirServico(){
+        int linhaSelecionada = view.getTabelaTurmas().getSelectedRow();
+        
+        if(linhaSelecionada>-1){
+            int codTurma = Integer.parseInt(tabelaDeTurmas.getValueAt(linhaSelecionada, 0).toString());
+            
+            ArrayList <Planos> planos= planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codTurma = "+codTurma+" AND situacao != 'Encerrado'");
+            
+            String situacao = tabelaDeTurmas.getValueAt(linhaSelecionada, 6).toString();
+            if(situacao.equals("Aberta")){
+                situacao = "Encerrada";
+            }else{
+                situacao = "Aberta";
+            }
+            
+            if(situacao.equals("Encerrada")&&planos!=null){
+                view.exibeMensagem("Não é possível encerrar a Turma, pois ainda existem Planos Não Encerrados!");
+            }else{
+                turmasDao.atualizarSituacao(codTurma, situacao);
+                view.exibeMensagem("Sucesso!");
+                listarTurmas();
+            }
+        }
     }
 }

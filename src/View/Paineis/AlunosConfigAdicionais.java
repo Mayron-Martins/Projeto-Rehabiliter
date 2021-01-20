@@ -174,6 +174,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         tabelaPlanos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tabelaPlanos.setMinimumSize(new java.awt.Dimension(300, 64));
         tabelaPlanos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaPlanos.setShowVerticalLines(false);
         tabelaPlanos.getTableHeader().setReorderingAllowed(false);
         tabelaPlanos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

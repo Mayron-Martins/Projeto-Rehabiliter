@@ -8,6 +8,7 @@ package View;
 import Controller.AlunosController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
+import Controller.auxiliar.LogsSystem;
 import View.Paineis.AlunosConfigAdicionais;
 import View.Paineis.AlunosDescricao;
 import java.awt.Color;
@@ -953,11 +954,11 @@ public class AlunosView extends javax.swing.JDialog {
         });
         
         //Atalho de conjunto de teclas
-        this.ConjuntoTeclasAtalho(meurootpane);
+        this.conjuntoTeclasAtalho(meurootpane);
            
     }
     
-    private void ConjuntoTeclasAtalho(JRootPane meurootpane){
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
         //Trocar Modo Turmas
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl T"), "TROCARTURMAS");
         meurootpane.getRootPane().getActionMap().put("TROCARTURMAS", new AbstractAction("TROCARTURMAS") {
@@ -1002,18 +1003,14 @@ public class AlunosView extends javax.swing.JDialog {
             "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RO", "RN", "RR", "RS", "SC", "SE", "SP", "TO" }));
             
         } catch (ParseException ex) {
-            Logger.getLogger(AlunosView.class.getName()).log(Level.SEVERE, null, ex);
+            gerarLog(ex);
         }
         
         //Alunos
-        tabelaAlunos.getTableHeader().setResizingAllowed(true);
-        tabelaAlunos.getTableHeader().setReorderingAllowed(false);
         tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboTurmas));
         tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JMoneyField()));
         
         //Planos
-        tabelaPlanos.getTableHeader().setResizingAllowed(true);
-        tabelaPlanos.getTableHeader().setReorderingAllowed(false);
         tabelaPlanos.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(comboServicos));
         tabelaPlanos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JMoneyField()));
         tabelaPlanos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JMoneyField()));
@@ -1022,16 +1019,12 @@ public class AlunosView extends javax.swing.JDialog {
         
         
         //Pais
-        tabelaPais.getTableHeader().setResizingAllowed(true);
-        tabelaPais.getTableHeader().setReorderingAllowed(false);
         tabelaPais.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cpfPai));
         tabelaPais.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(telefonePai));
         tabelaPais.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(cpfMae));
         tabelaPais.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(telefoneMae));
         
         //Enderecos
-        tabelaEnderecos.getTableHeader().setResizingAllowed(true);
-        tabelaEnderecos.getTableHeader().setReorderingAllowed(false);
         tabelaEnderecos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboEstado));
         tabelaEnderecos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cep));
         
@@ -1131,4 +1124,9 @@ public class AlunosView extends javax.swing.JDialog {
         return botaoObservacao;
     }
     
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
+    }
 }

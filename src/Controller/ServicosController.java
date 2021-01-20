@@ -5,25 +5,22 @@
  */
 package Controller;
 
-import Controller.adicionais.AdicionarServicosController;
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Dao.AlunosDao;
 import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
+import Dao.PlanosDao;
 import Dao.ServicosDao;
 import Model.Aluno;
 import Model.Funcionario;
 import Model.auxiliar.LogAçoesFuncionario;
+import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import View.ServicosView;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,6 +32,7 @@ public class ServicosController {
     private final DefaultTableModel tabelaDeServicos;
     private final ServicosDao servicosDao = new ServicosDao();
     private final AlunosDao alunoDao = new AlunosDao();
+    private final PlanosDao planosDao = new PlanosDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
@@ -54,10 +52,11 @@ public class ServicosController {
     
     //Lista todas as turmas 
     public void listarServicos(){
-        ArrayList <Servicos> servicos = new ArrayList<>();
-        servicos = this.servicosDao.selecionarTodosServicos();
+        String situacao = view.getComboSituacao().getSelectedItem().toString();
+        situacao = situacao.substring(0, situacao.length()-1);
+        ArrayList <Servicos> servicos = this.servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE situacao = '"+situacao+"'");
         if(servicos==null){
-            view.exibeMensagem("Sem Serviços Cadastradas");
+            view.exibeMensagem("Sem Dados");
             limparTabela();
         } else{
             limparTabela();
@@ -81,6 +80,7 @@ public class ServicosController {
                     Object[] dadosDaTabela = {servico.getCodBanco(), servico.getNome(),servico.getPeriodo(),
                         servico.getFormaPagamento(), valor, servico.getSituacao()};
                         this.tabelaDeServicos.addRow(dadosDaTabela);
+                        view.getComboMetodoPagamento().setSelectedItem(servico.getFormaPagamento());
             }
         }        
     }
@@ -92,7 +92,7 @@ public class ServicosController {
             String nome = this.tabelaDeServicos.getValueAt(linhaSelecionada, 1).toString();
             
             String periodo = this.retornarPeriodo();
-            String metodoDePagamento = view.getMetodoPagamento().getSelectedItem().toString();
+            String metodoDePagamento = tabelaDeServicos.getValueAt(linhaSelecionada, 3).toString();
             String situacao = tabelaDeServicos.getValueAt(linhaSelecionada, 5).toString();
             
             BigDecimal valor = new BigDecimal("0");
@@ -179,11 +179,9 @@ public class ServicosController {
           //Pega o valor da coluna Tipo
           String periodo = tabelaDeServicos.getValueAt(linhaSelecionada, 2).toString();
           //Pega o valor da coluna Forma de Pagamento
-          String metodoDePagamento = tabelaDeServicos.getValueAt(linhaSelecionada, 3).toString();
           //Joga o valor das colunas no combobox
           this.preencherComboPeriodo();
           view.getComboPeriodo().setSelectedItem(periodo);
-          view.getComboPeriodo().setSelectedItem(metodoDePagamento);
           view.getComboDias().setSelectedIndex(0);
           
           int codServico = Integer.parseInt(view.getTabelaServicos().getValueAt(linhaSelecionada, 0).toString());
@@ -339,6 +337,31 @@ public class ServicosController {
         }
         else{
             return period<30;
+        }
+    }
+    
+    public void encerrarReabrirServico(){
+        int linhaSelecionada = view.getTabelaServicos().getSelectedRow();
+        
+        if(linhaSelecionada>-1){
+            int codServico = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
+            
+            ArrayList <Planos> planos= planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codServico = "+codServico+" AND situacao != 'Encerrado'");
+            
+            String situacao = tabelaDeServicos.getValueAt(linhaSelecionada, 5).toString();
+            if(situacao.equals("Aberto")){
+                situacao = "Encerrado";
+            }else{
+                situacao = "Aberto";
+            }
+            
+            if(situacao.equals("Encerrado")&&planos!=null){
+                view.exibeMensagem("Não é possível encerrar o Serviço, pois ainda existem Planos Não Encerrados!");
+            }else{
+                servicosDao.atualizarSituacao(codServico, situacao);
+                view.exibeMensagem("Sucesso!");
+                listarServicos();
+            }
         }
     }
 }

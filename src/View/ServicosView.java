@@ -10,15 +10,10 @@ import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JTable;
@@ -33,8 +28,7 @@ public class ServicosView extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final int numeroTela = 4;
     private final ServicosController controller;
-    //private final JComboBox combo = new JComboBox();
-    private final JFormattedTextField valorFormatado = new JMoneyField();
+    private JComboBox comboMetodoPagamento = new JComboBox();
     private final ServicosAdicionar telaServicosAdicionar;
 
     /**
@@ -54,9 +48,10 @@ public class ServicosView extends javax.swing.JDialog {
         btnEditar.setBackground(new Color(0,0,0,0));
         btnRemover.setBackground(new Color(0,0,0,0));
         btnFechar.setBackground(new Color(0,0,0,0));
-        desabilitarComponentes();
-        fecharTelaESC();
-        setarValores();
+        this.setarComposicaoTabelas();
+        this.desabilitarComponentes();
+        this.teclasDeAtalho();
+        this.setarValores();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
     }
@@ -72,7 +67,6 @@ public class ServicosView extends javax.swing.JDialog {
 
         campoOutroPeriodo = new javax.swing.JTextField();
         comboPeriodo = new javax.swing.JComboBox<>();
-        metodoPagamento = new javax.swing.JComboBox<>();
         comboDias = new javax.swing.JComboBox<>();
         campoDias = new javax.swing.JTextField();
         btnRemover = new javax.swing.JButton();
@@ -82,6 +76,7 @@ public class ServicosView extends javax.swing.JDialog {
         painelderolagem = new javax.swing.JScrollPane();
         tabelaServicos = new javax.swing.JTable();
         btnListar = new javax.swing.JButton();
+        comboSituacao = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -113,14 +108,6 @@ public class ServicosView extends javax.swing.JDialog {
             }
         });
         getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 295, 160, 30));
-
-        metodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
-        metodoPagamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                metodoPagamentoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(metodoPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(678, 295, 160, 30));
 
         comboDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "D", "M", "A" }));
         getContentPane().add(comboDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 295, 50, 30));
@@ -175,7 +162,7 @@ public class ServicosView extends javax.swing.JDialog {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, true, false
+                false, true, false, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -186,10 +173,6 @@ public class ServicosView extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabelaServicos.getTableHeader().setResizingAllowed(false);
-        tabelaServicos.getTableHeader().setReorderingAllowed(false);
-        //tabelaServicos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(combo));
-        tabelaServicos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorFormatado));
         tabelaServicos.setFocusable(false);
         tabelaServicos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaServicos.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -219,6 +202,9 @@ public class ServicosView extends javax.swing.JDialog {
         });
         getContentPane().add(btnListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 210, 210, 60));
 
+        comboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abertos", "Encerrados" }));
+        getContentPane().add(comboSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 280, 210, 30));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/telafundo.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -237,10 +223,6 @@ public class ServicosView extends javax.swing.JDialog {
         telaServicosAdicionar.setLocationRelativeTo(null);
         telaServicosAdicionar.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
-
-    private void metodoPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodoPagamentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_metodoPagamentoActionPerformed
 
     private void tabelaServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaServicosMouseClicked
         controller.selecionarTabela();
@@ -338,8 +320,8 @@ public class ServicosView extends javax.swing.JDialog {
     private javax.swing.JTextField campoOutroPeriodo;
     private javax.swing.JComboBox<String> comboDias;
     private javax.swing.JComboBox<String> comboPeriodo;
+    private javax.swing.JComboBox<String> comboSituacao;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JComboBox<String> metodoPagamento;
     private javax.swing.JScrollPane painelderolagem;
     private javax.swing.JTable tabelaServicos;
     // End of variables declaration//GEN-END:variables
@@ -352,8 +334,8 @@ public class ServicosView extends javax.swing.JDialog {
         return comboPeriodo;
     }
 
-    public JComboBox<String> getMetodoPagamento() {
-        return metodoPagamento;
+    public JComboBox<String> getComboMetodoPagamento() {
+        return comboMetodoPagamento;
     }
 
     public JTable getTabelaServicos() {
@@ -363,7 +345,6 @@ public class ServicosView extends javax.swing.JDialog {
     public void desabilitarComponentes(){
         this.comboPeriodo.setVisible(false);
         this.campoOutroPeriodo.setVisible(false);
-        this.metodoPagamento.setVisible(false);
         this.comboDias.setVisible(false);
         this.campoDias.setVisible(false);
     }
@@ -371,7 +352,6 @@ public class ServicosView extends javax.swing.JDialog {
     public void habilitarComponentes(){
         this.comboPeriodo.setVisible(true);
         this.campoOutroPeriodo.setVisible(true);
-        this.metodoPagamento.setVisible(true);
         this.comboDias.setVisible(true);
         this.campoDias.setVisible(true);
     }
@@ -406,21 +386,58 @@ public class ServicosView extends javax.swing.JDialog {
     public JComboBox<String> getComboDias() {
         return comboDias;
     }
+
+    public JComboBox<String> getComboSituacao() {
+        return comboSituacao;
+    }
     
-    
-    public void fecharTelaESC() {
+    public void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
+        //Sair com Esc
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
+        
+        //Atualizar tabela
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), "F5");
+        meurootpane.getRootPane().getActionMap().put("F5", new AbstractAction("F5") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.listarServicos();
+            }
+        });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
     }
     
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Editar Serviço
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl E"), "EDITARSERVICO");
+        meurootpane.getRootPane().getActionMap().put("EDITARSERVICO", new AbstractAction("EDITARSERVICO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.editarServicos();
+            }
+        });
+        
+        //Encerrar ou Reabrir Serviço
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl F"), "ENCERRARREABRIR");
+        meurootpane.getRootPane().getActionMap().put("ENCERRARREABRIR", new AbstractAction("ENCERRARREABRIR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.encerrarReabrirServico();
+            }
+        });
+    }
+    
+    private void setarComposicaoTabelas(){
+        comboMetodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
+        tabelaServicos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboMetodoPagamento));
+        tabelaServicos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JMoneyField()));
+    }
     
 }
