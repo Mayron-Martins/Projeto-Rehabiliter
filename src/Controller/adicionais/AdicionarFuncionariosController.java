@@ -89,16 +89,26 @@ public class AdicionarFuncionariosController {
                 }
                 view.exibeMensagem("Sucesso!");
                 view.getCampoNome().setText("");
-                view.getCampoCPF().setText("");
-                view.getCampoCelular().setText("");
-                view.getCampoCelular().setText("");
+                view.getCampoCPF().setValue(null);
+                view.getCampoTelefone().setValue(null);
+                view.getCampoCelular().setValue(null);
                 view.getCampoCargo().setText("");
                 view.getCampoSalario().setText("");
                 view.getCampoSenha().setText("");
+                view.getCampoNascimento().setDate(null);
 
             }
         } catch (SQLException ex) {
             gerarLog(ex);
+            view.exibeMensagem("Não foi possível salvar o Funcionário corretamente!");
+                view.getCampoNome().setText("");
+                view.getCampoCPF().setValue(null);
+                view.getCampoTelefone().setValue(null);
+                view.getCampoCelular().setValue(null);
+                view.getCampoCargo().setText("");
+                view.getCampoSalario().setText("");
+                view.getCampoSenha().setText("");
+                view.getCampoNascimento().setDate(null);
         }
         
     }

@@ -35,14 +35,11 @@ import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -475,7 +472,12 @@ public class CaixaController {
                 }
             }
             else{
-                view.exibeMensagem("Adicione uma Forma de Pagamento!");
+                if(valorPago.compareTo(BigDecimal.ZERO)==0){
+                    view.exibeMensagem("Adicione uma Forma de Pagamento!");
+                }else{
+                    view.exibeMensagem("Verifique o cliente da venda! Em caso de compra com Cliente Cadastrado, selecione a linha"
+                            + "correspondente na tabela Clientes, ou Selecione Cliente Sem Cadastro");
+                }
             }
         } catch (SQLException ex) {
             gerarLog(ex);

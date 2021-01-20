@@ -93,6 +93,15 @@ public class AdicionarServicosController {
             }
         } catch (SQLException ex) {
             gerarLog(ex);
+            view.exibeMensagem("Não foi possível salvar o Serviço corretamente!");
+            //Limpando Campos
+            view.getNomeServico().setText("");
+            preencherComboPeriodo();
+            view.getComboPeriodo().setSelectedIndex(0);
+            view.getMetodoPagamento().setSelectedIndex(0);
+            view.getValorDinheiro().setText("");
+            view.getCampoOutroTipo().setText("Outro");
+            view.getCampoDias().setText("");
         }
         
     }

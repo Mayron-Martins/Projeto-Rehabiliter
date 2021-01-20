@@ -229,6 +229,7 @@ public class AdicionarAlunosController {
             view.getComboPlano().setSelectedIndex(0);
             view.getComboTurma().setSelectedIndex(0);
             view.getCampoValor().setText("");
+            view.getCampoValorMensal().setText("");
             view.getCampoRua().setText("");
             view.getCampoNum().setText("");
             view.getCampoBairro().setText("");
@@ -258,6 +259,7 @@ public class AdicionarAlunosController {
             view.getComboPlano().setSelectedIndex(0);
             view.getComboTurma().setSelectedIndex(0);
             view.getCampoValor().setText("");
+            view.getCampoValorMensal().setText("");
             view.getCampoRua().setText("");
             view.getCampoNum().setText("");
             view.getCampoBairro().setText("");

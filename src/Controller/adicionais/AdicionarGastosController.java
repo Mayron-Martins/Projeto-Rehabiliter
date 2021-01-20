@@ -82,6 +82,11 @@ public class AdicionarGastosController {
             }
         } catch (SQLException ex) {
             gerarLog(ex);
+            view.exibeMensagem("Não foi possível salvar o Gasto corretamente!");
+            view.getCampoFormaPagamento().setSelectedIndex(0);
+            view.getCampoQuantidade().setText("");
+            view.getCampoReferencia().setText("");
+            view.getCampoValor().setText("");
         }
         
     }

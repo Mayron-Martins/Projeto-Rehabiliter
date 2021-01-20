@@ -67,6 +67,7 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
         campoFormaPagamento = new javax.swing.JComboBox<>();
         campoValor = new JMoneyField();
         campoData = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -98,6 +99,11 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
         getContentPane().add(campoFormaPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 130, 30));
         getContentPane().add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 280, 90, 30));
         getContentPane().add(campoData, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 280, 130, 30));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel2.setText("R$");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 284, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodecontradc.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -166,6 +172,7 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
     private javax.swing.JTextField campoReferencia;
     private javax.swing.JFormattedTextField campoValor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
     public void exibeMensagem(String mensagem) {
       JOptionPane.showMessageDialog(null, mensagem);

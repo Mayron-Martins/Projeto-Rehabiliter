@@ -82,6 +82,12 @@ public class AdicionarEntradasController {
             }
         } catch (SQLException ex) {
             gerarLog(ex);
+            view.exibeMensagem("Não foi possível salvar a Entrada corretamente!");
+            view.getCampoFormaPagamento().setSelectedIndex(0);
+            view.getCampoQuantidade().setText("");
+            view.getCampoReferencia().setText("");
+            view.getCampoValor().setText("");
+            
         }
         
     }

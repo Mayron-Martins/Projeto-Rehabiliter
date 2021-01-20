@@ -11,10 +11,6 @@ import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -71,6 +67,7 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         valorDinheiro = new JMoneyField();
         metodoPagamento = new javax.swing.JComboBox<>();
         botaoConfirmar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -114,7 +111,7 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         getContentPane().add(nomeServico, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 202, 170, 30));
 
         valorDinheiro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        getContentPane().add(valorDinheiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 110, 40));
+        getContentPane().add(valorDinheiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(592, 320, 110, 40));
 
         metodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
         metodoPagamento.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +129,11 @@ public class ServicosAdicionar extends javax.swing.JDialog {
             }
         });
         getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 330, 50));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel2.setText("R$");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 330, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/telafundoadc.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -224,6 +226,7 @@ public class ServicosAdicionar extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboDias;
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JComboBox<String> metodoPagamento;
     private javax.swing.JTextField nomeServico;
     private javax.swing.JFormattedTextField valorDinheiro;

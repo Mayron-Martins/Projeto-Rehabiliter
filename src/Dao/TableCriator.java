@@ -9,8 +9,6 @@ import Controller.auxiliar.LogsSystem;
 import View.inicio;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -140,12 +138,12 @@ public class TableCriator {
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblFuncionarios("
                 + "codFuncionario INT PRIMARY KEY," //Cada funcionário terá um código único.
-                + "nome VARCHAR(50) NOT NULL,"
+                + "nome VARCHAR(MAX) NOT NULL,"
                 + "cpf VARCHAR(15) NOT NULL,"
                 + "rg VARCHAR(20) NULL,"
                 + "telefone VARCHAR(20) NULL,"
                 + "celular VARCHAR(20) NULL,"
-                + "email VARCHAR(50) NULL,"
+                + "email VARCHAR(MAX) NULL,"
                 + "dataNascimento DATE NOT NULL,"
                 + "codEndereco INT NULL,"     //Código do endereço do funcionário, cadastrado numa tabela à parte
                 + "usuario VARCHAR(16) NOT NULL," // Cada funcionário terá um usuário único
@@ -213,7 +211,7 @@ public class TableCriator {
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblProdutos("
                 + "codProduto INT PRIMARY KEY," //Cada produto terá um código único no banco
-                + "nome VARCHAR(50) NOT NULL," 
+                + "nome VARCHAR(MAX) NOT NULL," 
                 + "tipo VARCHAR(20) NULL," //Caso queira classificá-los para melhor filtragem (ex.: roupas, acessórios, etc.)
                 + "unMedida VARCHAR(3) NULL," //Caso queira definir uma unidade de medida (ex.: UN, KG, PAC).
                 + "quantidade FLOAT NOT NULL,"
@@ -257,8 +255,7 @@ public class TableCriator {
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblTurmas("
                 + "codTurma INT PRIMARY KEY," //Código único para cada turma.
-                + "nome VARCHAR(15) NOT NULL,"
-                + "subgrupo CHAR(2) NULL," //Caso seja turma A, B ou 1,2 etc.
+                + "nome VARCHAR(MAX) NOT NULL,"
                 + "quantAlunos INT NULL," //Caso queira colocar a quantidade presente de alunos.
                 + "quantLimiteDeAlunos INT NULL," //Caso queira definir um valor máximo de alunos para uma turma.
                 + "diasDaSemana VARCHAR(MAX) NOT NULL,"
@@ -299,7 +296,7 @@ public class TableCriator {
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblServicos("
                 + "codServico INT PRIMARY KEY," //Cada serviço terá um código único no banco.
-                + "nome VARCHAR(15) NOT NULL," //Nome do Serviço (natação, hidroginástica, etc.).
+                + "nome VARCHAR(MAX) NOT NULL," //Nome do Serviço (natação, hidroginástica, etc.).
                 + "periodo VARCHAR(10) NOT NULL,"
                 + "formaPagamento VARCHAR(25) NOT NULL,"
                 + "valor DECIMAL(16, 2) NULL," //Diária, Semanal, Mensal, etc.

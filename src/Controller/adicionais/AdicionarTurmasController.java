@@ -86,13 +86,20 @@ public class AdicionarTurmasController {
                 view.exibeMensagem("Sucesso!");
                 //Limpando Campos
                 view.getCampoNome().setText("");
-                view.getCampoHoras().setText("");
-                view.getCampoMinutos().setText("");
+                view.getCampoHoras().setValue(null);
+                view.getCampoMinutos().setValue(null);
                 view.getCampoCapMax().setText("");
                 view.desmarcarCaixas();
             }
         } catch (SQLException ex) {
             gerarLog(ex);
+            view.exibeMensagem("Não foi possível salvar a Turma corretamente!");
+            //Limpando Campos
+            view.getCampoNome().setText("");
+            view.getCampoHoras().setValue(null);
+            view.getCampoMinutos().setValue(null);
+            view.getCampoCapMax().setText("");
+            view.desmarcarCaixas();
         }
          
     }

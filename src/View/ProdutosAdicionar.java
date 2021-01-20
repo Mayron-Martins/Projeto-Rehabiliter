@@ -66,6 +66,7 @@ public class ProdutosAdicionar extends javax.swing.JDialog {
         campoNome = new javax.swing.JTextField();
         campoQuantidade = new JMoneyField();
         campoValor = new JMoneyField();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -108,6 +109,11 @@ public class ProdutosAdicionar extends javax.swing.JDialog {
         getContentPane().add(campoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 230, 32));
         getContentPane().add(campoQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 70, 32));
         getContentPane().add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 80, 32));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel2.setText("R$");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(514, 194, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/produtos/adicionarproduto/fundo.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -180,6 +186,7 @@ public class ProdutosAdicionar extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField campoQuantidade;
     private javax.swing.JFormattedTextField campoValor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
