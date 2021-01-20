@@ -64,6 +64,18 @@ public class Aluno extends Pessoa {
         this.valorMensal = new BigDecimal(valorMensal.toString());
         this.renovacaoAutomatica = renovacaoAutomatica;
     }
+
+    public Aluno(int turma, int servico, BigDecimal debito, BigDecimal valorContrato, BigDecimal valorMensal, int renovacaoAutomatica, int codBanco) {
+        super(codBanco);
+        this.turma = turma;
+        this.servico = servico;
+        this.debito = debito;
+        this.valorContrato = valorContrato;
+        this.valorMensal = valorMensal;
+        this.renovacaoAutomatica = renovacaoAutomatica;
+    }
+    
+    
    
     //___________________________________________________________________________
     //GETTERS

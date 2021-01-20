@@ -43,8 +43,8 @@ public class AdicionarTurmasController {
     public void adicionarTurma(){
         try{
             //Pegando Dados Da tela
-            int codBancoTurma = verificar.verificarUltimo("tblTurmas", "codTurma")+1;
-            int codBancoHorario = verificar.verificarUltimo("tblHorarios", "codHorario")+1;
+            int codBancoTurma = (int) (verificar.verificarUltimo("tblTurmas", "codTurma")+1);
+            int codBancoHorario = (int) (verificar.verificarUltimo("tblHorarios", "codHorario")+1);
             String nomeTurma = view.getCampoNome().getText();
             String situacao = "Aberta";
 

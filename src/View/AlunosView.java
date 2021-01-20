@@ -9,9 +9,8 @@ import Controller.AlunosController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
 import View.Paineis.AlunosConfigAdicionais;
-import com.toedter.calendar.JDateChooser;
+import View.Paineis.AlunosDescricao;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Point;
@@ -26,11 +25,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
@@ -43,8 +41,9 @@ public class AlunosView extends javax.swing.JDialog {
     private final int numeroTela = 1;
     private Point point = new Point();
     private final AlunosController controller;
-    private AlunosCadastro telaAlunosCadastro;
+    private final AlunosCadastro telaAlunosCadastro;
     private final AlunosConfigAdicionais painelConfigAdicionais;
+    private final AlunosDescricao painelDescricao;
     private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
     private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
     private javax.swing.JComboBox<String> comboEstado = new JComboBox<>();
@@ -62,8 +61,8 @@ public class AlunosView extends javax.swing.JDialog {
         
         this.setarComposicaoTabelas();
         this.painelConfigAdicionais = new AlunosConfigAdicionais(parent, false, this);
-        controller = new AlunosController(this, painelConfigAdicionais);
-        
+        this.painelDescricao = new AlunosDescricao(parent, false, this);
+        controller = new AlunosController(this, painelConfigAdicionais, painelDescricao);
         
         botaoConfigAdicionais.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
@@ -83,6 +82,7 @@ public class AlunosView extends javax.swing.JDialog {
         botaoPlanos.setBackground(new Color(0,0,0,0));
         
         botaoConfigAdicionais.setVisible(false);
+        botaoObservacao.setVisible(false);
         this.setInicialBotoes();
         fecharTelaESC();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
@@ -137,6 +137,8 @@ public class AlunosView extends javax.swing.JDialog {
         botaoPais = new javax.swing.JButton();
         botaoEndereco = new javax.swing.JButton();
         botaoAlunos = new javax.swing.JButton();
+        botaoObservacao = new javax.swing.JButton();
+        modoTurma = new javax.swing.JLabel();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -213,7 +215,7 @@ public class AlunosView extends javax.swing.JDialog {
         });
         painelAlunos.setViewportView(tabelaAlunos);
 
-        jPanel1.add(painelAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 340));
+        jPanel1.add(painelAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 320));
 
         tabelaPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaPlanos.setModel(new javax.swing.table.DefaultTableModel(
@@ -263,7 +265,7 @@ public class AlunosView extends javax.swing.JDialog {
         });
         painelPlanos.setViewportView(tabelaPlanos);
 
-        jPanel1.add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 340));
+        jPanel1.add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 320));
 
         tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaPais.setModel(new javax.swing.table.DefaultTableModel(
@@ -306,7 +308,7 @@ public class AlunosView extends javax.swing.JDialog {
         });
         painelPais.setViewportView(tabelaPais);
 
-        jPanel1.add(painelPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 340));
+        jPanel1.add(painelPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 320));
 
         tabelaEnderecos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaEnderecos.setModel(new javax.swing.table.DefaultTableModel(
@@ -349,9 +351,9 @@ public class AlunosView extends javax.swing.JDialog {
         });
         painelEnderecos.setViewportView(tabelaEnderecos);
 
-        jPanel1.add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 340));
+        jPanel1.add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 320));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 340));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 320));
 
         botaoConfigAdicionais.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnConfiguracoes.png"))); // NOI18N
         botaoConfigAdicionais.addActionListener(new java.awt.event.ActionListener() {
@@ -467,6 +469,18 @@ public class AlunosView extends javax.swing.JDialog {
             }
         });
         getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
+
+        botaoObservacao.setText("...");
+        botaoObservacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoObservacaoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoObservacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(842, 350, 30, 28));
+
+        modoTurma.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        modoTurma.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(modoTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 678, 190, 15));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/Alunos.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -651,6 +665,11 @@ public class AlunosView extends javax.swing.JDialog {
         painelConfigAdicionais.setModal(true);
         painelConfigAdicionais.setVisible(true);
     }//GEN-LAST:event_botaoConfigAdicionaisActionPerformed
+
+    private void botaoObservacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoObservacaoActionPerformed
+        painelDescricao.setModal(true);
+        painelDescricao.setVisible(true);
+    }//GEN-LAST:event_botaoObservacaoActionPerformed
      
     /**
      * @param args the command line arguments
@@ -702,6 +721,7 @@ public class AlunosView extends javax.swing.JDialog {
     private javax.swing.JButton botaoEndereco;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoListar;
+    private javax.swing.JButton botaoObservacao;
     private javax.swing.JButton botaoPais;
     private javax.swing.JButton botaoPlanos;
     private javax.swing.JButton botaoRemover;
@@ -710,6 +730,7 @@ public class AlunosView extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboListar;
     private javax.swing.JComboBox<String> comboTurmasExistentes;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel modoTurma;
     private javax.swing.JScrollPane painelAlunos;
     private javax.swing.JScrollPane painelEnderecos;
     private javax.swing.JScrollPane painelPais;
@@ -890,12 +911,9 @@ public class AlunosView extends javax.swing.JDialog {
     
     public void fecharTelaESC() {
         //sair
-        JRootPane meurootpane = getRootPane();
+        JRootPane meurootpane = getRootPane();     
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -903,12 +921,8 @@ public class AlunosView extends javax.swing.JDialog {
         });
         
         //atualizar
-        JRootPane meurootpane1 = getRootPane();
-        meurootpane1.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), "F5");
-        meurootpane1.getRootPane().getActionMap().put("F5", new AbstractAction("F5") {
-
-            
-
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), "F5");
+        meurootpane.getRootPane().getActionMap().put("F5", new AbstractAction("F5") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(comboTurmasExistentes.getItemCount()==0){
@@ -918,23 +932,9 @@ public class AlunosView extends javax.swing.JDialog {
             }
         });
         
-        //editar
-        JRootPane meurootpane2 = getRootPane();
-        meurootpane2.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "F1");
-        meurootpane2.getRootPane().getActionMap().put("F1", new AbstractAction("F1") {
-
-            
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.editarAluno();
-            }
-        });
-        
         //passar paineis direita
-        JRootPane meurootpane3 = getRootPane();
-        meurootpane3.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "RIGHT");
-        meurootpane3.getRootPane().getActionMap().put("RIGHT", new AbstractAction("RIGHT") {
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "RIGHT");
+        meurootpane.getRootPane().getActionMap().put("RIGHT", new AbstractAction("RIGHT") {
 
             
 
@@ -944,18 +944,40 @@ public class AlunosView extends javax.swing.JDialog {
             }
         });
         //passar paineis direita
-        JRootPane meurootpane4 = getRootPane();
-        meurootpane4.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LEFT");
-        meurootpane4.getRootPane().getActionMap().put("LEFT", new AbstractAction("LEFT") {
-
-            
-
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LEFT");
+        meurootpane.getRootPane().getActionMap().put("LEFT", new AbstractAction("LEFT") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 atalhosPaineis(1);
             }
         });
+        
+        //Atalho de conjunto de teclas
+        this.ConjuntoTeclasAtalho(meurootpane);
+           
     }
+    
+    private void ConjuntoTeclasAtalho(JRootPane meurootpane){
+        //Trocar Modo Turmas
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl T"), "TROCARTURMAS");
+        meurootpane.getRootPane().getActionMap().put("TROCARTURMAS", new AbstractAction("TROCARTURMAS") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.trocarModoTurma();
+            }
+        });
+        
+        //editar
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl E"), "EDITARALUNO");
+        meurootpane.getRootPane().getActionMap().put("EDITARALUNO", new AbstractAction("EDITARALUNO") {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.editarAluno();
+            }
+        });
+    }
+
 
     public Frame getParent() {
         return parent;
@@ -1096,4 +1118,17 @@ public class AlunosView extends javax.swing.JDialog {
     public AlunosConfigAdicionais getPainelConfigAdicionais() {
         return painelConfigAdicionais;
     }
+
+    public JLabel getModoTurma() {
+        return modoTurma;
+    }
+
+    public AlunosDescricao getPainelDescricao() {
+        return painelDescricao;
+    }
+
+    public JButton getBotaoObservacao() {
+        return botaoObservacao;
+    }
+    
 }

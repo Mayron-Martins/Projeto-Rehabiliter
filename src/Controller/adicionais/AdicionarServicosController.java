@@ -43,7 +43,7 @@ public class AdicionarServicosController {
     public void adicionarServico(){
         try{
             //Pegando Dados Da tela
-            int codBancoServico = verificar.verificarUltimo("tblServicos", "codServico")+1;
+            int codBancoServico = (int) (verificar.verificarUltimo("tblServicos", "codServico")+1);
             String nomeServico = view.getNomeServico().getText();
             String periodo= this.retornarPeriodo();
             String metodoDePagamento = view.getMetodoPagamento().getSelectedItem().toString();

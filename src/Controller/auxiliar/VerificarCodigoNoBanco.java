@@ -15,8 +15,8 @@ import java.sql.Statement;
  * @author Mayro
  */
 public class VerificarCodigoNoBanco {
-    public int verificarUltimo(String tabela, String dado) throws SQLException{
-        int ultimo=0;
+    public long verificarUltimo(String tabela, String dado) throws SQLException{
+        long ultimo=0;
         String comandoDeBusca = "SELECT ";
         comandoDeBusca = comandoDeBusca.concat("MAX("+dado+") AS valor FROM "+tabela);
         Conexao conexao = new Conexao() {};

@@ -47,8 +47,8 @@ public class AdicionarGastosController {
     public void adicionarEntrada(){
         try{
             //Dados Entrada
-            int codGasto = verificar.verificarUltimo("tblGastos", "codGasto") +1;
-            int codOrcamentario = verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
+            int codGasto = (int) (verificar.verificarUltimo("tblGastos", "codGasto") +1);
+            int codOrcamentario = (int) (verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1);
             String motivo = view.getCampoReferencia().getText();
 
             BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());

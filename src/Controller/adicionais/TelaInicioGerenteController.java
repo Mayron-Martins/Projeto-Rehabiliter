@@ -151,7 +151,9 @@ public class TelaInicioGerenteController {
 
                         }
                         planosDao.atualizarSituacao(planoAtual);
-                        this.setarDebitos(aluno);
+                        if(!planoAtual.getSituacao().equals("Encerrado")){
+                            this.setarDebitos(aluno);
+                        }
                      }
              }
             }

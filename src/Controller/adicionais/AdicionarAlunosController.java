@@ -108,7 +108,7 @@ public class AdicionarAlunosController {
         }
 
         //Dados do Aluno
-        int codAluno = verificar.verificarUltimo("tblAlunos", "codAluno")+1;
+        int codAluno = (int) (verificar.verificarUltimo("tblAlunos", "codAluno")+1);
         String nome = view.getCampoNomeAluno().getText();
         String cpf = view.getCampoCPFAluno().getText();
         String rg = ""; //Como não está na tabela é nula
@@ -132,7 +132,7 @@ public class AdicionarAlunosController {
         BigDecimal debito = valorMensal;
         
         //Dados de Matrícula e Serviços
-        int codMatricula = verificar.verificarUltimo("tblMatriculas", "codMatricula")+1;
+        int codMatricula = (int) (verificar.verificarUltimo("tblMatriculas", "codMatricula")+1);
         int codServico = 0;
         int codTurma = 0;
         if(!plano.equals("[Nenhum]")||!turma.equals("[Nenhuma]")){
@@ -148,7 +148,7 @@ public class AdicionarAlunosController {
         String matriculaObtida = this.converterMatricula(anoAtual, codTurma, codAluno, codServico);
         
         //dados do Endereço
-        int codEndereco = verificar.verificarUltimo("tblEndAlunoseClientes","codEndAlunoseClientes")+1;
+        int codEndereco = (int) (verificar.verificarUltimo("tblEndAlunoseClientes","codEndAlunoseClientes")+1);
         String logradouro = view.getCampoRua().getText();
         String bairro = view.getCampoBairro().getText();
         String numero = view.getCampoNum().getText();
@@ -184,7 +184,7 @@ public class AdicionarAlunosController {
         
         
         //Obtem a quantidade de alunos presentes na turma
-        int quantAlunosPresentes = verificar.verificarUltimo("tblTurmas", "quantAlunos")+1;
+        int quantAlunosPresentes = (int) (verificar.verificarUltimo("tblTurmas", "quantAlunos")+1);
         
         //Verifica se não há dados irregulares antes de colocar na tabela
         if(nome.equals("")||plano.equals("[Nenhum]") || dataNascimento == null||turma.equals("[Nenhuma]")
@@ -194,7 +194,7 @@ public class AdicionarAlunosController {
         }
         
         else{
-            alunosDao.inserirDados(aluno, endereco, matricula, planoAluno, codTurma);
+            alunosDao.inserirDados(aluno, endereco, matricula, planoAluno);
             turmasDao.atualizarQuantAunos(codTurma, quantAlunosPresentes);
             ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
             if(funcionarios!=null){

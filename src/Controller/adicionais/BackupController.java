@@ -59,7 +59,7 @@ public class BackupController {
             try {
             Date dataAtual = new Date();
             String nome = "LocalBackup";
-            int codBackup = verificar.verificarUltimo("tblBackups", "codBackup")+1;
+            int codBackup = (int) (verificar.verificarUltimo("tblBackups", "codBackup")+1);
             String endereco = System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bak";
             String tabelas = "Todas";
 

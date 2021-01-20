@@ -60,6 +60,12 @@ public abstract class Pessoa {
     public Pessoa(String usuario) {
         this.usuario = usuario;
     }
+
+    public Pessoa(int codBanco) {
+        this.codBanco = codBanco;
+    }
+    
+    
     
     
     //___________________________________________________________________________

@@ -328,7 +328,7 @@ public class CaixaController {
         try{
             BigDecimal valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVPago().getText()).toString());
             if(valorPago.compareTo(BigDecimal.ZERO)!=0 && this.retornarCliente()!=-1){
-                int codVenda = verificador.verificarUltimo("tblVendas", "codVenda")+1;
+                int codVenda = (int) (verificador.verificarUltimo("tblVendas", "codVenda")+1);
                 int codCliente = 0;
                 BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
                 BigDecimal valorTroco = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTroco().getText()).toString());
@@ -360,7 +360,7 @@ public class CaixaController {
                     venda = new Vendas(codVenda, codCliente, codAluno, chavePlano, valorTotal, valorPago, valorTroco, dataVenda, formaDePagamento, this.tipoVenda(), parcelas);
                     chaveVenda = venda.getChaveVenda();
                     int quantLinhas = view.getTabelaDeCarrinho().getRowCount();
-                    int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
+                    int codOrcamentario = (int) (verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1);
                     for(int linhas=0; linhas<quantLinhas;linhas++){
                         codProduto = Integer.parseInt(tabelaDeCarrinho.getValueAt(linhas, 0).toString());
                         quantidade = converterDinheiro.converterParaBigDecimal(tabelaDeCarrinho.getValueAt(linhas, 3).toString()).floatValue();
@@ -398,7 +398,7 @@ public class CaixaController {
                 else{
                     int totalLinhas = view.getTabelaMensalidade().getRowCount();
                     if(totalLinhas>0){
-                        int codOrcamentario = verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1;
+                        int codOrcamentario = (int) (verificador.verificarUltimo("tblDetOrcamentario", "codBanco")+1);
                         chavePlano = Integer.parseInt(tabelaDeMensalidade.getValueAt(0, 0).toString());
 
                         //Pegando Informações do Banco

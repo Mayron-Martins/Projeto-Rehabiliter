@@ -161,7 +161,7 @@ public class ReposicaoController {
                 String nomeTurma = view.getComboTurmasExistentes().getSelectedItem().toString().split("\\.")[0];
                 int codTurma = Integer.parseInt(nomeTurma);
 
-                int codAgendamento = verificar.verificarUltimo("tblReposicaoAulas", "codBanco")+1;
+                int codAgendamento = (int) (verificar.verificarUltimo("tblReposicaoAulas", "codBanco")+1);
                 
                 Date dataInicio = view.getCampoDataInicio().getDate();
                 Date dataFim = view.getCampoDataFim().getDate();

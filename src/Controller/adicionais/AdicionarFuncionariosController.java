@@ -43,7 +43,7 @@ public class AdicionarFuncionariosController {
     public void adicionarFuncionario(){
         try{
             //Dados do Gerente
-            int codFuncionario = verificar.verificarUltimo("tblFuncionarios", "codFuncionario")+1;
+            int codFuncionario = (int) (verificar.verificarUltimo("tblFuncionarios", "codFuncionario")+1);
             String nome = view.getCampoNome().getText();
             String cpf = view.getCampoCPF().getText();
             Date dataNascimento = view.getCampoNascimento().getDate();
@@ -57,7 +57,7 @@ public class AdicionarFuncionariosController {
             String email = view.getCampoEmail().getText();
 
             //dados do Endereço
-            int codEndereco = verificar.verificarUltimo("tblEndFuncionarios", "codEndFuncionarios")+1;
+            int codEndereco = (int) (verificar.verificarUltimo("tblEndFuncionarios", "codEndFuncionarios")+1);
             String logradouro = "";
             String bairro = "";
             String numero = "";
