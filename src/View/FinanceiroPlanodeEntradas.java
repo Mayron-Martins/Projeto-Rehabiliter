@@ -35,9 +35,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final PlanoEntradasController controller;
     private final FinanceiroPlanodeEntradasAdc telaAdAEntradas;
-    private final JFormattedTextField valorEntrada = new JMoneyField();
-    private final JFormattedTextField quantidadeEntrada = new JMoneyField();
-    private final JComboBox comboPagamentoEntrada;
+    private final JComboBox comboPagamentoEntrada = new JComboBox();
 
     /**
      * Creates new form FinanceiroPlanodeEntradas
@@ -50,8 +48,6 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         
         this.parent = parent;
         telaAdAEntradas= new FinanceiroPlanodeEntradasAdc(parent, false);
-        comboPagamentoEntrada = new JComboBox(telaAdAEntradas.getCampoFormaPagamento().getModel());
-        this.setarComponentesTabela();
         
         controller = new PlanoEntradasController(this);
         btnAdicionar.setBackground(new Color(0,0,0,0));
@@ -66,7 +62,8 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         
         this.setarComponentes();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
-        fecharTelaESC();
+        this.teclasDeAtalho();
+        this.setarComponentesTabela();
     }
 
     /**
@@ -548,13 +545,10 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         return campoDataEspecífica;
     }
     
-    public void fecharTelaESC() {
+    private void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -563,14 +557,11 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
     }
     
     private void setarComponentesTabela(){
-        tabelaVendas.getTableHeader().setResizingAllowed(false);
-        tabelaVendas.getTableHeader().setReorderingAllowed(false);
-        tabelasPlanos.getTableHeader().setResizingAllowed(false);
-        tabelasPlanos.getTableHeader().setReorderingAllowed(false);
-        tabelaEntradas.getTableHeader().setResizingAllowed(false);
-        tabelaEntradas.getTableHeader().setReorderingAllowed(false);
-        tabelaEntradas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(quantidadeEntrada));
+        
+        comboPagamentoEntrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
+        
+        tabelaEntradas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JMoneyField()));
         tabelaEntradas.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoEntrada));
-        tabelaEntradas.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorEntrada));
+        tabelaEntradas.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JMoneyField()));
     }
 }

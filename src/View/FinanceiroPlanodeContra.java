@@ -35,9 +35,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final PlanoGastosController controller;
     private final FinanceiroPlanodeContraAdc telaContraAdicionar;
-    private final JFormattedTextField valorGasto = new JMoneyField();
-    private final JFormattedTextField quantidadeGasto = new JMoneyField();
-    private final JComboBox comboPagamentoGasto;
+    private final JComboBox comboPagamentoGasto = new JComboBox();
 
     /**
      * Creates new form FinanceiroPlanodeContra
@@ -50,8 +48,8 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         
         this.parent = parent;
         telaContraAdicionar= new FinanceiroPlanodeContraAdc(parent, false);
-        comboPagamentoGasto = new JComboBox(telaContraAdicionar.getCampoFormaPagamento().getModel());
-        this.setarComponentesTabela();
+        
+        
         
         controller = new PlanoGastosController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -65,7 +63,8 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
         //Fechar a tela quando pressionar ESC
-        fecharTelaESC();
+        this.teclasDeAtalho();
+        this.setarComponentesTabela();
         
         
         
@@ -417,13 +416,10 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     
     
     
-    public void fecharTelaESC() {
+    public void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -432,10 +428,10 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     }
     
     private void setarComponentesTabela(){
-        tabelaGastos.getTableHeader().setResizingAllowed(false);
-        tabelaGastos.getTableHeader().setReorderingAllowed(false);
-        tabelaGastos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(quantidadeGasto));
+        comboPagamentoGasto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
+        
+        tabelaGastos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JMoneyField()));
         tabelaGastos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoGasto));
-        tabelaGastos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(valorGasto));
+        tabelaGastos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JMoneyField()));
     }
 }

@@ -359,7 +359,7 @@ public class ReposicaoView extends javax.swing.JDialog {
       JOptionPane.showMessageDialog(null, mensagem);
     }
     
-        public void atalhosTeclado() {
+    public void atalhosTeclado() {
         //sair
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0), "ESCAPE");
@@ -369,47 +369,50 @@ public class ReposicaoView extends javax.swing.JDialog {
                 dispose();
             }
         });
-        
+
         //atualizar
-        JRootPane meurootpane1 = getRootPane();
-        meurootpane1.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0), "F5");
-        meurootpane1.getRootPane().getActionMap().put("F5", new AbstractAction("F5") {
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0), "F5");
+        meurootpane.getRootPane().getActionMap().put("F5", new AbstractAction("F5") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.listarTurmas();
             }
         });
-        
+
         //Deletar Reposição
-        JRootPane meurootpane2 = getRootPane();
-        meurootpane2.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0), "DELETE");
-        meurootpane2.getRootPane().getActionMap().put("DELETE", new AbstractAction("DELETE") {
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0), "DELETE");
+        meurootpane.getRootPane().getActionMap().put("DELETE", new AbstractAction("DELETE") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.removerReposicao();
             }
         });
         
+        this.conjuntoTeclasAtalho(meurootpane);
+
+    }
+
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
         //Editar uma Reposição
-        JRootPane meurootpane3 = getRootPane();
-        meurootpane3.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0), "F1");
-        meurootpane3.getRootPane().getActionMap().put("F1", new AbstractAction("F1") {
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl E"), "EDITARREPOSICAO");
+        meurootpane.getRootPane().getActionMap().put("EDITARREPOSICAO", new AbstractAction("EDITARREPOSICAO") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.editarAluno();
+                controller.editarReposicao();
             }
         });
-        
+
         //Editar várias Reposições
         JRootPane meurootpane4 = getRootPane();
-        meurootpane4.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0), "F3");
-        meurootpane4.getRootPane().getActionMap().put("F3", new AbstractAction("F3") {
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl Q"), "EDITARVARIASREPOSICAO");
+        meurootpane.getRootPane().getActionMap().put("EDITARVARIASREPOSICAO", new AbstractAction("EDITARVARIASREPOSICAO") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.editarVariosAlunos();
+                controller.editarVariasReposicoes();
             }
         });
     }
+        
     
     public JDateChooser getCampoDataFim() {
         return campoDataFim;

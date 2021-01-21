@@ -14,10 +14,9 @@ import Model.Funcionario;
 import Model.auxiliar.LogAçoesFuncionario;
 import View.Funcionarios;
 import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -48,55 +47,67 @@ public class FuncionariosController {
     
     //Lista todas as turmas 
     public void listarFuncionarios() {
-        ArrayList <Funcionario> funcionarios = this.funcionarioDao.selecionarTodosFuncionarios();
-        this.buscas(funcionarios);
+        int linhaSelecionada = view.getComboListar().getSelectedIndex();
+        if(linhaSelecionada<2){
+            String situacao = view.getComboListar().getSelectedItem().toString();
+            situacao = situacao.substring(0, situacao.length()-1);
+            ArrayList <Funcionario> funcionarios = this.funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE situacao = '"+situacao+"'");
+            this.buscas(funcionarios);
+        }
+        else{
+            this.buscarAniversariantes();
+        }
     }
     
     public void editarFuncionarios(){
         if(this.view.getTabelaFuncionarios().getSelectedRow()!= -1){
             //Dados Alunos
-            int linhaSelecionada = this.view.getTabelaFuncionarios().getSelectedRow();
-            int codAluno = Integer.parseInt(tabelaDeFuncionarios.getValueAt(linhaSelecionada, 0).toString());
-            String nome = this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 1).toString();
-            String cpf = this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 2).toString();
-            String telefone = this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 3).toString();
-            String celular = this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 4).toString();
-            String cargo = this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 5).toString();
-            BigDecimal valorSalario = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 6).toString()).toString());
-            String usuario = cpf;
-            
-            String telasPermitidas = view.getTelasPermitidas();
-            Funcionario funcionarioAnterior = this.funcionarioAnterior(codAluno);
-            
-            Funcionario funcionario = new Funcionario(codAluno, nome, cpf, "", telefone, celular, funcionarioAnterior.getEmail(), funcionarioAnterior.getDatadenascimento(),
-                    usuario, funcionarioAnterior.getSenha(), valorSalario, cargo, telasPermitidas, null);
-        
-//Inserindo Dados
-        if(nome.equals("")|| cpf.equals("   .   .   -  ")){
-         view.exibeMensagem("Campos Preenchidos Incorretamente");
-        } else{
-            funcionarioDao.atualizarDados(funcionario);
-            
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                String acao = "Edição de Dados de Funcionário";
-                String descricao = "Editou os dados do funcionário "+nome;
-                this.setarLog(funcionarios, acao, descricao);
-            }
-            view.exibeMensagem("Sucesso!");
-            //Limpando Campos
-            listarFuncionarios();
+                int linhaSelecionada = this.view.getTabelaFuncionarios().getSelectedRow();
+                int codFuncionario = Integer.parseInt(tabelaDeFuncionarios.getValueAt(linhaSelecionada, 0).toString());
+                Funcionario funcionarioAnterior = this.funcionarioAnterior(codFuncionario);
+
+                if(!funcionarioAnterior.getSituacao().equals("Desvinculado")){
+                    String nome = this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 1).toString();
+                    String cpf = this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 2).toString();
+                    String telefone = this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 3).toString();
+                    String celular = this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 4).toString();
+                    String cargo = this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 5).toString();
+                    BigDecimal valorSalario = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 6).toString()).toString());
+                    String usuario = cpf;
+
+                    String telasPermitidas = view.getTelasPermitidas();
+
+
+                    String situacao = tabelaDeFuncionarios.getValueAt(linhaSelecionada, 7).toString();
+
+                    Funcionario funcionario = new Funcionario(codFuncionario, nome, cpf, "", telefone, celular, funcionarioAnterior.getEmail(), funcionarioAnterior.getDatadenascimento(),
+                            usuario, funcionarioAnterior.getSenha(), valorSalario, cargo, telasPermitidas, null, situacao);
+
+                    //Inserindo Dados
+                    if(nome.equals("")|| cpf.equals("   .   .   -  ")){
+                        view.exibeMensagem("Campos Preenchidos Incorretamente");
+                    } else{
+                        funcionarioDao.atualizarDados(funcionario);
+
+                        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+                        if(funcionarios!=null){
+                            String acao = "Edição de Dados de Funcionário";
+                            String descricao = "Editou os dados do funcionário "+nome;
+                            this.setarLog(funcionarios, acao, descricao);
+                        }
+                        view.exibeMensagem("Sucesso!");
+                        //Limpando Campos
+                        listarFuncionarios();
+                    } 
+                }else{
+                    view.exibeMensagem("Não é possível editar os dados de um Funcionário Desvinculado");
+                }
         }
-            //Turmas 
-        }
-        
         else{this.view.exibeMensagem("Erro, Nenhum Funcionário Selecionado!");}
-        
-    
     }
     
     
-    public void removerFuncionario() throws SQLException, ParseException, Exception{
+    public void removerFuncionario() {
         if(this.view.getTabelaFuncionarios().getSelectedRow()!= -1){
             int linhaSelecionada = this.view.getTabelaFuncionarios().getSelectedRow();
             if(this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 5).equals("Gerente")){
@@ -137,39 +148,21 @@ public class FuncionariosController {
         this.buscas(funcionariosAniversariantes);
     }
     
-    //Listar
-    public void listar(){
-        String comboListar = view.getComboListar().getSelectedItem().toString();
-        switch(comboListar){
-            case "Todos":
-                listarFuncionarios();
-            break;
-            
-            case "Aniversariantes":
-                this.buscarAniversariantes();
-                
-            break;
-        }
-    }
-
     
     private Funcionario funcionarioAnterior(int codFuncionario){
          return  funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE codFuncionario = "+codFuncionario).get(0);
     }
     
-    private void buscas(ArrayList <Funcionario> listar){
-        ArrayList<Funcionario> funcionarios = listar; 
-        
-        if(funcionarios==null){view.exibeMensagem("Funcionário Não Encontrado!"); limparTabela();}
+    private void buscas(ArrayList <Funcionario> funcionarios){     
+        if(funcionarios==null){view.exibeMensagem("Sem Dados"); limparTabela();}
         else{
-            limparTabela();
-            for(int linhas = 0; linhas<funcionarios.size(); linhas++){
-            Object[] dadosDaTabelaFuncionarios = {funcionarios.get(linhas).getCodBanco(), 
-            funcionarios.get(linhas).getNome(),funcionarios.get(linhas).getCpf(), 
-            funcionarios.get(linhas).getTelefone(), funcionarios.get(linhas).getCelular(),funcionarios.get(linhas).getCargo(),
-            funcionarios.get(linhas).getSalario()};
-            this.tabelaDeFuncionarios.addRow(dadosDaTabelaFuncionarios);
-
+                limparTabela();
+                for(Funcionario funcionario : funcionarios){
+                Object[] dadosDaTabelaFuncionarios = {funcionario.getCodBanco(), 
+                funcionario.getNome(),funcionario.getCpf(), 
+                funcionario.getTelefone(), funcionario.getCelular(),funcionario.getCargo(),
+                funcionario.getSalario(), funcionario.getSituacao()};
+                this.tabelaDeFuncionarios.addRow(dadosDaTabelaFuncionarios);
             }
         }
     }
@@ -230,7 +223,7 @@ public class FuncionariosController {
         
         if(linhaSelecionada!=-1){
             int codFuncionario = Integer.parseInt(tabelaDeFuncionarios.getValueAt(linhaSelecionada, 0).toString());
-            Funcionario funcionario = new Funcionario(codFuncionario, null, null, null, null, null, null, null, null, null, BigDecimal.ZERO, null, view.getTelasPermitidas(), null);
+            Funcionario funcionario = new Funcionario(codFuncionario, null, null, null, null, null, null, null, null, null, BigDecimal.ZERO, null, view.getTelasPermitidas(), null, null);
             
             funcionarioDao.atualizarTelasPermitidas(funcionario);
         }
@@ -242,4 +235,33 @@ public class FuncionariosController {
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
         return logAcao;
     }
+     
+     public void desvincularContratarFuncionario(){
+         int linhaSelecionada = view.getTabelaFuncionarios().getSelectedRow();
+         
+         if(linhaSelecionada>-1){
+            int opcao = JOptionPane.showConfirmDialog(null, "Deseja modificar a Situação Contratual deste Funcionário? Ao fazer isso poderão ocorrer"
+                    + " alterações referentes ao Login dos Funcionários!", "Alerta!", JOptionPane.YES_NO_OPTION);
+            
+            if(opcao == JOptionPane.YES_OPTION){
+                int codFuncionario = Integer.parseInt(tabelaDeFuncionarios.getValueAt(linhaSelecionada, 0).toString());
+                String cargo = tabelaDeFuncionarios.getValueAt(linhaSelecionada, 5).toString();
+                if(!cargo.equals("Gerente")){
+                    String situacao = tabelaDeFuncionarios.getValueAt(linhaSelecionada, 7).toString();
+                    if(situacao.equals("Contratado")){
+                        situacao = "Desvinculado";
+                    }else{
+                        situacao = "Contratado";
+                    }
+                    funcionarioDao.atualizarSituacao(codFuncionario, situacao);
+                    view.exibeMensagem("Sucesso.");
+                    listarFuncionarios();
+                }
+                else{
+                    view.exibeMensagem("Não é possível modificar a Situação Contratual do(a) Gerente");
+                }
+            }
+         }
+     }
+     
 }

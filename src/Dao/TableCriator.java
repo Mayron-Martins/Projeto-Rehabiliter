@@ -151,7 +151,8 @@ public class TableCriator {
                 + "cargo VARCHAR(25) NOT NULL,"
                 + "salario DECIMAL(16,2) NOT NULL,"
                 + "telasPermitidas VARCHAR(20) NULL,"
-                + "status VARCHAR(10) NULL"
+                + "status VARCHAR(10) NULL,"
+                + "situacao VARCHAR(15) NULL"
                 + ") ON [Funcionarios];");
     }
     

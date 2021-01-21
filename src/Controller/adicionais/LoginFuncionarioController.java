@@ -44,22 +44,23 @@ public class LoginFuncionarioController {
         else{
            if(funcionario==null){
             view.exibeMensagem("Usuário Não Encontrado!");
-        }
-        else{
-            if(funcionario.get(0).getCargo().equals("Gerente")){view.exibeMensagem("Por favor, realize o login como Gerente!");}   
-            else{String senhaBanco = funcionario.get(0).getSenha();
-            if(!senha.equals(senhaBanco)){
-                view.senhaErrada();
-            }
+           }
             else{
-                view.getTelaInicioFuncionario().setVisible(true);
-                this.setarPresencaFuncionario(usuario);
-                funcionarioDao.atualizarStatusAll();
-                funcionarioDao.atualizarStatus(usuario);
-                logDao.inserirDados(this.setarLog(usuario));
-                view.dispose();
-            }}
-        } 
+                if(funcionario.get(0).getCargo().equals("Gerente")){view.exibeMensagem("Por favor, realize o login como Gerente!");}   
+                else{
+                    String senhaBanco = funcionario.get(0).getSenha();
+                    if(!senha.equals(senhaBanco)||funcionario.get(0).getSituacao().equals("Desvinculado")){
+                        view.senhaErrada();
+                    }
+                    else{
+                        view.getTelaInicioFuncionario().setVisible(true);
+                        this.setarPresencaFuncionario(usuario);
+                        funcionarioDao.atualizarStatusAll();
+                        funcionarioDao.atualizarStatus(usuario);
+                        logDao.inserirDados(this.setarLog(usuario));
+                        view.dispose();
+                    }}
+            } 
         }
     }
     

@@ -323,7 +323,7 @@ public class ReposicaoController {
         }
     }
     
-    public void editarAluno(){
+    public void editarReposicao(){
         int linhaSelecionada = view.getTabelaAgendados().getSelectedRow();
         if(linhaSelecionada!=-1){
             int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhaSelecionada, 0).toString());
@@ -339,7 +339,7 @@ public class ReposicaoController {
         }
     }
     
-    public void editarVariosAlunos(){
+    public void editarVariasReposicoes(){
         int totalLinhas = tabelaAgendados.getRowCount();
         if(totalLinhas>0){
             for(int linhas =0; linhas<totalLinhas; linhas++){

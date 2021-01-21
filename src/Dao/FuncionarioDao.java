@@ -38,9 +38,9 @@ public class FuncionarioDao extends Conexao{
             //Adicionando aluno
             String inFuncionario = inserir.concat("tblFuncionarios("
                     + "codFuncionario, nome, cpf, rg, telefone, celular, email, dataNascimento, "
-                    + "codEndereco, usuario, senha, cargo, salario, telasPermitidas, status)"
+                    + "codEndereco, usuario, senha, cargo, salario, telasPermitidas, status, situacao)"
                     + "VALUES("
-                    + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inFuncionario);
             statement.setInt(1, funcionario.getCodBanco());
             statement.setString(2, funcionario.getNome());
@@ -57,6 +57,7 @@ public class FuncionarioDao extends Conexao{
             statement.setBigDecimal(13, new BigDecimal(funcionario.getSalario().toString()));
             statement.setString(14, funcionario.getTelasPermitidas());
             statement.setString(15, funcionario.getStatus());
+            statement.setString(16, funcionario.getSituacao());
             statement.execute();
             statement.close();
 
@@ -127,7 +128,7 @@ public class FuncionarioDao extends Conexao{
     public void atualizarStatus(String usuario){
         try{
             String inFuncionario = atualizar.concat("tblFuncionarios "
-                    + "SET status=? where usuario = ?");
+                    + "SET status=? WHERE usuario = ?");
 
             PreparedStatement statement = gerarStatement(inFuncionario);
             statement.setString(1, "Ativo");
@@ -142,11 +143,26 @@ public class FuncionarioDao extends Conexao{
     public void atualizarSenha(Funcionario funcionario){
         try{
             String inFuncionario = atualizar.concat("tblFuncionarios "
-                    + "SET senha=? where usuario = ?");
+                    + "SET senha=? WHERE usuario = ?");
 
             PreparedStatement statement = gerarStatement(inFuncionario);
             statement.setString(1, funcionario.getSenha());
             statement.setString(2, funcionario.getUsuario());
+            statement.execute();
+            statement.close();    
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
+    }
+    
+    public void atualizarSituacao(int codFuncionario, String situacao){
+        try{
+            String inFuncionario = atualizar.concat("tblFuncionarios "
+                    + "SET situacao=? WHERE codFuncionario = ?");
+
+            PreparedStatement statement = gerarStatement(inFuncionario);
+            statement.setString(1, situacao);
+            statement.setInt(2, codFuncionario);
             statement.execute();
             statement.close();    
         } catch (SQLException ex) {
@@ -204,8 +220,9 @@ public class FuncionarioDao extends Conexao{
             String cargo = resultset.getString("cargo");
             String telasPermitidas = resultset.getString("telasPermitidas");
             String status = resultset.getString("status");
+            String situacao = resultset.getString("situacao");
 
-            Funcionario funcionario = new Funcionario(codBanco, nome, cpf, "", telefone,celular , "", dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status);
+            Funcionario funcionario = new Funcionario(codBanco, nome, cpf, "", telefone,celular , "", dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status, situacao);
 
             funcionarios.add(funcionario);
              }while(resultset.next());

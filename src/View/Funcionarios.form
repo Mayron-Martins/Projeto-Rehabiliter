@@ -327,9 +327,10 @@
     <Component class="javax.swing.JComboBox" name="comboListar">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="2">
-            <StringItem index="0" value="Todos"/>
-            <StringItem index="1" value="Aniversariantes"/>
+          <StringArray count="3">
+            <StringItem index="0" value="Contratados"/>
+            <StringItem index="1" value="Desvinculados"/>
+            <StringItem index="2" value="Aniversariantes"/>
           </StringArray>
         </Property>
       </Properties>
@@ -385,7 +386,7 @@
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="0">
+              <Table columnCount="8" rowCount="0">
                 <Column editable="false" title="CodBanco" type="java.lang.Integer"/>
                 <Column editable="true" title="Nome" type="java.lang.String"/>
                 <Column editable="true" title="CPF" type="java.lang.String"/>
@@ -393,6 +394,7 @@
                 <Column editable="true" title="Celular" type="java.lang.String"/>
                 <Column editable="false" title="Cargo" type="java.lang.String"/>
                 <Column editable="true" title="Remunera&#xe7;&#xe3;o" type="java.lang.String"/>
+                <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
@@ -451,7 +453,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="620" y="270" width="210" height="40"/>
+          <AbsoluteConstraints x="710" y="306" width="130" height="20"/>
         </Constraint>
       </Constraints>
     </Component>

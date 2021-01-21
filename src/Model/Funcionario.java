@@ -18,14 +18,16 @@ public class Funcionario extends Pessoa{
     protected String cargo;
     protected String telasPermitidas;
     protected String status;
+    protected String situacao;
 
-    public Funcionario(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario,String senha, BigDecimal salario, String cargo, String telasPermitidas, String status) {
+    public Funcionario(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario,String senha, BigDecimal salario, String cargo, String telasPermitidas, String status, String situacao) {
         super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento, usuario);
         this.senha = senha;
         this.salario = new BigDecimal(salario.toString());
         this.cargo = cargo;
         this.telasPermitidas = telasPermitidas;
         this.status = status;
+        this.situacao = situacao;
     }
     
     
@@ -63,6 +65,10 @@ public class Funcionario extends Pessoa{
 
     public String getStatus() {
         return status;
+    }
+
+    public String getSituacao() {
+        return situacao;
     }
     
     

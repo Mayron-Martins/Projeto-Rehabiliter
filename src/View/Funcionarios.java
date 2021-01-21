@@ -7,6 +7,7 @@ package View;
 
 import Controller.FuncionariosController;
 import Controller.auxiliar.JMoneyField;
+import Controller.auxiliar.LogsSystem;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -36,10 +37,6 @@ public class Funcionarios extends javax.swing.JDialog {
     private final java.awt.Frame parent; 
     private final FuncionariosController controller;
     private final FuncionariosAdicionar telaAdicionarFuncionarios;
-    private final JFormattedTextField cpf;
-    private final JFormattedTextField telefone;
-    private final JFormattedTextField celular;
-    private final JFormattedTextField salario = new JMoneyField();
     private String telasPermitidas;
     private final FrequenciaFuncionariosView telaFrequencia;
     
@@ -56,9 +53,6 @@ public class Funcionarios extends javax.swing.JDialog {
         this.parent = parent;
         telaAdicionarFuncionarios = new FuncionariosAdicionar(parent, false);
         telaFrequencia = new FrequenciaFuncionariosView(parent, false);
-        cpf = new JFormattedTextField(telaAdicionarFuncionarios.getCampoCPF().getFormatter());
-        telefone = new JFormattedTextField(telaAdicionarFuncionarios.getCampoTelefone().getFormatter());
-        celular = new JFormattedTextField(telaAdicionarFuncionarios.getCampoCelular().getFormatter());
         
         controller = new FuncionariosController(this);
         botaobuscar1.setBackground(new Color(0,0,0,0));
@@ -78,7 +72,8 @@ public class Funcionarios extends javax.swing.JDialog {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         botaoPermissoes.setBackground(new Color(0,0,0,0));
         botaoPermissoes.setVisible(false);
-        fecharTelaESC();
+        this.teclasDeAtalho();
+        this.setarComponentesTabela();
     }
 
     /**
@@ -307,7 +302,7 @@ public class Funcionarios extends javax.swing.JDialog {
         });
         getContentPane().add(botaoListar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 205, 50));
 
-        comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Aniversariantes" }));
+        comboListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contratados", "Desvinculados", "Aniversariantes" }));
         getContentPane().add(comboListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 170, 30));
 
         campoBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -332,14 +327,14 @@ public class Funcionarios extends javax.swing.JDialog {
 
             },
             new String [] {
-                "CodBanco", "Nome", "CPF", "Telefone", "Celular", "Cargo", "Remuneração"
+                "CodBanco", "Nome", "CPF", "Telefone", "Celular", "Cargo", "Remuneração", "Situação"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, false, true
+                false, true, true, true, true, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -392,7 +387,7 @@ public class Funcionarios extends javax.swing.JDialog {
                 botaoPermissoesActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoPermissoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 270, 210, 40));
+        getContentPane().add(botaoPermissoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 306, 130, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios/Sem título-1.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -414,13 +409,7 @@ public class Funcionarios extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoAdicionar1ActionPerformed
 
     private void botaoRemover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemover1ActionPerformed
-        try {
-            controller.removerFuncionario();
-        } catch (ParseException ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    controller.removerFuncionario();
     }//GEN-LAST:event_botaoRemover1ActionPerformed
 
     private void botaoEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditar1ActionPerformed
@@ -437,15 +426,11 @@ public class Funcionarios extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void botaoListar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListar1ActionPerformed
-        controller.listar();
+        controller.listarFuncionarios();
     }//GEN-LAST:event_botaoListar1ActionPerformed
 
     private void botaobuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscar1ActionPerformed
-        try {
-            controller.buscarFuncionarios();
-        } catch (Exception ex) {
-            Logger.getLogger(Funcionarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.buscarFuncionarios();
     }//GEN-LAST:event_botaobuscar1ActionPerformed
 
     private void campoBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBuscarKeyPressed
@@ -744,26 +729,82 @@ public class Funcionarios extends javax.swing.JDialog {
         return botaoPermissoes;
     }
 
-    public void fecharTelaESC() {
+    public void teclasDeAtalho() {
+        //Sair da Tela
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
+        
+        //Atualizar Tabela
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), "F5");
+        meurootpane.getRootPane().getActionMap().put("F5", new AbstractAction("F5") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.listarFuncionarios();
+            }
+        });
+        
+        //Deletar Funcionário
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "DELETE");
+        meurootpane.getRootPane().getActionMap().put("DELETE", new AbstractAction("DELETE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.removerFuncionario();
+            }
+        });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //editar Funcionário
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl E"), "EDITARFUNCIONARIO");
+        meurootpane.getRootPane().getActionMap().put("EDITARFUNCIONARIO", new AbstractAction("EDITARFUNCIONARIO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.editarFuncionarios();
+            }
+        });
+        
+        //Encerrar Contrato
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl F"), "ENCERRARREABRIR");
+        meurootpane.getRootPane().getActionMap().put("ENCERRARREABRIR", new AbstractAction("ENCERRARREABRIR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.desvincularContratarFuncionario();
+            }
+        });
     }
     
     private void setarComponentesTabela(){
-        tabelaFuncionarios.getTableHeader().setResizingAllowed(false);
-        tabelaFuncionarios.getTableHeader().setReorderingAllowed(false);
+        JFormattedTextField cpf = new JFormattedTextField();
+        JFormattedTextField telefone = new JFormattedTextField();
+        JFormattedTextField celular = new JFormattedTextField();
+            
+        try {
+            //Transformação de variáveis
+            cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
+            celular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+            
+        } catch (ParseException ex) {
+            gerarLog(ex);
+        }
+        
         tabelaFuncionarios.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(cpf));
         tabelaFuncionarios.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(telefone));
         tabelaFuncionarios.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(celular));
-        tabelaFuncionarios.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(salario));
+        tabelaFuncionarios.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(new  JMoneyField()));
+    }
+    
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
     }
 }

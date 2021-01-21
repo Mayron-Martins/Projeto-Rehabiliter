@@ -61,9 +61,10 @@ public class AdicionarGerenteController {
         
         String telasPermitidas = "1,2,3,4,5,6,7,8,9";
         String status = "Inativo";
+        String situacao = "Contratado";
         
         //Cria os tipos Aluno, Endereco e Matricula com os dados
-        Funcionario funcionario = new Funcionario(codGerente, nome, cpf, "", "", celular, "", dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status);
+        Funcionario funcionario = new Funcionario(codGerente, nome, cpf, "", "", celular, "", dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status, situacao);
         EnderecoFuncionario endereco = new EnderecoFuncionario(codEndereco, codGerente, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         
         //Verifica se não há dados irregulares antes de colocar na tabela
