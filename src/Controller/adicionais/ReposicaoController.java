@@ -9,13 +9,19 @@ import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.LogsSystem;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
+import Dao.FuncionarioDao;
 import Dao.HorariosDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.ReposicaoDao;
 import Dao.TurmasDao;
 import Model.Aluno;
+import Model.Funcionario;
 import Model.auxiliar.Horarios;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.ReposicaoAulas;
 import Model.auxiliar.Turmas;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import View.ReposicaoView;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -37,6 +43,8 @@ public class ReposicaoController {
     private final TurmasDao turmasDao = new TurmasDao();
     private final ReposicaoDao reposicaoDao = new ReposicaoDao();
     private final HorariosDao horariosDao = new HorariosDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
@@ -188,6 +196,7 @@ public class ReposicaoController {
                     
                     ReposicaoAulas reposicao = new ReposicaoAulas(codAgendamento, dataAgendamento, codTurma, codAluno, "Au");
                     reposicaoDao.inserirDados(reposicao);
+                    this.setarLog("Cadastro de Reposição", "Cadastrou o aluno "+codAluno+" em "+codTurma+"para o dia "+dataAgendamento);
                 }else{
                     LocalDate dataInicioConv = converterData.conversaoLocalforDate(dataInicio);
                     LocalDate dataFimConv;
@@ -224,6 +233,7 @@ public class ReposicaoController {
                                 ReposicaoAulas reposicao = new ReposicaoAulas(codAgendamento, dataAgendamento, codTurma, codAluno, "Au");
                                 codAgendamento++;
                                 reposicaoDao.inserirDados(reposicao);
+                                this.setarLog("Cadastro de Reposição", "Cadastrou o aluno "+codAluno+" em "+codTurma+"para o dia "+dataAgendamento);
                                 datasIniciais.set(indice, datasIniciai.plusWeeks(1));
                             }
                             dataAtual = datasIniciai;
@@ -317,6 +327,7 @@ public class ReposicaoController {
         if(linhaSelecionada!=-1){
             int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhaSelecionada, 0).toString());
             reposicaoDao.removerReposicao(codBanco);
+            this.setarLog("Remoção de Reposição de Aula", "Removeu a reposição "+codBanco);
             view.exibeMensagem("Removido com sucesso!");
             setarTabelaAgendados();
             
@@ -333,6 +344,7 @@ public class ReposicaoController {
             }
             ReposicaoAulas reposicao = new ReposicaoAulas(codBanco, situacao);
             reposicaoDao.atualizarDados(reposicao);
+            this.setarLog("Edição de Reposição de Aula", "Modificou a presença para "+situacao+" em Reposição "+codBanco);
             view.exibeMensagem("Sucesso!");
             setarTabelaAgendados();
             
@@ -351,6 +363,7 @@ public class ReposicaoController {
                 
                 ReposicaoAulas reposicao = new ReposicaoAulas(codBanco, situacao);
                 reposicaoDao.atualizarDados(reposicao);
+                this.setarLog("Edição de Reposição de Aula", "Modificou a presença para "+situacao);
             }
             view.exibeMensagem("Sucesso!");
             setarTabelaAgendados();
@@ -385,6 +398,31 @@ public class ReposicaoController {
         LogsSystem gerarLog = new LogsSystem();
         gerarLog.gravarErro(erro);
         gerarLog.close();
+    }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String referencia){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, referencia);
+            return funcionario;
+        }
+        return null;
     }
     
 }

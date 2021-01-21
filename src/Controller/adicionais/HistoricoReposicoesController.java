@@ -7,12 +7,18 @@ package Controller.adicionais;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Dao.AlunosDao;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.ReposicaoDao;
 import Dao.TurmasDao;
 import Model.Aluno;
+import Model.Funcionario;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.ReposicaoAulas;
 import Model.auxiliar.Turmas;
 import View.HistoricoRehab;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +34,8 @@ public class HistoricoReposicoesController {
     private final ReposicaoDao reposicaoDao = new ReposicaoDao();
     private final AlunosDao alunosDao = new AlunosDao();
     private final TurmasDao turmasDao = new TurmasDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
     public HistoricoReposicoesController(HistoricoRehab view) {
@@ -152,5 +160,30 @@ public class HistoricoReposicoesController {
         }else{
             view.exibeMensagem("Sem Dados.");
         }
+    }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String referencia){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, referencia);
+            return funcionario;
+        }
+        return null;
     }
 }

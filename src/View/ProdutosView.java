@@ -8,6 +8,7 @@ package View;
 import Controller.ProdutosController;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
@@ -56,9 +57,9 @@ public class ProdutosView extends javax.swing.JDialog {
         botaoListar.setBackground(new Color(0,0,0,0));
         botaoRemover.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
-        fecharTelaESC();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
+        this.teclasDeAtalho();
     }
 
     /**
@@ -329,16 +330,47 @@ public class ProdutosView extends javax.swing.JDialog {
         return numeroTela;
     }
 
-    public void fecharTelaESC() {
+    public Frame getParent() {
+        return parent;
+    }
+
+    
+    
+    private void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+            }
+        });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
+                }
+            }
+        });
+        
+        //Adicionar Novo
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl N"), "NOVO");
+        meurootpane.getRootPane().getActionMap().put("NOVO", new AbstractAction("NOVO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                telaProdutosAdicionar.setModal(true);
+                telaProdutosAdicionar.setLocationRelativeTo(null);
+                telaProdutosAdicionar.setVisible(true);  
             }
         });
     }

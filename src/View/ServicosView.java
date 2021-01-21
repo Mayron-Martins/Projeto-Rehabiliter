@@ -8,6 +8,7 @@ package View;
 import Controller.ServicosController;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
@@ -390,6 +391,18 @@ public class ServicosView extends javax.swing.JDialog {
     public JComboBox<String> getComboSituacao() {
         return comboSituacao;
     }
+
+    public Frame getParent() {
+        return parent;
+    }
+    
+    
+    
+    private void setarComposicaoTabelas(){
+        comboMetodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
+        tabelaServicos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboMetodoPagamento));
+        tabelaServicos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JMoneyField()));
+    }
     
     public void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
@@ -441,12 +454,30 @@ public class ServicosView extends javax.swing.JDialog {
                 controller.encerrarReabrirServico();
             }
         });
-    }
-    
-    private void setarComposicaoTabelas(){
-        comboMetodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
-        tabelaServicos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboMetodoPagamento));
-        tabelaServicos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JMoneyField()));
+        
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
+                }
+            }
+        });
+        
+        //Adicionar Novo
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl N"), "NOVO");
+        meurootpane.getRootPane().getActionMap().put("NOVO", new AbstractAction("NOVO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                telaServicosAdicionar.setModal(true);
+                telaServicosAdicionar.setLocationRelativeTo(null);
+                telaServicosAdicionar.setVisible(true);
+            }
+        });
     }
     
 }

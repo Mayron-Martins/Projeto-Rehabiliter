@@ -14,6 +14,8 @@ import Dao.ProdutosDao;
 import Model.Funcionario;
 import Model.Produtos;
 import Model.auxiliar.LogAçoesFuncionario;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import View.ProdutosView;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -76,12 +78,9 @@ public class ProdutosController {
         } else{
             produtosDao.atualizarDados(produto);
             
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                String acao = "Edição de Dados de Produto";
-                String descricao = "Editou os dados do produto "+nome;
-                this.setarLog(funcionarios, acao, descricao);
-            }
+            
+            this.setarLog("Edição de Dados de Produto", "Editou os dados do produto "+nome);
+            
             view.exibeMensagem("Sucesso!");
             //Limpando Campos
             listarProdutos();
@@ -101,12 +100,8 @@ public class ProdutosController {
                 String nomeProduto = tabelaDeProdutos.getValueAt(linhaSelecionada, 1).toString();
                 produtosDao.removerProduto(codProduto);
                 
-                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    String acao = "Remoção de Produto";
-                    String descricao = "Remoção do produto "+nomeProduto;
-                    this.setarLog(funcionarios, acao, descricao);
-                }
+                this.setarLog("Remoção de Produto", "Remoção do produto "+nomeProduto);
+                
                 this.view.exibeMensagem("Sucesso");
                 listarProdutos();
         }
@@ -153,10 +148,28 @@ public class ProdutosController {
         }
     }
     
-    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
-        return logAcao;
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String descricao){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+            return funcionario;
+        }
+        return null;
     }
 }

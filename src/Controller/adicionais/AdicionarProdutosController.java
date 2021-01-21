@@ -13,6 +13,8 @@ import Dao.ProdutosDao;
 import Model.Funcionario;
 import Model.Produtos;
 import Model.auxiliar.LogAçoesFuncionario;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import View.ProdutosAdicionar;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -60,10 +62,9 @@ public class AdicionarProdutosController {
             } else{
                 produtosDao.inserirDados(produto);
 
-                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    this.setarLog(funcionarios, nome);
-                }
+                
+                this.setarLog("Cadastro de Produto", "Cadastrou o produto "+nome);
+                
                 view.exibeMensagem("Sucesso!");
                 //Limpando Campos
                 view.getCampoNome().setText("");
@@ -83,10 +84,28 @@ public class AdicionarProdutosController {
         return quantidade>=1;   
     }
     
-    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String nomeProduto){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Produto", "Cadastrou o produto "+nomeProduto);
-        return logAcao;
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String referencia){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, referencia);
+            return funcionario;
+        }
+        return null;
     } 
 }

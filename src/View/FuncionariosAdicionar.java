@@ -9,6 +9,7 @@ import Controller.adicionais.AdicionarFuncionariosController;
 import Controller.auxiliar.JMoneyField;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -48,7 +49,7 @@ public class FuncionariosAdicionar extends javax.swing.JDialog {
         botaofechar.setBackground(new Color(0,0,0,0));
         comboFuncionarios.setVisible(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
-        fecharTelaESC();
+        this.teclasDeAtalho();
     }
 
     /**
@@ -237,19 +238,40 @@ public class FuncionariosAdicionar extends javax.swing.JDialog {
         return campoTelefone;
     }
 
+    public Frame getParent() {
+        return parent;
+    }
+    
+    
+
     public void exibeMensagem(String mensagem) {
       JOptionPane.showMessageDialog(null, mensagem);
     }
-    public void fecharTelaESC() {
+    
+    private void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+            }
+        });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
+                }
             }
         });
     }

@@ -9,6 +9,7 @@ import Controller.PlanoGastosController;
 import Controller.auxiliar.JMoneyField;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -413,19 +414,12 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     public JDateChooser getCampoDataEspecífica() {
         return campoDataEspecífica;
     }
-    
-    
-    
-    public void teclasDeAtalho() {
-        JRootPane meurootpane = getRootPane();
-        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
-        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+
+    public Frame getParent() {
+        return parent;
     }
+    
+    
     
     private void setarComponentesTabela(){
         comboPagamentoGasto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
@@ -434,4 +428,43 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         tabelaGastos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoGasto));
         tabelaGastos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JMoneyField()));
     }
+    
+    private void teclasDeAtalho() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
+                }
+            }
+        });
+        
+        //Adicionar Novo
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl N"), "NOVO");
+        meurootpane.getRootPane().getActionMap().put("NOVO", new AbstractAction("NOVO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                telaContraAdicionar.setModal(true);
+                telaContraAdicionar.setLocationRelativeTo(null);
+                telaContraAdicionar.setVisible(true);
+            }
+        });
+    }
+    
 }

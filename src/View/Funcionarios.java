@@ -10,6 +10,7 @@ import Controller.auxiliar.JMoneyField;
 import Controller.auxiliar.LogsSystem;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -729,6 +730,12 @@ public class Funcionarios extends javax.swing.JDialog {
         return botaoPermissoes;
     }
 
+    public Frame getParent() {
+        return parent;
+    }
+    
+    
+
     public void teclasDeAtalho() {
         //Sair da Tela
         JRootPane meurootpane = getRootPane();
@@ -777,6 +784,30 @@ public class Funcionarios extends javax.swing.JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.desvincularContratarFuncionario();
+            }
+        });
+        
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
+                }
+            }
+        });
+        
+        //Adicionar Novo
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl N"), "NOVO");
+        meurootpane.getRootPane().getActionMap().put("NOVO", new AbstractAction("NOVO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                telaAdicionarFuncionarios.setModal(true);
+                telaAdicionarFuncionarios.setLocationRelativeTo(null);
+                telaAdicionarFuncionarios.setVisible(true); 
             }
         });
     }

@@ -5,12 +5,15 @@
  */
 package View;
 
+import Controller.ImprimirExportarGerenteController;
 import Dao.FileCriator;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
@@ -20,6 +23,7 @@ import javax.swing.KeyStroke;
  */
 public class ImprimirExportarGerente extends javax.swing.JDialog {
     private final java.awt.Frame parent;
+    private final ImprimirExportarGerenteController controller;
     private final int numeroTela = 6;
     private final FileCriator criacaoDePasta = new FileCriator();
     private final turmasFrequencia telaTurmasFrequencia;
@@ -35,6 +39,7 @@ public class ImprimirExportarGerente extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
+        controller = new ImprimirExportarGerenteController(this);
         telaTurmasFrequencia= new turmasFrequencia(parent, false);
         telaAnaliseFinanceira=new FinanceiroAnaliseFinanceira(parent, false);
         telaLogFuncionarios=new Relatoriosfun(parent, false);
@@ -44,7 +49,7 @@ public class ImprimirExportarGerente extends javax.swing.JDialog {
         btnRelatoriosFunc.setBackground(new Color(0,0,0,0));
         btnRelatoriosOrca.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
-        fecharTelaESC();
+        this.teclasDeAtalho();
     }
 
     /**
@@ -198,24 +203,44 @@ public class ImprimirExportarGerente extends javax.swing.JDialog {
     private javax.swing.JButton btnRelatoriosOrca;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
-public void fecharTelaESC() {
-        JRootPane meurootpane = getRootPane();
-        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
-        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
-    }
 
     public int getNumeroTela() {
         return numeroTela;
     }
 
+    public Frame getParent() {
+        return parent;
+    }
+    
+    
+    
+     private void teclasDeAtalho() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
+                }
+            }
+        });
+    }
 
 }
 

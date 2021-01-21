@@ -630,6 +630,29 @@ private void diasDaSemana(){
                 controller.encerrarReabrirServico();
             }
         });
+        
+        //fechar programa
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    parent.dispose();
+                }
+            }
+        });
+        
+        //Adicionar Novo
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl N"), "NOVO");
+        meurootpane.getRootPane().getActionMap().put("NOVO", new AbstractAction("NOVO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                telaTurmasAdicionar.setModal(true);
+                telaTurmasAdicionar.setLocationRelativeTo(null);         
+                telaTurmasAdicionar.setVisible(true);
+            }
+        });
     }
     
     private void setarComposicaoTabelas(){

@@ -16,6 +16,8 @@ import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.Gastos;
 import Model.auxiliar.LogAçoesFuncionario;
 import View.FinanceiroPlanodeContra;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -280,12 +282,9 @@ public class PlanoGastosController {
                         gastosDao.atualizarDados(gasto);
                         orcamentarioDao.atualizarDados(orcamentario);
                         
-                        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                        if(funcionarios!=null){
-                            String acao = "Edição de Gasto";
-                            String descricao = "Editou o gasto "+motivo;
-                            this.setarLog(funcionarios, acao, descricao);
-                        }
+                        
+                        this.setarLog("Edição de Gasto", "Editou o gasto "+motivo);
+                        
                         view.exibeMensagem("Sucesso!");
                         setarTabelas();
                     }                   
@@ -307,12 +306,9 @@ public class PlanoGastosController {
                     gastosDao.removerGastos(codGasto);
                     orcamentarioDao.removerOrcamentario("Gastos", this.chaveGasto(codGasto));
                     
-                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                        if(funcionarios!=null){
-                            String acao = "Remoção de Gasto";
-                            String descricao = "Removeu o gasto "+motivo;
-                            this.setarLog(funcionarios, acao, descricao);
-                        }
+
+                    this.setarLog("Remoção de Gasto", "Removeu o gasto "+motivo);
+                        
                     view.exibeMensagem("Sucesso!");
                     setarTabelas();
                                     
@@ -341,11 +337,30 @@ public class PlanoGastosController {
         Gastos gasto = gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE codGasto = "+codGasto).get(0);
         return gasto.getChaveTransacao();
     }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
         
-    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
-        return logAcao;
+    private Funcionario setarLog(String acao, String descricao){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+            return funcionario;
+        }
+        
+        return null;
     }
 }

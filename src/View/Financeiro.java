@@ -5,11 +5,14 @@
  */
 package View;
 
+import Controller.FinanceiroController;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
@@ -19,6 +22,7 @@ import javax.swing.KeyStroke;
  */
 public class Financeiro extends javax.swing.JDialog {
     private final java.awt.Frame parent;
+    private final FinanceiroController controller;
     private final int numeroTela = 5;
     private final FinanceiroPlanodeContra telaPlanoContra;
     private final FinanceiroPlanodeEntradas telaEntradas;
@@ -34,6 +38,7 @@ public class Financeiro extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
+        this.controller = new FinanceiroController(this);
         telaPlanoContra =new FinanceiroPlanodeContra(parent, false);
         telaEntradas= new FinanceiroPlanodeEntradas(parent, false);
         telaAnaliseFinanceira = new FinanceiroAnaliseFinanceira(parent, false);
@@ -43,7 +48,7 @@ public class Financeiro extends javax.swing.JDialog {
         btnAnaliseFinanceira.setBackground(new Color(0,0,0,0));
         btnPlanodeEntradas.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
-        fecharTelaESC();
+        this.teclasDeAtalho();
     }
 
     /**
@@ -189,17 +194,33 @@ public class Financeiro extends javax.swing.JDialog {
     public int getNumeroTela() {
         return numeroTela;
     }
+
+    public Frame getParent() {
+        return parent;
+    }
     
-    public void fecharTelaESC() {
+    private void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+            }
+        });
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();        
+                }
             }
         });
     }

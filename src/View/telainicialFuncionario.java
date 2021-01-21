@@ -89,6 +89,8 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoImprimirExportar.setBackground(new Color(0,0,0,0));
         botaoCaixa1.setBackground(new Color(0,0,0,0));
         
+        this.teclasDeAtalho();
+        
     }
 
     /**
@@ -332,7 +334,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
     private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
         controller.sairTela();
-        this.dispose();
         LoginFuncionario jump = new LoginFuncionario();
         jump.setVisible(true);
     }//GEN-LAST:event_botaoSairActionPerformed
@@ -469,9 +470,9 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCaixa1ActionPerformed
 
     private void botaoSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSair1ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-
+        controller.sairTela();
+        LoginFuncionario jump = new LoginFuncionario();
+        jump.setVisible(true);
     }//GEN-LAST:event_botaoSair1ActionPerformed
 
     private void botaoBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBackupActionPerformed
@@ -584,16 +585,34 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         return tabelaAniversariantes;
     }
     
-    public void fecharTelaESC() {
+    public void teclasDeAtalho() {
+        //Fechar Tela
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                controller.sairTela();
+                LoginFuncionario jump = new LoginFuncionario();
+                jump.setVisible(true);
+            }
+        });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Tela
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    LoginFuncionario jump = new LoginFuncionario();
+                    jump.setVisible(true);
+                }
             }
         });
     }

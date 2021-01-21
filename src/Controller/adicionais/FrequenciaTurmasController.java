@@ -20,6 +20,8 @@ import Model.auxiliar.FrequenciaTurmas;
 import Model.auxiliar.Horarios;
 import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Turmas;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import View.turmasFrequencia;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -120,12 +122,8 @@ public class FrequenciaTurmasController {
 
             frequencia.inserirDados(frequenciaAtual);
             
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                String acao = "Cadastro de Frequência";
-                String descricao = "Cadastrou a frequência para a turma "+nomeTurma;
-                this.setarLog(funcionarios, acao, descricao);
-            }
+                this.setarLog("Cadastro de Frequência", "Cadastrou a frequência para a turma "+nomeTurma);
+            
         }
         view.exibeMensagem("Dados Acicionados Com Sucesso!");
         limparTabela();
@@ -144,12 +142,8 @@ public class FrequenciaTurmasController {
 
             frequencia.atualizarDados(frequenciaAtual);
             
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                String acao = "Edição de Frequência";
-                String descricao = "Editou os dados da frequência para a turma "+nomeTurma;
-                this.setarLog(funcionarios, acao, descricao);
-            }
+            this.setarLog("Edição de Frequência", "Editou os dados da frequência para a turma "+nomeTurma);
+            
         }
         view.exibeMensagem("Dados Atualizados Com Sucesso!");
         limparTabelaBanco();
@@ -392,13 +386,6 @@ public class FrequenciaTurmasController {
         }
     }
     
-    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
-        return logAcao;
-    }
-    
     public void salvarDadosEmPlanilha(){
         int numLinhas = tabelaDeAlunosBanco.getRowCount();
         if(numLinhas>0){
@@ -420,5 +407,30 @@ public class FrequenciaTurmasController {
         else{
             view.exibeMensagem("Inicie uma tabela primeiro!");
         }
+    }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String referencia){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, referencia);
+            return funcionario;
+        }
+        return null;
     }
 }

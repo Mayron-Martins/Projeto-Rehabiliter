@@ -28,6 +28,8 @@ import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.AlunosView;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import View.Paineis.AlunosConfigAdicionais;
 import View.Paineis.AlunosDescricao;
 import java.awt.Component;
@@ -194,13 +196,9 @@ public class AlunosController {
                     alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno);
                     turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
                     turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
-
-                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                    if(funcionarios!=null){
-                        String acao = "Edição de Dados de Aluno";
-                        String descricao = "Editou os dados do aluno "+nome;
-                        this.setarLog(funcionarios, acao, descricao);
-                    }
+                    
+                    this.setarLog("Edição de Dados de Aluno", "Editou os dados do aluno "+nome);
+                    
                     }
                 }
                 }
@@ -317,12 +315,8 @@ public class AlunosController {
                     turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
                     turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
 
-                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                    if(funcionarios!=null){
-                        String acao = "Edição de Dados de Aluno";
-                        String descricaoAcao = "Editou os dados do aluno "+nome;
-                        this.setarLog(funcionarios, acao, descricaoAcao);
-                    }
+                    this.setarLog("Edição de Dados de Aluno", "Editou os dados do aluno "+nome);
+                    
                         view.exibeMensagem("Sucesso!"); 
                     }
 
@@ -347,12 +341,9 @@ public class AlunosController {
 
             turmasDao.atualizarQuantAunos(codTurma, turma.getQuantidadeAlunos()-1);
             alunosDao.removerAluno(codAluno);
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-                String acao = "Remoção de Aluno";
-                String descricao = "Removeu o aluno "+nomeAluno;
-                this.setarLog(funcionarios, acao, descricao);
-            }
+
+            this.setarLog("Remoção de Aluno", "Removeu o aluno "+nomeAluno);
+            
             this.view.exibeMensagem("Sucesso");
             listarAlunos();
         }
@@ -765,14 +756,7 @@ public class AlunosController {
     
     private Servicos pegarServico(int codServico){
         return servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
-    }
-    
-    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
-        return logAcao;
-    }
+    }    
     
     
     private void setarValorMensal(Servicos servicoContratado, int linhaSelecionada, int diaVencimento){
@@ -1450,5 +1434,30 @@ public class AlunosController {
         gerarLog.close();
     }
 
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String descricao){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+            logDao.inserirDados(logAcao);
+            return funcionario;
+        }
+        return null;
+    }
     
 }

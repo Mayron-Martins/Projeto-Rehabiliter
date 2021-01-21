@@ -8,13 +8,19 @@ package View;
 import Controller.adicionais.AdicionarGerenteController;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -31,6 +37,8 @@ public class RegistrodeGerente extends javax.swing.JFrame {
         controller = new AdicionarGerenteController(this);
         btnConfirmar.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
+        
+        this.teclasDeAtalho();
     }
 
     /**
@@ -172,4 +180,14 @@ public class RegistrodeGerente extends javax.swing.JFrame {
         return campoSenha;
     }
 
+    private void teclasDeAtalho() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    }
 }

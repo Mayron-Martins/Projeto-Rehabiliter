@@ -7,10 +7,16 @@ package View;
 
 import Controller.adicionais.AlunosETurmasController;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JRootPane;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -35,6 +41,8 @@ public class AlunosCadastroTurmasEHorarios extends javax.swing.JDialog {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new AlunosETurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
+        
+        this.teclasDeAtalho();
     }
 
     /**
@@ -84,10 +92,9 @@ public class AlunosCadastroTurmasEHorarios extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabelaTurmas.getTableHeader().setResizingAllowed(false);
-        tabelaTurmas.getTableHeader().setReorderingAllowed(false);
         tabelaTurmas.setFocusable(false);
         tabelaTurmas.setShowVerticalLines(false);
+        tabelaTurmas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabelaTurmas);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 100, 510, 150));
@@ -170,6 +177,16 @@ public class AlunosCadastroTurmasEHorarios extends javax.swing.JDialog {
     public JTable getTabelaTurmas() {
         return tabelaTurmas;
     }
-
+    
+    private void teclasDeAtalho() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    }
     
 }

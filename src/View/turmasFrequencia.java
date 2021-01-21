@@ -47,7 +47,7 @@ public class turmasFrequencia extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.parent = parent;
-        this.fecharTelaESC();
+        this.teclasDeAtalho();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         controller = new FrequenciaTurmasController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -472,6 +472,9 @@ public class turmasFrequencia extends javax.swing.JDialog {
         return numeroTela;
     }
 
+    public Frame getParent() {
+        return parent;
+    }
     
     public void alternarImprimir(){
         botaoAdicionar.setVisible(false);
@@ -480,22 +483,34 @@ public class turmasFrequencia extends javax.swing.JDialog {
         botaoImprimir.setVisible(true);
         tabelaAlunosBanco.setEnabled(false);
     }
-    public void fecharTelaESC() {
+
+    
+    
+    private void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
-
-            
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
-    }
-
-    public Frame getParent() {
-        return parent;
+        
+        this.conjuntoTeclasAtalho(meurootpane);
     }
     
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
+                }
+            }
+        });
+    }
 }

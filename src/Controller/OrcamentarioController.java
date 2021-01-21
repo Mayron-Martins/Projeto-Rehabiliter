@@ -11,13 +11,19 @@ import Controller.auxiliar.ExportarArquivos;
 import Controller.auxiliar.ImpressaoComponentes;
 import Dao.AlunosDao;
 import Dao.DetOrcamentarioDao;
+import Dao.FuncionarioDao;
+import Dao.LogAçoesFuncionarioDao;
 import Dao.PlanosDao;
 import Dao.ServicosDao;
 import Model.Aluno;
+import Model.Funcionario;
 import Model.auxiliar.DetOrcamentario;
+import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import View.FinanceiroAnaliseFinanceira;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -36,6 +42,8 @@ public class OrcamentarioController {
     private final PlanosDao planosDao = new PlanosDao();
     private final AlunosDao alunosDao = new AlunosDao();
     private final ServicosDao servicosDao = new ServicosDao();
+    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ExportarArquivos exportarTabela = new ExportarArquivos();
@@ -294,4 +302,30 @@ public class OrcamentarioController {
             }
             return valorMensal;
         }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String descricao){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+            logDao.inserirDados(logAcao);
+            return funcionario;
+        }
+        return null;
+    }
 }

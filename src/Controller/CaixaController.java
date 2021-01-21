@@ -31,6 +31,8 @@ import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.Caixa;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -371,12 +373,9 @@ public class CaixaController {
                         itens.add(itemVendido);
                         produtosDao.atualizarEstoque(codProduto, produto.getQuantidade()-quantidade);
 
-                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                    if(funcionarios!=null){
-                        String acao = "Venda Efetuada";
-                        String descricao = "Venda no Valor de R$"+valorTotal+" com "+formaDePagamento+" ao cliente "+codAluno;
-                        this.setarLogAcoesFuncionario(funcionarios, acao, descricao);
-                    }
+                    
+                        this.setarLogAcoesFuncionario("Venda Efetuada", "Venda no Valor de R$"+valorTotal+" com "+formaDePagamento+" ao cliente "+codAluno);
+                    
                     }
 
                     vendasDao.inserirDados(venda, itens);
@@ -453,12 +452,8 @@ public class CaixaController {
                                 planosDao.atualizarSituacao(plano);
                                 alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
 
-                            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                            if(funcionarios!=null){
-                                String acao = "Pagamento de Plano";
-                                String descricao = "Pagamento do plano do aluno "+aluno.getNome()+" da turma "+aluno.getTurma()+" no valor de "+valorTotal;
-                                this.setarLogAcoesFuncionario(funcionarios, acao, descricao);
-                            }
+                                this.setarLogAcoesFuncionario("Pagamento de Plano", "Pagamento do plano do aluno "+aluno.getNome()+" da turma "+aluno.getTurma()+" no valor de "+valorTotal);
+                            
                             }
                             else{
                                 view.exibeMensagem("Erro, verifique se o Valor Total corresponde ao Contrato!");
@@ -540,13 +535,6 @@ public class CaixaController {
         else{
             return "S";
         }
-    }
-    
-    private LogAçoesFuncionario setarLogAcoesFuncionario(ArrayList <Funcionario> funcionarios, String acao, String descricao){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
-        return logAcao;
     }
     
     private void imprimirComprovanteVenda(Vendas venda,String subtotal, String desconto){
@@ -783,5 +771,30 @@ public class CaixaController {
         LogsSystem gerarLog = new LogsSystem();
         gerarLog.gravarErro(erro);
         gerarLog.close();
+    }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLogAcoesFuncionario("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLogAcoesFuncionario(String acao, String descricao){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+            return funcionario;
+        }
+        return null;
     }
 }

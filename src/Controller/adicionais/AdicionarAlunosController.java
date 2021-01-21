@@ -28,6 +28,8 @@ import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.AlunosCadastro;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -196,10 +198,9 @@ public class AdicionarAlunosController {
         else{
             alunosDao.inserirDados(aluno, endereco, matricula, planoAluno);
             turmasDao.atualizarQuantAunos(codTurma, quantAlunosPresentes);
-            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-            if(funcionarios!=null){
-            this.setarLog(funcionarios, nome, turma);
-            }
+            
+            this.setarLog(nome, turma);
+            
             view.exibeMensagem("Sucesso!");
             
             int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja realizar a impressão do contrato?", 
@@ -336,12 +337,7 @@ public class AdicionarAlunosController {
         }
     }
     
-    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String nomeAluno, String nomeTurma){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Aluno", "Cadastrou o aluno "+nomeAluno+"na Turma "+nomeTurma);
-        return logAcao;
-    }
+    
     
     private Servicos buscarServico(int codServico){
         return servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
@@ -472,9 +468,34 @@ public class AdicionarAlunosController {
         } 
     }
     
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();
         gerarLog.gravarErro(erro);
         gerarLog.close();
+    }
+    
+    private Funcionario setarLog(String nomeAluno, String nomeTurma){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+                Funcionario funcionario = funcionarios.get(0);
+                Date dataEvento = new Date();
+                LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Aluno", "Cadastrou o aluno "+nomeAluno+"na Turma "+nomeTurma);
+                return funcionario;
+            }
+        return null;
     }
 }

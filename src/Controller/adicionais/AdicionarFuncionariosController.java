@@ -17,6 +17,8 @@ import Model.Funcionario;
 import Model.auxiliar.EnderecoFuncionario;
 import Model.auxiliar.LogAçoesFuncionario;
 import View.FuncionariosAdicionar;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -84,10 +86,9 @@ public class AdicionarFuncionariosController {
                 funcionarioDao.inserirDados(funcionario, endereco);
                 criarTabelas.tableLogdeAcoesdoFunc();
 
-                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    this.setarLog(funcionarios, nome, cargo);
-                }
+                
+                this.setarLog("Cadastro de Funcionário", "Cadastrou o funcionário "+nome+" aos cargo de "+cargo);
+                
                 view.exibeMensagem("Sucesso!");
                 view.getCampoNome().setText("");
                 view.getCampoCPF().setValue(null);
@@ -118,16 +119,35 @@ public class AdicionarFuncionariosController {
     return view.getCampoSenha().getPassword()==null;
     }
     
-    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String nomeFuncionario, String cargo){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Funcionário", "Cadastrou o funcionário "+nomeFuncionario+" aos cargo de "+cargo);
-        return logAcao;
-    }
     
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();
         gerarLog.gravarErro(erro);
         gerarLog.close();
+    }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String referencia){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, referencia);
+            return funcionario;
+        }
+        return null;
     }
 }

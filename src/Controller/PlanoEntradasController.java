@@ -28,6 +28,8 @@ import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
 import View.FinanceiroPlanodeEntradas;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -672,12 +674,8 @@ public class PlanoEntradasController {
                         entradasDao.atualizarDados(entrada);
                         orcamentarioDao.atualizarDados(orcamentario);
                         
-                        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                        if(funcionarios!=null){
-                            String acao = "Edição de Entrada";
-                            String descricao = "Editou os dados da entrada "+referencia+" em ganhos";
-                            this.setarLog(funcionarios, acao, descricao);
-                        }
+                        this.setarLog("Edição de Entrada", "Editou os dados da entrada "+referencia+" em ganhos");
+                        
                         view.exibeMensagem("Sucesso!");
                         setarTabelas();
                     }                   
@@ -699,12 +697,8 @@ public class PlanoEntradasController {
                     entradasDao.removerEntrada(codEntrada);
                     orcamentarioDao.removerOrcamentario("Entradas", codEntrada);
                     
-                    ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                        if(funcionarios!=null){
-                            String acao = "Remoção de Entrada";
-                            String descricao = "Removeu a entrada "+referencia+" de ganhos";
-                            this.setarLog(funcionarios, acao, descricao);
-                        }
+                    this.setarLog("Remoção de Entrada", "Removeu a entrada "+referencia+" de ganhos");
+                        
                     view.exibeMensagem("Sucesso!");
                     setarTabelas();
                                     
@@ -729,24 +723,43 @@ public class PlanoEntradasController {
         return "[Nenhum]";
     }
         
-        private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
-        return logAcao;
-    }
-        private BigDecimal valorMensalidade(Aluno aluno, Servicos servico){
-            BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
-            int renovacaoAutomatica = aluno.getRenovacaoAutomatica();            
-            BigDecimal valorMensal = aluno.getValorMensal();
+    private BigDecimal valorMensalidade(Aluno aluno, Servicos servico){
+        BigDecimal periodDays = new BigDecimal(servico.getPeriodDays());
+        int renovacaoAutomatica = aluno.getRenovacaoAutomatica();            
+        BigDecimal valorMensal = aluno.getValorMensal();
 
-            if(servico.getPeriodDays()<30){
-                if(renovacaoAutomatica == 1){
-                    BigDecimal period = (new BigDecimal(30)).divide(periodDays,4, RoundingMode.UP);
-                    valorMensal = valorMensal.divide(period, 4, RoundingMode.UP);
-                    valorMensal = valorMensal.setScale(2, RoundingMode.UP);
-                } 
-            }
-            return valorMensal;
+        if(servico.getPeriodDays()<30){
+            if(renovacaoAutomatica == 1){
+                BigDecimal period = (new BigDecimal(30)).divide(periodDays,4, RoundingMode.UP);
+                valorMensal = valorMensal.divide(period, 4, RoundingMode.UP);
+                valorMensal = valorMensal.setScale(2, RoundingMode.UP);
+            } 
         }
+        return valorMensal;
+    }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String descricao){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+            return funcionario;
+        }
+        return null;
+    }
 }

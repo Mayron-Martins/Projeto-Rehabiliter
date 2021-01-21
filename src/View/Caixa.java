@@ -10,6 +10,7 @@ import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -62,13 +63,14 @@ public class Caixa extends javax.swing.JDialog {
         quantParcelas.setBackground(new Color(0,0,0,0));
         quantParcelas.setBorder(null);
         //setExtendedState(MAXIMIZED_BOTH);
-        this.setarComponentes();
-        fecharTelaESC();
+        
         btnFechar.setBackground(new Color(0,0,0,0));
         painelTabelaProdutos.setVisible(true);
         painelPagamentoMensal.setVisible(false);
         jPanelFormaDePagamento.setVisible(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
+        this.teclasDeAtalho();
+        this.setarComponentes();
     }
 
     /**
@@ -945,8 +947,15 @@ public class Caixa extends javax.swing.JDialog {
     public JTextField getQuantParcelas() {
         return quantParcelas;
     }
+
+    public Frame getParent() {
+        return parent;
+    }
     
-    public void fecharTelaESC() {
+    
+    
+    private void teclasDeAtalho() {
+        //Sair da Tela
         JRootPane meurootpane = getRootPane();
         JRootPane meurootpane2 = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
@@ -957,6 +966,7 @@ public class Caixa extends javax.swing.JDialog {
             }
         });
         
+        //Abrir forma de pagamento
         meurootpane2.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "F1");
         meurootpane2.getRootPane().getActionMap().put("F1", new AbstractAction("F1") {
             @Override
@@ -966,6 +976,23 @@ public class Caixa extends javax.swing.JDialog {
                 }
                 else{
                     jPanelFormaDePagamento.setVisible(false);
+                }
+            }
+        });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
                 }
             }
         });

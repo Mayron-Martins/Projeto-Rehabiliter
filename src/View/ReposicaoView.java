@@ -10,6 +10,7 @@ import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import com.sun.glass.events.KeyEvent;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
@@ -48,7 +49,7 @@ public class ReposicaoView extends javax.swing.JDialog {
         btnHist.setBackground(new Color(0,0,0,0));
         
         ativarDesabilitarComponentes(false);
-        atalhosTeclado();
+        this.atalhosTeclado();
     }
 
     /**
@@ -359,7 +360,55 @@ public class ReposicaoView extends javax.swing.JDialog {
       JOptionPane.showMessageDialog(null, mensagem);
     }
     
-    public void atalhosTeclado() {
+        
+    public JDateChooser getCampoDataFim() {
+        return campoDataFim;
+    }
+
+    public JDateChooser getCampoDataInicio() {
+        return campoDataInicio;
+    }
+
+    public JTextField getCampoPesquisa() {
+        return campoPesquisa;
+    }
+
+    public JComboBox<String> getComboDiaDaSemana() {
+        return comboDiaDaSemana;
+    }
+
+    public JComboBox<String> getComboTurma() {
+        return comboTurma;
+    }
+
+    public JComboBox<String> getComboTurmasExistentes() {
+        return comboTurmasExistentes;
+    }
+
+    public JTable getTabelaAgendados() {
+        return tabelaAgendados;
+    }
+
+    public JTable getTabelaAgendamento() {
+        return tabelaAgendamento;
+    }
+
+    public Frame getParent() {
+        return parent;
+    }
+    
+    
+    
+    public void ativarDesabilitarComponentes(boolean opcao){
+        this.jLabelDInicio.setVisible(opcao);
+        this.jLabelDFim.setVisible(opcao);
+        this.campoDataFim.setVisible(opcao);
+        this.campoDataInicio.setVisible(opcao);
+        this.comboTurmasExistentes.setVisible(opcao);
+        this.botaoAdicionar.setVisible(opcao);
+    }
+    
+       private void atalhosTeclado() {
         //sair
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0), "ESCAPE");
@@ -411,47 +460,18 @@ public class ReposicaoView extends javax.swing.JDialog {
                 controller.editarVariasReposicoes();
             }
         });
-    }
         
-    
-    public JDateChooser getCampoDataFim() {
-        return campoDataFim;
-    }
-
-    public JDateChooser getCampoDataInicio() {
-        return campoDataInicio;
-    }
-
-    public JTextField getCampoPesquisa() {
-        return campoPesquisa;
-    }
-
-    public JComboBox<String> getComboDiaDaSemana() {
-        return comboDiaDaSemana;
-    }
-
-    public JComboBox<String> getComboTurma() {
-        return comboTurma;
-    }
-
-    public JComboBox<String> getComboTurmasExistentes() {
-        return comboTurmasExistentes;
-    }
-
-    public JTable getTabelaAgendados() {
-        return tabelaAgendados;
-    }
-
-    public JTable getTabelaAgendamento() {
-        return tabelaAgendamento;
-    }
-    
-    public void ativarDesabilitarComponentes(boolean opcao){
-        this.jLabelDInicio.setVisible(opcao);
-        this.jLabelDFim.setVisible(opcao);
-        this.campoDataFim.setVisible(opcao);
-        this.campoDataInicio.setVisible(opcao);
-        this.comboTurmasExistentes.setVisible(opcao);
-        this.botaoAdicionar.setVisible(opcao);
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
+                }
+            }
+        });
     }
 }

@@ -8,10 +8,17 @@ package View;
 import Controller.adicionais.HistoricoReposicoesController;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -32,7 +39,7 @@ public class HistoricoRehab extends javax.swing.JDialog {
  
         botaoFechar.setBackground(new Color(0,0,0,0));
         this.desativarCombos();
-        
+        this.teclasDeAtalho();
     }
 
     /**
@@ -264,11 +271,45 @@ public class HistoricoRehab extends javax.swing.JDialog {
     public JButton getBotaoAplicar() {
         return botaoAplicar;
     }
+
+    public Frame getParent() {
+        return parent;
+    }
+    
+    
     
     private void desativarCombos(){
         comboPeriodo.setEnabled(false);
         comboIntervalo.setEnabled(false);
         campoDataEspecífica.setEnabled(false);
         botaoAplicar.setEnabled(false);
+    }
+    
+    private void teclasDeAtalho() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
+                }
+            }
+        });
     }
 }

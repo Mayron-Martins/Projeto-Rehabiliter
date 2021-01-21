@@ -9,6 +9,7 @@ import Controller.PlanoEntradasController;
 import Controller.auxiliar.JMoneyField;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -544,6 +545,21 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
     public JDateChooser getCampoDataEspecífica() {
         return campoDataEspecífica;
     }
+
+    public Frame getParent() {
+        return parent;
+    }
+    
+    
+    
+    private void setarComponentesTabela(){
+        
+        comboPagamentoEntrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
+        
+        tabelaEntradas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JMoneyField()));
+        tabelaEntradas.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoEntrada));
+        tabelaEntradas.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JMoneyField()));
+    }
     
     private void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
@@ -554,14 +570,33 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
                 dispose();
             }
         });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
     }
     
-    private void setarComponentesTabela(){
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                    
+                }
+            }
+        });
         
-        comboPagamentoEntrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
-        
-        tabelaEntradas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JMoneyField()));
-        tabelaEntradas.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoEntrada));
-        tabelaEntradas.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JMoneyField()));
+        //Adicionar Novo
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl N"), "NOVO");
+        meurootpane.getRootPane().getActionMap().put("NOVO", new AbstractAction("NOVO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                telaAdAEntradas.setModal(true);
+                telaAdAEntradas.setLocationRelativeTo(null);
+                telaAdAEntradas.setVisible(true);
+            }
+        });
     }
 }

@@ -18,13 +18,12 @@ import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.Entradas;
 import Model.auxiliar.LogAçoesFuncionario;
 import View.FinanceiroPlanodeEntradasAdc;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -69,11 +68,9 @@ public class AdicionarEntradasController {
               //Adicionando no Banco
               entradasDao.inserirDados(entrada);
               orcamentarioDao.inserirDados(orcamentario);
-
-              ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    this.setarLog(funcionarios, referencia);
-                }
+              
+            this.setarLog("Cadastro de Entrada", "Cadastrou a entrada "+referencia+" aos ganhos");
+             
               view.exibeMensagem("Sucesso!");
               view.getCampoFormaPagamento().setSelectedIndex(0);
               view.getCampoQuantidade().setText("");
@@ -108,16 +105,35 @@ public class AdicionarEntradasController {
         return "[Nenhum]";
     }
     
-    private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String referencia){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Cadastro de Entrada", "Cadastrou a entrada "+referencia+" aos ganhos");
-        return logAcao;
-    }
     
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();
         gerarLog.gravarErro(erro);
         gerarLog.close();
+    }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String referencia){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, referencia);
+            return funcionario;
+        }
+        return null;
     }
 }

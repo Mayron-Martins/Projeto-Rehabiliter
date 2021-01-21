@@ -12,6 +12,8 @@ import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
 import Model.Funcionario;
 import Model.auxiliar.LogAçoesFuncionario;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import View.Relatoriosfun;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -229,5 +231,30 @@ public class RelatoriosFuncionariosController {
         else{
             view.exibeMensagem("Inicie uma tabela primeiro!");
         }
+    }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
+        }
+    }
+    
+    private Funcionario setarLog(String acao, String referencia){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+        if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, referencia);
+            return funcionario;
+        }
+        return null;
     }
 }
