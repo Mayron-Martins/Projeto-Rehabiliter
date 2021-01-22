@@ -68,7 +68,7 @@ public class BackupController {
             Date dataAtual = new Date();
             String nome = "LocalBackup";
             int codBackup = (int) (verificar.verificarUltimo("tblBackups", "codBackup")+1);
-            String endereco = System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bak";
+            String endereco = System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/";
             String tabelas = "Todas";
 
             Backup backup = new Backup(codBackup, nome, dataAtual, endereco, tabelas);
@@ -83,14 +83,11 @@ public class BackupController {
     }
     
     public void importarBanco(){
-        File file = new File(System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/LocalBackup.bak");
-        if(file.exists()){
-            backupDao.importarBanco();
+        String endereco = backupDao.buscarBackup();
+        if(endereco!=null){
+            backupDao.importarBanco(endereco);
             view.exibeMensagem("Sucesso!");
             inserirUltimoBackup();
-        }
-        else{
-            view.exibeMensagem("Realize um Backup Primeiro");
         }
     }
     

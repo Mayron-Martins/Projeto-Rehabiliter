@@ -4,15 +4,16 @@
  * and open the template in the editor.
  */
 package Dao;
-import Controller.auxiliar.LogsSystem;
-import Controller.auxiliar.SQLFiles;
+
+import Controller.auxiliar.Utilitarios;
+import Scripts.ScriptsGenerate;
+import Scripts.Sqlcmd;
 import View.inicio;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +24,9 @@ public abstract class Conexao {
     private final String pass = "164829";
     private final String url = "jdbc:sqlserver://localhost:1433; databaseName = Rehabiliter_Database;";
     private final FileCriator criarPastas = new FileCriator();
-    private final SQLFiles files = new SQLFiles();
+    private final ScriptsGenerate scripts = new ScriptsGenerate();
+    private final Sqlcmd sqlcmd = new Sqlcmd();
+    private final Utilitarios utilitarios = new Utilitarios();
 
     
     
@@ -37,14 +40,19 @@ public abstract class Conexao {
          TableCriator criarTabelas = new TableCriator(telaDeInicio);
         try{
             criarPastas.fileCriator();
-            files.stopDatabase();
+            scripts.gerarScripts();
+            sqlcmd.gerarBats();
+            utilitarios.inicializacao();
             if(existenciaDeBase.databaseConfirmed(user, pass) == false){
                 existenciaDeBase.databaseCriation(user, pass);
                 criarTabelas.createTables();
             }
-             System.out.println("Connection Successful");
+            if(utilitarios.testeMaster()){
+                sqlcmd.executeMaster();
+            }
         } catch (java.sql.SQLException erro){
-             System.out.println("Connection Failed");
+            JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco de Dados");
+            System.exit(1);
         }
     }
     

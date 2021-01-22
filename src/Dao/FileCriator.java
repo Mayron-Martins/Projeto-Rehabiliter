@@ -22,6 +22,7 @@ public class FileCriator {
         File pastaInfoComprovantes = new File("C:/Rehabiliter/Info/Comprovantes");
         File pastaComponents = new File("C:/Rehabiliter/Components");
         File pastaComponentsSystem = new File("C:/Rehabiliter/Components/System");
+        File pastaComponentsSystemScripts = new File("C:/Rehabiliter/Components/System/Scripts");
         File pastaComponentsLogs = new File("C:/Rehabiliter/Components/Logs");
         
         if(!pastapai.exists()){pastapai.mkdirs();}
@@ -30,6 +31,7 @@ public class FileCriator {
         if(!pastaInfoComprovantes.exists()){pastaInfoComprovantes.mkdirs();}
         if(!pastaComponents.exists()){pastaComponents.mkdirs();}
         if(!pastaComponentsSystem.exists()){pastaComponentsSystem.mkdirs();}
+        if(!pastaComponentsSystemScripts.exists()){pastaComponentsSystemScripts.mkdirs();}
         if(!pastaComponentsLogs.exists()){pastaComponentsLogs.mkdirs();}
     }
     
