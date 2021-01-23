@@ -25,15 +25,7 @@ public class BackupDao extends ConexaoMaster{
     private final DatabaseCriator dataBaseCriator = new DatabaseCriator();
     private final Sqlcmd sqlcmd = new Sqlcmd();
     
-    public void exportarBanco(){
-        /*try{
-            PreparedStatement statement = gerarStatement("USE master;"
-                    + "BACKUP DATABASE Rehabiliter_Database TO DISK = '"+System.getProperty("user.home")+"\\documents\\Rehabiliter\\Backups\\Local\\LocalBackup.bak'");
-            statement.execute();
-            statement.close();
-        } catch (SQLException ex) {
-            gerarLog(ex);
-        } */       
+    public void exportarBanco(){   
         sqlcmd.executeFullBackup();
     }
     

@@ -42,6 +42,7 @@ public abstract class Conexao {
             criarPastas.fileCriator();
             scripts.gerarScripts();
             sqlcmd.gerarBats();
+            sqlcmd.gerarBatsOnline();
             utilitarios.inicializacao();
             if(existenciaDeBase.databaseConfirmed(user, pass) == false){
                 existenciaDeBase.databaseCriation(user, pass);
