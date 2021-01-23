@@ -16,6 +16,7 @@ import Model.Funcionario;
 import View.BackupView;
 import Model.auxiliar.Backup;
 import Model.auxiliar.LogAçoesFuncionario;
+import Scripts.Sqlcmd;
 import View.LoginFuncionario;
 import View.LoginGerente;
 import java.io.File;
@@ -38,6 +39,7 @@ public class BackupController {
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
+    private final Sqlcmd sqlcmd = new Sqlcmd();
 
     public BackupController(BackupView view) {
         this.view = view;
@@ -91,6 +93,7 @@ public class BackupController {
         }
     }
     
+    
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();
         gerarLog.gravarErro(erro);
@@ -110,6 +113,7 @@ public class BackupController {
             jump.setVisible(true);
         }
     }
+    
     
     private Funcionario setarLog(String acao, String descricao){
         ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");

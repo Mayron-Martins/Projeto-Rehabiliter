@@ -65,42 +65,6 @@ public class Sqlcmd {
         }
     }
     
-    public void gerarBatsOnline(){
-        String exporterAzure = "sqlpackage.exe /Action:Export "
-                + "/ssn:tcp:rehabiliterserver.database.windows.net,1433 "
-                + "/sdn: Rehabiliter_Database /su:adm61637659318 /sp:Rehab164819 "
-                + "/tf:\""+System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Nuvem/Backup_Nuvem.bacpac\" /p:Storage=File";
-        
-        String importerAzure = "sqlpackage.exe /Action:Import /tsn:tcp:rehabiliterserver.database.windows.net,1433 "
-                + "/tdn:Rehabiliter_Database /tu:adm61637659318 /tp:Rehab164819 "
-                + "/sf:\""+System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Nuvem/Backup_Nuvem.bacpac\"  /p:Storage=File";
-        
-        File exporterBac = new File("C:/Rehabiliter/Components/System/Scripts/Bat_ExporterAzure.bat");
-        File importerBac = new File("C:/Rehabiliter/Components/System/Scripts/Bat_ImporterAzure.bat");
-        
-        if(!exporterBac.exists()){
-            exportar.geraArquivoTxt(exporterAzure, "C:/Rehabiliter/Components/System/Scripts/Bat_ExporterAzure.bat");
-        }
-        if(!importerBac.exists()){
-            exportar.geraArquivoTxt(importerAzure, "C:/Rehabiliter/Components/System/Scripts/Bat_ImporterAzure.bat");
-        }
-    }
-    
-    public void executarExporterAzure(){
-        try {
-            Runtime.getRuntime().exec("cmd.exe /C \" C:/Rehabiliter/Components/System/Scripts/Bat_ExporterAzure.bat");
-        } catch (IOException ex) {
-            gerarLog(ex);
-        }
-    }
-    
-    public void executarImporterAzure(){
-        try {
-            Runtime.getRuntime().exec("C:/Rehabiliter/Components/System/Scripts/Bat_ImporterAzure.bat");
-        } catch (IOException ex) {
-            gerarLog(ex);
-        }
-    }
     
     //Gerar arquivo com o log de erro, caso haja
     private void gerarLog(Throwable erro){

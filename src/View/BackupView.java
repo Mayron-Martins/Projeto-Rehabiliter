@@ -51,7 +51,7 @@ public class BackupView extends javax.swing.JDialog {
         btnImportarNuvem.setBackground(new Color(0,0,0,0));
         painelLocal.setEnabled(true);
         painelNuvem.setEnabled(false);
-        
+        painelNuvem.setVisible(false);
         this.teclasDeAtalho();
     }
 
@@ -121,6 +121,11 @@ public class BackupView extends javax.swing.JDialog {
         painelNuvem.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
         btnExportarNuvem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/btnExportar.png"))); // NOI18N
+        btnExportarNuvem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarNuvemActionPerformed(evt);
+            }
+        });
         painelNuvem.add(btnExportarNuvem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/quadro.png"))); // NOI18N
@@ -183,7 +188,7 @@ public class BackupView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnImportarLocalActionPerformed
 
     private void btnImportarNuvemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarNuvemActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnImportarNuvemActionPerformed
 
     private void painelLocalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelLocalMouseClicked
@@ -203,6 +208,10 @@ public class BackupView extends javax.swing.JDialog {
     private void btnExportarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarLocalActionPerformed
         controller.adicionarDadosnoBanco();
     }//GEN-LAST:event_btnExportarLocalActionPerformed
+
+    private void btnExportarNuvemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarNuvemActionPerformed
+        
+    }//GEN-LAST:event_btnExportarNuvemActionPerformed
 
     /**
      * @param args the command line arguments
