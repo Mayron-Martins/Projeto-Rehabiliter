@@ -773,6 +773,16 @@ public class CaixaController {
         gerarLog.close();
     }
     
+    public void ajuda(){
+        String atalhos = "\u07CBESC = Sair da Tela\n"
+                + "\u07CBF1 = Painel de Pagamento\n";
+        
+        view.getPainelAjuda().setModal(true);
+        view.getPainelAjuda().getCampoAtalhos().setText("");
+        view.getPainelAjuda().getCampoAtalhos().append(atalhos);
+        view.getPainelAjuda().setVisible(true);
+    }
+    
     public void sairTela(){
         funcionarioDao.atualizarStatusAll();
         Funcionario funcionario = this.setarLogAcoesFuncionario("Saída do Sistema", null);

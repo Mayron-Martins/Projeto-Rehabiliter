@@ -9,6 +9,7 @@ import Controller.CaixaController;
 import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
+import View.Paineis.PainelAjuda;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -38,6 +39,7 @@ public class Caixa extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final int numeroTela = 8;
     private final CaixaController controller;
+    private final PainelAjuda painelAjuda;
 
     /**
      * Creates new form Caixa
@@ -49,6 +51,7 @@ public class Caixa extends javax.swing.JDialog {
         initComponents();
         
         this.parent = parent;
+        painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width-200, this.getLocation().y);
         
         controller = new CaixaController(this);
         botaoBuscarCliente.setBackground(new Color(0,0,0,0));
@@ -127,6 +130,7 @@ public class Caixa extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         campoVTotal = new JMoneyField();
         jLabel2 = new javax.swing.JLabel();
+        botaoAjuda = new javax.swing.JButton();
         Fundo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -538,6 +542,17 @@ public class Caixa extends javax.swing.JDialog {
         jLabel2.setText("R$");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 620, 38, 40));
 
+        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAjuda.setText("?");
+        botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAjudaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(1235, 5, -1, -1));
+
         Fundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/fundoCaixa.jpg"))); // NOI18N
         getContentPane().add(Fundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -751,6 +766,10 @@ public class Caixa extends javax.swing.JDialog {
         campoDinheiro.setEnabled(false);
     }//GEN-LAST:event_campoParcelasMouseClicked
 
+    private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
+        controller.ajuda();
+    }//GEN-LAST:event_botaoAjudaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -802,6 +821,7 @@ public class Caixa extends javax.swing.JDialog {
     private javax.swing.JRadioButton alternarProdCodigo;
     private javax.swing.JRadioButton alternarProdNome;
     private javax.swing.JButton botaoAdicionar;
+    private javax.swing.JButton botaoAjuda;
     private javax.swing.JButton botaoBuscarCliente;
     private javax.swing.JButton botaoBuscarProdutos;
     private javax.swing.JButton botaoConfirmar;
@@ -951,6 +971,11 @@ public class Caixa extends javax.swing.JDialog {
     public Frame getParent() {
         return parent;
     }
+
+    public PainelAjuda getPainelAjuda() {
+        return painelAjuda;
+    }
+    
     
     
     

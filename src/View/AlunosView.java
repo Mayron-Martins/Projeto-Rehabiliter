@@ -11,6 +11,7 @@ import Controller.auxiliar.JMoneyField;
 import Controller.auxiliar.LogsSystem;
 import View.Paineis.AlunosConfigAdicionais;
 import View.Paineis.AlunosDescricao;
+import View.Paineis.PainelAjuda;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
@@ -48,6 +49,7 @@ public class AlunosView extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
     private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
     private javax.swing.JComboBox<String> comboEstado = new JComboBox<>();
+    private final PainelAjuda painelAjuda;
     /**
      * Creates new form Alunos
      * @param parent
@@ -59,6 +61,7 @@ public class AlunosView extends javax.swing.JDialog {
         
         this.parent = parent;
         telaAlunosCadastro = new AlunosCadastro(parent, false);
+        painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
         
         this.setarComposicaoTabelas();
         this.painelConfigAdicionais = new AlunosConfigAdicionais(parent, false, this);
@@ -140,6 +143,7 @@ public class AlunosView extends javax.swing.JDialog {
         botaoAlunos = new javax.swing.JButton();
         botaoObservacao = new javax.swing.JButton();
         modoTurma = new javax.swing.JLabel();
+        botaoAjuda = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -483,6 +487,17 @@ public class AlunosView extends javax.swing.JDialog {
         modoTurma.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(modoTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 678, 190, 15));
 
+        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAjuda.setText("?");
+        botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAjudaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/Alunos.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -671,6 +686,10 @@ public class AlunosView extends javax.swing.JDialog {
         painelDescricao.setModal(true);
         painelDescricao.setVisible(true);
     }//GEN-LAST:event_botaoObservacaoActionPerformed
+
+    private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
+        controller.ajuda();
+    }//GEN-LAST:event_botaoAjudaActionPerformed
      
     /**
      * @param args the command line arguments
@@ -716,6 +735,7 @@ public class AlunosView extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
+    private javax.swing.JButton botaoAjuda;
     private javax.swing.JButton botaoAlunos;
     private javax.swing.JButton botaoConfigAdicionais;
     private javax.swing.JButton botaoEditar;
@@ -872,6 +892,12 @@ public class AlunosView extends javax.swing.JDialog {
     public JButton getBotaoConfigAdicionais() {
         return botaoConfigAdicionais;
     }
+
+    public PainelAjuda getPainelAjuda() {
+        return painelAjuda;
+    }
+    
+    
         
     private void selecionarTabelas(int opcao){
         switch(opcao){
@@ -930,6 +956,18 @@ public class AlunosView extends javax.swing.JDialog {
                     controller.verificacaoDeTurmaEServico();
                 }
                 controller.listarAlunos();
+            }
+        });
+        
+        //excluir aluno
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "DELETE");
+        meurootpane.getRootPane().getActionMap().put("DELETE", new AbstractAction("DELETE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(comboTurmasExistentes.getItemCount()==0){
+                    controller.verificacaoDeTurmaEServico();
+                }
+                controller.removerAluno();
             }
         });
         

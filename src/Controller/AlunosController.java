@@ -1426,6 +1426,22 @@ public class AlunosController {
         }
     }
     
+    public void ajuda(){
+        String atalhos = "\u07CBESC = Sair da Tela\n"
+                + "\u07CBF5 = Atualizar Tabela\n"
+                + "\u07CBDEL = Remover Aluno\n"
+                + "\u07CBESQUERDA = Movimentar Painéis\n"
+                + "\u07CBDIREITA = Movimentar Painéis\n"
+                + "\u07CBCTRL + E = Editar Aluno\n"
+                + "\u07CBCTRL + N = Cadastrar Novo Funcionário\n"
+                + "\u07CBCTRL + T = Trocar Modo de Turma\n";
+        
+        view.getPainelAjuda().setModal(true);
+        view.getPainelAjuda().getCampoAtalhos().setText("");
+        view.getPainelAjuda().getCampoAtalhos().append(atalhos);
+        view.getPainelAjuda().setVisible(true);
+    }
+    
     
     //Gerar arquivo com o log de erro, caso haja
     private void gerarLog(Throwable erro){
