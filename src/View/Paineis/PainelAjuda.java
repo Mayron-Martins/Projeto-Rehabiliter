@@ -41,8 +41,9 @@ public class PainelAjuda extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(236, 400));
         setResizable(false);
-        setSize(new java.awt.Dimension(200, 250));
+        setSize(new java.awt.Dimension(236, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(116, 174, 159));
@@ -53,7 +54,7 @@ public class PainelAjuda extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("TECLAS DE ATALHO");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(170, 170));
@@ -62,10 +63,10 @@ public class PainelAjuda extends javax.swing.JDialog {
         campoAtalhos.setColumns(20);
         campoAtalhos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         campoAtalhos.setRows(5);
-        campoAtalhos.setPreferredSize(new java.awt.Dimension(250, 200));
+        campoAtalhos.setPreferredSize(new java.awt.Dimension(300, 200));
         jScrollPane1.setViewportView(campoAtalhos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 320, 270));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 80, 220, 270));
 
         botaoFecharConf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharPeq.png"))); // NOI18N
         botaoFecharConf.addActionListener(new java.awt.event.ActionListener() {
@@ -75,7 +76,7 @@ public class PainelAjuda extends javax.swing.JDialog {
         });
         jPanel1.add(botaoFecharConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 400));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 236, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
