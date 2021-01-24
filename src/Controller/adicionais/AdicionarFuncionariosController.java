@@ -69,7 +69,7 @@ public class AdicionarFuncionariosController {
             String complemento = "";
             String referencia = "";
 
-            String telasPermitidas = "1,2,3,4,5,6,7,8,9";
+            String telasPermitidas = "1,2,3,4,5,6,7,8,9,10";
             String status = "Inativo";
             String situacao = "Contratado";
 
