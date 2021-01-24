@@ -74,6 +74,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         botaoMenu.setBackground(new Color(0,0,0,0));
         botaoFuncionarios.setBackground(new Color(0,0,0,0));
         jScrollPane1.setVisible(false);
+        jScrollPane2.setVisible(false);
         setExtendedState(MAXIMIZED_BOTH);
         
         
@@ -90,6 +91,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         
         
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
+        this.teclasDeAtalho();
     }
 
     /**
@@ -123,6 +125,8 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         botaoMenu = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaAniversariantes = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelaVencimentos = new javax.swing.JTable();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -295,6 +299,8 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         });
         getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 20, 110, 70));
 
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(330, 402));
+
         tabelaAniversariantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -320,9 +326,8 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         });
         tabelaAniversariantes.setAutoscrolls(false);
         tabelaAniversariantes.setRowSelectionAllowed(false);
-        tabelaAniversariantes.getTableHeader().setResizingAllowed(false);
-        this.defineRenderers();
         tabelaAniversariantes.getTableHeader().setReorderingAllowed(false);
+        this.defineRenderersTabelaAniversariantes();
         tabelaAniversariantes.setBackground(new Color(0,134, 190));
         tabelaAniversariantes.setForeground(Color.WHITE);
         tabelaAniversariantes.setShowGrid(false);
@@ -332,7 +337,46 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 350, 316, 180));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 330, 190));
+
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(330, 402));
+
+        tabelaVencimentos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Aluno (Plano Vencido)", "Turma"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaVencimentos.setAutoscrolls(false);
+        tabelaVencimentos.setRowSelectionAllowed(false);
+        this.defineRenderersTabelaVencidos();
+        tabelaVencimentos.setBackground(new Color(0,134, 190));
+        tabelaVencimentos.setForeground(Color.WHITE);
+        tabelaVencimentos.setShowGrid(false);
+        jScrollPane2.setViewportView(tabelaVencimentos);
+
+        jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0,0), 1, true));
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 330, 190));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-gerentefundo.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, -1));
@@ -405,6 +449,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         controller.inicializarTabela();
         controller.setarPlanos();
+        controller.atualizacoes();
     }//GEN-LAST:event_formWindowOpened
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
@@ -563,37 +608,49 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private javax.swing.JButton botaoServicos;
     private javax.swing.JButton botaoTurmas;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel menuGerente;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JLabel planodefundo1;
     private javax.swing.JTable tabelaAniversariantes;
+    private javax.swing.JTable tabelaVencimentos;
     // End of variables declaration//GEN-END:variables
     
-    private void defineRenderers() {
-    DefaultTableCellRenderer rendererCentro = new DefaultTableCellRenderer();
-    rendererCentro.setHorizontalAlignment(SwingConstants.CENTER);
-    DefaultTableCellHeaderRenderer headerCentro = new DefaultTableCellHeaderRenderer();
-    headerCentro.setHorizontalAlignment(SwingConstants.CENTER);
-    DefaultTableCellRenderer rendererDireita = new DefaultTableCellRenderer();
-    rendererDireita.setHorizontalAlignment(SwingConstants.RIGHT);
-    DefaultTableCellRenderer rendererEsquerda = new DefaultTableCellRenderer();
-    rendererEsquerda.setHorizontalAlignment(SwingConstants.LEFT);
+    private void defineRenderersTabelaAniversariantes() {
+	DefaultTableCellRenderer rendererCentro = new DefaultTableCellRenderer();
+	rendererCentro.setHorizontalAlignment(SwingConstants.CENTER);
+        DefaultTableCellHeaderRenderer headerCentro = new DefaultTableCellHeaderRenderer();
+        headerCentro.setHorizontalAlignment(SwingConstants.CENTER);
 
-    JTableHeader header = tabelaAniversariantes.getTableHeader(); 
-    header.setPreferredSize(new Dimension(0, 35)); 
-    TableColumnModel modeloDaColuna = tabelaAniversariantes.getColumnModel();
+	TableColumnModel modeloDaColuna = tabelaAniversariantes.getColumnModel();
+	
+        //Tabela Aniversariantes
+	modeloDaColuna.getColumn(0).setCellRenderer(rendererCentro);
+	modeloDaColuna.getColumn(1).setCellRenderer(rendererCentro);
+	modeloDaColuna.getColumn(2).setCellRenderer(rendererCentro);
+        
+        DefaultTableCellRenderer defaultheader = (DefaultTableCellRenderer) tabelaAniversariantes.getTableHeader().getDefaultRenderer();
+        defaultheader.setHorizontalAlignment(SwingConstants.CENTER);
 
-    modeloDaColuna.getColumn(0).setCellRenderer(rendererCentro);
-    modeloDaColuna.getColumn(1).setCellRenderer(rendererCentro);
-    modeloDaColuna.getColumn(2).setCellRenderer(rendererCentro);
+        tabelaAniversariantes.getTableHeader().setResizingAllowed(true);
+    }
+    private void defineRenderersTabelaVencidos() {
+	DefaultTableCellRenderer rendererCentro = new DefaultTableCellRenderer();
+	rendererCentro.setHorizontalAlignment(SwingConstants.CENTER);
+        DefaultTableCellHeaderRenderer headerCentro = new DefaultTableCellHeaderRenderer();
+        headerCentro.setHorizontalAlignment(SwingConstants.CENTER);
 
-    DefaultTableCellRenderer defaultheader = (DefaultTableCellRenderer) tabelaAniversariantes.getTableHeader().getDefaultRenderer();
-    defaultheader.setHorizontalAlignment(SwingConstants.CENTER);
+        TableColumnModel modeloDaColuna2 = tabelaVencimentos.getColumnModel();
 
-    modeloDaColuna.getColumn(0).setMaxWidth(145);
-    modeloDaColuna.getColumn(1).setMaxWidth(90);
-    modeloDaColuna.getColumn(2).setMaxWidth(95);
-
+        //Tabela Vencimentos
+        modeloDaColuna2.getColumn(0).setCellRenderer(rendererCentro);
+	modeloDaColuna2.getColumn(1).setCellRenderer(rendererCentro);
+        
+        
+        DefaultTableCellRenderer defaultheader2 = (DefaultTableCellRenderer) tabelaVencimentos.getTableHeader().getDefaultRenderer();
+        defaultheader2.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        tabelaVencimentos.getTableHeader().setResizingAllowed(true);
     }
     
     public void exibeMensagem(String mensagem) {
@@ -604,9 +661,20 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         return jScrollPane1;
     }
 
+    public JScrollPane getjScrollPane2() {
+        return jScrollPane2;
+    }
+
+    
     public JTable getTabelaAniversariantes() {
         return tabelaAniversariantes;
     }
+
+    public JTable getTabelaVencimentos() {
+        return tabelaVencimentos;
+    }
+    
+    
     
     public void teclasDeAtalho() {
         //Fechar Tela

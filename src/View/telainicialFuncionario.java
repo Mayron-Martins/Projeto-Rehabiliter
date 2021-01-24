@@ -6,6 +6,7 @@
 package View;
 
 import Controller.adicionais.TelaInicioFuncionariosController;
+import View.Paineis.Novidades;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -71,6 +72,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         jScrollPane1.setVisible(false);
+        jScrollPane2.setVisible(false);
         menuFuncionario.setVisible(false);
         menuFuncionario.setBackground(new Color(0,0,0,2));
         
@@ -90,7 +92,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoCaixa1.setBackground(new Color(0,0,0,0));
         
         this.teclasDeAtalho();
-        
     }
 
     /**
@@ -102,6 +103,18 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        botaoSair = new javax.swing.JButton();
+        botaoCaixa = new javax.swing.JButton();
+        botaoAlunos = new javax.swing.JButton();
+        botaoFrequencia = new javax.swing.JButton();
+        botaoFinanceiro = new javax.swing.JButton();
+        botaoMenu = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelaVencimentos = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaAniversariantes = new javax.swing.JTable();
+        animaçãoRehabiliter = new javax.swing.JLabel();
+        planodefundo = new javax.swing.JLabel();
         menuFuncionario = new javax.swing.JPanel();
         botaoFechar = new javax.swing.JButton();
         botaoBackup = new javax.swing.JButton();
@@ -114,16 +127,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoCaixa1 = new javax.swing.JButton();
         botaoSair1 = new javax.swing.JButton();
         planodefundo1 = new javax.swing.JLabel();
-        botaoSair = new javax.swing.JButton();
-        botaoCaixa = new javax.swing.JButton();
-        botaoAlunos = new javax.swing.JButton();
-        botaoFrequencia = new javax.swing.JButton();
-        botaoFinanceiro = new javax.swing.JButton();
-        botaoMenu = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaAniversariantes = new javax.swing.JTable();
-        animaçãoRehabiliter = new javax.swing.JLabel();
-        planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -134,6 +137,144 @@ public class telainicialFuncionario extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSairActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 935, 50, 20));
+
+        botaoCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaprincipal.png"))); // NOI18N
+        botaoCaixa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaHoverPrincipal.png"))); // NOI18N
+        botaoCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCaixaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoCaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 120, -1, -1));
+
+        botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosprincipal.png"))); // NOI18N
+        botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosHoverprincipal.png"))); // NOI18N
+        botaoAlunos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlunosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
+
+        botaoFrequencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaprincipal.png"))); // NOI18N
+        botaoFrequencia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaHoverprincipal.png"))); // NOI18N
+        botaoFrequencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFrequenciaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 118, -1, -1));
+
+        botaoFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroprincipal.png"))); // NOI18N
+        botaoFinanceiro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroHoverprincipal.png"))); // NOI18N
+        botaoFinanceiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFinanceiroActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 120, -1, -1));
+
+        botaoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuprincipal.png"))); // NOI18N
+        botaoMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuHoverPrincipal.png"))); // NOI18N
+        botaoMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoMenuActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 20, -1, -1));
+
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(330, 402));
+
+        tabelaVencimentos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Aluno (Plano Vencido)", "Turma"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaVencimentos.setAutoscrolls(false);
+        tabelaVencimentos.setRowSelectionAllowed(false);
+        this.defineRenderersTabelaVencidos();
+        tabelaVencimentos.setBackground(new Color(0,134, 190));
+        tabelaVencimentos.setForeground(Color.WHITE);
+        tabelaVencimentos.setShowGrid(false);
+        jScrollPane2.setViewportView(tabelaVencimentos);
+
+        jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0,0), 1, true));
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 330, 190));
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(330, 402));
+
+        tabelaAniversariantes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Aniversariante do Mês", "Turma", "Dia"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaAniversariantes.setAutoscrolls(false);
+        tabelaAniversariantes.setRowSelectionAllowed(false);
+        tabelaAniversariantes.getTableHeader().setReorderingAllowed(false);
+        this.defineRenderersTabelaAniversariantes();
+        tabelaAniversariantes.setBackground(new Color(0,134, 190));
+        tabelaAniversariantes.setForeground(Color.WHITE);
+        tabelaAniversariantes.setShowGrid(false);
+        jScrollPane1.setViewportView(tabelaAniversariantes);
+
+        jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0,0), 1, true));
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 330, 190));
+
+        animaçãoRehabiliter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
+        getContentPane().add(animaçãoRehabiliter, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 740, 430, 260));
+
+        planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-funcionáriofundo.jpg"))); // NOI18N
+        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 1000));
 
         menuFuncionario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -230,104 +371,6 @@ public class telainicialFuncionario extends javax.swing.JFrame {
 
         getContentPane().add(menuFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSairActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 935, 50, 20));
-
-        botaoCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaprincipal.png"))); // NOI18N
-        botaoCaixa.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/caixaHoverPrincipal.png"))); // NOI18N
-        botaoCaixa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoCaixaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoCaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 120, -1, -1));
-
-        botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosprincipal.png"))); // NOI18N
-        botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/alunosHoverprincipal.png"))); // NOI18N
-        botaoAlunos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAlunosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
-
-        botaoFrequencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaprincipal.png"))); // NOI18N
-        botaoFrequencia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/frequenciaHoverprincipal.png"))); // NOI18N
-        botaoFrequencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoFrequenciaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 118, -1, -1));
-
-        botaoFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroprincipal.png"))); // NOI18N
-        botaoFinanceiro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/financeiroHoverprincipal.png"))); // NOI18N
-        botaoFinanceiro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoFinanceiroActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 120, -1, -1));
-
-        botaoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuprincipal.png"))); // NOI18N
-        botaoMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialfuncionario/menuHoverPrincipal.png"))); // NOI18N
-        botaoMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoMenuActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 20, -1, -1));
-
-        tabelaAniversariantes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Aniversariante do Mês", "Turma", "Dia"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabelaAniversariantes.setAutoscrolls(false);
-        tabelaAniversariantes.setRowSelectionAllowed(false);
-        tabelaAniversariantes.getTableHeader().setResizingAllowed(false);
-        this.defineRenderers();
-        tabelaAniversariantes.getTableHeader().setReorderingAllowed(false);
-        tabelaAniversariantes.setBackground(new Color(0,134, 190));
-        tabelaAniversariantes.setForeground(Color.WHITE);
-        tabelaAniversariantes.setShowGrid(false);
-        jScrollPane1.setViewportView(tabelaAniversariantes);
-
-        jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0,0), 1, true));
-        jScrollPane1.setOpaque(false);
-        jScrollPane1.getViewport().setOpaque(false);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
-
-        animaçãoRehabiliter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehab.gif"))); // NOI18N
-        getContentPane().add(animaçãoRehabiliter, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 740, 430, 260));
-
-        planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-funcionáriofundo.jpg"))); // NOI18N
-        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 1000));
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -381,12 +424,9 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCaixaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        /*
-        JIFAlunosCadastro tela = new JIFAlunosCadastro();
-        jdpPrincipal.add(tela);
-        tela.setVisible(true);*/
         controller.inicializarTabela();
         controller.setarPlanos();
+        controller.atualizacoes();
     }//GEN-LAST:event_formWindowOpened
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
@@ -540,26 +580,23 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton botaoServicos;
     private javax.swing.JButton botaoTurmas;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel menuFuncionario;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JLabel planodefundo1;
     private javax.swing.JTable tabelaAniversariantes;
+    private javax.swing.JTable tabelaVencimentos;
     // End of variables declaration//GEN-END:variables
 
-    private void defineRenderers() {
+    private void defineRenderersTabelaAniversariantes() {
 	DefaultTableCellRenderer rendererCentro = new DefaultTableCellRenderer();
 	rendererCentro.setHorizontalAlignment(SwingConstants.CENTER);
         DefaultTableCellHeaderRenderer headerCentro = new DefaultTableCellHeaderRenderer();
         headerCentro.setHorizontalAlignment(SwingConstants.CENTER);
-	DefaultTableCellRenderer rendererDireita = new DefaultTableCellRenderer();
-	rendererDireita.setHorizontalAlignment(SwingConstants.RIGHT);
-	DefaultTableCellRenderer rendererEsquerda = new DefaultTableCellRenderer();
-	rendererEsquerda.setHorizontalAlignment(SwingConstants.LEFT);
 
-	JTableHeader header = tabelaAniversariantes.getTableHeader(); 
-	header.setPreferredSize(new Dimension(0, 35)); 
 	TableColumnModel modeloDaColuna = tabelaAniversariantes.getColumnModel();
 	
+        //Tabela Aniversariantes
 	modeloDaColuna.getColumn(0).setCellRenderer(rendererCentro);
 	modeloDaColuna.getColumn(1).setCellRenderer(rendererCentro);
 	modeloDaColuna.getColumn(2).setCellRenderer(rendererCentro);
@@ -567,11 +604,26 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         DefaultTableCellRenderer defaultheader = (DefaultTableCellRenderer) tabelaAniversariantes.getTableHeader().getDefaultRenderer();
         defaultheader.setHorizontalAlignment(SwingConstants.CENTER);
 
-	modeloDaColuna.getColumn(0).setMaxWidth(145);
-	modeloDaColuna.getColumn(1).setMaxWidth(90);
-	modeloDaColuna.getColumn(2).setMaxWidth(95);
+        tabelaAniversariantes.getTableHeader().setResizingAllowed(true);
+    }
+    private void defineRenderersTabelaVencidos() {
+	DefaultTableCellRenderer rendererCentro = new DefaultTableCellRenderer();
+	rendererCentro.setHorizontalAlignment(SwingConstants.CENTER);
+        DefaultTableCellHeaderRenderer headerCentro = new DefaultTableCellHeaderRenderer();
+        headerCentro.setHorizontalAlignment(SwingConstants.CENTER);
 
-}
+        TableColumnModel modeloDaColuna2 = tabelaVencimentos.getColumnModel();
+
+        //Tabela Vencimentos
+        modeloDaColuna2.getColumn(0).setCellRenderer(rendererCentro);
+	modeloDaColuna2.getColumn(1).setCellRenderer(rendererCentro);
+        
+        
+        DefaultTableCellRenderer defaultheader2 = (DefaultTableCellRenderer) tabelaVencimentos.getTableHeader().getDefaultRenderer();
+        defaultheader2.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        tabelaVencimentos.getTableHeader().setResizingAllowed(true);
+    }
 
     public void exibeMensagem(String mensagem) {
       JOptionPane.showMessageDialog(null, mensagem);
@@ -581,9 +633,18 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         return jScrollPane1;
     }
 
+    public JScrollPane getjScrollPane2() {
+        return jScrollPane2;
+    }
     public JTable getTabelaAniversariantes() {
         return tabelaAniversariantes;
     }
+
+    public JTable getTabelaVencimentos() {
+        return tabelaVencimentos;
+    }
+    
+    
     
     public void teclasDeAtalho() {
         //Fechar Tela
@@ -616,4 +677,5 @@ public class telainicialFuncionario extends javax.swing.JFrame {
             }
         });
     }
+    
 }

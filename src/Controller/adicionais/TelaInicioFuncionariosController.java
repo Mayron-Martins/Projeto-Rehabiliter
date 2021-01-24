@@ -6,6 +6,7 @@
 package Controller.adicionais;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.LogsSystem;
 import Dao.AlunosDao;
 import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
@@ -14,17 +15,26 @@ import Dao.ServicosDao;
 import Dao.TurmasDao;
 import Model.Aluno;
 import Model.Funcionario;
+import Model.Gerente;
 import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Servicos;
 import Model.auxiliar.Turmas;
+import View.Paineis.Novidades;
 import View.telainicialFuncionario;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,6 +44,7 @@ import javax.swing.table.DefaultTableModel;
 public class TelaInicioFuncionariosController {
     private final telainicialFuncionario view;
     private final DefaultTableModel tabelaDeAlunos;
+    private final DefaultTableModel tabelaDeVencidos;
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final AlunosDao alunosDao = new AlunosDao();
     private final TurmasDao turmasDao = new TurmasDao();
@@ -45,6 +56,7 @@ public class TelaInicioFuncionariosController {
     public TelaInicioFuncionariosController(telainicialFuncionario view) {
         this.view = view;
         this.tabelaDeAlunos = (DefaultTableModel) view.getTabelaAniversariantes().getModel();
+        this.tabelaDeVencidos = (DefaultTableModel) view.getTabelaVencimentos().getModel();
     }
     
     public void limparTabela(){
@@ -170,6 +182,7 @@ public class TelaInicioFuncionariosController {
                 if(plano.getSituacao().equals("Pendente")){
                     if(plano.getDataVencimento()!=null){
                         Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+plano.getCodAluno()).get(0);
+                        Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+plano.getCodTurma()).get(0);
                         Servicos servico = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+plano.getCodServico()).get(0);
                         Date dataUsual = plano.getDataVencimento();
                         Date dataAux = converterData.parseDate(converterData.parseDate(dataUsual));
@@ -177,18 +190,22 @@ public class TelaInicioFuncionariosController {
 
                         periodo = Period.between(dataVencimento, dataAtual);
                         if(periodo.getDays()>=1){
-                        planoAtual = new Planos(plano.getChavePlano(), plano.getCodAluno(), 0, 0, 0, plano.getDataVencimento(),
-                                plano.getDataPagamento(), plano.getDataCancelamento(), 
-                                plano.getDataRenovacao(),"Vencido");
-                        planosDao.atualizarSituacao(planoAtual);
-                        verificadorExistencia++;
-                            }
+                            planoAtual = new Planos(plano.getChavePlano(), plano.getCodAluno(), 0, 0, 0, plano.getDataVencimento(),
+                                    plano.getDataPagamento(), plano.getDataCancelamento(), 
+                                    plano.getDataRenovacao(),"Vencido");
+                            planosDao.atualizarSituacao(planoAtual);
+                            verificadorExistencia++;
+
+                            Object[]dadosTabela ={aluno.getNome(), turma.getCodBanco()+"."+turma.getNomeTurma()};
+                            tabelaDeVencidos.addRow(dadosTabela);
+                        }
                     }
                 }        
             }
             }
         if(verificadorExistencia>0){
             view.exibeMensagem("A mensalidade de alguns alunos vence hoje. Verifique a tela de Alunos!");
+            view.getjScrollPane2().setVisible(true);
         }
     }
     
@@ -228,6 +245,31 @@ public class TelaInicioFuncionariosController {
         return true;
     }
     
+    public void atualizacoes(){
+        try{
+               BufferedReader myBuffer = new BufferedReader(new InputStreamReader(new FileInputStream("C:/Rehabiliter/Components/System/Inicial.txt")));
+               String texto = myBuffer.readLine();
+               boolean habilitar = false;
+               while(texto!=null){
+                   if(texto.contains("Notes")){
+                       if(texto.contains("ON")){
+                           habilitar = true;
+                       }
+                   }
+                   texto = myBuffer.readLine();
+               }
+               myBuffer.close();
+               if(habilitar){
+                    Novidades telaNovidades = new Novidades(view, true);
+                    telaNovidades.setVisible(true);
+               }
+        } catch (FileNotFoundException ex) {
+            gerarLog(ex);
+        } catch (IOException ex) {
+            gerarLog(ex);
+        }
+    }
+    
     private LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios){
         Funcionario funcionario = funcionarios.get(0);
         Date dataEvento = new Date();
@@ -236,6 +278,11 @@ public class TelaInicioFuncionariosController {
         return logAcao;
     } 
     
+    private void gerarLog(Throwable erro){
+        LogsSystem gerarLog = new LogsSystem();
+        gerarLog.gravarErro(erro);
+        gerarLog.close();
+    }
 }
 
 
