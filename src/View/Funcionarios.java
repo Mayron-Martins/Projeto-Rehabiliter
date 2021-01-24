@@ -8,7 +8,9 @@ package View;
 import Controller.FuncionariosController;
 import Controller.auxiliar.JMoneyField;
 import Controller.auxiliar.LogsSystem;
+import View.Paineis.PainelAjuda;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -24,6 +26,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JRootPane;
 import javax.swing.JTable;
@@ -40,6 +43,7 @@ public class Funcionarios extends javax.swing.JDialog {
     private final FuncionariosAdicionar telaAdicionarFuncionarios;
     private String telasPermitidas;
     private final FrequenciaFuncionariosView telaFrequencia;
+    private final PainelAjuda painelAjuda;
     
 
     /**
@@ -54,6 +58,7 @@ public class Funcionarios extends javax.swing.JDialog {
         this.parent = parent;
         telaAdicionarFuncionarios = new FuncionariosAdicionar(parent, false);
         telaFrequencia = new FrequenciaFuncionariosView(parent, false);
+        painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
         
         controller = new FuncionariosController(this);
         botaobuscar1.setBackground(new Color(0,0,0,0));
@@ -117,6 +122,7 @@ public class Funcionarios extends javax.swing.JDialog {
         tabelaFuncionarios = new javax.swing.JTable();
         btnRelatorios = new javax.swing.JButton();
         botaoPermissoes = new javax.swing.JButton();
+        botaoAjuda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -129,6 +135,7 @@ public class Funcionarios extends javax.swing.JDialog {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        panelPerm.setBackground(new java.awt.Color(0, 102, 255));
         panelPerm.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         radioAlunosNao.addActionListener(new java.awt.event.ActionListener() {
@@ -390,6 +397,17 @@ public class Funcionarios extends javax.swing.JDialog {
         });
         getContentPane().add(botaoPermissoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 306, 130, 20));
 
+        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAjuda.setText("?");
+        botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAjudaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios/Sem título-1.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -447,14 +465,13 @@ public class Funcionarios extends javax.swing.JDialog {
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void botaoPermissoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPermissoesActionPerformed
-        // TODO add your handling code here:
+        panelPerm.setEnabled(true);
         panelPerm.setVisible(true);
         this.alternarRadios();
     }//GEN-LAST:event_botaoPermissoesActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         this.setarTelasPermitidas();
-        
         controller.atualizarTelasPermitidas();
         panelPerm.setVisible(false);
     }//GEN-LAST:event_btnFecharActionPerformed
@@ -547,6 +564,10 @@ public class Funcionarios extends javax.swing.JDialog {
         controller.selecionarTabela();
     }//GEN-LAST:event_tabelaFuncionariosKeyReleased
 
+    private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
+        controller.ajuda();
+    }//GEN-LAST:event_botaoAjudaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -591,6 +612,7 @@ public class Funcionarios extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar1;
+    private javax.swing.JButton botaoAjuda;
     private javax.swing.JButton botaoEditar1;
     private javax.swing.JButton botaoFechar1;
     private javax.swing.JButton botaoListar1;
@@ -733,6 +755,11 @@ public class Funcionarios extends javax.swing.JDialog {
     public Frame getParent() {
         return parent;
     }
+
+    public PainelAjuda getPainelAjuda() {
+        return painelAjuda;
+    }
+    
     
     
 
@@ -831,7 +858,7 @@ public class Funcionarios extends javax.swing.JDialog {
         tabelaFuncionarios.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(telefone));
         tabelaFuncionarios.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(celular));
         tabelaFuncionarios.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(new  JMoneyField()));
-    }
+    } 
     
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();

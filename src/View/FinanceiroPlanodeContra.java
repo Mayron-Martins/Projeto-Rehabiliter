@@ -7,6 +7,7 @@ package View;
 
 import Controller.PlanoGastosController;
 import Controller.auxiliar.JMoneyField;
+import View.Paineis.PainelAjuda;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Frame;
@@ -37,6 +38,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private final PlanoGastosController controller;
     private final FinanceiroPlanodeContraAdc telaContraAdicionar;
     private final JComboBox comboPagamentoGasto = new JComboBox();
+    private final PainelAjuda painelAjuda;
 
     /**
      * Creates new form FinanceiroPlanodeContra
@@ -49,6 +51,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         
         this.parent = parent;
         telaContraAdicionar= new FinanceiroPlanodeContraAdc(parent, false);
+         painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
         
         
         
@@ -93,6 +96,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         botaoVDetalhada = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        botaoAjuda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -228,6 +232,17 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         });
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 146, 34));
 
+        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAjuda.setText("?");
+        botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAjudaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodecontra.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -302,6 +317,10 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_formKeyPressed
 
+    private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
+        controller.ajuda();
+    }//GEN-LAST:event_botaoAjudaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -345,6 +364,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAjuda;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoVDetalhada;
     private javax.swing.JButton botaoVResumida;
@@ -417,6 +437,10 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
 
     public Frame getParent() {
         return parent;
+    }
+
+    public PainelAjuda getPainelAjuda() {
+        return painelAjuda;
     }
     
     

@@ -393,6 +393,19 @@ public class ReposicaoController {
         }
     }
     
+    public void ajuda(){
+        String atalhos = "\u07CBESC = Sair da Tela\n"
+                + "\u07CBF5 = Atualizar Tabela\n"
+                + "\u07CBDEL = Remover Reposição\n"
+                + "\u07CBCTRL + E = Editar Reposição\n"
+                + "\u07CBCTRL + Q = Editar Várias Reposições\n";
+        
+        view.getPainelAjuda().setModal(true);
+        view.getPainelAjuda().getCampoAtalhos().setText("");
+        view.getPainelAjuda().getCampoAtalhos().append(atalhos);
+        view.getPainelAjuda().setVisible(true);
+    }
+    
     //Gerar arquivo com o log de erro, caso haja
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();

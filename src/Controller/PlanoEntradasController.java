@@ -738,6 +738,16 @@ public class PlanoEntradasController {
         return valorMensal;
     }
     
+    public void ajuda(){
+        String atalhos = "\u07CBESC = Sair da Tela\n"
+                + "\u07CBCTRL + N = Cadastrar Nova Entrada\n";
+        
+        view.getPainelAjuda().setModal(true);
+        view.getPainelAjuda().getCampoAtalhos().setText("");
+        view.getPainelAjuda().getCampoAtalhos().append(atalhos);
+        view.getPainelAjuda().setVisible(true);
+    }
+    
     public void sairTela(){
         funcionarioDao.atualizarStatusAll();
         Funcionario funcionario = this.setarLog("Saída do Sistema", null);

@@ -349,6 +349,20 @@ public class ServicosController {
         }
     }
     
+    public void ajuda(){
+        String atalhos = "\u07CBESC = Sair da Tela\n"
+                + "\u07CBF5 = Atualizar Tabela\n"
+                + "\u07CBDEL = Remover Serviço\n"
+                + "\u07CBCTRL + E = Editar Serviço\n"
+                + "\u07CBCTRL + F = Encerrar ou Reabrir Serviço\n"
+                + "\u07CBCTRL + N = Cadastrar Novo Serviço\n";
+        
+        view.getPainelAjuda().setModal(true);
+        view.getPainelAjuda().getCampoAtalhos().setText("");
+        view.getPainelAjuda().getCampoAtalhos().append(atalhos);
+        view.getPainelAjuda().setVisible(true);
+    }
+    
     public void sairTela(){
         funcionarioDao.atualizarStatusAll();
         Funcionario funcionario = this.setarLog("Saída do Sistema", null);

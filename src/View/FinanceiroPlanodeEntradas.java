@@ -7,6 +7,7 @@ package View;
 
 import Controller.PlanoEntradasController;
 import Controller.auxiliar.JMoneyField;
+import View.Paineis.PainelAjuda;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Frame;
@@ -37,6 +38,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
     private final PlanoEntradasController controller;
     private final FinanceiroPlanodeEntradasAdc telaAdAEntradas;
     private final JComboBox comboPagamentoEntrada = new JComboBox();
+    private final PainelAjuda painelAjuda;
 
     /**
      * Creates new form FinanceiroPlanodeEntradas
@@ -49,6 +51,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         
         this.parent = parent;
         telaAdAEntradas= new FinanceiroPlanodeEntradasAdc(parent, false);
+         painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
         
         controller = new PlanoEntradasController(this);
         btnAdicionar.setBackground(new Color(0,0,0,0));
@@ -95,6 +98,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         tabelaEntradas = new javax.swing.JTable();
         btnMensalidadesAReceber = new javax.swing.JButton();
         btnContasRecebidas = new javax.swing.JButton();
+        botaoAjuda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -323,6 +327,17 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         });
         getContentPane().add(btnContasRecebidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 211, 35));
 
+        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAjuda.setText("?");
+        botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAjudaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodeentrada.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -406,6 +421,10 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         controller.setarTabelaPlanosPendentes();
     }//GEN-LAST:event_btnMensalidadesAReceberActionPerformed
 
+    private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
+        controller.ajuda();
+    }//GEN-LAST:event_botaoAjudaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -449,6 +468,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAjuda;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoVDetalhada;
     private javax.swing.JButton botaoVResumida;
@@ -548,6 +568,10 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
 
     public Frame getParent() {
         return parent;
+    }
+
+    public PainelAjuda getPainelAjuda() {
+        return painelAjuda;
     }
     
     

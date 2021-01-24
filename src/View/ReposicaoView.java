@@ -7,6 +7,7 @@ package View;
 
 import Controller.adicionais.ReposicaoController;
 import Controller.auxiliar.FormatacaoCamposRestritosLetras;
+import View.Paineis.PainelAjuda;
 import com.sun.glass.events.KeyEvent;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
@@ -29,6 +30,7 @@ public class ReposicaoView extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final HistoricoRehab telaHistorico;
     private final ReposicaoController controller;
+    private final PainelAjuda painelAjuda;
     /**
      * Creates new form ReposicaoView
      * @param parent
@@ -40,6 +42,7 @@ public class ReposicaoView extends javax.swing.JDialog {
         
         this.parent = parent;
         this.telaHistorico = new HistoricoRehab(parent, false);
+        painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
         
         controller = new ReposicaoController(this);
         
@@ -78,6 +81,7 @@ public class ReposicaoView extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaAgendados = new javax.swing.JTable();
         botaoTodasReposicoes = new javax.swing.JButton();
+        botaoAjuda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -233,6 +237,17 @@ public class ReposicaoView extends javax.swing.JDialog {
         });
         getContentPane().add(botaoTodasReposicoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 660, 220, -1));
 
+        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAjuda.setText("?");
+        botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAjudaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/reposicao/fundo.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -293,6 +308,10 @@ public class ReposicaoView extends javax.swing.JDialog {
         controller.exibirFuturasReposicoes();
     }//GEN-LAST:event_botaoTodasReposicoesActionPerformed
 
+    private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
+        controller.ajuda();
+    }//GEN-LAST:event_botaoAjudaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -337,6 +356,7 @@ public class ReposicaoView extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
+    private javax.swing.JButton botaoAjuda;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoTodasReposicoes;
     private javax.swing.JButton botaobuscar;
@@ -395,6 +415,10 @@ public class ReposicaoView extends javax.swing.JDialog {
 
     public Frame getParent() {
         return parent;
+    }
+
+    public PainelAjuda getPainelAjuda() {
+        return painelAjuda;
     }
     
     

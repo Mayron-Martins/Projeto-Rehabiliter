@@ -8,6 +8,7 @@ package View;
 
 import Controller.TurmasController;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
+import View.Paineis.PainelAjuda;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -40,6 +41,7 @@ public class TurmasView extends javax.swing.JDialog {
     private String campoHorario="";
     private final TurmasAdicionar telaTurmasAdicionar;
     private final turmasFrequencia telaTurmasFrequencia;
+    private final PainelAjuda painelAjuda;
 
     /**
      * Creates new form Turmas
@@ -52,6 +54,7 @@ public class TurmasView extends javax.swing.JDialog {
         this.parent = parent;
         telaTurmasAdicionar=new TurmasAdicionar(parent, false);
         telaTurmasFrequencia=new turmasFrequencia(parent, false);
+        painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
         controller = new TurmasController(this);
         botaoAdicionarTurmas.setBackground(new Color(0,0,0,0));
         botaoEditarTurmas.setBackground(new Color(0,0,0,0));
@@ -96,6 +99,7 @@ public class TurmasView extends javax.swing.JDialog {
         comboSituacao = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaTurmas = new javax.swing.JTable();
+        botaoAjuda = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -271,6 +275,17 @@ public class TurmasView extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
+        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAjuda.setText("?");
+        botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAjudaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/fundo.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -354,6 +369,10 @@ public class TurmasView extends javax.swing.JDialog {
     private void tabelaTurmasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaTurmasKeyReleased
         controller.selecionarTabela();
     }//GEN-LAST:event_tabelaTurmasKeyReleased
+
+    private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
+        controller.ajuda();
+    }//GEN-LAST:event_botaoAjudaActionPerformed
    
     /**
      * @param args the command line arguments
@@ -403,6 +422,7 @@ public class TurmasView extends javax.swing.JDialog {
     private javax.swing.JScrollBar barraDeRolagemDiasdaSemana;
     private javax.swing.JLayeredPane blocoDiasdaSemana;
     private javax.swing.JButton botaoAdicionarTurmas;
+    private javax.swing.JButton botaoAjuda;
     private javax.swing.JButton botaoEditarTurmas;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoListarTurmas;
@@ -578,6 +598,12 @@ private void diasDaSemana(){
     public JComboBox<String> getComboSituacao() {
         return comboSituacao;
     }
+
+    public PainelAjuda getPainelAjuda() {
+        return painelAjuda;
+    }
+    
+    
     
     
     

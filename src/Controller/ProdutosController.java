@@ -148,6 +148,19 @@ public class ProdutosController {
         }
     }
     
+    public void ajuda(){
+        String atalhos = "\u07CBESC = Sair da Tela\n"
+                + "\u07CBF5 = Atualizar Tabela\n"
+                + "\u07CBDEL = Remover Produto\n"
+                + "\u07CBCTRL + E = Editar Produto\n"
+                + "\u07CBCTRL + N = Cadastrar Novo Produto\n";
+        
+        view.getPainelAjuda().setModal(true);
+        view.getPainelAjuda().getCampoAtalhos().setText("");
+        view.getPainelAjuda().getCampoAtalhos().append(atalhos);
+        view.getPainelAjuda().setVisible(true);
+    }
+    
     public void sairTela(){
         funcionarioDao.atualizarStatusAll();
         Funcionario funcionario = this.setarLog("Saída do Sistema", null);

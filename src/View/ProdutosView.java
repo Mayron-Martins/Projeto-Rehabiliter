@@ -7,6 +7,7 @@ package View;
 
 import Controller.ProdutosController;
 import Controller.auxiliar.JMoneyField;
+import View.Paineis.PainelAjuda;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -36,6 +37,7 @@ public class ProdutosView extends javax.swing.JDialog {
     private final JFormattedTextField campoQuantidade = new JMoneyField();
     private final JFormattedTextField valorProduto = new JMoneyField();
     private final ProdutosAdicionar telaProdutosAdicionar;
+    private final PainelAjuda painelAjuda;
 
     /**
      * Creates new form produtos
@@ -48,6 +50,7 @@ public class ProdutosView extends javax.swing.JDialog {
         
         this.parent = parent;
         telaProdutosAdicionar= new ProdutosAdicionar(parent, false);
+        painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
         
         controller = new ProdutosController(this);
         botaoFechar.setBackground(new Color(0,0,0,0));
@@ -81,6 +84,7 @@ public class ProdutosView extends javax.swing.JDialog {
         botaobuscar = new javax.swing.JButton();
         painelderolagem = new javax.swing.JScrollPane();
         tabelaProdutos = new javax.swing.JTable();
+        botaoAjuda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -201,6 +205,17 @@ public class ProdutosView extends javax.swing.JDialog {
 
         getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
+        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAjuda.setText("?");
+        botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAjudaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/produtos/fundo.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -250,6 +265,10 @@ public class ProdutosView extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_campoPesquisaKeyPressed
 
+    private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
+        controller.ajuda();
+    }//GEN-LAST:event_botaoAjudaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -294,6 +313,7 @@ public class ProdutosView extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
+    private javax.swing.JButton botaoAjuda;
     private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoListar;
@@ -334,6 +354,10 @@ public class ProdutosView extends javax.swing.JDialog {
         return parent;
     }
 
+    public PainelAjuda getPainelAjuda() {
+        return painelAjuda;
+    }
+
     
     
     private void teclasDeAtalho() {
@@ -346,10 +370,36 @@ public class ProdutosView extends javax.swing.JDialog {
             }
         });
         
+        //atualizar
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0), "F5");
+        meurootpane.getRootPane().getActionMap().put("F5", new AbstractAction("F5") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.listar();
+            }
+        });
+        
+        //Deletar Reposição
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0), "DELETE");
+        meurootpane.getRootPane().getActionMap().put("DELETE", new AbstractAction("DELETE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.removerProduto();
+            }
+        });
+        
         this.conjuntoTeclasAtalho(meurootpane);
     }
     
     private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Editar Produto
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl E"), "EDITARPRODUTO");
+        meurootpane.getRootPane().getActionMap().put("EDITARPRODUTO", new AbstractAction("EDITARPRODUTO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.editarProdutos();
+            }
+        });
         //Fechar Sistema
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
         meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {

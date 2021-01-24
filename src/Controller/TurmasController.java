@@ -273,4 +273,18 @@ public class TurmasController {
         view.getCaixaSabado().setSelected(false);
         view.getCaixaDomingo().setSelected(false);
     }
+    
+    public void ajuda(){
+        String atalhos = "\u07CBESC = Sair da Tela\n"
+                + "\u07CBF5 = Atualizar Tabela\n"
+                + "\u07CBDEL = Remover Turma\n"
+                + "\u07CBCTRL + E = Editar Turma\n"
+                + "\u07CBCTRL + F = Encerrar ou Reabrir Turma\n"
+                + "\u07CBCTRL + N = Cadastrar Nova Turma\n";
+        
+        view.getPainelAjuda().setModal(true);
+        view.getPainelAjuda().getCampoAtalhos().setText("");
+        view.getPainelAjuda().getCampoAtalhos().append(atalhos);
+        view.getPainelAjuda().setVisible(true);
+    }
 }
