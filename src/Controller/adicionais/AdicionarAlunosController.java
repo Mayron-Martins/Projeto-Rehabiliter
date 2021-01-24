@@ -207,13 +207,15 @@ public class AdicionarAlunosController {
                     "Nota", JOptionPane.YES_NO_OPTION);
             //Imprimir se Ativada a impressão do contrato
             if(confirmacao == JOptionPane.YES_OPTION){
-                exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, matricula, servicoContratado.getPeriodDays());
+                boolean confirmaco = exportarContrato.exportarContratoWord(aluno, endereco, servicoContratado, matricula, servicoContratado.getPeriodDays());
                 
                 sleep(10);
-                //exportarContrato.convertDocx2pdf("C:/Rehabiliter/ContratoEditado.docx", ".docx", "Word.Application");
-                exportarContrato.ConvertToPDF("C:/Rehabiliter/ContratoEditado.docx");
-                view.exibeMensagem("Exportando Arquivo para Impressão.");
-                imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");
+                if(confirmaco){
+                    exportarContrato.ConvertToPDF("C:/Rehabiliter/ContratoEditado.docx");
+                    view.exibeMensagem("Exportando Arquivo para Impressão.");
+                    imprimirContrato.impressao("C:/Rehabiliter/ContratoEditado.pdf");
+                }
+                
             }
             
             //Limpando Campos

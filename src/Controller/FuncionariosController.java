@@ -15,6 +15,7 @@ import Model.auxiliar.LogAçoesFuncionario;
 import View.Funcionarios;
 import View.LoginFuncionario;
 import View.LoginGerente;
+import View.Paineis.FuncionariosPermissoes;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FuncionariosController {
     private final Funcionarios view;
+    private final FuncionariosPermissoes view2;
     private final DefaultTableModel tabelaDeFuncionarios;
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final EnderecoFuncionarioDao enderecoDao = new EnderecoFuncionarioDao();
@@ -34,8 +36,9 @@ public class FuncionariosController {
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
-    public FuncionariosController(Funcionarios view) {
+    public FuncionariosController(Funcionarios view, FuncionariosPermissoes view2) {
         this.view = view;
+        this.view2 = view2;
         this.tabelaDeFuncionarios = (DefaultTableModel) view.getTabelaFuncionarios().getModel();
     }
     
@@ -77,7 +80,7 @@ public class FuncionariosController {
                     BigDecimal valorSalario = new BigDecimal(converterDinheiro.converterParaBigDecimal(this.tabelaDeFuncionarios.getValueAt(linhaSelecionada, 6).toString()).toString());
                     String usuario = cpf;
 
-                    String telasPermitidas = view.getTelasPermitidas();
+                    String telasPermitidas = view2.getTelasPermitidas();
 
 
                     String situacao = tabelaDeFuncionarios.getValueAt(linhaSelecionada, 7).toString();
@@ -187,44 +190,63 @@ public class FuncionariosController {
             
             switch(telas[linhas]){
                 case "1":
-                    view.getRadioAlunosSim().setSelected(true);
+                    view2.getRadioAlunosSim().setSelected(true);
                 break;
                 case "2":
-                    view.getRadioTurmasSim().setSelected(true);
+                    view2.getRadioTurmasSim().setSelected(true);
                 break;
                 case "3":
-                    view.getRadioProdutosSim().setSelected(true);
+                    view2.getRadioProdutosSim().setSelected(true);
                 break;
                 case "4":
-                    view.getRadioServicosSim().setSelected(true);
+                    view2.getRadioServicosSim().setSelected(true);
                 break;
                 case "5":
-                    view.getRadioFinanceiroSim().setSelected(true);
+                    view2.getRadioFinanceiroSim().setSelected(true);
                 break;
                 case "6":
-                    view.getRadioImprimirSim().setSelected(true);
+                    view2.getRadioImprimirSim().setSelected(true);
                 break;
                 case "7":
-                    view.getRadioBackupSim().setSelected(true);
+                    view2.getRadioBackupSim().setSelected(true);
                 break;
                 case "8":
-                    view.getRadioCaixaSim().setSelected(true);
+                    view2.getRadioCaixaSim().setSelected(true);
                 break;
             }
         }
-        view.setTelasPermitidas(funcionario.getTelasPermitidas());
+        view2.setTelasPermitidas(funcionario.getTelasPermitidas());
         
     }
     
+    public void setarPermissoes(){
+        int x = view.getLocation().x-200;
+        int y = view.getLocation().y;
+        
+        view.setLocation(x, y);
+        view2.setLocation(x+view.getWidth()+4, y+view.getHeight()-view2.getHeight());
+        view2.setModal(true);
+        view2.alternarRadios();
+        view2.setVisible(true);
+    }
+    
     public void atualizarTelasPermitidas(){
+        view2.setarTelasPermitidas();
         int linhaSelecionada = view.getTabelaFuncionarios().getSelectedRow();
         
         if(linhaSelecionada!=-1){
             int codFuncionario = Integer.parseInt(tabelaDeFuncionarios.getValueAt(linhaSelecionada, 0).toString());
-            Funcionario funcionario = new Funcionario(codFuncionario, null, null, null, null, null, null, null, null, null, BigDecimal.ZERO, null, view.getTelasPermitidas(), null, null);
+            Funcionario funcionario = new Funcionario(codFuncionario, null, null, null, null, null, null, null, null, null, BigDecimal.ZERO, null, view2.getTelasPermitidas(), null, null);
             
             funcionarioDao.atualizarTelasPermitidas(funcionario);
         }
+        
+        int x = view.getLocation().x+200;
+        int y = view.getLocation().y;
+        view.setLocation(x, y);
+        
+        view2.setVisible(false);
+        
     }
     
      

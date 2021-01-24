@@ -8,6 +8,7 @@ package View;
 import Controller.FuncionariosController;
 import Controller.auxiliar.JMoneyField;
 import Controller.auxiliar.LogsSystem;
+import View.Paineis.FuncionariosPermissoes;
 import View.Paineis.PainelAjuda;
 import java.awt.Color;
 import java.awt.Component;
@@ -41,9 +42,9 @@ public class Funcionarios extends javax.swing.JDialog {
     private final java.awt.Frame parent; 
     private final FuncionariosController controller;
     private final FuncionariosAdicionar telaAdicionarFuncionarios;
-    private String telasPermitidas;
     private final FrequenciaFuncionariosView telaFrequencia;
     private final PainelAjuda painelAjuda;
+    private final FuncionariosPermissoes painelPermissoes;
     
 
     /**
@@ -59,18 +60,17 @@ public class Funcionarios extends javax.swing.JDialog {
         telaAdicionarFuncionarios = new FuncionariosAdicionar(parent, false);
         telaFrequencia = new FrequenciaFuncionariosView(parent, false);
         painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
+        this.painelPermissoes = new FuncionariosPermissoes(parent, false, this);
         
-        controller = new FuncionariosController(this);
+        controller = new FuncionariosController(this, this.painelPermissoes);
         botaobuscar1.setBackground(new Color(0,0,0,0));
         botaoFechar1.setBackground(new Color(0,0,0,0));
         botaoAdicionar1.setBackground(new Color(0,0,0,0));
-        btnFechar.setBackground(Color.red);
         botaoRemover1.setBackground(new Color(0,0,0,0));
         botaoEditar1.setBackground(new Color(0,0,0,0));
         botaoListar1.setBackground(new Color(0,0,0,0));
         tabelaFuncionarios.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tabelaFuncionarios.getTableHeader().setOpaque(false);
-        panelPerm.setVisible(false);
         tabelaFuncionarios.getTableHeader().setBackground(new Color(0,0,0));
         tabelaFuncionarios.getTableHeader().setForeground(new Color(0,0,0));
         tabelaFuncionarios.setRowHeight(25);
@@ -91,25 +91,6 @@ public class Funcionarios extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelPerm = new javax.swing.JPanel();
-        radioAlunosNao = new javax.swing.JRadioButton();
-        radioAlunosSim = new javax.swing.JRadioButton();
-        radioTurmasSim = new javax.swing.JRadioButton();
-        radioTurmasNao = new javax.swing.JRadioButton();
-        radioProdutosNao = new javax.swing.JRadioButton();
-        radioProdutosSim = new javax.swing.JRadioButton();
-        radioServicosSim = new javax.swing.JRadioButton();
-        radioServicosNao = new javax.swing.JRadioButton();
-        radioFinanceiroNao = new javax.swing.JRadioButton();
-        radioFinanceiroSim = new javax.swing.JRadioButton();
-        radioImprimirNao = new javax.swing.JRadioButton();
-        radioImprimirSim = new javax.swing.JRadioButton();
-        radioBackupSim = new javax.swing.JRadioButton();
-        radioBackupNao = new javax.swing.JRadioButton();
-        radioCaixaNao = new javax.swing.JRadioButton();
-        radioCaixaSim = new javax.swing.JRadioButton();
-        btnFechar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         botaoFechar1 = new javax.swing.JButton();
         botaoAdicionar1 = new javax.swing.JButton();
         botaoRemover1 = new javax.swing.JButton();
@@ -134,136 +115,6 @@ public class Funcionarios extends javax.swing.JDialog {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panelPerm.setBackground(new java.awt.Color(0, 102, 255));
-        panelPerm.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        radioAlunosNao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioAlunosNaoActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioAlunosNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, -1, -1));
-
-        radioAlunosSim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioAlunosSimActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioAlunosSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, -1));
-
-        radioTurmasSim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioTurmasSimActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioTurmasSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, -1, -1));
-
-        radioTurmasNao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioTurmasNaoActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioTurmasNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, -1, -1));
-
-        radioProdutosNao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioProdutosNaoActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioProdutosNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, -1, -1));
-
-        radioProdutosSim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioProdutosSimActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioProdutosSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, -1, -1));
-
-        radioServicosSim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioServicosSimActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioServicosSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, -1, -1));
-
-        radioServicosNao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioServicosNaoActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioServicosNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, -1, -1));
-
-        radioFinanceiroNao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioFinanceiroNaoActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioFinanceiroNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, -1, -1));
-
-        radioFinanceiroSim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioFinanceiroSimActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioFinanceiroSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, -1));
-
-        radioImprimirNao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioImprimirNaoActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioImprimirNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 380, -1, -1));
-
-        radioImprimirSim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioImprimirSimActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioImprimirSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, -1, -1));
-
-        radioBackupSim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioBackupSimActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioBackupSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, -1, -1));
-
-        radioBackupNao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioBackupNaoActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioBackupNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 430, -1, -1));
-
-        radioCaixaNao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioCaixaNaoActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioCaixaNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 490, -1, -1));
-
-        radioCaixaSim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioCaixaSimActionPerformed(evt);
-            }
-        });
-        panelPerm.add(radioCaixaSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 490, -1, -1));
-
-        btnFechar.setBackground(new java.awt.Color(255, 255, 255));
-        btnFechar.setForeground(new java.awt.Color(255, 255, 255));
-        btnFechar.setText("X");
-        btnFechar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharActionPerformed(evt);
-            }
-        });
-        panelPerm.add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 40, 30));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/fundoPerm.png"))); // NOI18N
-        panelPerm.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 530));
-
-        getContentPane().add(panelPerm, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 510, 530));
 
         botaoFechar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
         botaoFechar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
@@ -465,96 +316,8 @@ public class Funcionarios extends javax.swing.JDialog {
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void botaoPermissoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPermissoesActionPerformed
-        panelPerm.setEnabled(true);
-        panelPerm.setVisible(true);
-        this.alternarRadios();
+        controller.setarPermissoes();
     }//GEN-LAST:event_botaoPermissoesActionPerformed
-
-    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-        this.setarTelasPermitidas();
-        controller.atualizarTelasPermitidas();
-        panelPerm.setVisible(false);
-    }//GEN-LAST:event_btnFecharActionPerformed
-
-    private void radioAlunosSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAlunosSimActionPerformed
-        if(radioAlunosSim.isSelected()){radioAlunosNao.setSelected(false);}
-        else{radioAlunosNao.setSelected(true);}
-    }//GEN-LAST:event_radioAlunosSimActionPerformed
-
-    private void radioAlunosNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAlunosNaoActionPerformed
-        if(radioAlunosNao.isSelected()){radioAlunosSim.setSelected(false);}
-        else{radioAlunosSim.setSelected(true);}
-    }//GEN-LAST:event_radioAlunosNaoActionPerformed
-
-    private void radioTurmasSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioTurmasSimActionPerformed
-        if(radioTurmasSim.isSelected()){radioTurmasNao.setSelected(false);}
-        else{radioTurmasNao.setSelected(true);}
-    }//GEN-LAST:event_radioTurmasSimActionPerformed
-
-    private void radioTurmasNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioTurmasNaoActionPerformed
-        if(radioTurmasNao.isSelected()){radioTurmasSim.setSelected(false);}
-        else{radioTurmasSim.setSelected(true);}
-    }//GEN-LAST:event_radioTurmasNaoActionPerformed
-
-    private void radioProdutosSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioProdutosSimActionPerformed
-        if(radioProdutosSim.isSelected()){radioProdutosNao.setSelected(false);}
-        else{radioProdutosNao.setSelected(true);}
-    }//GEN-LAST:event_radioProdutosSimActionPerformed
-
-    private void radioProdutosNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioProdutosNaoActionPerformed
-        if(radioProdutosNao.isSelected()){radioProdutosSim.setSelected(false);}
-        else{radioProdutosSim.setSelected(true);}
-    }//GEN-LAST:event_radioProdutosNaoActionPerformed
-
-    private void radioServicosSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioServicosSimActionPerformed
-        if(radioServicosSim.isSelected()){radioServicosNao.setSelected(false);}
-        else{radioServicosNao.setSelected(true);}
-    }//GEN-LAST:event_radioServicosSimActionPerformed
-
-    private void radioServicosNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioServicosNaoActionPerformed
-        if(radioServicosNao.isSelected()){radioServicosSim.setSelected(false);}
-        else{radioServicosSim.setSelected(true);}
-    }//GEN-LAST:event_radioServicosNaoActionPerformed
-
-    private void radioFinanceiroSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFinanceiroSimActionPerformed
-        if(radioFinanceiroSim.isSelected()){radioFinanceiroNao.setSelected(false);}
-        else{radioFinanceiroNao.setSelected(true);}
-    }//GEN-LAST:event_radioFinanceiroSimActionPerformed
-
-    private void radioFinanceiroNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFinanceiroNaoActionPerformed
-        if(radioFinanceiroNao.isSelected()){radioFinanceiroSim.setSelected(false);}
-        else{radioFinanceiroSim.setSelected(true);}
-    }//GEN-LAST:event_radioFinanceiroNaoActionPerformed
-
-    private void radioImprimirSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioImprimirSimActionPerformed
-        if(radioImprimirSim.isSelected()){radioImprimirNao.setSelected(false);}
-        else{radioImprimirNao.setSelected(true);}
-    }//GEN-LAST:event_radioImprimirSimActionPerformed
-
-    private void radioImprimirNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioImprimirNaoActionPerformed
-        if(radioImprimirNao.isSelected()){radioImprimirSim.setSelected(false);}
-        else{radioImprimirSim.setSelected(true);}
-    }//GEN-LAST:event_radioImprimirNaoActionPerformed
-
-    private void radioBackupSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBackupSimActionPerformed
-        if(radioBackupSim.isSelected()){radioBackupNao.setSelected(false);}
-        else{radioBackupNao.setSelected(true);}
-    }//GEN-LAST:event_radioBackupSimActionPerformed
-
-    private void radioBackupNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBackupNaoActionPerformed
-        if(radioBackupNao.isSelected()){radioBackupSim.setSelected(false);}
-        else{radioBackupSim.setSelected(true);}
-    }//GEN-LAST:event_radioBackupNaoActionPerformed
-
-    private void radioCaixaSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCaixaSimActionPerformed
-        if(radioCaixaSim.isSelected()){radioCaixaNao.setSelected(false);}
-        else{radioCaixaNao.setSelected(true);}
-    }//GEN-LAST:event_radioCaixaSimActionPerformed
-
-    private void radioCaixaNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCaixaNaoActionPerformed
-        if(radioCaixaNao.isSelected()){radioCaixaSim.setSelected(false);}
-        else{radioCaixaSim.setSelected(true);}
-    }//GEN-LAST:event_radioCaixaNaoActionPerformed
 
     private void tabelaFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFuncionariosMouseClicked
         controller.selecionarTabela();
@@ -619,87 +382,23 @@ public class Funcionarios extends javax.swing.JDialog {
     private javax.swing.JButton botaoPermissoes;
     private javax.swing.JButton botaoRemover1;
     private javax.swing.JButton botaobuscar1;
-    private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JTextField campoBuscar;
     private javax.swing.JComboBox<String> comboListar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane painelderolagem1;
-    private javax.swing.JPanel panelPerm;
-    private javax.swing.JRadioButton radioAlunosNao;
-    private javax.swing.JRadioButton radioAlunosSim;
-    private javax.swing.JRadioButton radioBackupNao;
-    private javax.swing.JRadioButton radioBackupSim;
-    private javax.swing.JRadioButton radioCaixaNao;
-    private javax.swing.JRadioButton radioCaixaSim;
-    private javax.swing.JRadioButton radioFinanceiroNao;
-    private javax.swing.JRadioButton radioFinanceiroSim;
-    private javax.swing.JRadioButton radioImprimirNao;
-    private javax.swing.JRadioButton radioImprimirSim;
-    private javax.swing.JRadioButton radioProdutosNao;
-    private javax.swing.JRadioButton radioProdutosSim;
-    private javax.swing.JRadioButton radioServicosNao;
-    private javax.swing.JRadioButton radioServicosSim;
-    private javax.swing.JRadioButton radioTurmasNao;
-    private javax.swing.JRadioButton radioTurmasSim;
     private javax.swing.JTable tabelaFuncionarios;
     // End of variables declaration//GEN-END:variables
 
-    private void setarTelasPermitidas(){
-        String telas="";
-        
-        if(this.radioAlunosSim.isSelected()){telas+="1,";}
-        if(this.radioTurmasSim.isSelected()){telas+="2,9,";}
-        if(this.radioProdutosSim.isSelected()){telas+="3,";}
-        if(this.radioServicosSim.isSelected()){telas+="4,";}
-        if(this.radioFinanceiroSim.isSelected()){telas+="5,";}
-        if(this.radioImprimirSim.isSelected()){telas+="6,";}
-        if(this.radioBackupSim.isSelected()){telas+="7,";}
-        if(this.radioCaixaSim.isSelected()){telas+="8,";}
-        
-        this.telasPermitidas = telas;
-    }
-    
-    private void alternarRadios(){
-        //Alternar Alunos
-        if(radioAlunosSim.isSelected()){radioAlunosNao.setSelected(false);}
-        else{radioAlunosNao.setSelected(true);}
-        //Alternar Turmas
-        if(radioTurmasSim.isSelected()){radioTurmasNao.setSelected(false);}
-        else{radioTurmasNao.setSelected(true);}
-        //AlternarProdutos
-        if(radioProdutosSim.isSelected()){radioProdutosNao.setSelected(false);}
-        else{radioProdutosNao.setSelected(true);}
-        //Alternar Serviços
-        if(radioServicosSim.isSelected()){radioServicosNao.setSelected(false);}
-        else{radioServicosNao.setSelected(true);}
-        //Alternar Financeiro
-        if(radioFinanceiroSim.isSelected()){radioFinanceiroNao.setSelected(false);}
-        else{radioFinanceiroNao.setSelected(true);}
-        //Alternar Imprimir
-        if(radioImprimirSim.isSelected()){radioImprimirNao.setSelected(false);}
-        else{radioImprimirNao.setSelected(true);}
-        //Alternar Backup
-        if(radioBackupSim.isSelected()){radioBackupNao.setSelected(false);}
-        else{radioBackupNao.setSelected(true);}
-        //Alternar Caixa
-        if(radioCaixaSim.isSelected()){radioCaixaNao.setSelected(false);}
-        else{radioCaixaNao.setSelected(true);}
-    }
     
     public void exibeMensagem(String mensagem) {
       JOptionPane.showMessageDialog(null, mensagem);
     }
 
-    public String getTelasPermitidas() {
-        return telasPermitidas;
-    }
 
     public JTable getTabelaFuncionarios() {
         return tabelaFuncionarios;
     }
-    
     
 
     public JTextField getCampoBuscar() {
@@ -708,44 +407,6 @@ public class Funcionarios extends javax.swing.JDialog {
 
     public JComboBox<String> getComboListar() {
         return comboListar;
-    }
-
-    
-    
-    public JRadioButton getRadioAlunosSim() {
-        return radioAlunosSim;
-    }
-
-    public JRadioButton getRadioBackupSim() {
-        return radioBackupSim;
-    }
-
-    public JRadioButton getRadioCaixaSim() {
-        return radioCaixaSim;
-    }
-
-    public JRadioButton getRadioFinanceiroSim() {
-        return radioFinanceiroSim;
-    }
-
-    public JRadioButton getRadioImprimirSim() {
-        return radioImprimirSim;
-    }
-
-    public JRadioButton getRadioProdutosSim() {
-        return radioProdutosSim;
-    }
-
-    public JRadioButton getRadioServicosSim() {
-        return radioServicosSim;
-    }
-
-    public JRadioButton getRadioTurmasSim() {
-        return radioTurmasSim;
-    }
-
-    public void setTelasPermitidas(String telasPermitidas) {
-        this.telasPermitidas = telasPermitidas;
     }
 
     public JButton getBotaoPermissoes() {

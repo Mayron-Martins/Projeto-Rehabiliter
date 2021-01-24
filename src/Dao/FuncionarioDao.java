@@ -98,11 +98,11 @@ public class FuncionarioDao extends Conexao{
     public void atualizarTelasPermitidas(Funcionario funcionario){
         try{
             String inFuncionario = atualizar.concat("tblFuncionarios "
-                    + "SET telasPermitidas=? where usuario = ?");
+                    + "SET telasPermitidas=? WHERE codFuncionario = ?");
 
             PreparedStatement statement = gerarStatement(inFuncionario);
             statement.setString(1, funcionario.getTelasPermitidas());
-            statement.setString(2, funcionario.getUsuario());
+            statement.setInt(2, funcionario.getCodBanco());
             statement.execute();
             statement.close();  
         } catch (SQLException ex) {
