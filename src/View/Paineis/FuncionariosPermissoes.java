@@ -62,7 +62,6 @@ public class FuncionariosPermissoes extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(400, 530));
         setResizable(false);
         setSize(new java.awt.Dimension(400, 530));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -75,116 +74,116 @@ public class FuncionariosPermissoes extends javax.swing.JDialog {
                 radioAlunosNaoActionPerformed(evt);
             }
         });
-        panelPerm.add(radioAlunosNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, -1, -1));
+        panelPerm.add(radioAlunosNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, -1, -1));
 
         radioAlunosSim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioAlunosSimActionPerformed(evt);
             }
         });
-        panelPerm.add(radioAlunosSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, -1, -1));
+        panelPerm.add(radioAlunosSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, -1));
 
         radioTurmasSim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioTurmasSimActionPerformed(evt);
             }
         });
-        panelPerm.add(radioTurmasSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, -1, -1));
+        panelPerm.add(radioTurmasSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, -1, -1));
 
         radioTurmasNao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioTurmasNaoActionPerformed(evt);
             }
         });
-        panelPerm.add(radioTurmasNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 150, -1, -1));
+        panelPerm.add(radioTurmasNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, -1, -1));
 
         radioProdutosNao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioProdutosNaoActionPerformed(evt);
             }
         });
-        panelPerm.add(radioProdutosNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, -1, -1));
+        panelPerm.add(radioProdutosNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, -1, -1));
 
         radioProdutosSim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioProdutosSimActionPerformed(evt);
             }
         });
-        panelPerm.add(radioProdutosSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, -1, -1));
+        panelPerm.add(radioProdutosSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, -1, -1));
 
         radioServicosSim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioServicosSimActionPerformed(evt);
             }
         });
-        panelPerm.add(radioServicosSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, -1, -1));
+        panelPerm.add(radioServicosSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, -1, -1));
 
         radioServicosNao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioServicosNaoActionPerformed(evt);
             }
         });
-        panelPerm.add(radioServicosNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, -1, -1));
+        panelPerm.add(radioServicosNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 260, -1, -1));
 
         radioFinanceiroNao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioFinanceiroNaoActionPerformed(evt);
             }
         });
-        panelPerm.add(radioFinanceiroNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, -1, -1));
+        panelPerm.add(radioFinanceiroNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 320, -1, -1));
 
         radioFinanceiroSim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioFinanceiroSimActionPerformed(evt);
             }
         });
-        panelPerm.add(radioFinanceiroSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 320, -1, -1));
+        panelPerm.add(radioFinanceiroSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, -1));
 
         radioImprimirNao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioImprimirNaoActionPerformed(evt);
             }
         });
-        panelPerm.add(radioImprimirNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 380, -1, -1));
+        panelPerm.add(radioImprimirNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 380, -1, -1));
 
         radioImprimirSim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioImprimirSimActionPerformed(evt);
             }
         });
-        panelPerm.add(radioImprimirSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 380, -1, -1));
+        panelPerm.add(radioImprimirSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, -1, -1));
 
         radioBackupSim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioBackupSimActionPerformed(evt);
             }
         });
-        panelPerm.add(radioBackupSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 430, -1, -1));
+        panelPerm.add(radioBackupSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, -1, -1));
 
         radioBackupNao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioBackupNaoActionPerformed(evt);
             }
         });
-        panelPerm.add(radioBackupNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
+        panelPerm.add(radioBackupNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, -1, -1));
 
         radioCaixaNao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioCaixaNaoActionPerformed(evt);
             }
         });
-        panelPerm.add(radioCaixaNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 490, -1, -1));
+        panelPerm.add(radioCaixaNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 490, -1, -1));
 
         radioCaixaSim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioCaixaSimActionPerformed(evt);
             }
         });
-        panelPerm.add(radioCaixaSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 490, -1, -1));
+        panelPerm.add(radioCaixaSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 490, -1, -1));
 
         btnFechar.setBackground(new java.awt.Color(255, 255, 255));
         btnFechar.setForeground(new java.awt.Color(255, 255, 255));
-        btnFechar.setText("X");
+        btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharX.png"))); // NOI18N
         btnFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFecharActionPerformed(evt);
@@ -193,9 +192,9 @@ public class FuncionariosPermissoes extends javax.swing.JDialog {
         panelPerm.add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 40, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/fundoPerm.png"))); // NOI18N
-        panelPerm.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 530));
+        panelPerm.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 530));
 
-        getContentPane().add(panelPerm, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 530));
+        getContentPane().add(panelPerm, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 530));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

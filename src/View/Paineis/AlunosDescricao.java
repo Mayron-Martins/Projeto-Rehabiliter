@@ -46,7 +46,6 @@ public class AlunosDescricao extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(237, 701));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(237, 701));
         setResizable(false);
         setSize(new java.awt.Dimension(237, 701));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -63,12 +62,12 @@ public class AlunosDescricao extends javax.swing.JDialog {
                 botaoFecharActionPerformed(evt);
             }
         });
-        jPanel1.add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
+        jPanel1.add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 120, 30));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("OBSERVAÇÕES");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 60, -1, 30));
 
         campoObservacao.setColumns(20);
         campoObservacao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -78,9 +77,9 @@ public class AlunosDescricao extends javax.swing.JDialog {
         campoObservacao.setPreferredSize(new java.awt.Dimension(220, 284));
         jScrollPane1.setViewportView(campoObservacao);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 280, 220, 284));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 330, 284));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 237, 701));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 701));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -43,6 +43,7 @@ public class PainelAjuda extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
         setSize(new java.awt.Dimension(200, 250));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(116, 174, 159));
         jPanel1.setMinimumSize(new java.awt.Dimension(200, 250));
@@ -52,7 +53,7 @@ public class PainelAjuda extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("TECLAS DE ATALHO");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, -1, -1));
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(170, 170));
@@ -64,7 +65,7 @@ public class PainelAjuda extends javax.swing.JDialog {
         campoAtalhos.setPreferredSize(new java.awt.Dimension(250, 200));
         jScrollPane1.setViewportView(campoAtalhos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 36, 170, 170));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 320, 270));
 
         botaoFecharConf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharPeq.png"))); // NOI18N
         botaoFecharConf.addActionListener(new java.awt.event.ActionListener() {
@@ -72,22 +73,9 @@ public class PainelAjuda extends javax.swing.JDialog {
                 botaoFecharConfActionPerformed(evt);
             }
         });
-        jPanel1.add(botaoFecharConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 214, 120, 30));
+        jPanel1.add(botaoFecharConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, 30));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

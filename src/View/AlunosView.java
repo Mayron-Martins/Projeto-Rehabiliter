@@ -487,16 +487,16 @@ public class AlunosView extends javax.swing.JDialog {
         modoTurma.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(modoTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 678, 190, 15));
 
-        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setBackground(new java.awt.Color(255, 255, 255));
         botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
-        botaoAjuda.setText("?");
+        botaoAjuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnDuvidas.png"))); // NOI18N
         botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAjudaActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, 30, 30));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/Alunos.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

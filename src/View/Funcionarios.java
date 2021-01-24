@@ -77,6 +77,7 @@ public class Funcionarios extends javax.swing.JDialog {
         btnRelatorios.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         botaoPermissoes.setBackground(new Color(0,0,0,0));
+        botaoAjuda.setBackground(new Color(0,0,0,0));
         botaoPermissoes.setVisible(false);
         this.teclasDeAtalho();
         this.setarComponentesTabela();
@@ -239,7 +240,7 @@ public class Funcionarios extends javax.swing.JDialog {
         });
         getContentPane().add(btnRelatorios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 210, 40));
 
-        botaoPermissoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnPermissoes.png"))); // NOI18N
+        botaoPermissoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnPermissoes2.png"))); // NOI18N
         botaoPermissoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoPermissoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -248,16 +249,16 @@ public class Funcionarios extends javax.swing.JDialog {
         });
         getContentPane().add(botaoPermissoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 306, 130, 20));
 
-        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setBackground(new java.awt.Color(255, 255, 255));
         botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
-        botaoAjuda.setText("?");
+        botaoAjuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnDuvidas.png"))); // NOI18N
         botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAjudaActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 10, 30, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios/Sem título-1.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
