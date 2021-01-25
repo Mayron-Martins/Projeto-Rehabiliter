@@ -33,7 +33,7 @@
           <Image iconType="3" name="/imagens/imagensparaseremtrocadas/btnAplicar.png"/>
         </Property>
         <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/financeiro/btnAplicar.png"/>
+          <Image iconType="3" name="/imagens/imagensparaseremtrocadas/btnAplicar.png"/>
         </Property>
       </Properties>
       <Events>
