@@ -191,8 +191,8 @@ public class FuncionariosPermissoes extends javax.swing.JDialog {
         });
         panelPerm.add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 40, 30));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/fundoPerm.png"))); // NOI18N
-        panelPerm.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 530));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/fundoperm4.png"))); // NOI18N
+        panelPerm.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 600));
 
         getContentPane().add(panelPerm, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 530));
 

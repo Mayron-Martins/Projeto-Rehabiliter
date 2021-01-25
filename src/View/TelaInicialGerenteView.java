@@ -72,7 +72,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         botaoFinanceiro.setBackground(new Color(0,0,0,0));
         botaoFrequencia.setBackground(new Color(0,0,0,0));
         botaoMenu.setBackground(new Color(0,0,0,0));
-        botaoFuncionarios.setBackground(new Color(0,0,0,0));
+        botaoReposicao.setBackground(new Color(0,0,0,0));
         jScrollPane1.setVisible(false);
         jScrollPane2.setVisible(false);
         setExtendedState(MAXIMIZED_BOTH);
@@ -115,7 +115,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         botaoCaixa1 = new javax.swing.JButton();
         botaoSair1 = new javax.swing.JButton();
         planodefundo1 = new javax.swing.JLabel();
-        botaoFuncionarios = new javax.swing.JButton();
+        botaoReposicao = new javax.swing.JButton();
         botaoSair = new javax.swing.JButton();
         botaoCaixa = new javax.swing.JButton();
         animaçãoRehabiliter = new javax.swing.JLabel();
@@ -127,6 +127,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         tabelaAniversariantes = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaVencimentos = new javax.swing.JTable();
+        botaoFuncionarios1 = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -234,14 +235,14 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
         getContentPane().add(menuGerente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 1030));
 
-        botaoFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarios.png"))); // NOI18N
-        botaoFuncionarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarioshover.png"))); // NOI18N
-        botaoFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+        botaoReposicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnReposição.png"))); // NOI18N
+        botaoReposicao.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnReposiçãoHover.png"))); // NOI18N
+        botaoReposicao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoFuncionariosActionPerformed(evt);
+                botaoReposicaoActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoFuncionarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 168, 203));
+        getContentPane().add(botaoReposicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 90, 168, 203));
 
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoSair.addActionListener(new java.awt.event.ActionListener() {
@@ -378,6 +379,15 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 330, 190));
 
+        botaoFuncionarios1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarios.png"))); // NOI18N
+        botaoFuncionarios1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarioshover.png"))); // NOI18N
+        botaoFuncionarios1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFuncionarios1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoFuncionarios1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 168, 203));
+
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-gerentefundo.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, -1));
 
@@ -429,11 +439,9 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         menuGerente.setVisible(true);
     }//GEN-LAST:event_botaoMenuActionPerformed
 
-    private void botaoFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionariosActionPerformed
-        telaFuncionarios.setModal(true);
-        telaFuncionarios.setLocationRelativeTo(null);
-        telaFuncionarios.setVisible(true);   
-    }//GEN-LAST:event_botaoFuncionariosActionPerformed
+    private void botaoReposicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoReposicaoActionPerformed
+         
+    }//GEN-LAST:event_botaoReposicaoActionPerformed
 
     private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed
         // TODO add your handling code here:
@@ -553,6 +561,10 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_botaoBackupActionPerformed
 
+    private void botaoFuncionarios1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionarios1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoFuncionarios1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -599,10 +611,11 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private javax.swing.JButton botaoFinanceiro;
     private javax.swing.JButton botaoFinanceiro1;
     private javax.swing.JButton botaoFrequencia;
-    private javax.swing.JButton botaoFuncionarios;
+    private javax.swing.JButton botaoFuncionarios1;
     private javax.swing.JButton botaoImprimirExportar;
     private javax.swing.JButton botaoMenu;
     private javax.swing.JButton botaoProdutos;
+    private javax.swing.JButton botaoReposicao;
     private javax.swing.JButton botaoSair;
     private javax.swing.JButton botaoSair1;
     private javax.swing.JButton botaoServicos;
