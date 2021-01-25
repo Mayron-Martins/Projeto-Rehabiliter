@@ -73,6 +73,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         botaoFrequencia.setBackground(new Color(0,0,0,0));
         botaoMenu.setBackground(new Color(0,0,0,0));
         botaoReposicao.setBackground(new Color(0,0,0,0));
+        botaoFuncionarios.setBackground(new Color(0,0,0,0));
         jScrollPane1.setVisible(false);
         jScrollPane2.setVisible(false);
         setExtendedState(MAXIMIZED_BOTH);
@@ -127,7 +128,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         tabelaAniversariantes = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaVencimentos = new javax.swing.JTable();
-        botaoFuncionarios1 = new javax.swing.JButton();
+        botaoFuncionarios = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -379,14 +380,14 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 330, 190));
 
-        botaoFuncionarios1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarios.png"))); // NOI18N
-        botaoFuncionarios1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarioshover.png"))); // NOI18N
-        botaoFuncionarios1.addActionListener(new java.awt.event.ActionListener() {
+        botaoFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarios.png"))); // NOI18N
+        botaoFuncionarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/telainicialgerente/funcionarioshover.png"))); // NOI18N
+        botaoFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoFuncionarios1ActionPerformed(evt);
+                botaoFuncionariosActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoFuncionarios1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 168, 203));
+        getContentPane().add(botaoFuncionarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 168, 203));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/tela-inicial-gerentefundo.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, -1));
@@ -561,9 +562,14 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_botaoBackupActionPerformed
 
-    private void botaoFuncionarios1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionarios1ActionPerformed
+    private void botaoFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFuncionariosActionPerformed
+            
+            telaFuncionarios.setModal(true);
+            telaFuncionarios.setLocationRelativeTo(null);
+            telaFuncionarios.setVisible(true);
+       
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoFuncionarios1ActionPerformed
+    }//GEN-LAST:event_botaoFuncionariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -611,7 +617,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private javax.swing.JButton botaoFinanceiro;
     private javax.swing.JButton botaoFinanceiro1;
     private javax.swing.JButton botaoFrequencia;
-    private javax.swing.JButton botaoFuncionarios1;
+    private javax.swing.JButton botaoFuncionarios;
     private javax.swing.JButton botaoImprimirExportar;
     private javax.swing.JButton botaoMenu;
     private javax.swing.JButton botaoProdutos;
