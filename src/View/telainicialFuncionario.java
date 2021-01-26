@@ -43,6 +43,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     private final ImprimirExportarGerente telaImprimirExportar;
     private final BackupView telaBackup;
     private final Caixa telaCaixa;
+    private final ReposicaoView telaReposicao;
 
     /**
      * Creates new form telainicialFuncionario
@@ -59,6 +60,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         telaImprimirExportar= new ImprimirExportarGerente(this, false);
         telaBackup= new BackupView(this, false);
         telaCaixa= new Caixa(this, false);
+        telaReposicao = new ReposicaoView(this, false);
         
         
         controller = new TelaInicioFuncionariosController(this);
@@ -128,6 +130,16 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         animaçãoRehabiliter = new javax.swing.JLabel();
         botaoReposicao = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         menuFuncionario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -222,15 +234,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         planodefundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/menu-principal-funcionárioFundo.png"))); // NOI18N
         menuFuncionario.add(planodefundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, -1));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
-        setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(menuFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoSair.addActionListener(new java.awt.event.ActionListener() {
@@ -535,7 +539,12 @@ public class telainicialFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoBackupActionPerformed
 
     private void botaoReposicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoReposicaoActionPerformed
-
+    if(controller.permissaoDeAcessoATela(telaReposicao.getNumeroTela()+"")){
+            telaReposicao.setModal(true);
+            telaReposicao.setLocationRelativeTo(null);
+            telaReposicao.setVisible(true);
+        }
+        else{this.exibeMensagem("Acesso Negado");}
     }//GEN-LAST:event_botaoReposicaoActionPerformed
 
     /**

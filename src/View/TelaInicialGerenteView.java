@@ -44,6 +44,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     private final BackupView telaBackup;
     private final Caixa telaCaixa;
     private final Funcionarios telaFuncionarios;
+    private final ReposicaoView telaReposicao;
 
     /**
      * Creates new form telaInicialGerente
@@ -61,6 +62,7 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
         telaBackup= new BackupView(this, false);
         telaCaixa= new Caixa(this, false);
         telaFuncionarios = new Funcionarios(this, false);
+        telaReposicao = new ReposicaoView(this, false);
         
         
         menuGerente.setVisible(false);
@@ -441,7 +443,12 @@ public class TelaInicialGerenteView extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoMenuActionPerformed
 
     private void botaoReposicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoReposicaoActionPerformed
-         
+        if(controller.permissaoDeAcessoATela(telaReposicao.getNumeroTela()+"")){
+            telaReposicao.setModal(true);
+            telaReposicao.setLocationRelativeTo(null);
+            telaReposicao.setVisible(true);
+        }
+        else{this.exibeMensagem("Acesso Negado");}
     }//GEN-LAST:event_botaoReposicaoActionPerformed
 
     private void botaoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCaixaActionPerformed
