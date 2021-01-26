@@ -85,6 +85,7 @@ public class Relatoriosfun extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
+        botaoFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
         botaoFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +174,7 @@ public class Relatoriosfun extends javax.swing.JDialog {
         campoDescricao.setWrapStyleWord(true);
 
         btExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/exportar.png"))); // NOI18N
+        btExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btExportarActionPerformed(evt);
@@ -181,6 +183,7 @@ public class Relatoriosfun extends javax.swing.JDialog {
         getContentPane().add(btExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 230, 40));
 
         btImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/imprimir.png"))); // NOI18N
+        btImprimir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btImprimirActionPerformed(evt);

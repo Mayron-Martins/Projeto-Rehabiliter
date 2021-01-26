@@ -7,6 +7,7 @@ package View.Paineis;
 
 import Controller.adicionais.SenhaEsquecidaController;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Color;
 import javax.swing.ButtonGroup;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -25,6 +26,8 @@ public class LoginSenhaEsquecida extends javax.swing.JDialog {
     public LoginSenhaEsquecida(java.awt.Frame parent, boolean modal, String cpf) {
         super(parent, modal);
         initComponents();
+        jButton2.setBackground(new Color(0,0,0,0));
+        btnCancelar.setBackground(new Color(0,0,0,0));
         
         controller = new SenhaEsquecidaController(this);
         
@@ -54,17 +57,16 @@ public class LoginSenhaEsquecida extends javax.swing.JDialog {
         campoEmail = new javax.swing.JTextField();
         JRadioEmail = new javax.swing.JRadioButton();
         JRadioCelular = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(400, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(400, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 134, 191));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         try {
@@ -80,6 +82,7 @@ public class LoginSenhaEsquecida extends javax.swing.JDialog {
         jPanel1.add(campoCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 210, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Celular");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
 
@@ -91,19 +94,23 @@ public class LoginSenhaEsquecida extends javax.swing.JDialog {
         jPanel1.add(campoCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 210, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("RECUPERAÇÃO DE SENHA");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, -1));
         jPanel1.add(campoDataNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 210, 30));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Data Nascimento");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("CPF");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("E-mail");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, -1, -1));
 
@@ -129,17 +136,20 @@ public class LoginSenhaEsquecida extends javax.swing.JDialog {
         });
         jPanel1.add(JRadioCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 215, -1, -1));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnCancelar2.png"))); // NOI18N
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCancelar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnCancelar2.png"))); // NOI18N
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 120, 40));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 120, 40));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton2.setText("Concluir");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnConcluir.png"))); // NOI18N
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -169,9 +179,9 @@ public class LoginSenhaEsquecida extends javax.swing.JDialog {
         this.habilitarDesabilitarCampos(false);
     }//GEN-LAST:event_campoEmailMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         controller.recuperarSenha();
@@ -222,11 +232,11 @@ public class LoginSenhaEsquecida extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton JRadioCelular;
     private javax.swing.JRadioButton JRadioEmail;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JFormattedTextField campoCPF;
     private javax.swing.JFormattedTextField campoCelular;
     private com.toedter.calendar.JDateChooser campoDataNascimento;
     private javax.swing.JTextField campoEmail;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

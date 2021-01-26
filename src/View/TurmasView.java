@@ -59,6 +59,7 @@ public class TurmasView extends javax.swing.JDialog {
         botaoAdicionarTurmas.setBackground(new Color(0,0,0,0));
         botaoEditarTurmas.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
+        botaoAjuda.setBackground(new Color(0,0,0,0));
         botaoListarTurmas.setBackground(new Color(0,0,0,0));
         botaoRemoverTurmas.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
@@ -161,6 +162,7 @@ public class TurmasView extends javax.swing.JDialog {
         getContentPane().add(blocoDiasdaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(606, 290, 120, 40));
 
         botaoRemoverTurmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoRemover.png"))); // NOI18N
+        botaoRemoverTurmas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoRemoverTurmas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverremover.png"))); // NOI18N
         botaoRemoverTurmas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,6 +172,7 @@ public class TurmasView extends javax.swing.JDialog {
         getContentPane().add(botaoRemoverTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 168, 205, 50));
 
         botaoEditarTurmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoEditar.png"))); // NOI18N
+        botaoEditarTurmas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoEditarTurmas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoEditarHover.png"))); // NOI18N
         botaoEditarTurmas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,6 +182,7 @@ public class TurmasView extends javax.swing.JDialog {
         getContentPane().add(botaoEditarTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 168, 205, 50));
 
         botaoListarTurmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequencia.png"))); // NOI18N
+        botaoListarTurmas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoListarTurmas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/frequenciaHover.png"))); // NOI18N
         botaoListarTurmas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,6 +192,7 @@ public class TurmasView extends javax.swing.JDialog {
         getContentPane().add(botaoListarTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 205, 50));
 
         botaoAdicionarTurmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
+        botaoAdicionarTurmas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoAdicionarTurmas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverAdicionar.png"))); // NOI18N
         botaoAdicionarTurmas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,6 +202,7 @@ public class TurmasView extends javax.swing.JDialog {
         getContentPane().add(botaoAdicionarTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 168, 205, 50));
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
+        botaoFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
         botaoFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,16 +281,17 @@ public class TurmasView extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
-        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setBackground(new java.awt.Color(255, 255, 255));
         botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
-        botaoAjuda.setText("?");
+        botaoAjuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnDuvidas.png"))); // NOI18N
+        botaoAjuda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAjudaActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(831, 10, 30, 30));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/fundo.jpg"))); // NOI18N
         getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

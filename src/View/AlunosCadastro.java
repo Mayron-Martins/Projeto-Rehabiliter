@@ -475,6 +475,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jPanelCadastroFinal.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 220, -1, -1));
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
+        botaoConfirmar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoConfirmar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmarHover.png"))); // NOI18N
         botaoConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -484,6 +485,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jPanelCadastroFinal.add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 420, 330, 60));
 
         btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/btnAnterior.png"))); // NOI18N
+        btnAnterior.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnteriorActionPerformed(evt);

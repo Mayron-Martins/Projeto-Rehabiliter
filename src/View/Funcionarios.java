@@ -118,6 +118,7 @@ public class Funcionarios extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
+        botaoFechar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFechar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
         botaoFechar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,6 +128,7 @@ public class Funcionarios extends javax.swing.JDialog {
         getContentPane().add(botaoFechar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
 
         botaoAdicionar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
+        botaoAdicionar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoAdicionar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverAdicionar.png"))); // NOI18N
         botaoAdicionar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,6 +138,7 @@ public class Funcionarios extends javax.swing.JDialog {
         getContentPane().add(botaoAdicionar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 168, 205, 50));
 
         botaoRemover1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoRemover.png"))); // NOI18N
+        botaoRemover1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoRemover1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverremover.png"))); // NOI18N
         botaoRemover1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +148,7 @@ public class Funcionarios extends javax.swing.JDialog {
         getContentPane().add(botaoRemover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 168, 205, 50));
 
         botaoEditar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoEditar.png"))); // NOI18N
+        botaoEditar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoEditar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoEditarHover.png"))); // NOI18N
         botaoEditar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,6 +158,7 @@ public class Funcionarios extends javax.swing.JDialog {
         getContentPane().add(botaoEditar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 168, 205, 50));
 
         botaoListar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoListar.png"))); // NOI18N
+        botaoListar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoListar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverListar.png"))); // NOI18N
         botaoListar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,6 +237,7 @@ public class Funcionarios extends javax.swing.JDialog {
         getContentPane().add(painelderolagem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios/btnrelatorios.png"))); // NOI18N
+        btnRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRelatorios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios/btnrelatoriosHover.png"))); // NOI18N
         btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -253,6 +259,7 @@ public class Funcionarios extends javax.swing.JDialog {
         botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
         botaoAjuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnDuvidas.png"))); // NOI18N
+        botaoAjuda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAjudaActionPerformed(evt);

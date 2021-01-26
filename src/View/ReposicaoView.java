@@ -48,6 +48,7 @@ public class ReposicaoView extends javax.swing.JDialog {
         
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
+        botaoTodasReposicoes.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
         btnHist.setBackground(new Color(0,0,0,0));
         
@@ -95,6 +96,7 @@ public class ReposicaoView extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
+        botaoFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
         botaoFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +136,7 @@ public class ReposicaoView extends javax.swing.JDialog {
         getContentPane().add(comboTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 320, 35));
 
         btnHist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/reposicao/btnHisto.png"))); // NOI18N
+        btnHist.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHistActionPerformed(evt);
@@ -142,6 +145,7 @@ public class ReposicaoView extends javax.swing.JDialog {
         getContentPane().add(btnHist, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 150, -1, 40));
 
         botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoAdicionar.png"))); // NOI18N
+        botaoAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAdicionarActionPerformed(evt);
@@ -229,7 +233,8 @@ public class ReposicaoView extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 420, 370));
 
-        botaoTodasReposicoes.setText("Exibir Todas");
+        botaoTodasReposicoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnExibirTodas.png"))); // NOI18N
+        botaoTodasReposicoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoTodasReposicoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoTodasReposicoesActionPerformed(evt);
@@ -237,16 +242,16 @@ public class ReposicaoView extends javax.swing.JDialog {
         });
         getContentPane().add(botaoTodasReposicoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 660, 220, -1));
 
-        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setBackground(new java.awt.Color(255, 255, 255));
         botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
-        botaoAjuda.setText("?");
+        botaoAjuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnDuvidas.png"))); // NOI18N
         botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAjudaActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 10, 30, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/reposicao/fundo.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

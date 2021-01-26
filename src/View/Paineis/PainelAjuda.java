@@ -41,7 +41,6 @@ public class PainelAjuda extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(236, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(236, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -69,6 +68,7 @@ public class PainelAjuda extends javax.swing.JDialog {
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 80, 220, 270));
 
         botaoFecharConf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharPeq.png"))); // NOI18N
+        botaoFecharConf.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFecharConf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoFecharConfActionPerformed(evt);

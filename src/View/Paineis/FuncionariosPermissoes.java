@@ -184,6 +184,7 @@ public class FuncionariosPermissoes extends javax.swing.JDialog {
         btnFechar.setBackground(new java.awt.Color(255, 255, 255));
         btnFechar.setForeground(new java.awt.Color(255, 255, 255));
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharX.png"))); // NOI18N
+        btnFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFecharActionPerformed(evt);

@@ -78,6 +78,7 @@ public class ImprimirExportarGerente extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
+        botaoFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
         botaoFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,6 +88,7 @@ public class ImprimirExportarGerente extends javax.swing.JDialog {
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
 
         btnFrequencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnfrequencia.png"))); // NOI18N
+        btnFrequencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnFrequencia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnfrequenciaHover.png"))); // NOI18N
         btnFrequencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,6 +98,7 @@ public class ImprimirExportarGerente extends javax.swing.JDialog {
         getContentPane().add(btnFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, -1));
 
         btnRelatoriosOrca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnRelatoriosOrca.png"))); // NOI18N
+        btnRelatoriosOrca.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRelatoriosOrca.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnRelatoriosOrcaHover.png"))); // NOI18N
         btnRelatoriosOrca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,6 +108,7 @@ public class ImprimirExportarGerente extends javax.swing.JDialog {
         getContentPane().add(btnRelatoriosOrca, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, -1, -1));
 
         btnRelatoriosFunc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnrelatoriosFunciona.png"))); // NOI18N
+        btnRelatoriosFunc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRelatoriosFunc.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imprimir/btnrelatoriosFuncionaHover.png"))); // NOI18N
         btnRelatoriosFunc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

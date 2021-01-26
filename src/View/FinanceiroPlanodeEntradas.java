@@ -108,6 +108,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         getContentPane().add(campoDataEspecífica, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 120, -1));
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
+        botaoFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
         botaoFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,6 +118,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAdicionar.png"))); // NOI18N
+        btnAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdicionar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAdicionarHover.png"))); // NOI18N
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,6 +128,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 146, 34));
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnRemover.png"))); // NOI18N
+        btnRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRemover.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnRemoverHover.png"))); // NOI18N
         btnRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +138,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 146, 34));
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnEditar.png"))); // NOI18N
+        btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnEditarHover.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +148,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 146, 34));
 
         botaoVResumida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumido.png"))); // NOI18N
+        botaoVResumida.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoVResumida.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumidoHover.png"))); // NOI18N
         botaoVResumida.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -153,6 +158,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         getContentPane().add(botaoVResumida, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 146, 34));
 
         botaoVDetalhada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnDetalhada.png"))); // NOI18N
+        botaoVDetalhada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoVDetalhada.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnDetalhadaHover.png"))); // NOI18N
         botaoVDetalhada.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -162,6 +168,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         getContentPane().add(botaoVDetalhada, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, 146, 34));
 
         btnAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicar.png"))); // NOI18N
+        btnAplicar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAplicar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicarHover.png"))); // NOI18N
         btnAplicar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -310,6 +317,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         getContentPane().add(painelEntradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
         btnMensalidadesAReceber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnMensalidadesAReceber.png"))); // NOI18N
+        btnMensalidadesAReceber.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMensalidadesAReceber.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnMensalidadesAReceberHover.png"))); // NOI18N
         btnMensalidadesAReceber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -319,6 +327,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         getContentPane().add(btnMensalidadesAReceber, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 287, 35));
 
         btnContasRecebidas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/BTNcontasrecebidas.png"))); // NOI18N
+        btnContasRecebidas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnContasRecebidas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/BTNcontasrecebidasHover.png"))); // NOI18N
         btnContasRecebidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,16 +336,17 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         });
         getContentPane().add(btnContasRecebidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 211, 35));
 
-        botaoAjuda.setBackground(new java.awt.Color(0, 153, 102));
+        botaoAjuda.setBackground(new java.awt.Color(255, 255, 255));
         botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botaoAjuda.setForeground(new java.awt.Color(255, 255, 255));
-        botaoAjuda.setText("?");
+        botaoAjuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnDuvidas.png"))); // NOI18N
+        botaoAjuda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoAjuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoAjudaActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 5, -1, -1));
+        getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 10, 30, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodeentrada.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

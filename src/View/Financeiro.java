@@ -72,6 +72,7 @@ public class Financeiro extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
+        botaoFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
         botaoFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +82,7 @@ public class Financeiro extends javax.swing.JDialog {
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
 
         btnPlanodeContraServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnplano.png"))); // NOI18N
+        btnPlanodeContraServicos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPlanodeContraServicos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnplanoHover.png"))); // NOI18N
         btnPlanodeContraServicos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,6 +92,7 @@ public class Financeiro extends javax.swing.JDialog {
         getContentPane().add(btnPlanodeContraServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 382, 47));
 
         btnAnaliseFinanceira.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnanalisefinaceira.png"))); // NOI18N
+        btnAnaliseFinanceira.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAnaliseFinanceira.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnanalisefinaceirahover.png"))); // NOI18N
         btnAnaliseFinanceira.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +102,7 @@ public class Financeiro extends javax.swing.JDialog {
         getContentPane().add(btnAnaliseFinanceira, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, 382, 47));
 
         btnPlanodeEntradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnplanodeentradas.png"))); // NOI18N
+        btnPlanodeEntradas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPlanodeEntradas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnplanodeentradashover.png"))); // NOI18N
         btnPlanodeEntradas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

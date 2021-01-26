@@ -91,6 +91,7 @@ public class BackupView extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
+        botaoFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFechar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoHoverfechar.png"))); // NOI18N
         botaoFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +145,7 @@ public class BackupView extends javax.swing.JDialog {
         painelLocal.add(campoHoraLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 320, 210, 30));
 
         btnImportarLocal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/btnImportar.png"))); // NOI18N
+        btnImportarLocal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnImportarLocal.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/btnImportar.png"))); // NOI18N
         btnImportarLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,6 +161,7 @@ public class BackupView extends javax.swing.JDialog {
         painelLocal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
 
         btnExportarLocal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/btnExportar.png"))); // NOI18N
+        btnExportarLocal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnExportarLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExportarLocalActionPerformed(evt);

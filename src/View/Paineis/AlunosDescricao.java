@@ -57,6 +57,7 @@ public class AlunosDescricao extends javax.swing.JDialog {
 
         botaoFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharPeq.png"))); // NOI18N
         botaoFechar.setAlignmentY(0.0F);
+        botaoFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoFecharActionPerformed(evt);

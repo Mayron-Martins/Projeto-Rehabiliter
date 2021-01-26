@@ -183,6 +183,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         jPanel1.add(painelCadTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 750, 210, 330));
 
         botaoFecharConf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnFecharPeq.png"))); // NOI18N
+        botaoFecharConf.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoFecharConf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoFecharConfActionPerformed(evt);
@@ -206,6 +207,7 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         jPanel1.add(campoDataVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 140, 30));
 
         botaoSetarVencimento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnSetarVenc.png"))); // NOI18N
+        botaoSetarVencimento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoSetarVencimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSetarVencimentoActionPerformed(evt);

@@ -129,15 +129,16 @@ public class LoginGerente extends javax.swing.JFrame {
         });
         getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 50, 30));
 
-        botaoEsqueceuSenha.setText("Esqueceu a Senha?");
+        botaoEsqueceuSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnEsqueceuSenha.png"))); // NOI18N
         botaoEsqueceuSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoEsqueceuSenha.setPreferredSize(new java.awt.Dimension(111, 21));
+        botaoEsqueceuSenha.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnEsqueceuSenhaHover.png"))); // NOI18N
         botaoEsqueceuSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoEsqueceuSenhaActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoEsqueceuSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 276, 150, -1));
+        getContentPane().add(botaoEsqueceuSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 130, 20));
 
         plano_de_fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logingerente/login-gerente2.jpg"))); // NOI18N
         getContentPane().add(plano_de_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 520));
