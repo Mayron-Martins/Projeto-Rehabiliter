@@ -69,6 +69,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         botaoAlunos.setBackground(new Color(0,0,0,0));
         botaoFinanceiro.setBackground(new Color(0,0,0,0));
         botaoFrequencia.setBackground(new Color(0,0,0,0));
+        botaoReposicao.setBackground(new Color(0,0,0,0));
         botaoMenu.setBackground(new Color(0,0,0,0));
         setExtendedState(MAXIMIZED_BOTH);
         
