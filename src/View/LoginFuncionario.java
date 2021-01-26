@@ -34,6 +34,7 @@ public class LoginFuncionario extends javax.swing.JFrame {
         initComponents();
         controller = new LoginFuncionarioController(this);
         botaosair.setBackground(new Color(0,0,0,0));
+        botaoEsqueceuSenha.setBackground(new Color(0,0,0,0));
         botaoentrarFuncionario.setBackground(new Color(0,0,0,0));
         botaoDesenvolvedor.setBackground(new Color(0,0,0,0));
         botaoGerente.setBackground(new Color(0,0,0,0));
@@ -56,6 +57,7 @@ public class LoginFuncionario extends javax.swing.JFrame {
         botaoDesenvolvedor = new javax.swing.JButton();
         botaoentrarFuncionario = new javax.swing.JButton();
         botaoGerente = new javax.swing.JButton();
+        botaoEsqueceuSenha = new javax.swing.JButton();
         plano_de_fundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -130,6 +132,16 @@ public class LoginFuncionario extends javax.swing.JFrame {
         });
         getContentPane().add(botaoGerente, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 362, 255, 31));
 
+        botaoEsqueceuSenha.setText("Esqueceu a Senha?");
+        botaoEsqueceuSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoEsqueceuSenha.setPreferredSize(new java.awt.Dimension(111, 21));
+        botaoEsqueceuSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEsqueceuSenhaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoEsqueceuSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 276, 150, -1));
+
         plano_de_fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/loginfuncionário/background.jpg"))); // NOI18N
         getContentPane().add(plano_de_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -190,6 +202,10 @@ public class LoginFuncionario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_campoSenhaKeyPressed
 
+    private void botaoEsqueceuSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEsqueceuSenhaActionPerformed
+        controller.recuperacaoSenha();
+    }//GEN-LAST:event_botaoEsqueceuSenhaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -227,6 +243,7 @@ public class LoginFuncionario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoDesenvolvedor;
+    private javax.swing.JButton botaoEsqueceuSenha;
     private javax.swing.JButton botaoGerente;
     private javax.swing.JButton botaoentrarFuncionario;
     private javax.swing.JButton botaosair;

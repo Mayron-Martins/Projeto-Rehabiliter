@@ -13,6 +13,7 @@ import Model.Funcionario;
 import Model.auxiliar.FrequenciaFuncionarios;
 import Model.auxiliar.LogAçoesFuncionario;
 import View.LoginFuncionario;
+import View.Paineis.LoginSenhaEsquecida;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -78,11 +79,23 @@ public class LoginFuncionarioController {
             frequencia.atualizarDados(frequenciaFuncionarios);
     }
     
+    public void recuperacaoSenha(){
+        String cpf = view.getCampoCpfFuncionario().getText();
+        if(!cpf.replace(".", "").replace("-", "").trim().equals("")){
+            LoginSenhaEsquecida telaSenhaEsquecida = new LoginSenhaEsquecida(view, true, cpf);
+            telaSenhaEsquecida.setVisible(true);
+        }
+        else{
+            view.exibeMensagem("Digite um CPF válido!");
+        }
+    }
+    
     private LogAçoesFuncionario setarLog(String usuario){
         Funcionario funcionario = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE usuario = '"+usuario+"'").get(0);
         Date dataEvento = new Date();
         
         LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, "Entrada no Sistema", null);
         return logAcao;
-    } 
+    }
+    
 }

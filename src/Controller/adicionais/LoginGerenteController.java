@@ -13,6 +13,7 @@ import Model.Funcionario;
 import Model.auxiliar.FrequenciaFuncionarios;
 import Model.auxiliar.LogAçoesFuncionario;
 import View.LoginGerente;
+import View.Paineis.LoginSenhaEsquecida;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -72,6 +73,17 @@ public class LoginGerenteController {
         String dataInput = converterData.parseDate(converterData.conversaoLocalforDate(dataAtual));
         FrequenciaFuncionarios frequenciaFuncionarios = new FrequenciaFuncionarios(funcionario.getCodBanco(), dataInput, "P");
         frequencia.atualizarDados(frequenciaFuncionarios);
+    }
+    
+    public void recuperacaoSenha(){
+        String cpf = view.getCampoCpfFuncionario().getText();
+        if(!cpf.replace(".", "").replace("-", "").trim().equals("")){
+            LoginSenhaEsquecida telaSenhaEsquecida = new LoginSenhaEsquecida(view, true, cpf);
+            telaSenhaEsquecida.setVisible(true);
+        }
+        else{
+            view.exibeMensagem("Digite um CPF válido!");
+        }
     }
     
     private LogAçoesFuncionario setarLog(String usuario){
