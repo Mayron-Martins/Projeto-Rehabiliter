@@ -213,6 +213,9 @@ public class FuncionariosController {
                 case "8":
                     view2.getRadioCaixaSim().setSelected(true);
                 break;
+                case "10":
+                    view2.getRadioReposicoesSim().setSelected(true);
+                break;
             }
         }
         view2.setTelasPermitidas(funcionario.getTelasPermitidas());
@@ -226,7 +229,6 @@ public class FuncionariosController {
         view.setLocation(x, y);
         view2.setLocation(x+view.getWidth()+4, y+view.getHeight()-view2.getHeight());
         view2.setModal(true);
-        view2.alternarRadios();
         view2.setVisible(true);
     }
     
@@ -245,7 +247,7 @@ public class FuncionariosController {
         int y = view.getLocation().y;
         view.setLocation(x, y);
         
-        view2.setVisible(false);
+        view2.dispose();
         
     }
     

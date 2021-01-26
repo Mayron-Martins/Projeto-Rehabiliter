@@ -28,6 +28,7 @@ import javax.swing.KeyStroke;
  */
 public class ReposicaoView extends javax.swing.JDialog {
     private final java.awt.Frame parent;
+    private final int numeroTela = 10;
     private final HistoricoRehab telaHistorico;
     private final ReposicaoController controller;
     private final PainelAjuda painelAjuda;
@@ -424,6 +425,10 @@ public class ReposicaoView extends javax.swing.JDialog {
 
     public PainelAjuda getPainelAjuda() {
         return painelAjuda;
+    }
+
+    public int getNumeroTela() {
+        return numeroTela;
     }
     
     
