@@ -924,7 +924,11 @@ public class AlunosController {
             Servicos servico = this.pegarServico(plano.getCodServico());
 
             Date dataConvertida = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
+            if(plano.getDataRenovacao()!=null){
+                dataConvertida = converterData.parseDate(converterData.parseDate(plano.getDataRenovacao()));
+            }
             LocalDate dataFimPlano = converterData.conversaoLocalforDate(dataConvertida);
+            
 
             view2.getCampoDataCadastro().setDate(aluno.getDataCadastro());
             view2.getCampoDataPagamento().setDate(plano.getDataPagamento());
