@@ -19,9 +19,9 @@ public class Sqlcmd {
     
     public void gerarBats(){
         //Comandos
-        String masterBat = "sqlcmd -S DESKTOP-61BKSM4\\SQLEXPRESS -E -i \"C:/Rehabiliter/Components/System/Scripts/Script_Master.sql\" -o \"C:/Rehabiliter/Components/Logs/Script_Master.log\"";
-        String fullBat = "sqlcmd -S DESKTOP-61BKSM4\\SQLEXPRESS -E -i \"C:/Rehabiliter/Components/System/Scripts/Full_Backup.sql\" -o \"C:/Rehabiliter/Components/Logs/Full_Backup.log\"";
-        String stopBat = "sqlcmd -S DESKTOP-61BKSM4\\SQLEXPRESS -E -i \"C:/Rehabiliter/Components/System/Scripts/Stop_Database.sql\" -o \"C:/Rehabiliter/Components/Logs/Stop_Database.log\"";
+        String masterBat = "sqlcmd -S DESKTOP-NDGBTAN\\SQLEXPRESS -E -i \"C:/Rehabiliter/Components/System/Scripts/Script_Master.sql\" -o \"C:/Rehabiliter/Components/Logs/Script_Master.log\"";
+        String fullBat = "sqlcmd -S DESKTOP-NDGBTAN\\SQLEXPRESS -E -i \"C:/Rehabiliter/Components/System/Scripts/Full_Backup.sql\" -o \"C:/Rehabiliter/Components/Logs/Full_Backup.log\"";
+        String stopBat = "sqlcmd -S DESKTOP-NDGBTAN\\SQLEXPRESS -E -i \"C:/Rehabiliter/Components/System/Scripts/Stop_Database.sql\" -o \"C:/Rehabiliter/Components/Logs/Stop_Database.log\"";
         
         //Arquivos
         File master = new File("C:/Rehabiliter/Components/System/Scripts/Bat_Master.bat");
