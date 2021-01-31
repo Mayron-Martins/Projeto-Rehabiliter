@@ -430,7 +430,7 @@ public class CaixaController {
                                 plano = new Planos(chavePlano, codAluno, 0, 0, 0, dataVencimento, dataVenda, null, dataFimPlano, "Pago"); 
                             }
                             else{
-                                plano = new Planos(chavePlano, codAluno, 0, 0, 0, dataVencimento, dataVenda, null, null, "Encerrado"); 
+                                plano = new Planos(chavePlano, codAluno, 0, 0, 0, dataVencimento, dataVenda, dataVenda, null, "Encerrado"); 
                             }
 
                         }
