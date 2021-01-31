@@ -40,6 +40,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -836,6 +837,48 @@ public class AlunosController {
         }
     }
     
+    public void encerrarPlano(){
+        int linhaSelecionada = view.getTabelaAlunos().getSelectedRow();
+        
+        if(linhaSelecionada>-1){
+            long chavePlano = Integer.parseInt(tabelaDePlanos.getValueAt(linhaSelecionada, 0).toString());
+            Planos plano = this.planoAnterior(chavePlano);
+            Aluno aluno = this.alunoAnterior(plano.getCodAluno());
+            
+            BigDecimal debito = aluno.getDebito();
+            
+            Planos novoPlano;
+            
+            if(!plano.getSituacao().equals("Encerrado")){
+                int confirmacao = -1;
+                if(debito.compareTo(BigDecimal.ZERO)!=0){
+                    confirmacao = JOptionPane.showConfirmDialog(null, "O Aluno ainda possui débitos não pagos, deseja Encerrar o Plano assim mesmo?", 
+                        "Atenção", JOptionPane.YES_NO_OPTION);
+                }
+                else{
+                    confirmacao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja encerrar o Plano deste Aluno?", 
+                        "Atenção", JOptionPane.YES_NO_OPTION);
+                }
+
+                if(confirmacao == JOptionPane.YES_OPTION){
+                    Date dataAtual = new Date();
+                    String situacao = "Encerrado";
+
+                    novoPlano = new Planos(chavePlano, plano.getCodAluno(), plano.getCodTurma(), plano.getCodServico(), 
+                            plano.getDiaVencimento(), plano.getDataVencimento(), plano.getDataPagamento(), dataAtual, plano.getDataRenovacao(), situacao);
+
+                    planosDao.atualizarSituacao(novoPlano);
+                    alunosDao.atualizarDebitos(aluno.getCodBanco(), BigDecimal.ZERO);
+                    view.exibeMensagem("Sucesso!");
+                    listarAlunos();
+                }
+            }
+            else{
+                view.exibeMensagem("O Plano já está encerrado!");
+            }
+        }
+    }
+    
     
     //CONFIGURAÇÕES ADICIONAIS
     public void selecionarTabela(){
@@ -1434,7 +1477,8 @@ public class AlunosController {
                 + "\u07CBDIREITA = Movimentar Painéis\n"
                 + "\u07CBCTRL + E = Editar Aluno\n"
                 + "\u07CBCTRL + N = Cadastrar Novo Funcionário\n"
-                + "\u07CBCTRL + T = Trocar Modo de Turma\n";
+                + "\u07CBCTRL + T = Trocar Modo de Turma\n"
+                + "\u07CBCTRL + END = Finalizar Plano Ativo\n";
         
         view.getPainelAjuda().setModal(true);
         view.getPainelAjuda().getCampoAtalhos().setText("");

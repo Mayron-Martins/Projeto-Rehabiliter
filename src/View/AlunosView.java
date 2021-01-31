@@ -1048,6 +1048,15 @@ public class AlunosView extends javax.swing.JDialog {
                 telaAlunosCadastro.setVisible(true);
             }
         });
+        
+        //Encerrar Contrato
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl END"), "ENCERRARPLANO");
+        meurootpane.getRootPane().getActionMap().put("ENCERRARPLANO", new AbstractAction("ENCERRARPLANO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.encerrarPlano();
+            }
+        });
     }
 
 
