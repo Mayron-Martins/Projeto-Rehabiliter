@@ -7,6 +7,7 @@ package Controller;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
+import Controller.auxiliar.ImpressaoComponentes;
 import Controller.auxiliar.LogsSystem;
 import Controller.auxiliar.VerificarCodigoNoBanco;
 import Dao.AlunosDao;
@@ -32,6 +33,7 @@ import View.LoginFuncionario;
 import View.LoginGerente;
 import View.Paineis.AlunosConfigAdicionais;
 import View.Paineis.AlunosDescricao;
+import java.awt.Color;
 import java.awt.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -40,6 +42,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -70,6 +73,7 @@ public class AlunosController {
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
+    private final ImpressaoComponentes imprimirTabela = new ImpressaoComponentes();
 
     public AlunosController(AlunosView view, AlunosConfigAdicionais view2, AlunosDescricao view3) {
         this.view = view;
@@ -333,20 +337,26 @@ public class AlunosController {
     
     public void removerAluno(){
         if(this.view.getTabelaAlunos().getSelectedRow()!= -1){
-            int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
-            int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
-            String nomeAluno = tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
-            String nomeTurma = view.getComboTurmas().getSelectedItem().toString();
-            int codTurma = Integer.parseInt(nomeTurma.split("\\.")[0]);
-            Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+codTurma).get(0);
+            int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover este aluno, todos os dados relacionados a ele serão perdidos!", 
+                    "Atenção!", JOptionPane.YES_NO_OPTION);
+            //Confirmação de Remoção
+            if(confirmacao == JOptionPane.YES_OPTION){
+                int linhaSelecionada = this.view.getTabelaAlunos().getSelectedRow();
+                int codAluno = Integer.parseInt(tabelaDeAlunos.getValueAt(linhaSelecionada, 0).toString());
+                String nomeAluno = tabelaDeAlunos.getValueAt(linhaSelecionada, 1).toString();
+                String nomeTurma = view.getComboTurmas().getSelectedItem().toString();
+                int codTurma = Integer.parseInt(nomeTurma.split("\\.")[0]);
+                Turmas turma = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE codTurma = "+codTurma).get(0);
 
-            turmasDao.atualizarQuantAunos(codTurma, turma.getQuantidadeAlunos()-1);
-            alunosDao.removerAluno(codAluno);
+                turmasDao.atualizarQuantAunos(codTurma, turma.getQuantidadeAlunos()-1);
+                alunosDao.removerAluno(codAluno);
 
-            this.setarLog("Remoção de Aluno", "Removeu o aluno "+nomeAluno);
+                this.setarLog("Remoção de Aluno", "Removeu o aluno "+nomeAluno);
+
+                this.view.exibeMensagem("Sucesso");
+                listarAlunos();
+            }
             
-            this.view.exibeMensagem("Sucesso");
-            listarAlunos();
         }
         else{this.view.exibeMensagem("Erro, Nenhum Aluno Selecionado!");}  
     }
@@ -684,6 +694,10 @@ public class AlunosController {
                     this.bloquearLinhaTabela(linhas);
                 }
                 
+                if(aluno.getDebito().compareTo(BigDecimal.ZERO)>0){
+                    this.saldoNegativo(linhas);
+                }
+                
                 linhas++;
             }
         }
@@ -730,6 +744,19 @@ public class AlunosController {
             tableCellEditorComponent = view.getTabelaEnderecos().getCellEditor(linhaTabela, colunas).getTableCellEditorComponent(tabela, dadoTabela, true, linhaTabela, colunas);
             tableCellEditorComponent.setEnabled(false);
         }
+    }
+    
+    private void saldoNegativo(int linhaTabela){
+        Component tableCellEditorComponent;
+        JTable tabela = view.getTabelaAlunos();
+        Object dadoTabela;
+        
+        //Tabela de Alunos
+        dadoTabela = tabelaDeAlunos.getValueAt(linhaTabela, 3);
+        tableCellEditorComponent =  view.getTabelaAlunos().getCellEditor(linhaTabela, 3).getTableCellEditorComponent(tabela, dadoTabela, true, linhaTabela, 3);
+        tableCellEditorComponent.setBackground(new Color(255,0,0));
+        tableCellEditorComponent.setForeground(new Color(255,255,255));
+        
     }
     
     public void removerSelecaoBox(){
@@ -875,6 +902,53 @@ public class AlunosController {
             }
             else{
                 view.exibeMensagem("O Plano já está encerrado!");
+            }
+        }
+    }
+    
+    //Imprimir Tabelas
+    public void imprimirTabela(){
+        int numeroLinhas = view.getTabelaAlunos().getRowCount();
+        if(numeroLinhas>0){
+            JComboBox opcoes = new JComboBox(new Object[]{"Somente esta tabela", "Todas as tabelas relacionadas"});
+            int confirmacao = JOptionPane.showConfirmDialog(null, opcoes, 
+                        "Selecione o modo de impressão", JOptionPane.OK_CANCEL_OPTION);
+            //Confirmação de Impressão
+            if(confirmacao == JOptionPane.OK_OPTION){
+                String titulo;
+                String data = converterData.parseDate(new Date());
+                String rodape = "Relatório Alunos - "+data;
+                if(opcoes.getSelectedIndex()==0){
+                    titulo = "Tabela de Alunos";
+                    if(view.getPainelPlanos().isVisible()){titulo = "Tabela de Planos";}
+                    if(view.getPainelPais().isVisible()){titulo = "Tabela de Pais";}
+                    if(view.getPainelEnderecos().isVisible()){titulo = "Tabela de Endereços";}
+                    imprimirTabela.imprimirTabelas(titulo, rodape, this.tabelaPrincipal());
+                }
+                else{
+                    titulo = "Tabela de Alunos";
+                    imprimirTabela.imprimirTabelas(titulo, rodape, view.getTabelaAlunos());
+                    titulo = "Tabela de Planos";
+                    imprimirTabela.imprimirTabelas(titulo, rodape, view.getTabelaPlanos());
+                    titulo = "Tabela de Pais";
+                    imprimirTabela.imprimirTabelas(titulo, rodape, view.getTabelaPais());
+                    titulo = "Tabela de Endereços";
+                    imprimirTabela.imprimirTabelas(titulo, rodape, view.getTabelaEnderecos());
+                }
+            }
+        }
+        
+    }
+    
+    private JTable tabelaPrincipal(){
+        if(view.getPainelAlunos().isVisible()){return view.getTabelaAlunos();}
+        else{
+            if(view.getPainelPlanos().isVisible()){return view.getTabelaPlanos();}
+            else{
+                if(view.getPainelEnderecos().isVisible()){return view.getTabelaEnderecos();}
+                else{
+                    return view.getTabelaPais();
+                }
             }
         }
     }
@@ -1482,6 +1556,7 @@ public class AlunosController {
                 + "\u07CBCTRL + E = Editar Aluno\n"
                 + "\u07CBCTRL + N = Cadastrar Novo Funcionário\n"
                 + "\u07CBCTRL + T = Trocar Modo de Turma\n"
+                + "\u07CBCTRL + P = Imprimir Tabela\n"
                 + "\u07CBCTRL + END = Finalizar Plano Ativo\n";
         
         view.getPainelAjuda().setModal(true);

@@ -193,6 +193,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
         getContentPane().add(R4, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 400, -1, 50));
 
         campoPendente.setEditable(false);
+        campoPendente.setForeground(new java.awt.Color(51, 51, 51));
         campoPendente.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         getContentPane().add(campoPendente, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 242, 142, 70));
 
@@ -201,6 +202,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
         getContentPane().add(R3, new org.netbeans.lib.awtextra.AbsoluteConstraints(644, 242, -1, 70));
 
         campoDespesaTotal.setEditable(false);
+        campoDespesaTotal.setForeground(new java.awt.Color(255, 0, 0));
         campoDespesaTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         getContentPane().add(campoDespesaTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(488, 242, 142, 70));
 
@@ -209,6 +211,7 @@ public class FinanceiroAnaliseFinanceira extends javax.swing.JDialog {
         getContentPane().add(R2, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 242, -1, 70));
 
         campoGanhoTotal.setEditable(false);
+        campoGanhoTotal.setForeground(new java.awt.Color(0, 153, 51));
         campoGanhoTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         getContentPane().add(campoGanhoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 242, 142, 70));
 

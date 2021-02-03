@@ -76,18 +76,12 @@ public class AdicionarGastosController {
             this.setarLog("Cadastro de Gasto", "Cadastrou o gasto "+motivo);
                 
               view.exibeMensagem("Sucesso!");
-              view.getCampoFormaPagamento().setSelectedIndex(0);
-              view.getCampoQuantidade().setText("");
-              view.getCampoReferencia().setText("");
-              view.getCampoValor().setText("");
+              limparCampos();
             }
         } catch (SQLException ex) {
             gerarLog(ex);
             view.exibeMensagem("Não foi possível salvar o Gasto corretamente!");
-            view.getCampoFormaPagamento().setSelectedIndex(0);
-            view.getCampoQuantidade().setText("");
-            view.getCampoReferencia().setText("");
-            view.getCampoValor().setText("");
+            limparCampos();
         }
         
     }
@@ -120,6 +114,13 @@ public class AdicionarGastosController {
             LoginGerente jump = new LoginGerente();
             jump.setVisible(true);
         }
+    }
+    
+    public void limparCampos(){
+        view.getCampoFormaPagamento().setSelectedIndex(0);
+        view.getCampoQuantidade().setText("");
+        view.getCampoReferencia().setText("");
+        view.getCampoValor().setText("");
     }
     
     private Funcionario setarLog(String acao, String motivo){

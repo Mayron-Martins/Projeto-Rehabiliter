@@ -557,7 +557,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
     }//GEN-LAST:event_campoBairroActionPerformed
 
     private void botaofecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaofecharActionPerformed
-
+        controller.limparCampos();
         this.dispose();
     }//GEN-LAST:event_botaofecharActionPerformed
 

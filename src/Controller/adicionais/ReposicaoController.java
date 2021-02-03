@@ -24,7 +24,6 @@ import View.LoginFuncionario;
 import View.LoginGerente;
 import View.ReposicaoView;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -285,6 +284,7 @@ public class ReposicaoController {
     public void setarTabelaAgendados(){
         if(view.getComboDiaDaSemana().getSelectedIndex()>0){
             limparTabelaAgendados();
+            view.getTabelaAgendados().setSelectionMode(0);
             String nomeTurma = view.getComboTurma().getSelectedItem().toString().split("\\.")[0];
             int codTurma = Integer.parseInt(nomeTurma);
 
@@ -323,14 +323,22 @@ public class ReposicaoController {
     }
     
     public void removerReposicao(){
-        int linhaSelecionada = view.getTabelaAgendados().getSelectedRow();
-        if(linhaSelecionada!=-1){
-            int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhaSelecionada, 0).toString());
-            reposicaoDao.removerReposicao(codBanco);
-            this.setarLog("Remoção de Reposição de Aula", "Removeu a reposição "+codBanco);
+        int[] linhas = view.getTabelaAgendados().getSelectedRows();
+        if(linhas!=null){
+            for(int linhaSelecionada:linhas){
+                int codBanco = Integer.parseInt(tabelaAgendados.getValueAt(linhaSelecionada, 0).toString());
+                reposicaoDao.removerReposicao(codBanco);
+                this.setarLog("Remoção de Reposição de Aula", "Removeu a reposição "+codBanco);
+            }
             view.exibeMensagem("Removido com sucesso!");
-            setarTabelaAgendados();
             
+            int modoSelecao = view.getTabelaAgendados().getSelectionModel().getSelectionMode();
+            if(modoSelecao==0){
+                setarTabelaAgendados();
+            }
+            else{
+                exibirFuturasReposicoes();
+            }
         }
     }
     
@@ -373,24 +381,30 @@ public class ReposicaoController {
     
     public void exibirFuturasReposicoes(){
         limparTabelaAgendados();
-        LocalDate dataAtualConv = LocalDate.now();
-        Date dataAtual = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtualConv));
-        ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE data >= '"+dataAtual+"'");
-        if(reposicoes!=null){
-            for(ReposicaoAulas reposicao : reposicoes){
-                String dataConvertida = converterData.parseDate(reposicao.getData());
-                
-                Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+reposicao.getCodAluno()).get(0);
-                boolean situacao = false;
-                if(reposicao.getSituacao().equals("Pr")){
-                    situacao = true;
+        view.getTabelaAgendados().setSelectionMode(1);
+        if(view.getComboTurma().getSelectedIndex()>0){
+            LocalDate dataAtualConv = LocalDate.now();
+            String nomeTurma = view.getComboTurma().getSelectedItem().toString().split("\\.")[0];
+            int codTurma = Integer.parseInt(nomeTurma);
+            Date dataAtual = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtualConv));
+            ArrayList <ReposicaoAulas> reposicoes = reposicaoDao.pesquisarReposicao("SELECT * FROM tblReposicaoAulas WHERE codTurma = "+codTurma+" AND data >= '"+dataAtual+"'");
+            if(reposicoes!=null){
+                for(ReposicaoAulas reposicao : reposicoes){
+                    String dataConvertida = converterData.parseDate(reposicao.getData());
+
+                    Aluno aluno = alunosDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codAluno = "+reposicao.getCodAluno()).get(0);
+                    boolean situacao = false;
+                    if(reposicao.getSituacao().equals("Pr")){
+                        situacao = true;
+                    }
+                    Object[] dadosDaTabela = {reposicao.getCodBanco(), dataConvertida, aluno.getNome(), situacao};
+                    tabelaAgendados.addRow(dadosDaTabela);
                 }
-                Object[] dadosDaTabela = {reposicao.getCodBanco(), dataConvertida, aluno.getNome(), situacao};
-                tabelaAgendados.addRow(dadosDaTabela);
+            }else{
+                view.exibeMensagem("Sem Dados.");
             }
-        }else{
-            view.exibeMensagem("Sem Dados.");
         }
+        
     }
     
     public void ajuda(){
@@ -437,5 +451,6 @@ public class ReposicaoController {
         }
         return null;
     }
+    
     
 }

@@ -77,14 +77,7 @@ public class AdicionarServicosController {
                     this.setarLog("Cadastro de Serviço", "Cadastrou o serviço "+nomeServico);
                     
                     view.exibeMensagem("Sucesso!");
-                    //Limpando Campos
-                    view.getNomeServico().setText("");
-                    preencherComboPeriodo();
-                    view.getComboPeriodo().setSelectedIndex(0);
-                    view.getMetodoPagamento().setSelectedIndex(0);
-                    view.getValorDinheiro().setText("");
-                    view.getCampoOutroTipo().setText("Outro");
-                    view.getCampoDias().setText("");
+                    limparCampos();
                 }
                 else{
                     view.exibeMensagem("Por motivos de compatibilidade, esse período de dias não pôde ser aceito!");
@@ -94,14 +87,7 @@ public class AdicionarServicosController {
         } catch (SQLException ex) {
             gerarLog(ex);
             view.exibeMensagem("Não foi possível salvar o Serviço corretamente!");
-            //Limpando Campos
-            view.getNomeServico().setText("");
-            preencherComboPeriodo();
-            view.getComboPeriodo().setSelectedIndex(0);
-            view.getMetodoPagamento().setSelectedIndex(0);
-            view.getValorDinheiro().setText("");
-            view.getCampoOutroTipo().setText("Outro");
-            view.getCampoDias().setText("");
+            limparCampos();
         }
         
     }
@@ -210,6 +196,17 @@ public class AdicionarServicosController {
         else{
             return period<30;
         }
+    }
+    
+    public void limparCampos(){
+        //Limpando Campos
+        view.getNomeServico().setText("");
+        preencherComboPeriodo();
+        view.getComboPeriodo().setSelectedIndex(0);
+        view.getMetodoPagamento().setSelectedIndex(0);
+        view.getValorDinheiro().setText("");
+        view.getCampoOutroTipo().setText("Outro");
+        view.getCampoDias().setText("");    
     }
     
     private void gerarLog(Throwable erro){

@@ -30,6 +30,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -851,6 +852,7 @@ public class AlunosView extends javax.swing.JDialog {
         this.painelPais.setVisible(false);
         this.botaoAlunos.setVisible(false);
         this.painelEnderecos.setVisible(false);
+        this.painelPlanos.setVisible(false);
     }
 
     public JComboBox<String> getComboServicos() {
@@ -904,6 +906,22 @@ public class AlunosView extends javax.swing.JDialog {
 
     public PainelAjuda getPainelAjuda() {
         return painelAjuda;
+    }
+
+    public JScrollPane getPainelAlunos() {
+        return painelAlunos;
+    }
+
+    public JScrollPane getPainelEnderecos() {
+        return painelEnderecos;
+    }
+
+    public JScrollPane getPainelPais() {
+        return painelPais;
+    }
+
+    public JScrollPane getPainelPlanos() {
+        return painelPlanos;
     }
     
     
@@ -1049,6 +1067,15 @@ public class AlunosView extends javax.swing.JDialog {
             }
         });
         
+        //Imprimir Tabela
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl P"), "IMPRIMIR");
+        meurootpane.getRootPane().getActionMap().put("IMPRIMIR", new AbstractAction("IMPRIMIR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.imprimirTabela();
+            }
+        });
+        
         //Encerrar Contrato
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl END"), "ENCERRARPLANO");
         meurootpane.getRootPane().getActionMap().put("ENCERRARPLANO", new AbstractAction("ENCERRARPLANO") {
@@ -1110,36 +1137,6 @@ public class AlunosView extends javax.swing.JDialog {
         
     }
     
-    private void bloquearLiberarPaineis(boolean acao){
-        painelAlunos.getRootPane().setEnabled(acao);
-        painelAlunos.getHorizontalScrollBar().setEnabled(acao);
-        painelAlunos.getVerticalScrollBar().setEnabled(acao);
-        painelAlunos.getViewport().getView().setEnabled(acao);
-        
-        painelPlanos.getRootPane().setEnabled(acao);
-        painelPlanos.getHorizontalScrollBar().setEnabled(acao);
-        painelPlanos.getVerticalScrollBar().setEnabled(acao);
-        painelPlanos.getViewport().getView().setEnabled(acao);
-        
-        painelPais.getRootPane().setEnabled(acao);
-        painelPais.getHorizontalScrollBar().setEnabled(acao);
-        painelPais.getVerticalScrollBar().setEnabled(acao);
-        painelPais.getViewport().getView().setEnabled(acao);
-        
-        painelEnderecos.getRootPane().setEnabled(acao);
-        painelEnderecos.getHorizontalScrollBar().setEnabled(acao);
-        painelEnderecos.getVerticalScrollBar().setEnabled(acao);
-        painelEnderecos.getViewport().getView().setEnabled(acao);
-        
-        jPanel1.setEnabled(acao);
-
-        tabelaAlunos.getTableHeader().setEnabled(acao);
-        tabelaPlanos.getTableHeader().setEnabled(acao);
-        tabelaPais.getTableHeader().setEnabled(acao);
-        tabelaEnderecos.getTableHeader().setEnabled(acao);
-        comboTurmas.setVisible(acao);
-        comboServicos.setVisible(acao);
-    }
     
     private void atalhosPaineis(int leftOrRight){
         //0 - Direita

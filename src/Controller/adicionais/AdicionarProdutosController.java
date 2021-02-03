@@ -17,8 +17,6 @@ import View.LoginFuncionario;
 import View.LoginGerente;
 import View.ProdutosAdicionar;
 import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -67,11 +65,7 @@ public class AdicionarProdutosController {
                 
                 view.exibeMensagem("Sucesso!");
                 //Limpando Campos
-                view.getCampoNome().setText("");
-                view.getCampoDescricao().setText("");
-                view.getCampoQuantidade().setText("");
-                view.getCampoValor().setText("");
-                view.getCampoCodigo().setText("");
+                limparCampos();
             }
 
         }
@@ -82,6 +76,14 @@ public class AdicionarProdutosController {
         int quantidade = produtos.size();
         view.exibeMensagem("Verifique o campo Código do Produto!");
         return quantidade>=1;   
+    }
+    
+    public void limparCampos(){
+        view.getCampoNome().setText("");
+        view.getCampoDescricao().setText("");
+        view.getCampoQuantidade().setText("");
+        view.getCampoValor().setText("");
+        view.getCampoCodigo().setText("");
     }
     
     public void sairTela(){

@@ -190,7 +190,7 @@ public class TurmasAdicionar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
-        // TODO add your handling code here:
+        controller.limparCampos();
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
 

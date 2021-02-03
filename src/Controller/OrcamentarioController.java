@@ -24,6 +24,7 @@ import Model.auxiliar.Servicos;
 import View.FinanceiroAnaliseFinanceira;
 import View.LoginFuncionario;
 import View.LoginGerente;
+import java.awt.Color;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -247,6 +248,14 @@ public class OrcamentarioController {
         totalParcial = totalParcial.setScale(2, RoundingMode.UP);
         totalRelativo = totalRelativo.setScale(2, RoundingMode.UP);
         
+        if(totalParcial.compareTo(BigDecimal.ZERO)<0){view.getCampoTotalParcial().setForeground(new Color(255, 0, 0));}
+        else{
+            view.getCampoTotalParcial().setForeground(new Color(0, 153, 51));
+        }
+        if(totalRelativo.compareTo(BigDecimal.ZERO)<0){view.getCampoGanhoRelativoTotal().setForeground(new Color(255, 0, 0));}
+        else{
+           view.getCampoGanhoRelativoTotal().setForeground(new Color(0, 153, 51));
+        }
         view.getCampoTotalParcial().setText(totalParcial.toString());
         view.getCampoGanhoRelativoTotal().setText(totalRelativo.toString());
     }

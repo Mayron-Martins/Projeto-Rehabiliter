@@ -66,12 +66,12 @@ public class AdicionarAlunosController {
     }
     
     public void verificacaoDeTurmaEServico(){
-        ArrayList <Turmas> turmas = turmasDao.selecionarTodasTurmas();
-        ArrayList <Servicos> servicos = servicosDao.selecionarTodosServicos();
+        ArrayList <Turmas> turmas = turmasDao.pesquisarTurmas("SELECT * FROM tblTurmas WHERE situacao != 'Encerrada'");
+        ArrayList <Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE situacao != 'Encerrado'");
         limparCombos();
         
         if(turmas==null){
-            view.exibeMensagem("Sem Turmas Cadastradas! Adicione Alguma Para Entrar Nessa Tela!");
+            view.exibeMensagem("Sem Turmas Cadastradas Ou Abertas! Adicione Alguma Para Entrar Nessa Tela!");
             if(view.isVisible()){
                view.dispose(); 
             }
@@ -83,7 +83,7 @@ public class AdicionarAlunosController {
         }
         
         if(servicos==null){
-            view.exibeMensagem("Sem Serviços Cadastrados! Adicione Algum Para Entrar Nessa Tela!");
+            view.exibeMensagem("Sem Serviços Cadastrados ou Abertos! Adicione Algum Para Entrar Nessa Tela!");
             if(view.isVisible()){
                view.dispose(); 
             }
@@ -218,63 +218,12 @@ public class AdicionarAlunosController {
                 
             }
             
-            //Limpando Campos
-            view.getCampoNomeAluno().setText("");
-            view.getCampoCPFAluno().setValue(null);
-            view.getCampoTelefone().setValue(null);
-            view.getCampoCelular().setValue(null);
-            view.getCampoNomePai().setText("");
-            view.getCampoNomeMae().setText("");
-            view.getCampoContatoPai().setValue(null);
-            view.getCampoContatoMae().setValue(null);
-            view.getCampoCPFPai().setValue(null);
-            view.getCampoCPFMae().setValue(null);
-            view.getComboPlano().setSelectedIndex(0);
-            view.getComboTurma().setSelectedIndex(0);
-            view.getCampoValor().setText("");
-            view.getCampoValorMensal().setText("");
-            view.getCampoRua().setText("");
-            view.getCampoNum().setText("");
-            view.getCampoBairro().setText("");
-            view.getCampoCidade().setText("Santa Inês");
-            view.getCampoCEP().setValue(null);
-            view.getComboEstado().setSelectedItem("MA");
-            view.getjPanelCadastroFinal().setVisible(false);
-            view.getJpanelDados().setVisible(true);
-            view.getCampoNascimentoAluno().setDate(null);
-            view.getCampoDataCadastro().setDate(null);
-            view.getCampoDataUltimoPag().setDate(null);
+            this.limparCampos();
         }
         } catch (SQLException | InvalidFormatException | InterruptedException ex) {
             this.gerarLog(ex);
             view.exibeMensagem("Não foi possível Salvar o Aluno corretamente.");
-            //Limpando Campos
-            view.getCampoNomeAluno().setText("");
-            view.getCampoCPFAluno().setValue(null);
-            view.getCampoTelefone().setValue(null);
-            view.getCampoCelular().setValue(null);
-            view.getCampoNomePai().setText("");
-            view.getCampoNomeMae().setText("");
-            view.getCampoContatoPai().setValue(null);
-            view.getCampoContatoMae().setValue(null);
-            view.getCampoCPFPai().setValue(null);
-            view.getCampoCPFMae().setValue(null);
-            view.getComboPlano().setSelectedIndex(0);
-            view.getComboTurma().setSelectedIndex(0);
-            view.getCampoValor().setText("");
-            view.getCampoValorMensal().setText("");
-            view.getCampoRua().setText("");
-            view.getCampoNum().setText("");
-            view.getCampoBairro().setText("");
-            view.getCampoCidade().setText("Santa Inês");
-            view.getCampoCEP().setValue(null);
-            view.getComboEstado().setSelectedItem("MA");
-            view.getjPanelCadastroFinal().setVisible(false);
-            view.getJpanelDados().setVisible(true);
-            view.getCampoNascimentoAluno().setDate(null);
-            view.getCampoDataCadastro().setDate(null);
-            view.getCampoDataUltimoPag().setDate(null);
-            
+            this.limparCampos();
         }
         
     }
@@ -468,6 +417,35 @@ public class AdicionarAlunosController {
                return converterData.conversaoLocalforDate(dataVencimento);
             }           
         } 
+    }
+    
+    public void limparCampos(){
+        //Limpando Campos
+            view.getCampoNomeAluno().setText("");
+            view.getCampoCPFAluno().setValue(null);
+            view.getCampoTelefone().setValue(null);
+            view.getCampoCelular().setValue(null);
+            view.getCampoNomePai().setText("");
+            view.getCampoNomeMae().setText("");
+            view.getCampoContatoPai().setValue(null);
+            view.getCampoContatoMae().setValue(null);
+            view.getCampoCPFPai().setValue(null);
+            view.getCampoCPFMae().setValue(null);
+            view.getComboPlano().setSelectedIndex(0);
+            view.getComboTurma().setSelectedIndex(0);
+            view.getCampoValor().setText("");
+            view.getCampoValorMensal().setText("");
+            view.getCampoRua().setText("");
+            view.getCampoNum().setText("");
+            view.getCampoBairro().setText("");
+            view.getCampoCidade().setText("Santa Inês");
+            view.getCampoCEP().setValue(null);
+            view.getComboEstado().setSelectedItem("MA");
+            view.getjPanelCadastroFinal().setVisible(false);
+            view.getJpanelDados().setVisible(true);
+            view.getCampoNascimentoAluno().setDate(null);
+            view.getCampoDataCadastro().setDate(null);
+            view.getCampoDataUltimoPag().setDate(null);
     }
     
     public void sairTela(){

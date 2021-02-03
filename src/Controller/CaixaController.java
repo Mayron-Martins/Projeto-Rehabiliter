@@ -453,6 +453,7 @@ public class CaixaController {
                                 alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
 
                                 this.setarLogAcoesFuncionario("Pagamento de Plano", "Pagamento do plano do aluno "+aluno.getNome()+" da turma "+aluno.getTurma()+" no valor de "+valorTotal);
+                                this.posVenda(venda, valorTotal);
                             
                             }
                             else{
@@ -660,7 +661,7 @@ public class CaixaController {
         
     }
     
-    private void novaVenda(){
+    public void novaVenda(){
         limparTabelaClientes();
         limparTabelaProdutos();
         limparTabelaCarrinho();

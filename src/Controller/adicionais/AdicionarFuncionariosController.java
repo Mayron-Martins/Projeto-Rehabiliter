@@ -90,27 +90,13 @@ public class AdicionarFuncionariosController {
                 this.setarLog("Cadastro de Funcionário", "Cadastrou o funcionário "+nome+" aos cargo de "+cargo);
                 
                 view.exibeMensagem("Sucesso!");
-                view.getCampoNome().setText("");
-                view.getCampoCPF().setValue(null);
-                view.getCampoTelefone().setValue(null);
-                view.getCampoCelular().setValue(null);
-                view.getCampoCargo().setText("");
-                view.getCampoSalario().setText("");
-                view.getCampoSenha().setText("");
-                view.getCampoNascimento().setDate(null);
+                limparCampos();
 
             }
         } catch (SQLException ex) {
             gerarLog(ex);
             view.exibeMensagem("Não foi possível salvar o Funcionário corretamente!");
-                view.getCampoNome().setText("");
-                view.getCampoCPF().setValue(null);
-                view.getCampoTelefone().setValue(null);
-                view.getCampoCelular().setValue(null);
-                view.getCampoCargo().setText("");
-                view.getCampoSalario().setText("");
-                view.getCampoSenha().setText("");
-                view.getCampoNascimento().setDate(null);
+            limparCampos();
         }
         
     }
@@ -119,6 +105,16 @@ public class AdicionarFuncionariosController {
     return view.getCampoSenha().getPassword()==null;
     }
     
+    public void limparCampos(){
+        view.getCampoNome().setText("");
+        view.getCampoCPF().setValue(null);
+        view.getCampoTelefone().setValue(null);
+        view.getCampoCelular().setValue(null);
+        view.getCampoCargo().setText("");
+        view.getCampoSalario().setText("");
+        view.getCampoSenha().setText("");
+        view.getCampoNascimento().setDate(null);
+    }
     
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();

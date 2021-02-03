@@ -85,22 +85,12 @@ public class AdicionarTurmasController {
                 this.setarLog("Cadastro de Turmas", "Cadastrou a turma "+nomeTurma);
                 
                 view.exibeMensagem("Sucesso!");
-                //Limpando Campos
-                view.getCampoNome().setText("");
-                view.getCampoHoras().setValue(null);
-                view.getCampoMinutos().setValue(null);
-                view.getCampoCapMax().setText("");
-                view.desmarcarCaixas();
+                limparCampos();
             }
         } catch (SQLException ex) {
             gerarLog(ex);
             view.exibeMensagem("Não foi possível salvar a Turma corretamente!");
-            //Limpando Campos
-            view.getCampoNome().setText("");
-            view.getCampoHoras().setValue(null);
-            view.getCampoMinutos().setValue(null);
-            view.getCampoCapMax().setText("");
-            view.desmarcarCaixas();
+            limparCampos();
         }
          
     }
@@ -117,6 +107,15 @@ public class AdicionarTurmasController {
             LoginGerente jump = new LoginGerente();
             jump.setVisible(true);
         }
+    }
+    
+    public void limparCampos(){
+        //Limpando Campos
+        view.getCampoNome().setText("");
+        view.getCampoHoras().setValue(null);
+        view.getCampoMinutos().setValue(null);
+        view.getCampoCapMax().setText("");
+        view.desmarcarCaixas();
     }
     
    private Funcionario setarLog(String acao, String referencia){
