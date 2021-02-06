@@ -25,7 +25,7 @@ public class Utilitarios {
         String conteudo = "Version = 1.0.0\n"
             + "Update Notes= ON\n"
             + "Execute Script Master = OFF\n"
-            + "Set Pay = OFF\n";
+            + "Set Pay = OFF";
         
         File arquivo = new File("C:/Rehabiliter/Components/System/Inicial.txt");
         
