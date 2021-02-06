@@ -22,11 +22,8 @@ import View.LoginFuncionario;
 import View.LoginGerente;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

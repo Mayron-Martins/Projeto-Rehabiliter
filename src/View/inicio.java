@@ -106,6 +106,8 @@ public class inicio extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         controller.setarFrequenciaFuncionarios();
+        controller.reiniciarPagamento();
+        controller.setarPagamento();
     }//GEN-LAST:event_formWindowClosed
 
     /**

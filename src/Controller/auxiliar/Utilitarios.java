@@ -24,7 +24,8 @@ public class Utilitarios {
     public void inicializacao(){
         String conteudo = "Version = 1.0.0\n"
             + "Update Notes= ON\n"
-            + "Execute Script Master = OFF\n";
+            + "Execute Script Master = OFF\n"
+            + "Set Pay = OFF\n";
         
         File arquivo = new File("C:/Rehabiliter/Components/System/Inicial.txt");
         
@@ -39,6 +40,10 @@ public class Utilitarios {
     
     public boolean testeNotes(){
         return teste("Notes", "ON", "OFF");
+    }
+    
+    public boolean testePay(String anterior, String posterior){
+        return teste("Pay", anterior, posterior);
     }
     
     private boolean teste(String referencia, String valorOriginal, String substituto){
