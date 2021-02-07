@@ -241,7 +241,17 @@ public class FuncionariosPermissoes extends javax.swing.JDialog {
         return radioReposicoesSim;
     }
     
-    
+    public void resetarPermissoes(){
+        radioAlunosNao.setSelected(true);
+        radioBackupNao.setSelected(true);
+        radioCaixaNao.setSelected(true);
+        radioFinanceiroNao.setSelected(true);
+        radioImprimirNao.setSelected(true);
+        radioProdutosNao.setSelected(true);
+        radioReposicoesNao.setSelected(true);
+        radioServicosNao.setSelected(true);
+        radioTurmasNao.setSelected(true);
+    }
     
     public void setarTelasPermitidas(){
         String telas="";

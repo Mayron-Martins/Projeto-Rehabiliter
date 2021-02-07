@@ -327,6 +327,10 @@ public class Funcionarios extends javax.swing.JDialog {
         controller.setarPermissoes();
     }//GEN-LAST:event_botaoPermissoesActionPerformed
 
+    private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
+        controller.ajuda();
+    }//GEN-LAST:event_botaoAjudaActionPerformed
+
     private void tabelaFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFuncionariosMouseClicked
         controller.selecionarTabela();
     }//GEN-LAST:event_tabelaFuncionariosMouseClicked
@@ -334,10 +338,6 @@ public class Funcionarios extends javax.swing.JDialog {
     private void tabelaFuncionariosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaFuncionariosKeyReleased
         controller.selecionarTabela();
     }//GEN-LAST:event_tabelaFuncionariosKeyReleased
-
-    private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
-        controller.ajuda();
-    }//GEN-LAST:event_botaoAjudaActionPerformed
 
     /**
      * @param args the command line arguments

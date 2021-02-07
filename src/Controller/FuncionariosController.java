@@ -172,10 +172,7 @@ public class FuncionariosController {
         int linhaSelecionada = view.getTabelaFuncionarios().getSelectedRow();
         
         if(linhaSelecionada!=-1){
-            int codFuncionario = Integer.parseInt(tabelaDeFuncionarios.getValueAt(linhaSelecionada, 0).toString());
-            
             view.getBotaoPermissoes().setVisible(true);
-            this.pegarTelasPermitidas(codFuncionario);
         }
         else{
             view.getBotaoPermissoes().setVisible(false);
@@ -185,6 +182,7 @@ public class FuncionariosController {
     private void pegarTelasPermitidas(int codFuncionario){
         Funcionario funcionario = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE codFuncionario = "+codFuncionario).get(0);
         String[] telas = funcionario.getTelasPermitidas().split(",");
+        view2.setTelasPermitidas(funcionario.getTelasPermitidas());
         for(int linhas=0; linhas<telas.length; linhas++){
             telas[linhas]=telas[linhas].replace(",", "");
             
@@ -218,11 +216,14 @@ public class FuncionariosController {
                 break;
             }
         }
-        view2.setTelasPermitidas(funcionario.getTelasPermitidas());
+        
         
     }
     
     public void setarPermissoes(){
+        int linhaSelecionada = view.getTabelaFuncionarios().getSelectedRow();
+        int codFuncionario = Integer.parseInt(tabelaDeFuncionarios.getValueAt(linhaSelecionada, 0).toString());
+        this.pegarTelasPermitidas(codFuncionario);
         int x = view.getLocation().x-200;
         int y = view.getLocation().y;
         
@@ -242,6 +243,7 @@ public class FuncionariosController {
             
             funcionarioDao.atualizarTelasPermitidas(funcionario);
         }
+        view2.resetarPermissoes();
         
         int x = view.getLocation().x+200;
         int y = view.getLocation().y;
@@ -250,6 +252,7 @@ public class FuncionariosController {
         view2.dispose();
         
     }
+    
     
      
      public void desvincularContratarFuncionario(){
