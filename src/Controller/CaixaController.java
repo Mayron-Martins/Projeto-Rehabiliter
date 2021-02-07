@@ -33,6 +33,8 @@ import Model.auxiliar.Turmas;
 import View.Caixa;
 import View.LoginFuncionario;
 import View.LoginGerente;
+import View.Paineis.CaixaRelatorio;
+import View.Paineis.CaixaSaldoInicial;
 import static java.lang.Thread.sleep;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -51,6 +53,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CaixaController {
     private final Caixa view;
+    private final CaixaSaldoInicial view2;
+    private final CaixaRelatorio view3;
     private final DefaultTableModel tabelaDeClientes;
     private final DefaultTableModel tabelaDeProdutos;
     private final DefaultTableModel tabelaDeCarrinho;
@@ -70,8 +74,10 @@ public class CaixaController {
     private final ImpressaoComponentes imprimirComprovante = new ImpressaoComponentes();
     private final ExportarArquivos exportarComprovante = new ExportarArquivos();
 
-    public CaixaController(Caixa view) {
+    public CaixaController(Caixa view, CaixaSaldoInicial view2, CaixaRelatorio view3) {
         this.view = view;
+        this.view2 = view2;
+        this.view3 = view3;
         this.tabelaDeClientes = (DefaultTableModel) view.getTabelaDeClientes().getModel();
         this.tabelaDeProdutos = (DefaultTableModel) view.getTabelaDeProdutos().getModel();
         this.tabelaDeCarrinho = (DefaultTableModel) view.getTabelaDeCarrinho().getModel();
@@ -380,11 +386,13 @@ public class CaixaController {
 
                     vendasDao.inserirDados(venda, itens);
                     LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
+                    valorTotal = valorTotal.divide(new BigDecimal(parcelas)).setScale(2, RoundingMode.UP);
                     for(int linhas=0; linhas<parcelas;linhas++){
                         dataParcelamentos = dataParcelamentos.plusMonths(1);
                         dataVenda = converterData.conversaoLocalforDate(dataParcelamentos);
-                        DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario++, "Vendas", formaDePagamento, valorPago, dataVenda, chaveVenda);
+                        DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario++, "Vendas", formaDePagamento, valorTotal.divide(valorTotal), dataVenda, chaveVenda);
                         orcamentarioDao.inserirDados(orcamentario);
+                        this.setarValoresRelatorio(orcamentario);
                     }
 
                     this.posVenda(venda, valorTotal);
@@ -442,12 +450,14 @@ public class CaixaController {
                             if(debitos.subtract(valor).compareTo(BigDecimal.ZERO)>=0){
                                 vendasDao.inserirDados(venda, itens);
                                 LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
+                                valorTotal = valorTotal.divide(new BigDecimal(parcelas)).setScale(2, RoundingMode.UP);
                                 for(int linhas=0; linhas<parcelas;linhas++){
                                     dataParcelamentos = dataParcelamentos.plusMonths(1);
                                     dataVenda = converterData.conversaoLocalforDate(dataParcelamentos);
-                                    DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Planos", formaDePagamento, valorPago, dataVenda, chaveVenda);
+                                    DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Planos", formaDePagamento, valorTotal, dataVenda, chaveVenda);
                                     codOrcamentario++;
                                     orcamentarioDao.inserirDados(orcamentario);
+                                    this.setarValoresRelatorio(orcamentario);
                                 }
                                 planosDao.atualizarSituacao(plano);
                                 alunosDao.atualizarDebitos(codAluno, debitos.subtract(valor));
@@ -496,7 +506,8 @@ public class CaixaController {
         }
         else{
             this.novaVenda();
-        }     
+        }
+        view.getCampoSaldo().setText(saldoAtual.toString());
     }
     
     private String retornarFormaPagamento(){
@@ -807,5 +818,68 @@ public class CaixaController {
             return funcionario;
         }
         return null;
+    }
+    
+    //PAINEIS ADICIONAIS
+    //PAINEL SALDO INICIAL
+    private BigDecimal saldoInicial;
+    
+    public void setarSaldoInicial(){
+        BigDecimal saldo = converterDinheiro.converterParaBigDecimal(view2.getCampoSaldoInicial().getText());
+        this.saldoInicial = saldo;
+        view2.dispose();
+        view.getCampoSaldo().setText(saldoInicial.toString());
+    }
+    
+    //PAINEL RELATORIO
+    private BigDecimal saldoAtual = new BigDecimal(0);
+    private BigDecimal arrecadacaoTotal = new BigDecimal(0);
+    private BigDecimal valorVendas = new BigDecimal(0);
+    private BigDecimal valorPlanos = new BigDecimal(0);
+    private BigDecimal valorDinheiro = new BigDecimal(0);
+    private BigDecimal valorCartao = new BigDecimal(0);
+    
+    public void setarRelatorioCaixa(){
+        this.limparPainelRelatorio();
+        
+        view3.getCampoSaldoInicial().setText(saldoInicial.toString());
+        view3.getCampoSaldoAtual().setText(saldoAtual.add(saldoInicial).toString());
+        view3.getCampoDiferencial().setText(saldoAtual.subtract(saldoInicial).toString());
+        view3.getCampoArrecadacao().setText(arrecadacaoTotal.toString());
+        view3.getCampoVendas().setText(valorVendas.toString());
+        view3.getCampoPlanos().setText(valorPlanos.toString());
+        view3.getCampoDinheiro().setText(valorDinheiro.toString());
+        view3.getCampoCartao().setText(valorCartao.toString());
+        
+        view3.setModal(true);
+        view3.setVisible(true);
+    }
+    
+    private void setarValoresRelatorio(DetOrcamentario venda){
+        arrecadacaoTotal = arrecadacaoTotal.add(venda.getValor());
+        
+        if(venda.getFormaPagamento().equals("Dinheiro")){
+            saldoAtual =  saldoAtual.add(venda.getValor());
+            valorDinheiro = valorDinheiro.add(venda.getValor());
+        }else{
+            valorCartao = valorCartao.add(venda.getValor());
+        }
+        
+        if(venda.getTipo().equals("Vendas")){
+            valorVendas = valorVendas.add(venda.getValor());
+        }else{
+            valorPlanos = valorPlanos.add(venda.getValor());
+        }
+    }
+    
+    private void limparPainelRelatorio(){
+        view3.getCampoSaldoInicial().setText("");
+        view3.getCampoSaldoAtual().setText("");
+        view3.getCampoArrecadacao().setText("");
+        view3.getCampoDiferencial().setText("");
+        view3.getCampoDinheiro().setText("");
+        view3.getCampoCartao().setText("");
+        view3.getCampoPlanos().setText("");
+        view3.getCampoVendas().setText("");
     }
 }

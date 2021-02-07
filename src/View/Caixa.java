@@ -9,17 +9,16 @@ import Controller.CaixaController;
 import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
+import View.Paineis.CaixaRelatorio;
+import View.Paineis.CaixaSaldoInicial;
 import View.Paineis.PainelAjuda;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -39,6 +38,8 @@ public class Caixa extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final int numeroTela = 8;
     private final CaixaController controller;
+    private final CaixaSaldoInicial painelSaldoInicial;
+    private final CaixaRelatorio painelRelatorio;
     private final PainelAjuda painelAjuda;
 
     /**
@@ -53,7 +54,10 @@ public class Caixa extends javax.swing.JDialog {
         this.parent = parent;
         painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width-200, this.getLocation().y);
         
-        controller = new CaixaController(this);
+        this.painelSaldoInicial = new CaixaSaldoInicial(parent, false, this);
+        this.painelRelatorio = new CaixaRelatorio(parent, false, this);
+        
+        controller = new CaixaController(this, painelSaldoInicial, painelRelatorio);
         botaoBuscarCliente.setBackground(new Color(0,0,0,0));
         botaoBuscarProdutos.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
@@ -131,11 +135,18 @@ public class Caixa extends javax.swing.JDialog {
         campoVTotal = new JMoneyField();
         jLabel2 = new javax.swing.JLabel();
         botaoAjuda = new javax.swing.JButton();
+        campoSaldo = new JMoneyField();
+        jLabel4 = new javax.swing.JLabel();
         Fundo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         alternarClienteCadastrado.addActionListener(new java.awt.event.ActionListener() {
@@ -257,11 +268,6 @@ public class Caixa extends javax.swing.JDialog {
 
         getContentPane().add(jPanelFormaDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 720, 410, 300));
 
-        campoCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoClienteActionPerformed(evt);
-            }
-        });
         campoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 campoClienteKeyPressed(evt);
@@ -555,6 +561,16 @@ public class Caixa extends javax.swing.JDialog {
         });
         getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(1241, 10, 30, 30));
 
+        campoSaldo.setEditable(false);
+        campoSaldo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        campoSaldo.setForeground(new java.awt.Color(0, 102, 51));
+        getContentPane().add(campoSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 10, 120, 30));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("SALDO");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1045, 17, -1, -1));
+
         Fundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/fundoCaixa.jpg"))); // NOI18N
         getContentPane().add(Fundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -563,24 +579,17 @@ public class Caixa extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarClienteActionPerformed
-        try {
-            controller.setarTabelaClientes();
-        } catch (Exception ex) {
-            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarTabelaClientes();
     }//GEN-LAST:event_botaoBuscarClienteActionPerformed
 
     private void botaoBuscarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarProdutosActionPerformed
-        try {
-            controller.setarTabelaProdutos();
-        } catch (Exception ex) {
-            Logger.getLogger(Caixa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.setarTabelaProdutos();
     }//GEN-LAST:event_botaoBuscarProdutosActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         controller.novaVenda();
-        this.dispose();
+        campoSaldo.setText("");
+        controller.setarRelatorioCaixa();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void botaoPagamentoMensalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPagamentoMensalidadeActionPerformed
@@ -649,13 +658,13 @@ public class Caixa extends javax.swing.JDialog {
 
     private void campoClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoClienteKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            getRootPane().setDefaultButton(botaoBuscarCliente);
+            controller.setarTabelaClientes();
         }
     }//GEN-LAST:event_campoClienteKeyPressed
 
     private void campoProdutoNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoProdutoNomeKeyPressed
        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            getRootPane().setDefaultButton(botaoBuscarProdutos);
+            controller.setarTabelaProdutos();
         }
     }//GEN-LAST:event_campoProdutoNomeKeyPressed
 
@@ -741,17 +750,13 @@ public class Caixa extends javax.swing.JDialog {
 
     private void campoProdutoCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoProdutoCodigoKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            getRootPane().setDefaultButton(botaoBuscarProdutos);
+            controller.setarTabelaProdutos();
         }
     }//GEN-LAST:event_campoProdutoCodigoKeyPressed
 
     private void campoVTrocoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoVTrocoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoVTrocoActionPerformed
-
-    private void campoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoClienteActionPerformed
 
     private void campoParcelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
@@ -771,6 +776,12 @@ public class Caixa extends javax.swing.JDialog {
     private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
         controller.ajuda();
     }//GEN-LAST:event_botaoAjudaActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        painelSaldoInicial.setModal(true);
+        painelSaldoInicial.getCampoSaldoInicial().setText("");
+        painelSaldoInicial.setVisible(true);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -840,6 +851,7 @@ public class Caixa extends javax.swing.JDialog {
     private javax.swing.JTextField campoProdutoCodigo;
     private javax.swing.JTextField campoProdutoNome;
     private javax.swing.JFormattedTextField campoQuantidade;
+    private javax.swing.JTextField campoSaldo;
     private javax.swing.JFormattedTextField campoVDesconto;
     private javax.swing.JFormattedTextField campoVPago;
     private javax.swing.JFormattedTextField campoVTotal;
@@ -847,6 +859,7 @@ public class Caixa extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -978,6 +991,18 @@ public class Caixa extends javax.swing.JDialog {
         return painelAjuda;
     }
     
+    public CaixaSaldoInicial getPainelSaldoInicial() {
+        return painelSaldoInicial;
+    }
+
+    public CaixaRelatorio getPainelRelatorio() {
+        return painelRelatorio;
+    }
+
+    public JTextField getCampoSaldo() {
+        return campoSaldo;
+    }
+    
     
     
     
@@ -1024,5 +1049,8 @@ public class Caixa extends javax.swing.JDialog {
             }
         });
     }
+
+    
+    
     
 }
