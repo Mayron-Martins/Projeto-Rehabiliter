@@ -39,7 +39,8 @@ public class Gastos {
         this.quantidade = quantidade;
         this.formaPagamento = formaPagamento;
         this.valorGasto = valorGasto;
-        this.dataCadastro = dataCadastro;
+        ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();    
+        this.dataCadastro = converterData.getSqlDate(dataCadastro);
         this.chaveTransacao = chaveTransacao;
     }
 

@@ -76,51 +76,52 @@ public class InicioController {
     
     public void setarPagamento(){
         LocalDate dataAtual = LocalDate.now();
-        //Verificar se está entre os dias 5 e 7
-        if(dataAtual.getDayOfMonth()>=5 && dataAtual.getDayOfMonth()<=7){
-            //Verificar se é um fim de semana
-            if(dataAtual.getDayOfWeek()!=DayOfWeek.SATURDAY && dataAtual.getDayOfWeek()!=DayOfWeek.SUNDAY){
-                if(utilitarios.testePay("OFF", "ON")){
-                    this.verificarDataPagamento();
-                }
-            }
-        }  
-    }
-    
-    public void reiniciarPagamento(){
-        LocalDate dataAtual = LocalDate.now();
-        if(dataAtual.getDayOfMonth()==1){
-            utilitarios.testePay("ON", "OFF");
+        LocalDate dataAgendada = LocalDate.of(dataAtual.getYear(), dataAtual.getMonthValue(), 5);
+        
+        if(utilitarios.testePay(dataAgendada.getMonthValue()+"-"+dataAgendada.getYear())){
+            this.verificarDataPagamento(dataAgendada);
         }
     }
     
-    private void verificarDataPagamento(){
+    
+    private void verificarDataPagamento(LocalDate dataAgendada){
         try{
-            LocalDate dataAtual = LocalDate.now();
-            ArrayList <Funcionario> funcionarios = funcionariosDao.pesquisarFuncionario("SELECT * FROM tblFreqFuncionarios WHERE situacao != 'Desvinculado'");
-            //Verificar se há funcionários habilitados
-            if(funcionarios!=null){
-                int codGasto, codOrcamentario;                   
-                String motivo, formaPagamento = "Dinheiro";
-                Date dataCadastro = converterData.conversaoLocalforDate(dataAtual);
+            //Verificar se está entre os dias 5 e 7
+            if(dataAgendada.getDayOfMonth()>=5&&dataAgendada.getDayOfMonth()<=7){
+                //Verificar se é um fim de semana
+                if(dataAgendada.getDayOfWeek()!=DayOfWeek.SATURDAY && dataAgendada.getDayOfWeek()!=DayOfWeek.SUNDAY){
+                    ArrayList <Funcionario> funcionarios = funcionariosDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE situacao != 'Desvinculado'");
+                    //Verificar se há funcionários habilitados
+                    if(funcionarios!=null){
+                        int codGasto= (int) (verificar.verificarUltimo("tblGastos", "codGasto") +1); 
+                        int codOrcamentario = (int) (verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1);                   
+                        String motivo, formaPagamento = "Dinheiro";
+                        Date dataCadastro = converterData.conversaoLocalforDate(dataAgendada);
 
-                Gastos gasto;
-                DetOrcamentario orcamentario;
-                for(Funcionario funcionario : funcionarios){
-                    //Verificar se o salário não é zero
-                    if(funcionario.getSalario().compareTo(BigDecimal.ZERO)>0){
-                        codGasto = (int) (verificar.verificarUltimo("tblGastos", "codGasto") +1);
-                        codOrcamentario = (int) (verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1);
-                        motivo = "Pagamento Salarial do "+funcionario.getNome();
+                        Gastos gasto;
+                        DetOrcamentario orcamentario;
+                        for(Funcionario funcionario : funcionarios){
+                            //Verificar se o salário não é zero
+                            if(funcionario.getSalario().compareTo(BigDecimal.ZERO)>0){
+                                motivo = "Pagamento Salarial do "+funcionario.getNome();
 
-                        gasto = new Gastos(codGasto, motivo, 1, formaPagamento, funcionario.getSalario(), dataCadastro);
-                        orcamentario = new DetOrcamentario(codOrcamentario, "Gastos", formaPagamento, funcionario.getSalario(), dataCadastro, gasto.getChaveTransacao());
+                                gasto = new Gastos(codGasto, motivo, 1, formaPagamento, funcionario.getSalario(), dataCadastro, codGasto);
+                                orcamentario = new DetOrcamentario(codOrcamentario, "Gastos", formaPagamento, funcionario.getSalario(), dataCadastro, gasto.getChaveTransacao());
 
-                        gastosDao.inserirDados(gasto);
-                        orcamentarioDao.inserirDados(orcamentario);
+                                gastosDao.inserirDados(gasto);
+                                orcamentarioDao.inserirDados(orcamentario);
+                                codGasto++; 
+                                codOrcamentario++;
+                            }
+                        }
                     }
                 }
-            }
+                else{
+                    verificarDataPagamento(dataAgendada.plusDays(1));
+                }
+            }  
+            
+            
         } catch (SQLException ex) {
             gerarLog(ex);
         }

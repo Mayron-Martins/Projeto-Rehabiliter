@@ -25,7 +25,7 @@ public class Utilitarios {
         String conteudo = "Version = 1.0.0\n"
             + "Update Notes= ON\n"
             + "Execute Script Master = OFF\n"
-            + "Set Pay = OFF";
+            + "Set Pay = ";
         
         File arquivo = new File("C:/Rehabiliter/Components/System/Inicial.txt");
         
@@ -35,32 +35,48 @@ public class Utilitarios {
     }
     
     public boolean testeMaster(){
-        return teste("Master", "OFF", "ON");
+        return teste("Master", "OFF", "ON", false);
     }
     
     public boolean testeNotes(){
-        return teste("Notes", "ON", "OFF");
+        return teste("Notes", "ON", "OFF", false);
     }
     
-    public boolean testePay(String anterior, String posterior){
-        return teste("Pay", anterior, posterior);
+    public boolean testePay(String posterior){
+        return teste("Pay", null, posterior, true);
     }
     
-    private boolean teste(String referencia, String valorOriginal, String substituto){
+    private boolean teste(String referencia, String valorOriginal, String substituto, boolean datavel){
         try{
            BufferedReader myBuffer = new BufferedReader(new InputStreamReader(new FileInputStream("C:/Rehabiliter/Components/System/Inicial.txt")));
            String texto = myBuffer.readLine();
-           String conect="";
+           String auxiliar, conect="";
            boolean alterado = false;
            while(texto!=null){
                if(texto.contains(referencia)){
-                   if(texto.contains(valorOriginal)){
-                       texto = texto.replace(valorOriginal, substituto);
-                       alterado = true;
+                   if(datavel){
+                       String[] split = texto.split("=");
+                       if(!split[1].trim().equals(substituto)){
+                           texto = split[0]+"= "+substituto;
+                           alterado = true;
+                       }
                    }
+                   else{
+                       if(texto.contains(valorOriginal)){
+                           texto = texto.replace(valorOriginal, substituto);
+                           alterado = true;
+                       }
+                   }
+                   
                }
-               conect+=texto+"\n";
+               auxiliar = texto;
                texto = myBuffer.readLine();
+               if(texto!=null){
+                   conect+=auxiliar+"\n";
+               }
+               else{
+                   conect+=auxiliar;
+               }
            }
            myBuffer.close();
            if(alterado){
