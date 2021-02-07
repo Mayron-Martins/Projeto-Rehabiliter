@@ -9,7 +9,14 @@ import Controller.CaixaController;
 import Controller.auxiliar.JMoneyField;
 import View.Caixa;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -30,6 +37,8 @@ public class CaixaRelatorio extends javax.swing.JDialog {
         
         botaoFechar.setBackground(new Color(0,0,0,0));
         this.setBackground(new Color(0,0,0,160));
+        
+        this.teclasDeAtalho();
     }
 
     /**
@@ -268,5 +277,34 @@ public class CaixaRelatorio extends javax.swing.JDialog {
         return campoVendas;
     }
     
+    private void teclasDeAtalho() {
+        //Sair da Tela
+        JRootPane meurootpane = getRootPane();
+        JRootPane meurootpane2 = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                view.dispose();
+            }
+        });
+        
+        this.conjuntoTeclasAtalho(meurootpane);
+    }
+    
+    private void conjuntoTeclasAtalho(JRootPane meurootpane){
+        //Fechar Sistema
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("alt F4"), "FECHAR");
+        meurootpane.getRootPane().getActionMap().put("FECHAR", new AbstractAction("FECHAR") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
+                if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    controller.sairTela();
+                }
+            }
+        });
+    }
 
 }
