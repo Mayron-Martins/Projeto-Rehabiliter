@@ -329,10 +329,26 @@ public class CaixaController {
         }
     }
     
+    
+    private boolean verificarPagamento(){
+        BigDecimal valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVPago().getText()).toString());
+        BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
+        if(valorPago.compareTo(valorTotal)>=0){
+             return true;
+         }
+         else{
+             if(view.getCampoParcelas().isEnabled()){
+                 return true;
+             }
+             else{
+                 return false;
+             }
+         }
+    }
     public void finalizarVenda(){
         try{
             BigDecimal valorPago = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVPago().getText()).toString());
-            if(valorPago.compareTo(BigDecimal.ZERO)!=0 && this.retornarCliente()!=-1){
+            if(this.verificarPagamento() && this.retornarCliente()!=-1){
                 int codVenda = (int) (verificador.verificarUltimo("tblVendas", "codVenda")+1);
                 int codCliente = 0;
                 BigDecimal valorTotal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoVTotal().getText()).toString());
@@ -446,7 +462,7 @@ public class CaixaController {
                             plano = new Planos(chavePlano, codAluno, 0, 0, 0,dataVencimento, dataVenda, null, planoAntigo.getDataRenovacao(), "Pago"); 
                         }
 
-                        if(debitos.compareTo(BigDecimal.ZERO)!=0){
+                        if(debitos.compareTo(BigDecimal.ZERO)>=0){
                             if(debitos.subtract(valor).compareTo(BigDecimal.ZERO)>=0){
                                 vendasDao.inserirDados(venda, itens);
                                 LocalDate dataParcelamentos = converterData.conversaoLocalforDate(dataVenda);
