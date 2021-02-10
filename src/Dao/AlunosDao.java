@@ -94,7 +94,7 @@ public class AlunosDao extends Conexao{
             String inAlunos = atualizar.concat("tblAlunos "
                     + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, telefoneMae=?, "
                     + "telefonePai=?, matricula=?, codTurma=?, codDiasDaSemana=?, codServico=?, "
-                    + "descricao=?, debito=?, valorContrato=?, dataCadastro=?, valorMensal=?, renovacaoAutomatica=? where codAluno = ?");
+                    + "debito=?, valorContrato=?, dataCadastro=?, valorMensal=?, renovacaoAutomatica=? where codAluno = ?");
 
             PreparedStatement statement = gerarStatement(inAlunos);
             statement.setString(1, aluno.getNome());
@@ -108,13 +108,12 @@ public class AlunosDao extends Conexao{
             statement.setInt(9, aluno.getTurma());
             statement.setInt(10, aluno.getTurma());
             statement.setInt(11, aluno.getServico());
-            statement.setString(12, aluno.getDescricao());
-            statement.setBigDecimal(13, new BigDecimal(aluno.getDebito().toString()));
-            statement.setBigDecimal(14, new BigDecimal(aluno.getValorContrato().toString()));
-            statement.setDate(15, (Date) aluno.getDataCadastro());
-            statement.setBigDecimal(16, new BigDecimal(aluno.getValorMensal().toString()));
-            statement.setInt(17, aluno.getRenovacaoAutomatica());
-            statement.setInt(18, aluno.getCodBanco());
+            statement.setBigDecimal(12, new BigDecimal(aluno.getDebito().toString()));
+            statement.setBigDecimal(13, new BigDecimal(aluno.getValorContrato().toString()));
+            statement.setDate(14, (Date) aluno.getDataCadastro());
+            statement.setBigDecimal(15, new BigDecimal(aluno.getValorMensal().toString()));
+            statement.setInt(16, aluno.getRenovacaoAutomatica());
+            statement.setInt(17, aluno.getCodBanco());
 
             statement.execute();
             statement.close();
@@ -163,6 +162,24 @@ public class AlunosDao extends Conexao{
             statement.setBigDecimal(6, aluno.getValorMensal());
             statement.setInt(7,aluno.getRenovacaoAutomatica());
             statement.setInt(8,aluno.getCodBanco());
+
+            statement.execute();
+            statement.close();
+            
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
+    }
+    
+    public void atualizarDescricao(int codAluno, String descricao){
+        try{
+            //atualizando a tabela de alunos
+            String inAlunos = atualizar.concat("tblAlunos "
+                    + "SET descricao=? WHERE codAluno = ?");
+
+            PreparedStatement statement = gerarStatement(inAlunos);
+            statement.setString(1,descricao);
+            statement.setInt(2,codAluno);
 
             statement.execute();
             statement.close();

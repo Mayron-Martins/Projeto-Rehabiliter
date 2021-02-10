@@ -694,6 +694,8 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoConfigAdicionaisActionPerformed
 
     private void botaoObservacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoObservacaoActionPerformed
+        this.trocarTabelas(4);
+        this.selecionarTabelas(4);
         painelDescricao.setModal(true);
         painelDescricao.setVisible(true);
     }//GEN-LAST:event_botaoObservacaoActionPerformed

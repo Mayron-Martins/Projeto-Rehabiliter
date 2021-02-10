@@ -283,8 +283,12 @@ public class AlunosController {
                     dataCadastro = view2.getCampoDataCadastro().getDate();
 
                 }
-
-                String descricao = view3.getCampoObservacao().getText();
+                
+                
+                String descricao = "";
+                if(view3 !=null){
+                    descricao = view3.getCampoObservacao().getText();
+                }
 
                 Aluno aluno = new Aluno(codAluno, nome, alunoAnterior.getCpf(), alunoAnterior.getRg(), alunoAnterior.getTelefone(), 
                         alunoAnterior.getCelular(), alunoAnterior.getEmail(), alunoAnterior.getDatadenascimento(), 
@@ -317,6 +321,10 @@ public class AlunosController {
                  view.exibeMensagem("Campos Preenchidos Incorretamente na linha "+linhaSelecionada+1);
                 } else{
                     alunosDao.atualizarDados(aluno, endereco, matricula, planoAluno);
+                    
+                    if(view3!=null){
+                        alunosDao.atualizarDescricao(codAluno, descricao);
+                    }
                     turmasDao.atualizarQuantAunos(turmaAnterior.getCodBanco(), (turmaAnterior.getQuantidadeAlunos()-1));
                     turmasDao.atualizarQuantAunos(turmaAtual.getCodBanco(), (turmaAtual.getQuantidadeAlunos()+1));
 
@@ -1012,7 +1020,7 @@ public class AlunosController {
             if(plano.getDataVencimento()!=null){
                 view2.getCampoDataVencimento().setDate(plano.getDataVencimento());
             }
-            if(!plano.getSituacao().equals("Encerrado")){
+            if(plano.getSituacao().equals("Encerrado")){
                 view2.getCampoDataCadastro().setEnabled(false);
                 view2.getCampoDataPagamento().setEnabled(false);
             }
@@ -1148,14 +1156,23 @@ public class AlunosController {
             Date dataCadastroBanco = converterData.parseDate(converterData.parseDate(aluno.getDataCadastro()));
             LocalDate dataPagBanco = converterData.conversaoLocalforDate(dataPagamentoBanco);
             LocalDate dataCadBanco = converterData.conversaoLocalforDate(dataCadastroBanco);
-
-            if(!dataPagConv.isEqual(dataPagBanco)||!dataCad.isEqual(dataCadBanco)){
-                editarAluno();
-                if(!dataPagConv.isEqual(dataPagBanco)&&dataPagamento!=null){
-                    alunosDao.atualizarDebitos(codAluno, BigDecimal.ZERO);
+            
+            if(dataPagBanco==null || dataPagConv == null){
+                if(dataPagConv!=dataPagBanco){
+                    editarAluno();
+                    if(dataPagamento!=null){
+                        alunosDao.atualizarDebitos(codAluno, BigDecimal.ZERO);
+                    }
                 }
             }
-
+            else{
+                if(!dataPagConv.isEqual(dataPagBanco)||!dataCad.isEqual(dataCadBanco)){
+                    editarAluno();
+                    if(!dataPagConv.isEqual(dataPagBanco)&&dataPagamento!=null){
+                        alunosDao.atualizarDebitos(codAluno, BigDecimal.ZERO);
+                    }
+                }
+            }
         }
     }
     
@@ -1545,6 +1562,7 @@ public class AlunosController {
             Aluno aluno = this.alunoAnterior(codAluno);
             
             if(!aluno.getDescricao().equals(observacao)){
+                alunosDao.atualizarDescricao(codAluno, observacao);
                 editarAluno();
             }
         }
