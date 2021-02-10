@@ -133,6 +133,10 @@ public class AdicionarAlunosController {
         BigDecimal valorMensal = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValorMensal().getText()).toString());
         BigDecimal debito = valorMensal;
         
+        if(dataUltimoPag!=null){
+            debito = BigDecimal.ZERO;
+        }
+        
         //Dados de Matrícula e Serviços
         int codMatricula = (int) (verificar.verificarUltimo("tblMatriculas", "codMatricula")+1);
         int codServico = 0;

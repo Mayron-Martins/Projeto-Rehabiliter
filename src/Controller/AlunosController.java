@@ -1151,6 +1151,9 @@ public class AlunosController {
 
             if(!dataPagConv.isEqual(dataPagBanco)||!dataCad.isEqual(dataCadBanco)){
                 editarAluno();
+                if(!dataPagConv.isEqual(dataPagBanco)&&dataPagamento!=null){
+                    alunosDao.atualizarDebitos(codAluno, BigDecimal.ZERO);
+                }
             }
 
         }
