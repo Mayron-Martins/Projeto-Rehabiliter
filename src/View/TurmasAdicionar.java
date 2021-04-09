@@ -79,6 +79,10 @@ public class TurmasAdicionar extends javax.swing.JDialog {
         caixaSexta = new javax.swing.JCheckBox();
         caixaSabado = new javax.swing.JCheckBox();
         caixaDomingo = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         fundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -182,7 +186,27 @@ public class TurmasAdicionar extends javax.swing.JDialog {
 
         getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 195, 190, 40));
 
-        fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/backup/fundoTurma.png"))); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel1.setText("Dias da Semana");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel2.setText("Horário");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 170, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel3.setText("Capacidade Máxima");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel4.setText("Nome");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, -1, -1));
+
+        fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/adicionarNova.png"))); // NOI18N
         getContentPane().add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -290,6 +314,10 @@ public class TurmasAdicionar extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField campoMinutos;
     private javax.swing.JTextField campoNome;
     private javax.swing.JLabel fundo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLayeredPane jLayeredPane1;
     // End of variables declaration//GEN-END:variables
 

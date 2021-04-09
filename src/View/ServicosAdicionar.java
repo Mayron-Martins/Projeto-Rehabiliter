@@ -69,6 +69,9 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         metodoPagamento = new javax.swing.JComboBox<>();
         botaoConfirmar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -138,7 +141,22 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         jLabel2.setText("R$");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 330, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/telafundoadc.jpg"))); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel3.setText("Categoria");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel4.setText("Forma de Pagamento");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel5.setText("Tipo");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/adicionarNova.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -230,6 +248,9 @@ public class ServicosAdicionar extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JComboBox<String> metodoPagamento;
     private javax.swing.JTextField nomeServico;
     private javax.swing.JFormattedTextField valorDinheiro;
