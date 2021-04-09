@@ -47,7 +47,6 @@ public class AdicionarGastosController {
         try{
             //Dados Entrada
             int codGasto = (int) (verificar.verificarUltimo("tblGastos", "codGasto") +1);
-            int codOrcamentario = (int) (verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1);
             String motivo = view.getCampoReferencia().getText();
 
             BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
@@ -57,8 +56,8 @@ public class AdicionarGastosController {
             BigDecimal valorGasto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
             Date dataCadastro = view.getCampoData().getDate();
 
-            Gastos gasto = new Gastos(codGasto, motivo, quantidade, formaPagamento, valorGasto, dataCadastro);
-            DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Gastos", formaPagamento, valorGasto, dataCadastro, gasto.getChaveTransacao());
+            Gastos gasto = new Gastos(motivo, quantidade, formaPagamento, valorGasto, dataCadastro);
+            DetOrcamentario orcamentario = new DetOrcamentario("Gastos", formaPagamento, valorGasto, dataCadastro, gasto.getChaveTransacao());
 
             if(motivo.equals("")||quantidade==0||formaPagamento.equals("[Nenhum]")||valorGasto.compareTo(BigDecimal.ZERO)==0
                     || dataCadastro == null){

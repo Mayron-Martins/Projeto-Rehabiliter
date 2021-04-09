@@ -34,20 +34,19 @@ public class ServicosDao extends Conexao{
         try{
             //Adicionando Turma
             String inServicos = inserir.concat("tblServicos("
-                    + "codServico, nome, periodo, formaPagamento, valor, valorAVista, valorBoleto, valorCartaoDeCredito, valorCartaoDeDebito, periodDays, situacao)"
+                    + "nome, periodo, formaPagamento, valor, valorAVista, valorBoleto, valorCartaoDeCredito, valorCartaoDeDebito, periodDays, situacao)"
                     + "VALUES("
-                    + "?,?,?,?,?,?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inServicos);
-            statement.setInt(1, servico.getCodBanco());
-            statement.setString(2, servico.getNome());
-            statement.setString(3, servico.getPeriodo());
-            statement.setString(4, servico.getFormaPagamento());
-            statement.setBigDecimal(5, servico.getValor());
-            statement.setBigDecimal(6, servico.getValorVista());
-            statement.setBigDecimal(7, servico.getValorBoleto());
-            statement.setBigDecimal(8, servico.getValorPrazoCredito());
-            statement.setBigDecimal(9, servico.getValorPrazoDebito());
-            statement.setInt(10, servico.getPeriodDays());
+            statement.setString(1, servico.getNome());
+            statement.setString(2, servico.getPeriodo());
+            statement.setString(3, servico.getFormaPagamento());
+            statement.setBigDecimal(4, servico.getValor());
+            statement.setBigDecimal(5, servico.getValorVista());
+            statement.setBigDecimal(6, servico.getValorBoleto());
+            statement.setBigDecimal(7, servico.getValorPrazoCredito());
+            statement.setBigDecimal(8, servico.getValorPrazoDebito());
+            statement.setInt(9, servico.getPeriodDays());
             statement.setString(11, servico.getSituacao());
             statement.execute();
             statement.close();

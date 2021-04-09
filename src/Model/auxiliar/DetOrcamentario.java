@@ -31,6 +31,16 @@ public class DetOrcamentario {
         this.dataCadastro = converterData.getSqlDate(dataCadastro);
         this.chave = chave;
     }
+    
+    public DetOrcamentario(String tipo, String formaPagamento, BigDecimal valor, Date dataCadastro, long chave) {
+        this.tipo = tipo;
+        this.formaPagamento = formaPagamento;
+        this.valor = new BigDecimal(valor.toString());
+        
+        ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+        this.dataCadastro = converterData.getSqlDate(dataCadastro);
+        this.chave = chave;
+    }
 
     public String getTipo() {
         return tipo;

@@ -38,6 +38,18 @@ public class Planos {
         this.situacao = situacao;
         this.chavePlano = chavePlano;
     }
+    
+    public Planos(int codTurma, int codServico, int diaVencimento, Date dataVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
+        this.codTurma = codTurma;
+        this.codServico = codServico;
+        this.diaVencimento = diaVencimento;
+        ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+        this.dataPagamento = converterData.getSqlDate(dataPagamento);
+        this.dataCancelamento = converterData.getSqlDate(dataCancelamento);
+        this.dataRenovacao = converterData.getSqlDate(dataRenovacao);
+        this.dataVencimento = converterData.getSqlDate(dataVencimento);
+        this.situacao = situacao;
+    }
 
     public int getCodAluno() {
         return codAluno;

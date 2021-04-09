@@ -5,12 +5,6 @@
  */
 package Model.auxiliar;
 
-import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
-import java.sql.Time;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Mayro
@@ -18,18 +12,19 @@ import java.util.logging.Logger;
 public class Horarios {
     private int codBanco;
     private String diaDaSemana;
-    private Time horario;
+    private String horarioInicio;
+    private String horarioFim;
     private int codCliente;
     private int codTurma;
 
     public Horarios() {
     }
 
-    public Horarios(int codBanco, String diaDaSemana, String horario, int codCliente, int codTurma) {
+    public Horarios(int codBanco, String diaDaSemana, String horarioInicio, String horarioFim, int codCliente, int codTurma) {
         this.codBanco = codBanco;
         this.diaDaSemana = diaDaSemana;
-        ConversaodeDataParaPadraoDesignado converter = new ConversaodeDataParaPadraoDesignado();
-        this.horario = converter.parseHour(horario);
+        this.horarioInicio = horarioInicio;
+        this.horarioFim = horarioFim;
         this.codCliente = codCliente;
         this.codTurma = codTurma;
     }
@@ -44,10 +39,15 @@ public class Horarios {
         return diaDaSemana;
     }
 
-    public Time getHorario() {
-        return horario;
+    public String getHorarioInicio() {
+        return horarioInicio;
     }
 
+    public String getHorarioFim() {
+        return horarioFim;
+    }
+
+    
     public int getCodCliente() {
         return codCliente;
     }

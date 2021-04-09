@@ -28,6 +28,14 @@ public class ReposicaoAulas {
         this.codAluno = codAluno;
         this.situacao = situacao;
     }
+    
+    public ReposicaoAulas(Date data, int codTurma, int codAluno, String situacao) {
+        ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+        this.data = converterData.getSqlDate(data);
+        this.codTurma = codTurma;
+        this.codAluno = codAluno;
+        this.situacao = situacao;
+    }
 
     public ReposicaoAulas(int codBanco, String situacao) {
         this.codBanco = codBanco;

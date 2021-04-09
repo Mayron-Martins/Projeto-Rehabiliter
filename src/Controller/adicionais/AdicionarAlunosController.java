@@ -114,9 +114,7 @@ public class AdicionarAlunosController {
         String nome = view.getCampoNomeAluno().getText();
         String cpf = view.getCampoCPFAluno().getText();
         String rg = ""; //Como não está na tabela é nula
-        
         Date dataNascimento = view.getCampoNascimentoAluno().getDate();
-        
         String telefone = view.getCampoTelefone().getText();
         String celular = view.getCampoCelular().getText();
         String email=""; //Nula por enquanto
@@ -138,7 +136,6 @@ public class AdicionarAlunosController {
         }
         
         //Dados de Matrícula e Serviços
-        int codMatricula = (int) (verificar.verificarUltimo("tblMatriculas", "codMatricula")+1);
         int codServico = 0;
         int codTurma = 0;
         if(!plano.equals("[Nenhum]")||!turma.equals("[Nenhuma]")){
@@ -154,7 +151,6 @@ public class AdicionarAlunosController {
         String matriculaObtida = this.converterMatricula(anoAtual, codTurma, codAluno, codServico);
         
         //dados do Endereço
-        int codEndereco = (int) (verificar.verificarUltimo("tblEndAlunoseClientes","codEndAlunoseClientes")+1);
         String logradouro = view.getCampoRua().getText();
         String bairro = view.getCampoBairro().getText();
         String numero = view.getCampoNum().getText();
@@ -182,8 +178,8 @@ public class AdicionarAlunosController {
         
         Aluno aluno = new Aluno(codAluno, nome, cpf, rg, telefone, celular, email, 
         dataNascimento, nomeMae, nomePai, contatoMae, contatoPai, cpfMae, cpfPai, codTurma, codServico, descricao, debito, valorContrato, dataCadastro, valorMensal, renovacaoAutomatica);
-        EnderecoAlunos endereco = new EnderecoAlunos(codEndereco, codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
-        Matriculas matricula = new Matriculas(codMatricula, codTurma, codAluno, anoAtual, matriculaObtida);
+        EnderecoAlunos endereco = new EnderecoAlunos(logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
+        Matriculas matricula = new Matriculas(codTurma, anoAtual, matriculaObtida);
         
         Date dataVencimento = this.dataVencimento(aluno, servicoContratado, dataUltimoPag, diaVencimento);
         Planos planoAluno = new Planos(chavePlano, codAluno, codTurma, codServico, diaVencimento, dataVencimento, dataUltimoPag, null, null, situacao);

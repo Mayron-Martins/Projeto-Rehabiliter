@@ -66,21 +66,17 @@ public class BackupController {
     }
     
     public void adicionarDadosnoBanco(){
-            try {
+
             Date dataAtual = new Date();
             String nome = "LocalBackup";
-            int codBackup = (int) (verificar.verificarUltimo("tblBackups", "codBackup")+1);
             String endereco = System.getProperty("user.home")+"/documents/Rehabiliter/Backups/Local/";
             String tabelas = "Todas";
 
-            Backup backup = new Backup(codBackup, nome, dataAtual, endereco, tabelas);
+            Backup backup = new Backup(nome, dataAtual, endereco, tabelas);
             backupDao.exportarBanco();
             backupBancoDao.inserirDados(backup);
             view.exibeMensagem("Sucesso!");
             inserirUltimoBackup();
-        } catch (SQLException ex) {
-            this.gerarLog(ex);
-        }
         
     }
     

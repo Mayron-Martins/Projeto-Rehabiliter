@@ -32,15 +32,13 @@ public class MatriculasDao extends Conexao{
         try{
             //Adicionando Matrícula
             String inMatriculas = inserir.concat("tblMatriculas("
-                    + "codMatricula, codTurma, codAluno, anoMatricula, matricula)"
+                    + "codTurma, codAluno, anoMatricula, matricula)"
                     + "VALUES("
-                    + "?,?,?,?,?);");
+                    + "?,(SELECT IDENT_CURRENT('tblAlunos')),?,?);");
             PreparedStatement statement = gerarStatement(inMatriculas);
-            statement.setInt(1, matricula.getCodBanco());
-            statement.setInt(2, matricula.getCodTurma());
-            statement.setInt(3, matricula.getCodAluno());
-            statement.setInt(4, matricula.getAnoMatricula());
-            statement.setString(5, matricula.getMatricula());
+            statement.setInt(1, matricula.getCodTurma());
+            statement.setInt(2, matricula.getAnoMatricula());
+            statement.setString(3, matricula.getMatricula());
             statement.execute();
             statement.close();
         } catch (SQLException ex) {

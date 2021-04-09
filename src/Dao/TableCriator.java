@@ -70,7 +70,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Alunos...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblAlunos("
-                + "codAluno INT PRIMARY KEY,"   //É gerado um código único no banco para cada aluno.
+                + "codAluno INT IDENTITY(1,1) PRIMARY KEY,"   //É gerado um código único no banco para cada aluno.
                 + "nome VARCHAR(MAX) NOT NULL,"
                 + "cpf VARCHAR(15) NULL,"
                 + "rg VARCHAR(20) NULL,"
@@ -78,16 +78,13 @@ public class TableCriator {
                 + "celular VARCHAR(20) NULL,"
                 + "email VARCHAR(50) NULL,"
                 + "dataNascimento DATE NOT NULL,"
-                + "codEndereco INT NOT NULL,"     //O endereço de cada aluno é cadastrado numa tabela à parte.
                 + "nomeMae VARCHAR(MAX) NULL,"
                 + "nomePai VARCHAR(MAX) NULL,"
                 + "telefoneMae VARCHAR(20) NULL,"
                 + "telefonePai VARCHAR(20) NULL,"
                 + "cpfMae VARCHAR(15) NULL,"
                 + "cpfPai VARCHAR(15) NULL,"
-                + "matricula VARCHAR(MAX) NOT NULL,"
                 + "codTurma INT NOT NULL,"   //Como cada aluno pode ter mais de uma matrícula, então elas são armazenadas sequencialmente num varhar.
-                + "codDiasDaSemana INT NOT NULL,"  //código dos dias da semana que irá ter aula, coincide com os dias da turma.
                 + "codServico INT NOT NULL,"  //Código do serviço e tempo para pagamento.
                 + "descricao VARCHAR(MAX) NULL,"
                 + "debito DECIMAL(16,2) NULL,"
@@ -103,7 +100,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Endereços AC...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblEndAlunoseClientes("
-                + "codEndAlunoseClientes INT PRIMARY KEY," //É gerado um endereço único para cada aluno.
+                + "codEndAlunoseClientes INT IDENTITY(1,1) PRIMARY KEY," //É gerado um endereço único para cada aluno.
                 + "codAluno INT NOT NULL," //Abstrai o código de um aluno para que exista.
                 + "logradouro VARCHAR(MAX) NULL,"
                 + "bairro VARCHAR(MAX) NULL,"
@@ -121,7 +118,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Clientes...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblClientes("
-                + "codCliente INT PRIMARY KEY,"  //Cada cliente tem um código único.
+                + "codCliente INT IDENTITY(1,1) PRIMARY KEY,"  //Cada cliente tem um código único.
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cpf VARCHAR(15) NOT NULL,"
                 + "telefone VARCHAR(20) NOT NULL,"
@@ -137,7 +134,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Funcionários...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblFuncionarios("
-                + "codFuncionario INT PRIMARY KEY," //Cada funcionário terá um código único.
+                + "codFuncionario INT IDENTITY(1,1) PRIMARY KEY," //Cada funcionário terá um código único.
                 + "nome VARCHAR(MAX) NOT NULL,"
                 + "cpf VARCHAR(15) NOT NULL,"
                 + "rg VARCHAR(20) NULL,"
@@ -145,7 +142,6 @@ public class TableCriator {
                 + "celular VARCHAR(20) NULL,"
                 + "email VARCHAR(MAX) NULL,"
                 + "dataNascimento DATE NOT NULL,"
-                + "codEndereco INT NULL,"     //Código do endereço do funcionário, cadastrado numa tabela à parte
                 + "usuario VARCHAR(16) NOT NULL," // Cada funcionário terá um usuário único
                 + "senha VARCHAR(10) NOT NULL,"
                 + "cargo VARCHAR(25) NOT NULL,"
@@ -161,7 +157,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Endereço F...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblEndFuncionarios("
-                + "codEndFuncionarios INT PRIMARY KEY," // É gerado um código único de endereço de funcionário
+                + "codEndFuncionarios INT IDENTITY(1,1) PRIMARY KEY," // É gerado um código único de endereço de funcionário
                 + "codFuncionario INT NOT NULL,"  //Associação do endereço ao funcionário.
                 + "logradouro VARCHAR(50) NULL,"
                 + "bairro VARCHAR(25) NULL,"
@@ -194,7 +190,7 @@ public class TableCriator {
        telaDeInicio.mudartexto("Criando tabela de Endereço E...");
        telaDeInicio.mudarPercentual();
        this.gerarStatement().execute("CREATE TABLE tblEndEmpresa("
-                + "codEndEmpresa INT PRIMARY KEY," //Código do endereço.
+                + "codEndEmpresa INT IDENTITY(1,1) PRIMARY KEY," //Código do endereço.
                 + "logradouro VARCHAR(50) NULL,"
                 + "bairro VARCHAR(25) NULL,"
                 + "numero VARCHAR(10) NULL,"
@@ -211,7 +207,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Produtos...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblProdutos("
-                + "codProduto INT PRIMARY KEY," //Cada produto terá um código único no banco
+                + "codProduto INT IDENTITY(1,1) PRIMARY KEY," //Cada produto terá um código único no banco
                 + "nome VARCHAR(MAX) NOT NULL," 
                 + "tipo VARCHAR(20) NULL," //Caso queira classificá-los para melhor filtragem (ex.: roupas, acessórios, etc.)
                 + "unMedida VARCHAR(3) NULL," //Caso queira definir uma unidade de medida (ex.: UN, KG, PAC).
@@ -243,7 +239,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Fornecedores...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblFornProdutos("
-                + "codFornecedor INT PRIMARY KEY," //Cada fornecedor tem um código único.
+                + "codFornecedor INT IDENTITY(1,1) PRIMARY KEY," //Cada fornecedor tem um código único.
                 + "nome VARCHAR(50) NOT NULL,"
                 + "cnpj VARCHAR NULL,"
                 + "codProduto VARCHAR(MAX) NOT NULL" //Produtos aos quais o fornecedor é associado, havendo a possibilidade de diversos fornecedores fornecerem um mesmo produto.
@@ -255,12 +251,12 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Turmas...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblTurmas("
-                + "codTurma INT PRIMARY KEY," //Código único para cada turma.
+                + "codTurma INT IDENTITY(1,1) PRIMARY KEY," //Código único para cada turma.
                 + "nome VARCHAR(MAX) NOT NULL,"
                 + "quantAlunos INT NULL," //Caso queira colocar a quantidade presente de alunos.
                 + "quantLimiteDeAlunos INT NULL," //Caso queira definir um valor máximo de alunos para uma turma.
                 + "diasDaSemana VARCHAR(MAX) NOT NULL,"
-                + "horario TIME NOT NULL,"
+                + "horario VARCHAR(5) NOT NULL,"
                 + "situacao VARCHAR(15) NULL" //Dias da semana que a turma irá utilizar.
                 + ") ON [AlunoseClientes];");
     }
@@ -272,7 +268,8 @@ public class TableCriator {
         this.gerarStatement().execute("CREATE TABLE tblHorarios("
                 + "codHorario INT NOT NULL," //Código único para cada horário.
                 + "diaDaSemana VARCHAR(15) NOT NULL," //Dia da semana correspondente ao horário.
-                + "horario TIME NOT NULL," //hora.
+                + "horarioInicio VARCHAR(5) NOT NULL,"
+                + "horarioFim VARCHAR(5) NULL," //hora.
                 + "codCliente INT NULL," //Caso um cliente tenha agendado um horário.
                 + "codTurma INT NULL" //Caso a turma utilize o horário.
                 + ") ON [AlunoseClientes];");
@@ -296,7 +293,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Serviços...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblServicos("
-                + "codServico INT PRIMARY KEY," //Cada serviço terá um código único no banco.
+                + "codServico INT IDENTITY(1,1) PRIMARY KEY," //Cada serviço terá um código único no banco.
                 + "nome VARCHAR(MAX) NOT NULL," //Nome do Serviço (natação, hidroginástica, etc.).
                 + "periodo VARCHAR(10) NOT NULL,"
                 + "formaPagamento VARCHAR(25) NOT NULL,"
@@ -315,7 +312,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Vendas...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblVendas("
-                + "codVenda INT NOT NULL," //Cada venda terá um código único.
+                + "codVenda INT IDENTITY(1,1) NOT NULL," //Cada venda terá um código único.
                 + "codCliente INT NULL," //Caso a venda ocorra com um cliente.
                 + "codAluno INT NULL,"  //Caso a venda ocorra com um aluno.
                 + "chavePlano BIGINT NULL," //Caso a venda seja pagamento de plano
@@ -348,12 +345,14 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Entradas...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblEntradas("
-                + "codEntrada INT NOT NULL," //Cada Entrada terá um código único.
+                + "codEntrada INT IDENTITY(1,1) PRIMARY KEY," //Cada Entrada terá um código único.
+                + "chavePlano BIGINT NULL,"
                 + "referencia VARCHAR(MAX) NOT NULL,"
                 + "quantidade FLOAT NOT NULL,"
                 + "formaPagamento VARCHAR(10) NOT NULL,"
                 + "valorEntrada DECIMAL(16,2) NOT NULL,"
-                + "dataCadastro DATE NOT NULL" 
+                + "dataCadastro DATE NOT NULL,"
+                + "status VARCHAR(10) NULL" 
                 + ") ON [Transacoes];");
     }
     
@@ -362,7 +361,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Gastos...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblGastos("
-                + "codGasto INT NOT NULL," //Cada gasto terá um código único.
+                + "codGasto INT IDENTITY(1,1) NOT NULL," //Cada gasto terá um código único.
                 + "motivo VARCHAR(MAX) NOT NULL,"
                 + "quantidade FLOAT NOT NULL,"
                 + "formaPagamento VARCHAR(10) NOT NULL,"
@@ -392,7 +391,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Orçamentário...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblDetOrcamentario("
-                + "codBanco INT PRIMARY KEY,"
+                + "codBanco INT IDENTITY(1,1) PRIMARY KEY,"
                 + "tipo VARCHAR(10) NOT NULL," //Item que foi comprado ou pago.
                 + "formaPagamento VARCHAR(10) NOT NULL,"
                 + "valor DECIMAL(16,2) NOT NULL,"
@@ -415,7 +414,7 @@ public class TableCriator {
                 + "dataCancelamento DATE NULL,"
                 + "dataRenovacao DATE NULL," //Caso tenha sido cancelado, então a data em que ocorreu.
                 + "situacao VARCHAR(10) NOT NULL," //Pago, pendente, vencido, cancelado.
-                + "chavePlano BIGINT PRIMARY KEY" //Cada plano terá uma chave única gerada por meio de função codificada aluno-turma-serviço.
+                + "chavePlano BIGINT IDENTITY(1,1) PRIMARY KEY" //Cada plano terá uma chave única gerada por meio de função codificada aluno-turma-serviço.
                 + ") ON [AlunoseClientes];");
     }
     
@@ -424,7 +423,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Backups...");
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblBackups("
-                + "codBackup INT PRIMARY KEY," //Cada backup terá um código único.
+                + "codBackup INT IDENTITY(1,1) PRIMARY KEY," //Cada backup terá um código único.
                 + "nome VARCHAR(20) NOT NULL," //Data e horário como nome
                 + "data DATETIME NOT NULL," //
                 + "endArquivo VARCHAR(MAX) NOT NULL," //Localização no computador.
@@ -448,7 +447,7 @@ public class TableCriator {
         telaDeInicio.mudartexto("Criando tabela de Reposição de Aulas");
         telaDeInicio.mudarPercentual();    
         this.gerarStatement().execute("CREATE TABLE tblReposicaoAulas("
-                + "codBanco INT PRIMARY KEY,"
+                + "codBanco INT IDENTITY(1,1) PRIMARY KEY,"
                 + "data DATE NOT NULL," //Data em que ocorreu a entrada no sistema.
                 + "codTurma INT NOT NULL,"
                 + "codAluno INT NOT NULL," //Associa a frequência ao código do funcionário.

@@ -7,9 +7,6 @@ package Model.auxiliar;
 
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import java.sql.Time;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,7 +18,7 @@ public class Turmas {
     private int quantidadeAlunos;
     private int quantidadeMaximaAlunos;
     private String diasDaSemana;
-    private Time horario;
+    private String horario;
     private String situacao;
 
     
@@ -31,8 +28,16 @@ public class Turmas {
         this.quantidadeAlunos = quantidadeAlunos;
         this.quantidadeMaximaAlunos = quantidadeMaximaAlunos;
         this.diasDaSemana = diasDaSemana;
-        ConversaodeDataParaPadraoDesignado converter = new ConversaodeDataParaPadraoDesignado();
-        this.horario = converter.parseHour(horario);
+        this.horario = horario;
+        this.situacao = situacao;
+    }
+    
+    public Turmas(String nomeTurma, int quantidadeAlunos, int quantidadeMaximaAlunos, String diasDaSemana, String horario, String situacao) {
+        this.nomeTurma = nomeTurma;
+        this.quantidadeAlunos = quantidadeAlunos;
+        this.quantidadeMaximaAlunos = quantidadeMaximaAlunos;
+        this.diasDaSemana = diasDaSemana;
+        this.horario = horario;
         this.situacao = situacao;
     }
 
@@ -56,7 +61,7 @@ public class Turmas {
         return diasDaSemana;
     }
 
-    public Time getHorario() {
+    public String getHorario() {
         return horario;
     }
 

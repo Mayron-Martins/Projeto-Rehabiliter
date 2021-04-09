@@ -32,17 +32,16 @@ public class TurmasDao extends Conexao{
         try{
             //Adicionando Turma
             String inTurmas = inserir.concat("tblTurmas("
-                    + "codTurma, nome, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario, situacao)"
+                    + "nome, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario, situacao)"
                     + "VALUES("
-                    + "?,?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inTurmas);
-            statement.setInt(1, turma.getCodBanco());
-            statement.setString(2, turma.getNomeTurma());
-            statement.setInt(3, 0);
-            statement.setInt(4, turma.getQuantidadeMaximaAlunos());
-            statement.setString(5, turma.getDiasDaSemana());
-            statement.setTime(6, turma.getHorario());
-            statement.setString(7, turma.getSituacao());
+            statement.setString(1, turma.getNomeTurma());
+            statement.setInt(2, turma.getQuantidadeAlunos());
+            statement.setInt(3, turma.getQuantidadeMaximaAlunos());
+            statement.setString(4, turma.getDiasDaSemana());
+            statement.setString(5, turma.getHorario());
+            statement.setString(6, turma.getSituacao());
             statement.execute();
             statement.close();
 
@@ -67,7 +66,7 @@ public class TurmasDao extends Conexao{
             statement.setString(1, turmas.getNomeTurma());
             statement.setInt(2, turmas.getQuantidadeMaximaAlunos());
             statement.setString(3, turmas.getDiasDaSemana());
-            statement.setTime(4, turmas.getHorario());
+            statement.setString(4, turmas.getHorario());
             statement.setInt(5, turmas.getCodBanco());
 
             statement.execute();
@@ -158,9 +157,7 @@ public class TurmasDao extends Conexao{
             int quantAlunos = resultset.getInt("quantAlunos");
             int quantLimiteDeAlunos = resultset.getInt("quantLimiteDeAlunos");
             String diasDaSemana = resultset.getString("diasDaSemana");
-
-            int tamanhoHora = resultset.getTime("horario").toString().length()-3;
-            String horario = resultset.getTime("horario").toString().substring(0, tamanhoHora);
+            String horario = resultset.getString("horario");
             String situacao = resultset.getString("situacao");
 
             Turmas turma = new Turmas(codBanco, nome, quantAlunos, quantLimiteDeAlunos, diasDaSemana, horario, situacao);

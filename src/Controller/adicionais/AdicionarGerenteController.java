@@ -37,7 +37,6 @@ public class AdicionarGerenteController {
     
     public void adicionarGerente(){
         //Dados do Gerente
-        int codGerente = 1;
         String nome = view.getCampoNome().getText();
         String cpf = view.getCampoCPF().getText();
         Date dataNascimento = view.getCampoNascimento().getDate();
@@ -64,8 +63,8 @@ public class AdicionarGerenteController {
         String situacao = "Contratado";
         
         //Cria os tipos Aluno, Endereco e Matricula com os dados
-        Funcionario funcionario = new Funcionario(codGerente, nome, cpf, "", "", celular, "", dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status, situacao);
-        EnderecoFuncionario endereco = new EnderecoFuncionario(codEndereco, codGerente, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
+        Funcionario funcionario = new Funcionario(nome, cpf, "", "", celular, "", dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status, situacao);
+        EnderecoFuncionario endereco = new EnderecoFuncionario(logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         
         //Verifica se não há dados irregulares antes de colocar na tabela
         if(nome==null||dataNascimento==null|| verificarSenha() ||cpf.equals("   .   .   -  ")){

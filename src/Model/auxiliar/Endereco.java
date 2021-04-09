@@ -31,6 +31,17 @@ public abstract class Endereco {
         this.estado = estado;
         this.cep = cep;
     }
+    
+    public Endereco(String logradouro, String bairro, String numero, String complemento, String referencia, String cidade, String estado, String cep) {
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.referencia = referencia;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
+    }
 
     public int getCodBanco() {
         return codBanco;

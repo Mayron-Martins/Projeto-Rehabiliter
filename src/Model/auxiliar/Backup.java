@@ -28,6 +28,14 @@ public class Backup {
         this.enderecoBackup = enderecoBackup;
         this.tabelasBackup = tabelasBackup;
     }
+    
+    public Backup(String nome, Date data, String enderecoBackup, String tabelasBackup) {
+        this.nome = nome;
+        ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+        this.data = converterData.getSqlDateAndTime(data);
+        this.enderecoBackup = enderecoBackup;
+        this.tabelasBackup = tabelasBackup;
+    }
 
     public int getCodBackup() {
         return codBackup;

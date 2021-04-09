@@ -35,7 +35,6 @@ public class AdicionarFuncionariosController {
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
-    private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final TableCriatorPosInput criarTabelas = new TableCriatorPosInput();
 
     public AdicionarFuncionariosController(FuncionariosAdicionar view) {
@@ -43,62 +42,53 @@ public class AdicionarFuncionariosController {
     }
     
     public void adicionarFuncionario(){
-        try{
-            //Dados do Gerente
-            int codFuncionario = (int) (verificar.verificarUltimo("tblFuncionarios", "codFuncionario")+1);
-            String nome = view.getCampoNome().getText();
-            String cpf = view.getCampoCPF().getText();
-            Date dataNascimento = view.getCampoNascimento().getDate();
+        //Dados do Gerente
+        String nome = view.getCampoNome().getText();
+        String cpf = view.getCampoCPF().getText();
+        Date dataNascimento = view.getCampoNascimento().getDate();
 
-            String celular = view.getCampoCelular().getText();
-            String telefone = view.getCampoTelefone().getText();
-            String usuario = cpf;
-            String senha = new String(view.getCampoSenha().getPassword());
-            BigDecimal salario = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoSalario().getText()).toString()); //Seta setado em 0 reais
-            String cargo = view.getCampoCargo().getText();
-            String email = view.getCampoEmail().getText();
+        String celular = view.getCampoCelular().getText();
+        String telefone = view.getCampoTelefone().getText();
+        String usuario = cpf;
+        String senha = new String(view.getCampoSenha().getPassword());
+        BigDecimal salario = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoSalario().getText()).toString()); //Seta setado em 0 reais
+        String cargo = view.getCampoCargo().getText();
+        String email = view.getCampoEmail().getText();
 
-            //dados do Endereço
-            int codEndereco = (int) (verificar.verificarUltimo("tblEndFuncionarios", "codEndFuncionarios")+1);
-            String logradouro = "";
-            String bairro = "";
-            String numero = "";
-            String cidade = "";
-            String estado = "";
-            String cep = "";
-            String complemento = "";
-            String referencia = "";
+        //dados do Endereço
+        String logradouro = "";
+        String bairro = "";
+        String numero = "";
+        String cidade = "";
+        String estado = "";
+        String cep = "";
+        String complemento = "";
+        String referencia = "";
 
-            String telasPermitidas = "1,2,3,4,5,6,7,8,9,10";
-            String status = "Inativo";
-            String situacao = "Contratado";
+        String telasPermitidas = "1,2,3,4,5,6,7,8,9,10";
+        String status = "Inativo";
+        String situacao = "Contratado";
 
-            //Cria os tipos Aluno, Endereco e Matricula com os dados
-            Funcionario funcionario = new Funcionario(codFuncionario, nome, cpf, "", telefone, celular, email, dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status, situacao);
-            EnderecoFuncionario endereco = new EnderecoFuncionario(codEndereco, codFuncionario, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
+        //Cria os tipos Aluno, Endereco e Matricula com os dados
+        Funcionario funcionario = new Funcionario(nome, cpf, "", telefone, celular, email, dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status, situacao);
+        EnderecoFuncionario endereco = new EnderecoFuncionario(logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
 
-            //Verifica se não há dados irregulares antes de colocar na tabela
-            if(nome==null||dataNascimento==null|| verificarSenha() ||cpf.equals("   .   .   -  ")){
-            view.exibeMensagem("Valores Preenchidos Incorretamente!");
-            }
-
-            else{
-                funcionarioDao.inserirDados(funcionario, endereco);
-                criarTabelas.tableLogdeAcoesdoFunc();
-
-                
-                this.setarLog("Cadastro de Funcionário", "Cadastrou o funcionário "+nome+" aos cargo de "+cargo);
-                
-                view.exibeMensagem("Sucesso!");
-                limparCampos();
-
-            }
-        } catch (SQLException ex) {
-            gerarLog(ex);
-            view.exibeMensagem("Não foi possível salvar o Funcionário corretamente!");
-            limparCampos();
+        //Verifica se não há dados irregulares antes de colocar na tabela
+        if(nome==null||dataNascimento==null|| verificarSenha() ||cpf.equals("   .   .   -  ")){
+        view.exibeMensagem("Valores Preenchidos Incorretamente!");
         }
-        
+
+        else{
+            funcionarioDao.inserirDados(funcionario, endereco);
+            criarTabelas.tableLogdeAcoesdoFunc();
+
+
+            this.setarLog("Cadastro de Funcionário", "Cadastrou o funcionário "+nome+" aos cargo de "+cargo);
+
+            view.exibeMensagem("Sucesso!");
+            limparCampos();
+
+        }        
     }
 
     private boolean verificarSenha() {      

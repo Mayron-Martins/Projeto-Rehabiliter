@@ -30,15 +30,14 @@ public class ReposicaoDao extends Conexao{
         try{
             //Adicionando Reposicao
             String inReposicao = inserir.concat("tblReposicaoAulas("
-                    + "codBanco, data, codTurma, codAluno, situacao)"
+                    + "data, codTurma, codAluno, situacao)"
                     + "VALUES("
-                    + "?,?,?,?,?);");
+                    + "?,?,?,?);");
             PreparedStatement statement = gerarStatement(inReposicao);
-            statement.setInt(1, reposicao.getCodBanco());
-            statement.setDate(2, (Date) reposicao.getData());
-            statement.setInt(3, reposicao.getCodTurma());
-            statement.setInt(4, reposicao.getCodAluno());
-            statement.setString(5, reposicao.getSituacao());
+            statement.setDate(1, (Date) reposicao.getData());
+            statement.setInt(2, reposicao.getCodTurma());
+            statement.setInt(3, reposicao.getCodAluno());
+            statement.setString(4, reposicao.getSituacao());
             statement.execute();
             statement.close();
         } catch (SQLException ex) {

@@ -21,7 +21,18 @@ public class Funcionario extends Pessoa{
     protected String situacao;
 
     public Funcionario(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario,String senha, BigDecimal salario, String cargo, String telasPermitidas, String status, String situacao) {
-        super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento, usuario);
+        super(nome, cpf, rg, telefone, celular, email, datadenascimento, usuario);
+        this.codBanco = codBanco;
+        this.senha = senha;
+        this.salario = new BigDecimal(salario.toString());
+        this.cargo = cargo;
+        this.telasPermitidas = telasPermitidas;
+        this.status = status;
+        this.situacao = situacao;
+    }
+    
+    public Funcionario(String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario,String senha, BigDecimal salario, String cargo, String telasPermitidas, String status, String situacao) {
+        super(nome, cpf, rg, telefone, celular, email, datadenascimento, usuario);
         this.senha = senha;
         this.salario = new BigDecimal(salario.toString());
         this.cargo = cargo;

@@ -35,17 +35,16 @@ public class GastosDao extends Conexao{
         try{
             //Adicionando Turma
             String inGastos = inserir.concat("tblGastos("
-                    + "codGasto, motivo, quantidade, formaPagamento, valorGasto, dataGasto, chaveTransacao)"
+                    + "motivo, quantidade, formaPagamento, valorGasto, dataGasto, chaveTransacao)"
                     + "VALUES("
-                    + "?,?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inGastos);
-            statement.setInt(1, gasto.getCodBanco());
-            statement.setString(2, gasto.getMotivo());
-            statement.setFloat(3, gasto.getQuantidade());
-            statement.setString(4, gasto.getFormaPagamento());
-            statement.setBigDecimal(5, new BigDecimal(gasto.getValorGasto().toString()));
-            statement.setDate(6, (Date) gasto.getDataCadastro());
-            statement.setLong(7, gasto.getChaveTransacao());
+            statement.setString(1, gasto.getMotivo());
+            statement.setFloat(2, gasto.getQuantidade());
+            statement.setString(3, gasto.getFormaPagamento());
+            statement.setBigDecimal(4, new BigDecimal(gasto.getValorGasto().toString()));
+            statement.setDate(5, (Date) gasto.getDataCadastro());
+            statement.setLong(6, gasto.getChaveTransacao());
             statement.execute();
             statement.close();
         } catch (SQLException ex) {

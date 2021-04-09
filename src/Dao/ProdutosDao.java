@@ -13,10 +13,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -35,19 +32,18 @@ public class ProdutosDao extends Conexao{
         try{
             //Adicionando Turma
             String inProdutos = inserir.concat("tblProdutos("
-                    + "codProduto, nome, tipo, unMedida, quantidade, descricao, valorDeCompra, dataDeCompra, valorDeVenda)"
+                    + "nome, tipo, unMedida, quantidade, descricao, valorDeCompra, dataDeCompra, valorDeVenda)"
                     + "VALUES("
-                    + "?,?,?,?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inProdutos);
-            statement.setInt(1, produto.getCodBanco());
-            statement.setString(2, produto.getNomeProduto());
-            statement.setString(3, produto.getTipo());
-            statement.setString(4, produto.getUnMedida());
-            statement.setFloat(5, produto.getQuantidade());
-            statement.setString(6, produto.getDescricao());
-            statement.setBigDecimal(7, new BigDecimal(produto.getValorDeCompra().toString()));
-            statement.setDate(8, (Date) produto.getDataDeCompra());
-            statement.setBigDecimal(9, new BigDecimal(produto.getValorDeVenda().toString()));
+            statement.setString(1, produto.getNomeProduto());
+            statement.setString(2, produto.getTipo());
+            statement.setString(3, produto.getUnMedida());
+            statement.setFloat(4, produto.getQuantidade());
+            statement.setString(5, produto.getDescricao());
+            statement.setBigDecimal(6, new BigDecimal(produto.getValorDeCompra().toString()));
+            statement.setDate(7, (Date) produto.getDataDeCompra());
+            statement.setBigDecimal(8, new BigDecimal(produto.getValorDeVenda().toString()));
             statement.execute();
             statement.close();
         } catch (SQLException ex) {

@@ -30,20 +30,18 @@ public class EnderecoAlunosDao extends Conexao{
     public void inserirDadosEmEnderecoAluno(EnderecoAlunos endereco){
         try{
             String inEndereco = inserir.concat("tblEndAlunoseClientes("
-                    + "codEndAlunoseClientes, codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, CEP)"
+                    + "codAluno, logradouro, bairro, numero, complemento, referencia, cidade, estado, CEP)"
                     + "VALUES("
-                    + "?,?,?,?,?,?,?,?,?,?);");
+                    + "(SELECT IDENT_CURRENT('tblAlunos')),?,?,?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inEndereco);
-            statement.setInt(1, endereco.getCodBanco());
-            statement.setInt(2, endereco.getCodAluno());
-            statement.setString(3, endereco.getLogradouro());
-            statement.setString(4, endereco.getBairro());
-            statement.setString(5, endereco.getNumero());
-            statement.setString(6, endereco.getComplemento());
-            statement.setString(7, endereco.getReferencia());
-            statement.setString(8, endereco.getCidade());
-            statement.setString(9, endereco.getEstado());
-            statement.setString(10, endereco.getCep());
+            statement.setString(1, endereco.getLogradouro());
+            statement.setString(2, endereco.getBairro());
+            statement.setString(3, endereco.getNumero());
+            statement.setString(4, endereco.getComplemento());
+            statement.setString(5, endereco.getReferencia());
+            statement.setString(6, endereco.getCidade());
+            statement.setString(7, endereco.getEstado());
+            statement.setString(8, endereco.getCep());
             statement.execute(); 
             statement.close(); 
         } catch (SQLException ex) {

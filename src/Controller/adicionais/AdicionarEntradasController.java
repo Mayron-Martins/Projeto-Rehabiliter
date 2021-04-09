@@ -47,18 +47,17 @@ public class AdicionarEntradasController {
         try{
             //Dados Entrada
             int codEntrada = (int) (verificar.verificarUltimo("tblEntradas", "codEntrada") +1);
-            int codOrcamentario = (int) (verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1);
+            long chavePlano = 0;
             String referencia = view.getCampoReferencia().getText();
-
             BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
             float quantidade = quantidadeGrande.floatValue();
-
             String formaPagamento = this.retornarFormaPagamento();
             BigDecimal valorEntrada = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
             Date dataCadastro = view.getCampoData().getDate();
+            String status = "Recebido";
 
-            Entradas entrada = new Entradas(codEntrada, referencia, quantidade, formaPagamento, valorEntrada, dataCadastro);
-            DetOrcamentario orcamentario = new DetOrcamentario(codOrcamentario, "Entradas", formaPagamento, valorEntrada, dataCadastro, entrada.getCodBanco());
+            Entradas entrada = new Entradas(chavePlano, referencia, quantidade, formaPagamento, valorEntrada, dataCadastro, status);
+            DetOrcamentario orcamentario = new DetOrcamentario("Entradas", formaPagamento, valorEntrada, dataCadastro, codEntrada);
 
             if(referencia.equals("")||quantidade==0||formaPagamento.equals("[Nenhum]")||valorEntrada.compareTo(BigDecimal.ZERO)==0
                     || dataCadastro == null){

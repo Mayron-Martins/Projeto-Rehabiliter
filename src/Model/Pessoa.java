@@ -28,8 +28,7 @@ public abstract class Pessoa {
     
     
     //Pessoa Normal
-    public Pessoa(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento) {
-        this.codBanco = codBanco;
+    public Pessoa(String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento) {
         this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;
@@ -42,8 +41,7 @@ public abstract class Pessoa {
     }
     
     //Pessoa com Login e Senha
-    public Pessoa(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario) {
-        this.codBanco = codBanco;
+    public Pessoa(String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String usuario) {
         this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;
@@ -64,9 +62,6 @@ public abstract class Pessoa {
     public Pessoa(int codBanco) {
         this.codBanco = codBanco;
     }
-    
-    
-    
     
     //___________________________________________________________________________
     //GETTERS

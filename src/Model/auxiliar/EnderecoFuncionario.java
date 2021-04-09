@@ -15,6 +15,10 @@ public class EnderecoFuncionario extends Endereco{
         super(codBanco, logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         this.codFuncionario = codFuncionario;
     }
+    
+    public EnderecoFuncionario(String logradouro, String bairro, String numero, String complemento, String referencia, String cidade, String estado, String cep) {
+        super(logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
+    }
 
     public int getCodFuncionario() {
         return codFuncionario;

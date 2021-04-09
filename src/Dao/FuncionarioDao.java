@@ -34,27 +34,25 @@ public class FuncionarioDao extends Conexao{
         try{
             //Adicionando aluno
             String inFuncionario = inserir.concat("tblFuncionarios("
-                    + "codFuncionario, nome, cpf, rg, telefone, celular, email, dataNascimento, "
-                    + "codEndereco, usuario, senha, cargo, salario, telasPermitidas, status, situacao)"
+                    + "nome, cpf, rg, telefone, celular, email, dataNascimento, "
+                    + "usuario, senha, cargo, salario, telasPermitidas, status, situacao)"
                     + "VALUES("
-                    + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inFuncionario);
-            statement.setInt(1, funcionario.getCodBanco());
-            statement.setString(2, funcionario.getNome());
-            statement.setString(3, funcionario.getCpf());
-            statement.setString(4, funcionario.getRg());
-            statement.setString(5, funcionario.getTelefone());
-            statement.setString(6, funcionario.getCelular());
-            statement.setString(7, "");
-            statement.setDate(8, (Date) funcionario.getDatadenascimento());
-            statement.setInt(9, endereco.getCodBanco());
-            statement.setString(10, funcionario.getUsuario());
-            statement.setString(11, funcionario.getSenha());
-            statement.setString(12, funcionario.getCargo());
-            statement.setBigDecimal(13, new BigDecimal(funcionario.getSalario().toString()));
-            statement.setString(14, funcionario.getTelasPermitidas());
-            statement.setString(15, funcionario.getStatus());
-            statement.setString(16, funcionario.getSituacao());
+            statement.setString(1, funcionario.getNome());
+            statement.setString(2, funcionario.getCpf());
+            statement.setString(3, funcionario.getRg());
+            statement.setString(4, funcionario.getTelefone());
+            statement.setString(5, funcionario.getCelular());
+            statement.setString(6, "");
+            statement.setDate(7, (Date) funcionario.getDatadenascimento());
+            statement.setString(8, funcionario.getUsuario());
+            statement.setString(9, funcionario.getSenha());
+            statement.setString(10, funcionario.getCargo());
+            statement.setBigDecimal(11, new BigDecimal(funcionario.getSalario().toString()));
+            statement.setString(12, funcionario.getTelasPermitidas());
+            statement.setString(13, funcionario.getStatus());
+            statement.setString(14, funcionario.getSituacao());
             statement.execute();
             statement.close();
 

@@ -14,8 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -34,16 +32,17 @@ public class EntradasDao extends Conexao{
         try{
             //Adicionando Turma
             String inEntradas = inserir.concat("tblEntradas("
-                    + "codEntrada, referencia, quantidade, formaPagamento, valorEntrada, dataCadastro)"
+                    + "chavePlano, referencia, quantidade, formaPagamento, valorEntrada, dataCadastro, status)"
                     + "VALUES("
-                    + "?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inEntradas);
-            statement.setInt(1, entrada.getCodBanco());
+            statement.setLong(1, entrada.getChavePlano());
             statement.setString(2, entrada.getReferencia());
             statement.setFloat(3, entrada.getQuantidade());
             statement.setString(4, entrada.getFormaPagamento());
             statement.setBigDecimal(5, new BigDecimal(entrada.getValorEntrada().toString()));
             statement.setDate(6, (Date) entrada.getDataCadastro());
+            statement.setString(7, entrada.getStatus());
             statement.execute();
             statement.close();
         } catch (SQLException ex) {
@@ -71,7 +70,23 @@ public class EntradasDao extends Conexao{
         } catch (SQLException ex) {
             gerarLog(ex);
         }
-        
+    }
+    
+    public void atualizarStatus(int codEntrada, String status){
+        try{
+            //atualizando a tabela de turmas
+            String inEntradas = atualizar.concat("tblEntradas "
+                    + "SET status=? where codEntrada = ?");
+
+            PreparedStatement statement = gerarStatement(inEntradas);
+            statement.setString(1, status);
+            statement.setInt(2, codEntrada);
+
+            statement.execute();
+            statement.close();
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
     }
     
     //Remover Dados
@@ -108,13 +123,15 @@ public class EntradasDao extends Conexao{
 
             do{
             int codEntrada = resultset.getInt("codEntrada");
+            long chavePlano = resultset.getLong("chavePlano");
             String referencia = resultset.getString("referencia");
             float quantidade = resultset.getFloat("quantidade");
             String formaPagamento = resultset.getString("formaPagamento");
             BigDecimal valorEntrada = new BigDecimal(resultset.getBigDecimal("valorEntrada").toString());
             Date dataCadastro = resultset.getDate("dataCadastro");
+            String status = resultset.getString("status");
 
-            Entradas entrada = new Entradas(codEntrada, referencia, quantidade, formaPagamento, valorEntrada, dataCadastro);
+            Entradas entrada = new Entradas(codEntrada, chavePlano, referencia, quantidade, formaPagamento, valorEntrada, dataCadastro, status);
 
             entradas.add(entrada);
              }while(resultset.next());

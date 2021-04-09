@@ -23,25 +23,22 @@ public class HorariosDao extends Conexao{
     private final String selecionarTudo = "SELECT * FROM ";
     private ConversaodeDataParaPadraoDesignado converterData;
     
-    public void inserirDadosEmHorarios(PreparedStatement statement, ArrayList<Horarios>horario){
+    public void inserirDadosEmHorarios(PreparedStatement statement, ArrayList<Horarios>horarios){
         try{
-            int quantidadeDias = horario.size();
-            int diferenca, contador = quantidadeDias;
-
             String inHorarios = inserir.concat("tblHorarios("
-                    + "codHorario, diaDaSemana, horario, codCliente, codTurma)"
+                    + "codHorario, diaDaSemana, horarioInicio, horarioFim, codCliente, codTurma)"
                     + "VALUES("
-                    + "?,?,?,?,?);");
+                    + "?,?,?,?,?,?);");
             statement = gerarStatement(inHorarios);
-            while(quantidadeDias>0){
-                diferenca = contador-quantidadeDias;
-                statement.setInt(1, horario.get(diferenca).getCodBanco());
-                statement.setString(2,horario.get(diferenca).getDiaDaSemana());
-                statement.setTime(3, horario.get(diferenca).getHorario());
-                statement.setInt(4, horario.get(diferenca).getCodCliente());
-                statement.setInt(5, horario.get(diferenca).getCodTurma());
+            
+            for(Horarios horario:horarios){
+                statement.setInt(1, horario.getCodBanco());
+                statement.setString(2,horario.getDiaDaSemana());
+                statement.setString(3, horario.getHorarioInicio());
+                statement.setString(4, horario.getHorarioFim());
+                statement.setInt(5, horario.getCodCliente());
+                statement.setInt(6, horario.getCodTurma());
                 statement.execute(); 
-                quantidadeDias--;
             }
             statement.close(); 
         } catch (SQLException ex) {
@@ -93,13 +90,13 @@ public class HorariosDao extends Conexao{
             int codBanco = resultset.getInt("codHorario");
             String diaDaSemana = resultset.getString("diaDaSemana");
 
-            int tamanhoHorario = resultset.getTime("horario").toString().length()-3;
-            String horarioBanco = resultset.getTime("horario").toString().substring(0, tamanhoHorario);
+            String horarioInicio = resultset.getString("horarioInicio");
+            String horarioFim = resultset.getString("horarioFim");
             int codCliente = resultset.getInt("codCliente");
             int codTurma = resultset.getInt("codTurma");
 
 
-            Horarios horario = new Horarios(codBanco, diaDaSemana, horarioBanco, codCliente, codTurma);
+            Horarios horario = new Horarios(codBanco, diaDaSemana, horarioInicio, horarioFim, codCliente, codTurma);
 
             horarios.add(horario);
              }while(resultset.next());

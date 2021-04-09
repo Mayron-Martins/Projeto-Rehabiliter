@@ -28,9 +28,10 @@ public class Aluno extends Pessoa {
    private Date dataCadastro;
    private BigDecimal valorMensal;
    private int renovacaoAutomatica;
-
-    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int servico, String descricao, BigDecimal debito, BigDecimal valorContrato, BigDecimal valorMensal, int renovacaoAutomatica) {
-        super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento);
+      
+    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int servico, String descricao, BigDecimal debito, BigDecimal valorContrato, Date dataCadastro, BigDecimal valorMensal, int renovacaoAutomatica) {
+        super(nome, cpf, rg, telefone, celular, email, datadenascimento);
+        this.codBanco = codBanco;
         this.nomedamae = nomedamae;
         this.nomedopai = nomedopai;
         this.telefonedamae = telefonedamae;
@@ -42,12 +43,14 @@ public class Aluno extends Pessoa {
         this.descricao = descricao;
         this.debito = new BigDecimal(debito.toString());
         this.valorContrato = new BigDecimal(valorContrato.toString());
+        ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+        this.dataCadastro = converterData.getSqlDate(dataCadastro);
         this.valorMensal = new BigDecimal(valorMensal.toString());
         this.renovacaoAutomatica = renovacaoAutomatica;
     }
-    
-    public Aluno(int codBanco, String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int servico, String descricao, BigDecimal debito, BigDecimal valorContrato, Date dataCadastro, BigDecimal valorMensal, int renovacaoAutomatica) {
-        super(codBanco, nome, cpf, rg, telefone, celular, email, datadenascimento);
+   
+    public Aluno(String nome, String cpf, String rg, String telefone, String celular, String email, Date datadenascimento, String nomedamae, String nomedopai, String telefonedamae, String telefonedopai, String cpfdamae, String cpfdopai, int turma, int servico, String descricao, BigDecimal debito, BigDecimal valorContrato, Date dataCadastro, BigDecimal valorMensal, int renovacaoAutomatica) {
+        super(nome, cpf, rg, telefone, celular, email, datadenascimento);
         this.nomedamae = nomedamae;
         this.nomedopai = nomedopai;
         this.telefonedamae = telefonedamae;

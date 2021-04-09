@@ -73,9 +73,8 @@ public class AdicionarProdutosController {
     private boolean verificarExistenciaNoBanco(int codBanco){
         ArrayList <Produtos> produtos = produtosDao.pesquisarProdutos("SELECT * FROM tblProdutos WHERE codProduto = "+codBanco);
         if(produtos==null){return false;}
-        int quantidade = produtos.size();
         view.exibeMensagem("Verifique o campo Código do Produto!");
-        return quantidade>=1;   
+        return true;   
     }
     
     public void limparCampos(){

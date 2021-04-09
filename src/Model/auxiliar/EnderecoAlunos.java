@@ -17,6 +17,11 @@ public class EnderecoAlunos extends Endereco{
         this.codAluno = codAluno;
     }
 
+    public EnderecoAlunos(String logradouro, String bairro, String numero, String complemento, String referencia, String cidade, String estado, String cep) {
+        super(logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
+    }
+    
+
     public int getCodAluno() {
         return codAluno;
     }

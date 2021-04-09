@@ -22,8 +22,7 @@ public class Gastos {
     private Date dataCadastro;
     private long chaveTransacao;
 
-    public Gastos(int codBanco, String motivo, float quantidade, String formaPagamento, BigDecimal valorGasto, Date dataCadastro) {
-        this.codBanco = codBanco;
+    public Gastos(String motivo, float quantidade, String formaPagamento, BigDecimal valorGasto, Date dataCadastro) {
         this.motivo = motivo;
         this.quantidade = quantidade;
         this.formaPagamento = formaPagamento;

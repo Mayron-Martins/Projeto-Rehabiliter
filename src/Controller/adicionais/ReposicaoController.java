@@ -44,7 +44,7 @@ public class ReposicaoController {
     private final HorariosDao horariosDao = new HorariosDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
-    private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
+    //private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
 
     public ReposicaoController(ReposicaoView view) {
@@ -163,101 +163,88 @@ public class ReposicaoController {
     private void setarAgendamento(){
         int linhaSelecionada = view.getTabelaAgendamento().getSelectedRow();
         if(linhaSelecionada!=-1){
-            try{
-                int codAluno = Integer.parseInt(tabelaDeAgendamento.getValueAt(linhaSelecionada, 0).toString());
-                String nomeTurma = view.getComboTurmasExistentes().getSelectedItem().toString().split("\\.")[0];
-                int codTurma = Integer.parseInt(nomeTurma);
+            int codAluno = Integer.parseInt(tabelaDeAgendamento.getValueAt(linhaSelecionada, 0).toString());
+            String nomeTurma = view.getComboTurmasExistentes().getSelectedItem().toString().split("\\.")[0];
+            int codTurma = Integer.parseInt(nomeTurma);
 
-                int codAgendamento = (int) (verificar.verificarUltimo("tblReposicaoAulas", "codBanco")+1);
-                
-                Date dataInicio = view.getCampoDataInicio().getDate();
-                Date dataFim = view.getCampoDataFim().getDate();
-                
-                ArrayList <Horarios> horarios = horariosDao.pesquisarHorarios("SELECT * FROM tblHorarios WHERE codHorario = "+codTurma);
-                
-                //Quando não se escolhe um período, utiliza-se o próximo dia útil da turma
-                if(dataInicio==null){
-                    LocalDate dataAtual = LocalDate.now();
-                    boolean diaAgendado = false;
-                    while(diaAgendado==false){
-                        for (Horarios horario : horarios) {
-                            if(retornarDiaDaSemana(dataAtual.getDayOfWeek()).equals(horario.getDiaDaSemana())){
-                                diaAgendado = true;
-                                break;
-                            }
-                        }
-                        if(diaAgendado==true){
+            Date dataInicio = view.getCampoDataInicio().getDate();
+            Date dataFim = view.getCampoDataFim().getDate();
+
+            ArrayList <Horarios> horarios = horariosDao.pesquisarHorarios("SELECT * FROM tblHorarios WHERE codHorario = "+codTurma);
+
+            //Quando não se escolhe um período, utiliza-se o próximo dia útil da turma
+            if(dataInicio==null){
+                LocalDate dataAtual = LocalDate.now();
+                boolean diaAgendado = false;
+                while(diaAgendado==false){
+                    for (Horarios horario : horarios) {
+                        if(retornarDiaDaSemana(dataAtual.getDayOfWeek()).equals(horario.getDiaDaSemana())){
+                            diaAgendado = true;
                             break;
                         }
-                        dataAtual = dataAtual.plusDays(1);
                     }
-                    Date dataAgendamento = converterData.conversaoLocalforDate(dataAtual);
-                    
-                    ReposicaoAulas reposicao = new ReposicaoAulas(codAgendamento, dataAgendamento, codTurma, codAluno, "Au");
-                    reposicaoDao.inserirDados(reposicao);
-                    this.setarLog("Cadastro de Reposição", "Cadastrou o aluno "+codAluno+" em "+codTurma+"para o dia "+dataAgendamento);
-                }else{
-                    LocalDate dataInicioConv = converterData.conversaoLocalforDate(dataInicio);
-                    LocalDate dataFimConv;
-                    //Quando não se define um período de fim, defini-se automaticamente o período de 6 meses
-                    if(dataFim==null){
-                        dataFimConv = dataInicioConv.plusMonths(6);
-                    }else{
-                        //Quando define-se o período de fim
-                        dataFimConv = converterData.conversaoLocalforDate(dataFim);
+                    if(diaAgendado==true){
+                        break;
                     }
-                    
-                    if(dataFimConv.isBefore(dataInicioConv)){
-                        
-                    }
-                    ArrayList <LocalDate> datasIniciais = new ArrayList<>();
-                    int quantDiasAgendados = 0;
-                    while(quantDiasAgendados!=horarios.size()){
-                        for (Horarios horario : horarios) {
-                            if(retornarDiaDaSemana(dataInicioConv.getDayOfWeek()).equals(horario.getDiaDaSemana())){
-                                datasIniciais.add(dataInicioConv);
-                                quantDiasAgendados++;
-                                break;
-                            }
-                        }
-                        dataInicioConv = dataInicioConv.plusDays(1);
-                    }
-                   
-                    LocalDate dataAtual = datasIniciais.get(0);
-                    while(!dataAtual.isAfter(dataFimConv)){
-                        int indice =0;
-                        for (LocalDate datasIniciai : datasIniciais) {
-                            if(!datasIniciai.isAfter(dataFimConv)){
-                                Date dataAgendamento = converterData.conversaoLocalforDate(datasIniciai);
-                                ReposicaoAulas reposicao = new ReposicaoAulas(codAgendamento, dataAgendamento, codTurma, codAluno, "Au");
-                                codAgendamento++;
-                                reposicaoDao.inserirDados(reposicao);
-                                this.setarLog("Cadastro de Reposição", "Cadastrou o aluno "+codAluno+" em "+codTurma+"para o dia "+dataAgendamento);
-                                datasIniciais.set(indice, datasIniciai.plusWeeks(1));
-                            }
-                            dataAtual = datasIniciai;
-                            indice++;
-                        }
-                    }
-                    
+                    dataAtual = dataAtual.plusDays(1);
                 }
-                
-                //Limpando Campos
-                view.exibeMensagem("Sucesso");
-                view.getComboTurma().setSelectedIndex(view.getComboTurmasExistentes().getSelectedIndex()+1);
-                view.getComboTurmasExistentes().setSelectedIndex(0);
-                view.getCampoDataInicio().setDate(null);
-                view.getCampoDataFim().setDate(null);
-                
-            } catch (SQLException ex) {
-                gerarLog(ex);
-                view.exibeMensagem("Não foi possível realizar o agendamento!");
-                view.getComboTurmasExistentes().setSelectedIndex(0);
-                view.getCampoDataInicio().setDate(null);
-                view.getCampoDataFim().setDate(null);
+                Date dataAgendamento = converterData.conversaoLocalforDate(dataAtual);
+
+                ReposicaoAulas reposicao = new ReposicaoAulas(dataAgendamento, codTurma, codAluno, "Au");
+                reposicaoDao.inserirDados(reposicao);
+                this.setarLog("Cadastro de Reposição", "Cadastrou o aluno "+codAluno+" em "+codTurma+"para o dia "+dataAgendamento);
+            }else{
+                LocalDate dataInicioConv = converterData.conversaoLocalforDate(dataInicio);
+                LocalDate dataFimConv;
+                //Quando não se define um período de fim, defini-se automaticamente o período de 6 meses
+                if(dataFim==null){
+                    dataFimConv = dataInicioConv.plusMonths(6);
+                }else{
+                    //Quando define-se o período de fim
+                    dataFimConv = converterData.conversaoLocalforDate(dataFim);
+                }
+
+                if(dataFimConv.isBefore(dataInicioConv)){
+
+                }
+                ArrayList <LocalDate> datasIniciais = new ArrayList<>();
+                int quantDiasAgendados = 0;
+                while(quantDiasAgendados!=horarios.size()){
+                    for (Horarios horario : horarios) {
+                        if(retornarDiaDaSemana(dataInicioConv.getDayOfWeek()).equals(horario.getDiaDaSemana())){
+                            datasIniciais.add(dataInicioConv);
+                            quantDiasAgendados++;
+                            break;
+                        }
+                    }
+                    dataInicioConv = dataInicioConv.plusDays(1);
+                }
+
+                LocalDate dataAtual = datasIniciais.get(0);
+                while(!dataAtual.isAfter(dataFimConv)){
+                    int indice =0;
+                    for (LocalDate datasIniciai : datasIniciais) {
+                        if(!datasIniciai.isAfter(dataFimConv)){
+                            Date dataAgendamento = converterData.conversaoLocalforDate(datasIniciai);
+                            ReposicaoAulas reposicao = new ReposicaoAulas(dataAgendamento, codTurma, codAluno, "Au");
+                            reposicaoDao.inserirDados(reposicao);
+                            this.setarLog("Cadastro de Reposição", "Cadastrou o aluno "+codAluno+" em "+codTurma+"para o dia "+dataAgendamento);
+                            datasIniciais.set(indice, datasIniciai.plusWeeks(1));
+                        }
+                        dataAtual = datasIniciai;
+                        indice++;
+                    }
+                }
+
             }
-            
-            
+
+            //Limpando Campos
+            view.exibeMensagem("Sucesso");
+            view.getComboTurma().setSelectedIndex(view.getComboTurmasExistentes().getSelectedIndex()+1);
+            view.getComboTurmasExistentes().setSelectedIndex(0);
+            view.getCampoDataInicio().setDate(null);
+            view.getCampoDataFim().setDate(null);
+   
         }else{
             view.exibeMensagem("Selecione um aluno!");
         }

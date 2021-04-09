@@ -23,6 +23,12 @@ public class Matriculas {
         this.anoMatricula = anoMatricula;
         this.matricula = matricula;
     }
+    
+    public Matriculas(int codTurma, int anoMatricula, String matricula) {
+        this.codTurma = codTurma;
+        this.anoMatricula = anoMatricula;
+        this.matricula = matricula;
+    }
 
     public int getCodBanco() {
         return codBanco;

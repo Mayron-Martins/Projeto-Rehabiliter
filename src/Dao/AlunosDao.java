@@ -40,38 +40,34 @@ public class AlunosDao extends Conexao{
             LocalDate dataAtual = LocalDate.now();
             //Adicionando aluno
             String inAluno = inserir.concat("tblAlunos("
-                    + "codAluno, nome, cpf, rg, telefone, celular, email, dataNascimento, "
-                    + "codEndereco, nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, "
-                    + "matricula, codTurma, codDiasDaSemana, codServico, descricao, debito, valorContrato, dataCadastro,"
+                    + "nome, cpf, rg, telefone, celular, email, dataNascimento, "
+                    + "nomeMae, nomePai, telefoneMae, telefonePai, cpfMae, cpfPai, "
+                    + "codTurma, codServico, descricao, debito, valorContrato, dataCadastro,"
                     + "valorMensal, renovacaoAutomatica)"
                     + "VALUES("
-                    + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inAluno);
-            statement.setInt(1, aluno.getCodBanco());
-            statement.setString(2, aluno.getNome());
-            statement.setString(3, aluno.getCpf());
-            statement.setString(4, aluno.getRg());
-            statement.setString(5, aluno.getTelefone());
-            statement.setString(6, aluno.getCelular());
-            statement.setString(7, "");
-            statement.setDate(8, (Date) aluno.getDatadenascimento());
-            statement.setInt(9, endereco.getCodBanco());
-            statement.setString(10, aluno.getNomedamae());
-            statement.setString(11, aluno.getNomedopai());
-            statement.setString(12, aluno.getTelefonedamae());
-            statement.setString(13, aluno.getTelefonedopai());
-            statement.setString(14, aluno.getCpfdamae());
-            statement.setString(15, aluno.getCpfdopai());
-            statement.setString(16, matricula.getMatricula());
-            statement.setInt(17, aluno.getTurma());
-            statement.setInt(18, aluno.getTurma());
-            statement.setInt(19, aluno.getServico());
-            statement.setString(20, aluno.getDescricao());
-            statement.setBigDecimal(21, new BigDecimal(aluno.getDebito().toString()));
-            statement.setBigDecimal(22, new BigDecimal(aluno.getValorContrato().toString()));
-            statement.setDate(23, (Date) aluno.getDataCadastro());
-            statement.setBigDecimal(24, new BigDecimal(aluno.getValorMensal().toString()));
-            statement.setInt(25, aluno.getRenovacaoAutomatica());
+            statement.setString(1, aluno.getNome());
+            statement.setString(2, aluno.getCpf());
+            statement.setString(3, aluno.getRg());
+            statement.setString(4, aluno.getTelefone());
+            statement.setString(5, aluno.getCelular());
+            statement.setString(6, aluno.getEmail());
+            statement.setDate(7, (Date) aluno.getDatadenascimento());
+            statement.setString(8, aluno.getNomedamae());
+            statement.setString(9, aluno.getNomedopai());
+            statement.setString(10, aluno.getTelefonedamae());
+            statement.setString(11, aluno.getTelefonedopai());
+            statement.setString(12, aluno.getCpfdamae());
+            statement.setString(13, aluno.getCpfdopai());
+            statement.setInt(14, aluno.getTurma());
+            statement.setInt(15, aluno.getServico());
+            statement.setString(16, aluno.getDescricao());
+            statement.setBigDecimal(17, new BigDecimal(aluno.getDebito().toString()));
+            statement.setBigDecimal(18, new BigDecimal(aluno.getValorContrato().toString()));
+            statement.setDate(19, (Date) aluno.getDataCadastro());
+            statement.setBigDecimal(20, new BigDecimal(aluno.getValorMensal().toString()));
+            statement.setInt(21, aluno.getRenovacaoAutomatica());
             statement.execute();
             statement.close();
 
@@ -93,7 +89,7 @@ public class AlunosDao extends Conexao{
             //atualizando a tabela de alunos
             String inAlunos = atualizar.concat("tblAlunos "
                     + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, telefoneMae=?, "
-                    + "telefonePai=?, matricula=?, codTurma=?, codDiasDaSemana=?, codServico=?, "
+                    + "telefonePai=?, codTurma=?, codServico=?, "
                     + "debito=?, valorContrato=?, dataCadastro=?, valorMensal=?, renovacaoAutomatica=? where codAluno = ?");
 
             PreparedStatement statement = gerarStatement(inAlunos);
@@ -104,16 +100,14 @@ public class AlunosDao extends Conexao{
             statement.setString(5, aluno.getCelular());
             statement.setString(6, aluno.getTelefonedamae());
             statement.setString(7, aluno.getTelefonedopai());
-            statement.setString(8, matricula.getMatricula());
-            statement.setInt(9, aluno.getTurma());
-            statement.setInt(10, aluno.getTurma());
-            statement.setInt(11, aluno.getServico());
-            statement.setBigDecimal(12, new BigDecimal(aluno.getDebito().toString()));
-            statement.setBigDecimal(13, new BigDecimal(aluno.getValorContrato().toString()));
-            statement.setDate(14, (Date) aluno.getDataCadastro());
-            statement.setBigDecimal(15, new BigDecimal(aluno.getValorMensal().toString()));
-            statement.setInt(16, aluno.getRenovacaoAutomatica());
-            statement.setInt(17, aluno.getCodBanco());
+            statement.setInt(8, aluno.getTurma());
+            statement.setInt(9, aluno.getServico());
+            statement.setBigDecimal(10, new BigDecimal(aluno.getDebito().toString()));
+            statement.setBigDecimal(11, new BigDecimal(aluno.getValorContrato().toString()));
+            statement.setDate(12, (Date) aluno.getDataCadastro());
+            statement.setBigDecimal(13, new BigDecimal(aluno.getValorMensal().toString()));
+            statement.setInt(14, aluno.getRenovacaoAutomatica());
+            statement.setInt(15, aluno.getCodBanco());
 
             statement.execute();
             statement.close();
@@ -151,17 +145,16 @@ public class AlunosDao extends Conexao{
         try{
             //atualizando a tabela de alunos
             String inAlunos = atualizar.concat("tblAlunos "
-                    + "SET codTurma=?, codDiasDaSemana = ?, codServico=?, debito=?, valorContrato=?, valorMensal=?, renovacaoAutomatica=? WHERE codAluno = ?");
+                    + "SET codTurma=?, codServico=?, debito=?, valorContrato=?, valorMensal=?, renovacaoAutomatica=? WHERE codAluno = ?");
 
             PreparedStatement statement = gerarStatement(inAlunos);
             statement.setInt(1,aluno.getTurma());
-            statement.setInt(2,aluno.getTurma());
-            statement.setInt(3,aluno.getServico());
-            statement.setBigDecimal(4, aluno.getDebito());
-            statement.setBigDecimal(5, aluno.getValorContrato());
-            statement.setBigDecimal(6, aluno.getValorMensal());
-            statement.setInt(7,aluno.getRenovacaoAutomatica());
-            statement.setInt(8,aluno.getCodBanco());
+            statement.setInt(2,aluno.getServico());
+            statement.setBigDecimal(3, aluno.getDebito());
+            statement.setBigDecimal(4, aluno.getValorContrato());
+            statement.setBigDecimal(5, aluno.getValorMensal());
+            statement.setInt(6,aluno.getRenovacaoAutomatica());
+            statement.setInt(7,aluno.getCodBanco());
 
             statement.execute();
             statement.close();
@@ -236,7 +229,7 @@ public class AlunosDao extends Conexao{
             String rg = resultset.getString("rg");
             String telefone = resultset.getString("telefone");
             String celular = resultset.getString("celular");
-            String email = "";
+            String email = resultset.getString("email");
             Date dataNascimento = resultset.getDate("dataNascimento");
             String nomeMae = resultset.getString("nomeMae");
             String nomePai = resultset.getString("nomePai");

@@ -62,16 +62,15 @@ public class AdicionarTurmasController {
             Turmas turma = null;
             ArrayList <Horarios> horarios = new ArrayList <>();
             if(!view.getCampoHorario().equals("")){
-            turma = new Turmas(codBancoTurma, nomeTurma, 0, quantidadeMax, diasDaSemana, horario, situacao);    
+                turma = new Turmas(nomeTurma, 0, quantidadeMax, diasDaSemana, horario, situacao);    
 
-
-            int diferenca, contador = diasDaSemanaUnitario.size();
-            while(contador>0){
-            diferenca = diasDaSemanaUnitario.size()-contador;
-            Horarios auxiliar = new Horarios(codBancoHorario, diasDaSemanaUnitario.get(diferenca), horario, 0, codBancoTurma);
-            horarios.add(auxiliar);
-            contador--;
-            }
+                int diferenca, contador = diasDaSemanaUnitario.size();
+                while(contador>0){
+                    diferenca = diasDaSemanaUnitario.size()-contador;
+                    Horarios auxiliar = new Horarios(codBancoHorario, diasDaSemanaUnitario.get(diferenca), horario, 0, codBancoTurma);
+                    horarios.add(auxiliar);
+                    contador--;
+                }
             }
 
             //Inserindo Dados

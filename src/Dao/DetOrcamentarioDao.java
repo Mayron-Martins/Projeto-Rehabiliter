@@ -32,16 +32,15 @@ public class DetOrcamentarioDao extends Conexao{
     public void inserirDados (DetOrcamentario orcamentario){
         try{
             String inOrcamentario = inserir.concat("tblDetOrcamentario("
-                    + "codBanco, tipo, formaPagamento, valor, dataCadastro, chave)"
+                    + "tipo, formaPagamento, valor, dataCadastro, chave)"
                     + "VALUES("
-                    + "?,?,?,?,?,?);");
+                    + "?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inOrcamentario);
-            statement.setInt(1, orcamentario.getCodBanco());
-            statement.setString(2, orcamentario.getTipo());
-            statement.setString(3, orcamentario.getFormaPagamento());
-            statement.setBigDecimal(4, new BigDecimal(orcamentario.getValor().toString()));
-            statement.setDate(5, (Date) orcamentario.getDataCadastro());
-            statement.setLong(6, orcamentario.getChave());
+            statement.setString(1, orcamentario.getTipo());
+            statement.setString(2, orcamentario.getFormaPagamento());
+            statement.setBigDecimal(3, new BigDecimal(orcamentario.getValor().toString()));
+            statement.setDate(4, (Date) orcamentario.getDataCadastro());
+            statement.setLong(5, orcamentario.getChave());
             statement.execute();
             statement.close();
         } catch (SQLException ex) {

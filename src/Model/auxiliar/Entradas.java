@@ -15,20 +15,34 @@ import java.util.Date;
  */
 public class Entradas {
     private int codBanco;
+    private long chavePlano;
     private String referencia;
     private float quantidade;
     private String formaPagamento;
     private BigDecimal valorEntrada;
     private Date dataCadastro;
+    private String status;
 
-    public Entradas(int codBanco, String referencia, float quantidade, String formaPagamento, BigDecimal valor, Date dataCadastro) {
+    public Entradas(long chavePlano, String referencia, float quantidade, String formaPagamento, BigDecimal valorEntrada, Date dataCadastro, String status) {
+        this.chavePlano = chavePlano;
+        this.referencia = referencia;
+        this.quantidade = quantidade;
+        this.formaPagamento = formaPagamento;
+        this.valorEntrada = valorEntrada;
+        this.dataCadastro = dataCadastro;
+        this.status = status;
+    }
+    
+    public Entradas(int codBanco, long chavePlano, String referencia, float quantidade, String formaPagamento, BigDecimal valor, Date dataCadastro, String status) {
         this.codBanco = codBanco;
+        this.chavePlano = chavePlano;
         this.referencia = referencia;
         this.quantidade = quantidade;
         this.formaPagamento = formaPagamento;
         this.valorEntrada = new BigDecimal(valor.toString());
         ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
         this.dataCadastro = converterData.getSqlDate(dataCadastro);
+        this.status = status;
     }
 
     
@@ -56,4 +70,12 @@ public class Entradas {
     public Date getDataCadastro() {
         return dataCadastro;
     }  
+
+    public long getChavePlano() {
+        return chavePlano;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 }

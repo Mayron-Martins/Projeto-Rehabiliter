@@ -27,15 +27,14 @@ public class BackupBancoDao extends Conexao{
         try{
             //Adicionando Turma
             String inBackups = inserir.concat("tblBackups("
-                    + "codBackup, nome, data, endArquivo, tabelas)"
+                    + "nome, data, endArquivo, tabelas)"
                     + "VALUES("
-                    + "?,?,?,?,?);");
+                    + "?,?,?,?);");
             PreparedStatement statement = gerarStatement(inBackups);
-            statement.setInt(1, backup.getCodBackup());
-            statement.setString(2, backup.getNome());
-            statement.setTimestamp(3, backup.getData());
-            statement.setString(4, backup.getEnderecoBackup());
-            statement.setString(5, backup.getTabelasBackup());
+            statement.setString(1, backup.getNome());
+            statement.setTimestamp(2, backup.getData());
+            statement.setString(3, backup.getEnderecoBackup());
+            statement.setString(4, backup.getTabelasBackup());
             statement.execute();
             statement.close();
         } catch (SQLException ex) {

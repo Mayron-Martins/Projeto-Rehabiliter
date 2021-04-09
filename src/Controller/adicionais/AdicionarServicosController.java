@@ -20,11 +20,8 @@ import View.ServicosAdicionar;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -35,7 +32,6 @@ public class AdicionarServicosController {
     private final ServicosDao servicosDao = new ServicosDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
-    private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     
     public AdicionarServicosController(ServicosAdicionar view) {
@@ -43,53 +39,45 @@ public class AdicionarServicosController {
     }
     
     public void adicionarServico(){
-        try{
-            //Pegando Dados Da tela
-            int codBancoServico = (int) (verificar.verificarUltimo("tblServicos", "codServico")+1);
-            String nomeServico = view.getNomeServico().getText();
-            String periodo= this.retornarPeriodo();
-            String metodoDePagamento = view.getMetodoPagamento().getSelectedItem().toString();
-            String situacao = "Aberto";
+        //Pegando Dados Da tela
+        String nomeServico = view.getNomeServico().getText();
+        String periodo= this.retornarPeriodo();
+        String metodoDePagamento = view.getMetodoPagamento().getSelectedItem().toString();
+        String situacao = "Aberto";
 
-            BigDecimal valor = new BigDecimal(0);
-            BigDecimal valorAVista= new BigDecimal(0);
-            BigDecimal valorBoleto= new BigDecimal(0);
-            BigDecimal valorAPrazoCredito= new BigDecimal(0);
-            BigDecimal valorAPrazoDebito= new BigDecimal(0);
+        BigDecimal valor = new BigDecimal(0);
+        BigDecimal valorAVista= new BigDecimal(0);
+        BigDecimal valorBoleto= new BigDecimal(0);
+        BigDecimal valorAPrazoCredito= new BigDecimal(0);
+        BigDecimal valorAPrazoDebito= new BigDecimal(0);
 
-            String valorDinheiro = converterDinheiro.converterParaBigDecimal(view.getValorDinheiro().getText()).toString();
-            if(metodoDePagamento.equals("[Nenhuma]")){valor = new BigDecimal(valorDinheiro);}
-            if(metodoDePagamento.equals("Dinheiro")){valorAVista = new BigDecimal(valorDinheiro);}
-            if(metodoDePagamento.equals("Boleto")){valorBoleto = new BigDecimal(valorDinheiro);}
-            if(metodoDePagamento.equals("Cartão de Crédito")){valorAPrazoCredito = new BigDecimal(valorDinheiro);}
-            if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
-            int periodDays = this.periodDays();
+        String valorDinheiro = converterDinheiro.converterParaBigDecimal(view.getValorDinheiro().getText()).toString();
+        if(metodoDePagamento.equals("[Nenhuma]")){valor = new BigDecimal(valorDinheiro);}
+        if(metodoDePagamento.equals("Dinheiro")){valorAVista = new BigDecimal(valorDinheiro);}
+        if(metodoDePagamento.equals("Boleto")){valorBoleto = new BigDecimal(valorDinheiro);}
+        if(metodoDePagamento.equals("Cartão de Crédito")){valorAPrazoCredito = new BigDecimal(valorDinheiro);}
+        if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
+        int periodDays = this.periodDays();
 
-            Servicos servico = new Servicos(codBancoServico, nomeServico, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays, situacao);
-            //Inserindo Dados
-            if(nomeServico.equals("")|| periodo.equals("[Nenhum]")||periodDays==0){
-             view.exibeMensagem("Campos Preenchidos Incorretamente");
-            } else{
+        Servicos servico = new Servicos(nomeServico, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays, situacao);
+        //Inserindo Dados
+        if(nomeServico.equals("")|| periodo.equals("[Nenhum]")||periodDays==0){
+         view.exibeMensagem("Campos Preenchidos Incorretamente");
+        } else{
 
-                if(this.verificarPeriodo(periodDays)){
-                    servicosDao.inserirDados(servico);
- 
-                    this.setarLog("Cadastro de Serviço", "Cadastrou o serviço "+nomeServico);
-                    
-                    view.exibeMensagem("Sucesso!");
-                    limparCampos();
-                }
-                else{
-                    view.exibeMensagem("Por motivos de compatibilidade, esse período de dias não pôde ser aceito!");
-                }
+            if(this.verificarPeriodo(periodDays)){
+                servicosDao.inserirDados(servico);
 
+                this.setarLog("Cadastro de Serviço", "Cadastrou o serviço "+nomeServico);
+
+                view.exibeMensagem("Sucesso!");
+                limparCampos();
             }
-        } catch (SQLException ex) {
-            gerarLog(ex);
-            view.exibeMensagem("Não foi possível salvar o Serviço corretamente!");
-            limparCampos();
+            else{
+                view.exibeMensagem("Por motivos de compatibilidade, esse período de dias não pôde ser aceito!");
+            }
+
         }
-        
     }
     
     private String retornarPeriodo(){
