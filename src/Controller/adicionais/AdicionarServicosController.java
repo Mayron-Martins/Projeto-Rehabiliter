@@ -42,24 +42,24 @@ public class AdicionarServicosController {
         //Pegando Dados Da tela
         String nomeServico = view.getNomeServico().getText();
         String periodo= this.retornarPeriodo();
-        String metodoDePagamento = view.getMetodoPagamento().getSelectedItem().toString();
+        String metodoDePagamento = "Unica";
         String situacao = "Aberto";
 
-        BigDecimal valor = new BigDecimal(0);
-        BigDecimal valorAVista= new BigDecimal(0);
-        BigDecimal valorBoleto= new BigDecimal(0);
-        BigDecimal valorAPrazoCredito= new BigDecimal(0);
-        BigDecimal valorAPrazoDebito= new BigDecimal(0);
-
-        String valorDinheiro = converterDinheiro.converterParaBigDecimal(view.getValorDinheiro().getText()).toString();
-        if(metodoDePagamento.equals("[Nenhuma]")){valor = new BigDecimal(valorDinheiro);}
-        if(metodoDePagamento.equals("Dinheiro")){valorAVista = new BigDecimal(valorDinheiro);}
-        if(metodoDePagamento.equals("Boleto")){valorBoleto = new BigDecimal(valorDinheiro);}
-        if(metodoDePagamento.equals("Cartão de Crédito")){valorAPrazoCredito = new BigDecimal(valorDinheiro);}
-        if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
+        BigDecimal valor = converterDinheiro.converterParaBigDecimal(view.getValorUnico().getText());
+        BigDecimal valorBoleto = valor;
+        BigDecimal valorAPrazoCredito = valor;
+        BigDecimal valorAPrazoDebito = valor;
+        
+        if(!view.getRadioFormaPag1().isSelected()){
+            metodoDePagamento = "Diversos";
+            valor = converterDinheiro.converterParaBigDecimal(view.getValorDinheiro().getText());
+            valorBoleto = converterDinheiro.converterParaBigDecimal(view.getValorBoleto().getText());
+            valorAPrazoCredito = converterDinheiro.converterParaBigDecimal(view.getValorCredito().getText());
+            valorAPrazoDebito = converterDinheiro.converterParaBigDecimal(view.getValorDebito().getText());
+        }
         int periodDays = this.periodDays();
 
-        Servicos servico = new Servicos(nomeServico, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays, situacao);
+        Servicos servico = new Servicos(nomeServico, periodo, metodoDePagamento, valor, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays, situacao);
         //Inserindo Dados
         if(nomeServico.equals("")|| periodo.equals("[Nenhum]")||periodDays==0){
          view.exibeMensagem("Campos Preenchidos Incorretamente");
@@ -186,15 +186,20 @@ public class AdicionarServicosController {
         }
     }
     
+    
     public void limparCampos(){
         //Limpando Campos
         view.getNomeServico().setText("");
         preencherComboPeriodo();
         view.getComboPeriodo().setSelectedIndex(0);
-        view.getMetodoPagamento().setSelectedIndex(0);
-        view.getValorDinheiro().setText("");
         view.getCampoOutroTipo().setText("Outro");
-        view.getCampoDias().setText("");    
+        view.getCampoDias().setText(""); 
+        view.getValorUnico().setText("");
+        view.getValorDinheiro().setText("");
+        view.getValorBoleto().setText("");
+        view.getValorCredito().setText("");
+        view.getValorDebito().setText("");
+        view.getRadioFormaPag1().setSelected(true);
     }
     
     private void gerarLog(Throwable erro){

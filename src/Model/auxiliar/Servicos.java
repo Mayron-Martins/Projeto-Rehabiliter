@@ -18,20 +18,18 @@ public class Servicos {
     private String periodo;
     private String formaPagamento;
     private BigDecimal valor;
-    private BigDecimal valorVista;
     private BigDecimal valorBoleto;
     private BigDecimal valorPrazoCredito;
     private BigDecimal valorPrazoDebito;
     private int periodDays;
     private String situacao;
 
-    public Servicos(int codBanco, String nome, String periodo, String formaPagamento,BigDecimal valor, BigDecimal valorVista, BigDecimal valorBoleto, BigDecimal valorPrazoCredito, BigDecimal valorPrazoDebito, int periodDays, String situacao) {
+    public Servicos(int codBanco, String nome, String periodo, String formaPagamento,BigDecimal valor, BigDecimal valorBoleto, BigDecimal valorPrazoCredito, BigDecimal valorPrazoDebito, int periodDays, String situacao) {
         this.codBanco = codBanco;
         this.nome = nome;
         this.periodo = periodo;
         this.formaPagamento = formaPagamento;
         this.valor = new BigDecimal(valor.toString());
-        this.valorVista = new BigDecimal (valorVista.toString());
         this.valorBoleto = new BigDecimal (valorBoleto.toString());
         this.valorPrazoCredito = new BigDecimal(valorPrazoCredito.toString());
         this.valorPrazoDebito = new BigDecimal (valorPrazoDebito.toString());
@@ -39,12 +37,11 @@ public class Servicos {
         this.situacao = situacao;
     }
     
-    public Servicos(String nome, String periodo, String formaPagamento,BigDecimal valor, BigDecimal valorVista, BigDecimal valorBoleto, BigDecimal valorPrazoCredito, BigDecimal valorPrazoDebito, int periodDays, String situacao) {
+    public Servicos(String nome, String periodo, String formaPagamento,BigDecimal valor, BigDecimal valorBoleto, BigDecimal valorPrazoCredito, BigDecimal valorPrazoDebito, int periodDays, String situacao) {
         this.nome = nome;
         this.periodo = periodo;
         this.formaPagamento = formaPagamento;
         this.valor = new BigDecimal(valor.toString());
-        this.valorVista = new BigDecimal (valorVista.toString());
         this.valorBoleto = new BigDecimal (valorBoleto.toString());
         this.valorPrazoCredito = new BigDecimal(valorPrazoCredito.toString());
         this.valorPrazoDebito = new BigDecimal (valorPrazoDebito.toString());
@@ -62,10 +59,6 @@ public class Servicos {
 
     public String getPeriodo() {
         return periodo;
-    }
-
-    public BigDecimal getValorVista() {
-        return valorVista;
     }
 
     public BigDecimal getValorBoleto() {

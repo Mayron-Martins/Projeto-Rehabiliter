@@ -297,8 +297,7 @@ public class TableCriator {
                 + "nome VARCHAR(MAX) NOT NULL," //Nome do Serviço (natação, hidroginástica, etc.).
                 + "periodo VARCHAR(10) NOT NULL,"
                 + "formaPagamento VARCHAR(25) NOT NULL,"
-                + "valor DECIMAL(16, 2) NULL," //Diária, Semanal, Mensal, etc.
-                + "valorAVista DECIMAL(16,2) NULL,"
+                + "valor DECIMAL(16, 2) NULL," 
                 + "valorBoleto DECIMAL(16,2) NULL,"
                 + "valorCartaoDeCredito DECIMAL(16,2) NULL,"
                 + "valorCartaoDeDebito DECIMAL(16,2) NULL,"

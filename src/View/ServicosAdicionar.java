@@ -13,10 +13,12 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
+import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -48,6 +50,7 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         this.teclasDeAtalho();
+        this.grupoBotoes();
     }
 
     /**
@@ -59,16 +62,34 @@ public class ServicosAdicionar extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        campoOutroTipo = new javax.swing.JTextField();
         comboPeriodo = new javax.swing.JComboBox<>();
-        campoDias = new FormatacaodeCamposRestritos();
         btnFechar = new javax.swing.JButton();
-        comboDias = new javax.swing.JComboBox<>();
         nomeServico = new javax.swing.JTextField();
-        valorDinheiro = new JMoneyField();
-        metodoPagamento = new javax.swing.JComboBox<>();
         botaoConfirmar = new javax.swing.JButton();
+        radioFormaPag2 = new javax.swing.JRadioButton();
+        radioFormaPag1 = new javax.swing.JRadioButton();
+        painelFormaDiversas = new javax.swing.JPanel();
+        valorDinheiro = new JMoneyField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        valorBoleto = new JMoneyField();
+        jLabel12 = new javax.swing.JLabel();
+        valorCredito = new JMoneyField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        valorDebito = new JMoneyField();
+        jLabel15 = new javax.swing.JLabel();
+        painelFormaUnica = new javax.swing.JPanel();
+        valorUnico = new JMoneyField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        painelNovoTipo = new javax.swing.JPanel();
+        campoOutroTipo = new javax.swing.JTextField();
+        comboDias = new javax.swing.JComboBox<>();
+        campoDias = new FormatacaodeCamposRestritos();
+        jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -79,21 +100,18 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        campoOutroTipo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoOutroTipoMouseClicked(evt);
-            }
-        });
-        getContentPane().add(campoOutroTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 202, 170, 30));
-
         comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Diária", "Semanal", "Mensal", "Trimestral", "Quadrimestral", "Semestral", "Anual" }));
         comboPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 comboPeriodoMouseClicked(evt);
             }
         });
-        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 202, 170, 30));
-        getContentPane().add(campoDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 240, 110, 30));
+        comboPeriodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPeriodoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 170, 30));
 
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaofechar.png"))); // NOI18N
         btnFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -105,26 +123,12 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         });
         getContentPane().add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 230, 60));
 
-        comboDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "D", "M", "A" }));
-        getContentPane().add(comboDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 240, 50, 30));
-
         nomeServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nomeServicoActionPerformed(evt);
             }
         });
-        getContentPane().add(nomeServico, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 202, 170, 30));
-
-        valorDinheiro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        getContentPane().add(valorDinheiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(592, 320, 110, 40));
-
-        metodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
-        metodoPagamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                metodoPagamentoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(metodoPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 250, 40));
+        getContentPane().add(nomeServico, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 170, 30));
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/adicionarturma/confirmar.png"))); // NOI18N
         botaoConfirmar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -134,27 +138,135 @@ public class ServicosAdicionar extends javax.swing.JDialog {
                 botaoConfirmarActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 330, 50));
+        getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 440, 330, 50));
+
+        radioFormaPag2.setText("Diversas");
+        radioFormaPag2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioFormaPag2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(radioFormaPag2, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 270, -1, -1));
+
+        radioFormaPag1.setSelected(true);
+        radioFormaPag1.setText("Única");
+        radioFormaPag1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioFormaPag1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(radioFormaPag1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, -1, -1));
+
+        painelFormaDiversas.setBackground(new java.awt.Color(157, 197, 187));
+        painelFormaDiversas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        valorDinheiro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        painelFormaDiversas.add(valorDinheiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 120, 30));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel8.setText("R$");
+        painelFormaDiversas.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 45, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel9.setText("Dinheiro");
+        painelFormaDiversas.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel10.setText("Boleto");
+        painelFormaDiversas.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel11.setText("R$");
+        painelFormaDiversas.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 105, -1, -1));
+
+        valorBoleto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        painelFormaDiversas.add(valorBoleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 120, 30));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel12.setText("C. Crédito");
+        painelFormaDiversas.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, -1));
+
+        valorCredito.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        painelFormaDiversas.add(valorCredito, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 120, 30));
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel13.setText("R$");
+        painelFormaDiversas.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 45, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel14.setText("C. Débito");
+        painelFormaDiversas.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, -1, -1));
+
+        valorDebito.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        painelFormaDiversas.add(valorDebito, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, 120, 30));
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel15.setText("R$");
+        painelFormaDiversas.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 105, -1, -1));
+
+        getContentPane().add(painelFormaDiversas, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 760, 140));
+
+        painelFormaUnica.setBackground(new java.awt.Color(157, 197, 187));
+        painelFormaUnica.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        valorUnico.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        painelFormaUnica.add(valorUnico, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 170, 40));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setText("R$");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 330, -1, -1));
+        painelFormaUnica.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 57, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel7.setText("Valor");
+        painelFormaUnica.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, -1));
+
+        getContentPane().add(painelFormaUnica, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 760, 140));
+
+        painelNovoTipo.setBackground(new java.awt.Color(157, 197, 187));
+        painelNovoTipo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        campoOutroTipo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoOutroTipoMouseClicked(evt);
+            }
+        });
+        painelNovoTipo.add(campoOutroTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 170, 30));
+
+        comboDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "D", "M", "A" }));
+        painelNovoTipo.add(comboDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 20, 50, 30));
+        painelNovoTipo.add(campoDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 110, 30));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel6.setText("Novo Tipo");
+        painelNovoTipo.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        getContentPane().add(painelNovoTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 360, 60));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(11, 13, 138));
-        jLabel3.setText("Categoria");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, -1, -1));
+        jLabel3.setText("Categoria ");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(11, 13, 138));
         jLabel4.setText("Forma de Pagamento");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(11, 13, 138));
         jLabel5.setText("Tipo");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/adicionarNova.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -172,10 +284,6 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_nomeServicoActionPerformed
 
-    private void metodoPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodoPagamentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_metodoPagamentoActionPerformed
-
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
         controller.adicionarServico();
     }//GEN-LAST:event_botaoConfirmarActionPerformed
@@ -184,18 +292,37 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         comboPeriodo.setEnabled(true);
         campoOutroTipo.setText("Outro");
         campoOutroTipo.setEnabled(false);
-        
         campoDias.setEnabled(false);
         comboDias.setEnabled(false);
     }//GEN-LAST:event_comboPeriodoMouseClicked
 
     private void campoOutroTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoOutroTipoMouseClicked
         campoOutroTipo.setEnabled(true);
-        this.esvaziarOutroTipo();
         campoDias.setEnabled(true);
         comboDias.setEnabled(true);
         comboPeriodo.setEnabled(false);
+        comboPeriodo.setSelectedIndex(0);
+        if(campoOutroTipo.getText().equals("Outro")){
+            campoOutroTipo.setText("");
+        }
     }//GEN-LAST:event_campoOutroTipoMouseClicked
+
+    private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
+        if(comboPeriodo.getSelectedIndex()==0){
+            painelNovoTipo.setVisible(true);
+        }
+        else{
+            painelNovoTipo.setVisible(false);
+        }
+    }//GEN-LAST:event_comboPeriodoActionPerformed
+
+    private void radioFormaPag1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFormaPag1ActionPerformed
+        formaPagamento(true);
+    }//GEN-LAST:event_radioFormaPag1ActionPerformed
+
+    private void radioFormaPag2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFormaPag2ActionPerformed
+        formaPagamento(false);
+    }//GEN-LAST:event_radioFormaPag2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,13 +374,31 @@ public class ServicosAdicionar extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboDias;
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JComboBox<String> metodoPagamento;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField nomeServico;
+    private javax.swing.JPanel painelFormaDiversas;
+    private javax.swing.JPanel painelFormaUnica;
+    private javax.swing.JPanel painelNovoTipo;
+    private javax.swing.JRadioButton radioFormaPag1;
+    private javax.swing.JRadioButton radioFormaPag2;
+    private javax.swing.JFormattedTextField valorBoleto;
+    private javax.swing.JFormattedTextField valorCredito;
+    private javax.swing.JFormattedTextField valorDebito;
     private javax.swing.JFormattedTextField valorDinheiro;
+    private javax.swing.JFormattedTextField valorUnico;
     // End of variables declaration//GEN-END:variables
 
     public void exibeMensagem(String mensagem) {
@@ -262,10 +407,6 @@ public class ServicosAdicionar extends javax.swing.JDialog {
     
     public JComboBox<String> getComboPeriodo() {
         return comboPeriodo;
-    }
-
-    public JComboBox<String> getMetodoPagamento() {
-        return metodoPagamento;
     }
 
     public JTextField getNomeServico() {
@@ -280,29 +421,62 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         return comboDias;
     }
 
-    public JFormattedTextField getValorDinheiro() {
-        return valorDinheiro;
+    public JFormattedTextField getValorBoleto() {
+        return valorBoleto;
     }
 
-    private void setarValores(){
-        comboPeriodo.setEnabled(true);
-        campoOutroTipo.setText("Outro");
-        campoOutroTipo.setEnabled(false);
+    public JFormattedTextField getValorCredito() {
+        return valorCredito;
+    }
+
+    public JFormattedTextField getValorDebito() {
+        return valorDebito;
+    }
+
+    public JFormattedTextField getValorUnico() {
+        return valorUnico;
     }
     
-    private void esvaziarOutroTipo(){
-        if(campoOutroTipo.getText().equals("Outro")){
-            campoOutroTipo.setText("");
-        }
+    public JFormattedTextField getValorDinheiro() {
+        return valorUnico;
     }
-
+    
     public JTextField getCampoOutroTipo() {
         return campoOutroTipo;
+    }
+
+    public JRadioButton getRadioFormaPag1() {
+        return radioFormaPag1;
     }
 
     public Frame getParent() {
         return parent;
     }
+
+    
+    private void setarValores(){
+        //Quanto ao período
+        comboPeriodo.setEnabled(true);
+        campoOutroTipo.setText("Outro");
+        campoOutroTipo.setEnabled(false);
+        comboDias.setEnabled(false);
+        painelNovoTipo.setVisible(false);
+        formaPagamento(true);
+        //Quanto a forma de pagamento
+        
+    }
+    
+    private void formaPagamento(boolean unica){
+        painelFormaUnica.setVisible(unica);
+        painelFormaDiversas.setVisible(!unica);
+    }
+    
+    private void grupoBotoes(){
+        ButtonGroup grupoFormas = new ButtonGroup();
+        grupoFormas.add(radioFormaPag1);
+        grupoFormas.add(radioFormaPag2);
+    }
+    
     
     
     
