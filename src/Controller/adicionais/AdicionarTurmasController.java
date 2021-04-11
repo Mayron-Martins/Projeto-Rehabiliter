@@ -19,11 +19,10 @@ import View.LoginFuncionario;
 import View.LoginGerente;
 import View.TurmasAdicionar;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
 
 /**
  *
@@ -36,9 +35,11 @@ public class AdicionarTurmasController {
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final TableCriatorPosInput criarTabela = new TableCriatorPosInput();
+    private boolean testeHorario;
 
 
     public AdicionarTurmasController(TurmasAdicionar view) {
+        this.testeHorario = false;
         this.view = view;
     }
     
@@ -49,43 +50,40 @@ public class AdicionarTurmasController {
             int codBancoHorario = (int) (verificar.verificarUltimo("tblHorarios", "codHorario")+1);
             String nomeTurma = view.getCampoNome().getText();
             String situacao = "Aberta";
-
-            int quantidadeMax;
-            if(view.getCampoCapMax().getText().equals("")){quantidadeMax = 0;}
-            else{quantidadeMax = Integer.parseInt(view.getCampoCapMax().getText());}
-            String diasDaSemana = view.getDiasDaSemana();
-            ArrayList <String> diasDaSemanaUnitario = new ArrayList<>();
-            diasDaSemanaUnitario = view.getDiasDaSemanaUnitarios();
-
-            String horario = view.getCampoHorario();
-
-            Turmas turma = null;
-            ArrayList <Horarios> horarios = new ArrayList <>();
-            if(!view.getCampoHorario().equals("")){
-                turma = new Turmas(nomeTurma, 0, quantidadeMax, diasDaSemana, horario, situacao);    
-
-                int diferenca, contador = diasDaSemanaUnitario.size();
-                while(contador>0){
-                    diferenca = diasDaSemanaUnitario.size()-contador;
-                    Horarios auxiliar = new Horarios(codBancoHorario, diasDaSemanaUnitario.get(diferenca), horario, 0, codBancoTurma);
-                    horarios.add(auxiliar);
-                    contador--;
-                }
+            
+            int quantidadeMax = 0;
+            if(!view.getCampoCapMax().getText().equals("")){
+                quantidadeMax = Integer.parseInt(view.getCampoCapMax().getText());;
             }
+            
+            String horario = "Único";
+            if(!view.getRadioHorUnico().isSelected()){
+                horario = "Diversos";
+            }
+            
+            String diasDaSemana = this.diasDaSemana();
 
+
+            Turmas turma = new Turmas(nomeTurma, 0, quantidadeMax, diasDaSemana, horario, situacao);
+            
+            ArrayList <Horarios> horarios = horario(codBancoHorario, codBancoTurma);
+            
+            System.out.println(testeHorario);
+            
+            
             //Inserindo Dados
-            if(nomeTurma.equals("")|| horario.equals("") ||view.testeValidacaoHorario()==false){
+            if(nomeTurma.equals("")||diasDaSemana.equals("")||testeHorario){
              view.exibeMensagem("Campos Preenchidos Incorretamente");
             } else{
                 turmaDao.inserirDados(turma, horarios);
                 criarTabela.tableFreqTurmas();
-
                 
                 this.setarLog("Cadastro de Turmas", "Cadastrou a turma "+nomeTurma);
                 
                 view.exibeMensagem("Sucesso!");
                 limparCampos();
             }
+            
         } catch (SQLException ex) {
             gerarLog(ex);
             view.exibeMensagem("Não foi possível salvar a Turma corretamente!");
@@ -108,13 +106,93 @@ public class AdicionarTurmasController {
         }
     }
     
+    private String diasDaSemana(){
+        String dias="";
+        for(JCheckBox caixa : view.getDiasSemana()){
+            if(caixa.isSelected()){
+                dias+=caixa.getText();
+            }
+        }  
+        return dias;
+    }
+    
+    private ArrayList<Horarios> horario(int codHorario, int codTurma){
+        String horaI, horaF;
+        ArrayList<Horarios> horarios = new ArrayList<>();
+        if(view.getRadioHorUnico().isSelected()){
+            horaI = view.getCampoHorariosI().get(0).getText();
+            horaF = view.getCampoHorariosF().get(0).getText();
+            
+            for(JCheckBox caixa : view.getDiasSemana()){
+                if(caixa.isSelected()){
+                    horarios.add(new Horarios(codHorario, caixa.getText(), horaI, horaF, 0, codTurma));
+                }
+            }
+            
+            if(testeHora(horaI)){
+                testeHorario=true;
+            }
+            if(!horaF.trim().equals(":")&&testeHora(horaF)){
+                testeHorario = true;
+            }
+            
+            
+        }
+        
+        else{
+            int cont=1;
+            for(JCheckBox caixa : view.getDiasSemana()){
+                if(caixa.isSelected()){
+                    horaI = view.getCampoHorariosI().get(cont).getText();
+                    horaF = view.getCampoHorariosF().get(cont).getText();
+                    horarios.add(new Horarios(codHorario, caixa.getText(), horaI, horaF, 0, codTurma));
+                    
+                    if(testeHora(horaI)){
+                        testeHorario=true;
+                    }
+                    if(!horaF.trim().equals(":")&&testeHora(horaF)){
+                        testeHorario = true;
+                    }
+                }
+                cont++;
+            }
+        }
+        return horarios;
+    }
+    
+    private boolean testeHora(String hora){
+        if(hora.trim().equals(":")){
+            return true;
+        }
+        
+        int horas = Integer.parseInt(hora.split(":")[0]);
+        int minutos = Integer.parseInt(hora.split(":")[1]);
+        
+        return horas>23||minutos>59;
+    }
+    
     public void limparCampos(){
         //Limpando Campos
         view.getCampoNome().setText("");
-        view.getCampoHoras().setValue(null);
-        view.getCampoMinutos().setValue(null);
         view.getCampoCapMax().setText("");
-        view.desmarcarCaixas();
+        
+        for(JCheckBox caixa : view.getDiasSemana()){
+            caixa.setSelected(false);
+        }
+        
+        view.getRadioHorUnico().setSelected(true);
+        
+        for(JFormattedTextField campo : view.getCampoHorariosI()){
+            campo.setValue(null);
+        }
+        
+        for(JFormattedTextField campo : view.getCampoHorariosF()){
+            campo.setValue(null);
+        }
+    }
+    
+    private void desmarcarCaixas(){
+        
     }
     
    private Funcionario setarLog(String acao, String referencia){
