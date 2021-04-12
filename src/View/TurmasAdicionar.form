@@ -97,6 +97,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="caixaSegunda">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8a" green="d" red="b" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Segunda"/>
       </Properties>
       <Events>
@@ -110,6 +113,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="caixaTerca">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8a" green="d" red="b" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ter&#xe7;a"/>
       </Properties>
       <Events>
@@ -123,6 +129,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="caixaQuarta">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8a" green="d" red="b" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Quarta"/>
       </Properties>
       <Events>
@@ -136,6 +145,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="caixaQuinta">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8a" green="d" red="b" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Quinta"/>
       </Properties>
       <Events>
@@ -149,6 +161,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="caixaSexta">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8a" green="d" red="b" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Sexta"/>
       </Properties>
       <Events>
@@ -162,6 +177,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="caixaSabado">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8a" green="d" red="b" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="S&#xe1;bado"/>
       </Properties>
       <Events>
@@ -175,6 +193,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="caixaDomingo">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="8a" green="d" red="b" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Domingo"/>
       </Properties>
       <Events>

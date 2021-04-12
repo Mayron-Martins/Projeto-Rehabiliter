@@ -98,15 +98,16 @@ public class TurmasDao extends Conexao{
         }
     }
     
-    public void atualizarSituacao(int codBanco, String situacao){
+    public void atualizarSituacao(int codBanco, String nomeTurma, String situacao){
         try{
             //atualizando a tabela de turmas
             String inTurmas = atualizar.concat("tblTurmas "
-                    + "SET situacao = ? where codTurma = ?");
+                    + "SET nome = ?, situacao = ? where codTurma = ?");
 
             PreparedStatement statement = gerarStatement(inTurmas);
-            statement.setString(1, situacao);
-            statement.setInt(2, codBanco);
+            statement.setString(1, nomeTurma);
+            statement.setString(2, situacao);
+            statement.setInt(3, codBanco);
 
             statement.execute();
             statement.close();

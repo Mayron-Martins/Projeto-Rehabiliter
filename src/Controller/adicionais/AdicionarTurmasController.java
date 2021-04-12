@@ -68,8 +68,6 @@ public class AdicionarTurmasController {
             
             ArrayList <Horarios> horarios = horario(codBancoHorario, codBancoTurma);
             
-            System.out.println(testeHorario);
-            
             
             //Inserindo Dados
             if(nomeTurma.equals("")||diasDaSemana.equals("")||testeHorario){
@@ -118,15 +116,17 @@ public class AdicionarTurmasController {
     
     private ArrayList<Horarios> horario(int codHorario, int codTurma){
         String horaI, horaF;
+        int indiceSemana=1;
         ArrayList<Horarios> horarios = new ArrayList<>();
         if(view.getRadioHorUnico().isSelected()){
             horaI = view.getCampoHorariosI().get(0).getText();
             horaF = view.getCampoHorariosF().get(0).getText();
-            
+              
             for(JCheckBox caixa : view.getDiasSemana()){
                 if(caixa.isSelected()){
-                    horarios.add(new Horarios(codHorario, caixa.getText(), horaI, horaF, 0, codTurma));
+                    horarios.add(new Horarios(codHorario, caixa.getText(), indiceSemana, horaI, horaF, 0, codTurma));
                 }
+                indiceSemana++;
             }
             
             if(testeHora(horaI)){
@@ -145,7 +145,7 @@ public class AdicionarTurmasController {
                 if(caixa.isSelected()){
                     horaI = view.getCampoHorariosI().get(cont).getText();
                     horaF = view.getCampoHorariosF().get(cont).getText();
-                    horarios.add(new Horarios(codHorario, caixa.getText(), horaI, horaF, 0, codTurma));
+                    horarios.add(new Horarios(codHorario, caixa.getText(), indiceSemana, horaI, horaF, 0, codTurma));
                     
                     if(testeHora(horaI)){
                         testeHorario=true;
@@ -155,6 +155,7 @@ public class AdicionarTurmasController {
                     }
                 }
                 cont++;
+                indiceSemana++;
             }
         }
         return horarios;
@@ -189,6 +190,8 @@ public class AdicionarTurmasController {
         for(JFormattedTextField campo : view.getCampoHorariosF()){
             campo.setValue(null);
         }
+        
+        view.setarConfigsInciciais();
     }
     
     private void desmarcarCaixas(){

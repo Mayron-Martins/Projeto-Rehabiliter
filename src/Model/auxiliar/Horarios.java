@@ -12,6 +12,7 @@ package Model.auxiliar;
 public class Horarios {
     private int codBanco;
     private String diaDaSemana;
+    private int indiceSemana;
     private String horarioInicio;
     private String horarioFim;
     private int codCliente;
@@ -20,9 +21,10 @@ public class Horarios {
     public Horarios() {
     }
 
-    public Horarios(int codBanco, String diaDaSemana, String horarioInicio, String horarioFim, int codCliente, int codTurma) {
+    public Horarios(int codBanco, String diaDaSemana, int indiceSemana, String horarioInicio, String horarioFim, int codCliente, int codTurma) {
         this.codBanco = codBanco;
         this.diaDaSemana = diaDaSemana;
+        this.indiceSemana = indiceSemana;
         this.horarioInicio = horarioInicio;
         this.horarioFim = horarioFim;
         this.codCliente = codCliente;
@@ -39,6 +41,10 @@ public class Horarios {
         return diaDaSemana;
     }
 
+    public int getIndiceSemana() {
+        return indiceSemana;
+    }
+
     public String getHorarioInicio() {
         return horarioInicio;
     }
@@ -46,7 +52,6 @@ public class Horarios {
     public String getHorarioFim() {
         return horarioFim;
     }
-
     
     public int getCodCliente() {
         return codCliente;

@@ -26,18 +26,19 @@ public class HorariosDao extends Conexao{
     public void inserirDadosEmHorarios(PreparedStatement statement, ArrayList<Horarios>horarios){
         try{
             String inHorarios = inserir.concat("tblHorarios("
-                    + "codHorario, diaDaSemana, horarioInicio, horarioFim, codCliente, codTurma)"
+                    + "codHorario, diaDaSemana, indiceSemana, horarioInicio, horarioFim, codCliente, codTurma)"
                     + "VALUES("
-                    + "?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?,?);");
             statement = gerarStatement(inHorarios);
             
             for(Horarios horario:horarios){
                 statement.setInt(1, horario.getCodBanco());
                 statement.setString(2,horario.getDiaDaSemana());
-                statement.setString(3, horario.getHorarioInicio());
-                statement.setString(4, horario.getHorarioFim());
-                statement.setInt(5, horario.getCodCliente());
-                statement.setInt(6, horario.getCodTurma());
+                statement.setInt(3, horario.getIndiceSemana());
+                statement.setString(4, horario.getHorarioInicio());
+                statement.setString(5, horario.getHorarioFim());
+                statement.setInt(6, horario.getCodCliente());
+                statement.setInt(7, horario.getCodTurma());
                 statement.execute(); 
             }
             statement.close(); 
@@ -89,14 +90,14 @@ public class HorariosDao extends Conexao{
             do{
             int codBanco = resultset.getInt("codHorario");
             String diaDaSemana = resultset.getString("diaDaSemana");
-
+            int indiceSemana = resultset.getInt("indiceSemana");
             String horarioInicio = resultset.getString("horarioInicio");
             String horarioFim = resultset.getString("horarioFim");
             int codCliente = resultset.getInt("codCliente");
             int codTurma = resultset.getInt("codTurma");
 
 
-            Horarios horario = new Horarios(codBanco, diaDaSemana, horarioInicio, horarioFim, codCliente, codTurma);
+            Horarios horario = new Horarios(codBanco, diaDaSemana, indiceSemana, horarioInicio, horarioFim, codCliente, codTurma);
 
             horarios.add(horario);
              }while(resultset.next());

@@ -267,7 +267,8 @@ public class TableCriator {
         telaDeInicio.mudarPercentual();
         this.gerarStatement().execute("CREATE TABLE tblHorarios("
                 + "codHorario INT NOT NULL," //Código único para cada horário.
-                + "diaDaSemana VARCHAR(15) NOT NULL," //Dia da semana correspondente ao horário.
+                + "diaDaSemana VARCHAR(15) NOT NULL,"
+                + "indiceSemana INT NULL," //Dia da semana correspondente ao horário.
                 + "horarioInicio VARCHAR(5) NOT NULL,"
                 + "horarioFim VARCHAR(5) NULL," //hora.
                 + "codCliente INT NULL," //Caso um cliente tenha agendado um horário.
