@@ -5,9 +5,11 @@
  */
 package View;
 
+import Controller.Paineis.ServicosDetalhesController;
 import Controller.ServicosController;
 import Controller.auxiliar.JMoneyField;
 import View.Paineis.PainelAjuda;
+import View.Paineis.ServicosDetalhes;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -30,9 +32,10 @@ public class ServicosView extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final int numeroTela = 4;
     private final ServicosController controller;
-    private JComboBox comboMetodoPagamento = new JComboBox();
+    private final ServicosDetalhesController controllerDetalhes;
     private final ServicosAdicionar telaServicosAdicionar;
     private final PainelAjuda painelAjuda;
+    private final ServicosDetalhes servicosDetalhes;
 
     /**
      * Creates new form Servicos
@@ -46,17 +49,18 @@ public class ServicosView extends javax.swing.JDialog {
         this.parent = parent;
         painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
         telaServicosAdicionar=new ServicosAdicionar(parent, false);
-        btnListar.setBackground(new Color(0,0,0,0));
+        servicosDetalhes = new ServicosDetalhes(this, parent, false);
+        
         controller = new ServicosController(this);
+        controllerDetalhes = new ServicosDetalhesController(this, servicosDetalhes);
         btnAdicionar.setBackground(new Color(0,0,0,0));
-        btnEditar.setBackground(new Color(0,0,0,0));
         btnRemover.setBackground(new Color(0,0,0,0));
         btnFechar.setBackground(new Color(0,0,0,0));
-        this.setarComposicaoTabelas();
-        this.desabilitarComponentes();
-        this.teclasDeAtalho();
-        this.setarValores();
+        botaobuscar.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
+        
+        this.teclasDeAtalho();
+        setarBotaoEditar(false, 0);
         
     }
 
@@ -69,54 +73,28 @@ public class ServicosView extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        campoOutroPeriodo = new javax.swing.JTextField();
-        comboPeriodo = new javax.swing.JComboBox<>();
-        comboDias = new javax.swing.JComboBox<>();
-        campoDias = new javax.swing.JTextField();
         btnRemover = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
         btnFechar = new javax.swing.JButton();
         painelderolagem = new javax.swing.JScrollPane();
         tabelaServicos = new javax.swing.JTable();
-        btnListar = new javax.swing.JButton();
         comboSituacao = new javax.swing.JComboBox<>();
         botaoAjuda = new javax.swing.JButton();
+        campoDePesquisa = new javax.swing.JTextField();
+        botaobuscar = new javax.swing.JButton();
+        botaoEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(873, 700));
         setResizable(false);
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
-            }
-        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        campoOutroPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoOutroPeriodoMouseClicked(evt);
-            }
-        });
-        getContentPane().add(campoOutroPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 295, 130, 30));
-
-        comboPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diária", "Semanal", "Mensal", "Trimestral", "Quadrimestral", "Semestral", "Anual" }));
-        comboPeriodo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                comboPeriodoMouseClicked(evt);
-            }
-        });
-        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 295, 160, 30));
-
-        comboDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "D", "M", "A" }));
-        getContentPane().add(comboDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 295, 50, 30));
-        getContentPane().add(campoDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(405, 295, 40, 30));
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnRemover.png"))); // NOI18N
         btnRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -127,16 +105,6 @@ public class ServicosView extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 210, 60));
-
-        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnEditar.png"))); // NOI18N
-        btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEditar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnEditarHover.png"))); // NOI18N
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 210, 60));
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/btnAdicionar.png"))); // NOI18N
         btnAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -164,14 +132,14 @@ public class ServicosView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "CodBanco", "Categoria", "Tipo", "Forma de Pagamento", "Valor", "Situação"
+                "CodBanco", "Nome", "Período", "Situação"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, true, true, false
+                false, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -185,7 +153,6 @@ public class ServicosView extends javax.swing.JDialog {
         tabelaServicos.setFocusable(false);
         tabelaServicos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaServicos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaServicos.setRowHeight(25);
         tabelaServicos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaServicos.setShowVerticalLines(false);
         tabelaServicos.getTableHeader().setReorderingAllowed(false);
@@ -203,17 +170,13 @@ public class ServicosView extends javax.swing.JDialog {
 
         getContentPane().add(painelderolagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 811, 340));
 
-        btnListar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoListar.png"))); // NOI18N
-        btnListar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnListar.addActionListener(new java.awt.event.ActionListener() {
+        comboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abertos", "Encerrados" }));
+        comboSituacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListarActionPerformed(evt);
+                comboSituacaoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 210, 210, 60));
-
-        comboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abertos", "Encerrados" }));
-        getContentPane().add(comboSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 280, 210, 30));
+        getContentPane().add(comboSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 210, 30));
 
         botaoAjuda.setBackground(new java.awt.Color(255, 255, 255));
         botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -227,6 +190,38 @@ public class ServicosView extends javax.swing.JDialog {
         });
         getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 10, 30, 30));
 
+        campoDePesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                campoDePesquisaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                campoDePesquisaMouseExited(evt);
+            }
+        });
+        campoDePesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoDePesquisaKeyPressed(evt);
+            }
+        });
+        getContentPane().add(campoDePesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 230, 60, 40));
+
+        botaobuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
+        botaobuscar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
+        botaobuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaobuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 230, 50, 40));
+
+        botaoEditar.setText("...");
+        botaoEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEditarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 354, 20, 20));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/servicos/telafundo.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -235,64 +230,75 @@ public class ServicosView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-        // TODO add your handling code here:
+        if(servicosDetalhes.isVisible()){
+            servicosDetalhes.dispose();
+        }
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
+        if(servicosDetalhes.isVisible()){
+            controllerDetalhes.sairTela();
+        }
         telaServicosAdicionar.setModal(true);
         telaServicosAdicionar.setLocationRelativeTo(null);
         telaServicosAdicionar.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void tabelaServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaServicosMouseClicked
-        controller.selecionarTabela();
+        controllerDetalhes.releasedTable();
+        if(tabelaServicos.getSelectedRow()>-1){
+            setarBotaoEditar(true, evt.getYOnScreen()); 
+        }else{
+            setarBotaoEditar(false, 0);
+        }
     }//GEN-LAST:event_tabelaServicosMouseClicked
 
     private void tabelaServicosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaServicosKeyReleased
-        controller.selecionarTabela();
+        controllerDetalhes.releasedTable();
     }//GEN-LAST:event_tabelaServicosKeyReleased
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        if(servicosDetalhes.isVisible()){
+            controllerDetalhes.sairTela();
+        }
         controller.removerServico();
     }//GEN-LAST:event_btnRemoverActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        controller.editarServicos();
-    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         controller.listarServicos();
     }//GEN-LAST:event_formWindowOpened
 
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        desabilitarComponentes();
-    }//GEN-LAST:event_formMouseClicked
-
-    private void comboPeriodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboPeriodoMouseClicked
-        comboPeriodo.setEnabled(true);
-        campoOutroPeriodo.setText("Outro");
-        campoOutroPeriodo.setEnabled(false);
-        comboDias.setEnabled(false);
-        campoDias.setEnabled(false);
-    }//GEN-LAST:event_comboPeriodoMouseClicked
-
-    private void campoOutroPeriodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoOutroPeriodoMouseClicked
-        campoOutroPeriodo.setEnabled(true);
-        this.esvaziarOutroTipo();
-        comboDias.setEnabled(true);
-        campoDias.setEnabled(true);
-        comboPeriodo.setEnabled(false);        
-    }//GEN-LAST:event_campoOutroPeriodoMouseClicked
-
-    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        controller.listarServicos();
-    }//GEN-LAST:event_btnListarActionPerformed
-
     private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
         controller.ajuda();
     }//GEN-LAST:event_botaoAjudaActionPerformed
+
+    private void campoDePesquisaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDePesquisaMouseEntered
+        aumentarPesquisa(true);
+    }//GEN-LAST:event_campoDePesquisaMouseEntered
+
+    private void campoDePesquisaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDePesquisaMouseExited
+        aumentarPesquisa(false);
+    }//GEN-LAST:event_campoDePesquisaMouseExited
+
+    private void campoDePesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDePesquisaKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaobuscar);
+        }
+    }//GEN-LAST:event_campoDePesquisaKeyPressed
+
+    private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
+        controller.buscarServico();
+    }//GEN-LAST:event_botaobuscarActionPerformed
+
+    private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
+        controllerDetalhes.selecionarTabela();
+    }//GEN-LAST:event_botaoEditarActionPerformed
+
+    private void comboSituacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSituacaoActionPerformed
+        controller.listarServicos();
+    }//GEN-LAST:event_comboSituacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,15 +344,12 @@ public class ServicosView extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAjuda;
+    private javax.swing.JButton botaoEditar;
+    private javax.swing.JButton botaobuscar;
     private javax.swing.JButton btnAdicionar;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnFechar;
-    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnRemover;
-    private javax.swing.JTextField campoDias;
-    private javax.swing.JTextField campoOutroPeriodo;
-    private javax.swing.JComboBox<String> comboDias;
-    private javax.swing.JComboBox<String> comboPeriodo;
+    private javax.swing.JTextField campoDePesquisa;
     private javax.swing.JComboBox<String> comboSituacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane painelderolagem;
@@ -357,66 +360,26 @@ public class ServicosView extends javax.swing.JDialog {
       JOptionPane.showMessageDialog(null, mensagem);
     }
     
-    public JComboBox<String> getComboPeriodo() {
-        return comboPeriodo;
-    }
-
-    public JComboBox<String> getComboMetodoPagamento() {
-        return comboMetodoPagamento;
+    public void mensagemCritica(String mensagem, String titulo){
+       JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.WARNING_MESSAGE);
     }
 
     public JTable getTabelaServicos() {
         return tabelaServicos;
-    }
-    
-    public void desabilitarComponentes(){
-        this.comboPeriodo.setVisible(false);
-        this.campoOutroPeriodo.setVisible(false);
-        this.comboDias.setVisible(false);
-        this.campoDias.setVisible(false);
-    }
-    
-    public void habilitarComponentes(){
-        this.comboPeriodo.setVisible(true);
-        this.campoOutroPeriodo.setVisible(true);
-        this.comboDias.setVisible(true);
-        this.campoDias.setVisible(true);
-    }
-
-    public JTextField getCampoOutroPeriodo() {
-        return campoOutroPeriodo;
-    }
-    
-    public void setarValores(){
-        comboPeriodo.setEnabled(true);
-        campoOutroPeriodo.setText("Outro");
-        campoOutroPeriodo.setEnabled(false);
-        comboDias.setEnabled(false);
-        campoDias.setText("");
-        campoDias.setEnabled(false);
-    }
-    
-    private void esvaziarOutroTipo(){
-        if(campoOutroPeriodo.getText().equals("Outro")){
-            campoOutroPeriodo.setText("");
-        }
     }
 
     public int getNumeroTela() {
         return numeroTela;
     }
 
-    public JTextField getCampoDias() {
-        return campoDias;
-    }
-
-    public JComboBox<String> getComboDias() {
-        return comboDias;
-    }
-
     public JComboBox<String> getComboSituacao() {
         return comboSituacao;
     }
+
+    public JTextField getCampoDePesquisa() {
+        return campoDePesquisa;
+    }
+    
 
     public Frame getParent() {
         return parent;
@@ -426,21 +389,50 @@ public class ServicosView extends javax.swing.JDialog {
         return painelAjuda;
     }
     
-    
-    
-    private void setarComposicaoTabelas(){
-        comboMetodoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
-        tabelaServicos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboMetodoPagamento));
-        tabelaServicos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JMoneyField()));
+    private void setarBotaoEditar(boolean visible, int y){
+        
+        if(visible){
+            int cont=370;
+            while(cont<=670){
+                if(y>=cont&&y<cont+15){
+                    botaoEditar.setLocation(botaoEditar.getX(), cont-16);
+                    botaoEditar.setVisible(visible);
+                    break;
+                }
+                cont+=15;
+            }  
+        }
+        else{
+            botaoEditar.setVisible(false);
+        }
     }
     
-    public void teclasDeAtalho() {
+    private void aumentarPesquisa(boolean aumentar){
+        int campoX = campoDePesquisa.getX();
+        int campoY = campoDePesquisa.getY();
+        int largCampo = campoDePesquisa.getWidth();
+        int altCampo = campoDePesquisa.getHeight();
+        
+        if(aumentar){
+            campoDePesquisa.setSize(largCampo+200, altCampo);
+            campoDePesquisa.setLocation(campoX-200, campoY);
+        }
+        else{
+            campoDePesquisa.setSize(largCampo-200, altCampo);
+            campoDePesquisa.setLocation(campoX+200, campoY);
+        }
+    }
+    
+    private void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
         //Sair com Esc
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(servicosDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
                 dispose();
             }
         });
@@ -472,7 +464,22 @@ public class ServicosView extends javax.swing.JDialog {
         meurootpane.getRootPane().getActionMap().put("EDITARSERVICO", new AbstractAction("EDITARSERVICO") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.editarServicos();
+                if(servicosDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
+                controller.editarServico();
+            }
+        });
+        
+        //Editar Vários Serviços
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl shift E"), "EDITARVARIOSSERVICOS");
+        meurootpane.getRootPane().getActionMap().put("EDITARVARIOSSERVICOS", new AbstractAction("EDITARVARIOSSERVICOS") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(servicosDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
+                controller.editarVariosServicos();
             }
         });
         
@@ -481,6 +488,9 @@ public class ServicosView extends javax.swing.JDialog {
         meurootpane.getRootPane().getActionMap().put("ENCERRARREABRIR", new AbstractAction("ENCERRARREABRIR") {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(servicosDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
                 controller.encerrarReabrirServico();
             }
         });
@@ -503,6 +513,9 @@ public class ServicosView extends javax.swing.JDialog {
         meurootpane.getRootPane().getActionMap().put("NOVO", new AbstractAction("NOVO") {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(servicosDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
                 telaServicosAdicionar.setModal(true);
                 telaServicosAdicionar.setLocationRelativeTo(null);
                 telaServicosAdicionar.setVisible(true);

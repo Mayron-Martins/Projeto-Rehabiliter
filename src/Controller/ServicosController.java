@@ -19,8 +19,6 @@ import Model.auxiliar.Servicos;
 import View.LoginFuncionario;
 import View.LoginGerente;
 import View.ServicosView;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
@@ -30,14 +28,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Mayro
  */
 public class ServicosController {
-    private final ServicosView view;
-    private final DefaultTableModel tabelaDeServicos;
-    private final ServicosDao servicosDao = new ServicosDao();
-    private final AlunosDao alunoDao = new AlunosDao();
-    private final PlanosDao planosDao = new PlanosDao();
-    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
-    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
-    private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
+    protected final ServicosView view;
+    protected final DefaultTableModel tabelaDeServicos;
+    protected final ServicosDao servicosDao = new ServicosDao();
+    protected final AlunosDao alunoDao = new AlunosDao();
+    protected final PlanosDao planosDao = new PlanosDao();
+    protected final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    protected final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
+    protected final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
 
     public ServicosController(ServicosView view) {
         this.view = view;
@@ -62,128 +60,65 @@ public class ServicosController {
             limparTabela();
         } else{
             limparTabela();
-            for(Servicos servico : servicos){
-                    String formaPagamento = servico.getFormaPagamento();
-                    BigDecimal valor = servico.getValor();
-
-                    if(formaPagamento.equals("Dinheiro")){
-                        valor = servico.getValorVista();
-                    }
-                    if(formaPagamento.equals("Boleto")){
-                        valor = servico.getValorBoleto();
-                    }
-                    if(formaPagamento.equals("Cartão de Crédito")){
-                        valor = servico.getValorPrazoCredito();
-                    }
-                    if(formaPagamento.equals("Cartão de Débito")){
-                        valor = servico.getValorPrazoDebito();
-                    }
-                    
-                    Object[] dadosDaTabela = {servico.getCodBanco(), servico.getNome(),servico.getPeriodo(),
-                        servico.getFormaPagamento(), valor, servico.getSituacao()};
-                        this.tabelaDeServicos.addRow(dadosDaTabela);
-                        view.getComboMetodoPagamento().setSelectedItem(servico.getFormaPagamento());
+            for(Servicos servico : servicos){                    
+                Object[] dadosDaTabela = {servico.getCodBanco(), servico.getNome(), servico.getPeriodo(), servico.getSituacao()};
+                    this.tabelaDeServicos.addRow(dadosDaTabela);
             }
         }        
     }
     
-    public void editarServicos(){
+    public void editarServico(){
         if(this.view.getTabelaServicos().getSelectedRow()!= -1){
-            int linhaSelecionada = this.view.getTabelaServicos().getSelectedRow();
+            int linhaSelecionada = view.getTabelaServicos().getSelectedRow();
             int codServico = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
-            String nome = this.tabelaDeServicos.getValueAt(linhaSelecionada, 1).toString();
-            
-            String periodo = this.retornarPeriodo();
-            String metodoDePagamento = tabelaDeServicos.getValueAt(linhaSelecionada, 3).toString();
-            String situacao = tabelaDeServicos.getValueAt(linhaSelecionada, 5).toString();
-            
-            BigDecimal valor = new BigDecimal("0");
-            BigDecimal valorAVista = new BigDecimal("0");
-            BigDecimal valorBoleto = new BigDecimal("0");
-            BigDecimal valorAPrazoCredito = new BigDecimal("0");
-            BigDecimal valorAPrazoDebito = new BigDecimal("0");
-            
-            
-            String valorDinheiro = converterDinheiro.converterParaBigDecimal(view.getTabelaServicos().getValueAt(linhaSelecionada, 4).toString()).toString();
-            
-            if(metodoDePagamento.equals("[Nenhuma]")){valor = new BigDecimal(valorDinheiro);}
-            if(metodoDePagamento.equals("Dinheiro")){valorAVista = new BigDecimal(valorDinheiro);}
-            if(metodoDePagamento.equals("Boleto")){valorBoleto = new BigDecimal(valorDinheiro);}
-            if(metodoDePagamento.equals("Cartão de Crédito")){valorAPrazoCredito = new BigDecimal(valorDinheiro);}
-            if(metodoDePagamento.equals("Cartão de Débito")){valorAPrazoDebito = new BigDecimal(valorDinheiro);}
-            
-            int periodDays = this.periodDays();
-            Servicos servico = new Servicos(codServico, nome, periodo, metodoDePagamento, valor, valorAVista, valorBoleto, valorAPrazoCredito, valorAPrazoDebito, periodDays, situacao);
-            Servicos servicoAnterior = this.retornarServicoAnterior(codServico);
+            String nome = tabelaDeServicos.getValueAt(linhaSelecionada, 1).toString();
+            String situacao = tabelaDeServicos.getValueAt(linhaSelecionada, 3).toString();
         //Inserindo Dados
-        if(nome.equals("")){
-         view.exibeMensagem("Campos Preenchidos Incorretamente");
-        } else{
-            if(!this.retornarAlunosUsando(codServico)){
-                if(periodDays!=servicoAnterior.getPeriodDays()||valor.compareTo(servicoAnterior.getValor())!=0
-                    ||valorAPrazoCredito.compareTo(servicoAnterior.getValorPrazoCredito())!=0
-                    ||valorAPrazoDebito.compareTo(servicoAnterior.getValorPrazoDebito())!=0
-                    ||valorAVista.compareTo(servicoAnterior.getValorVista())!=0
-                    ||valorBoleto.compareTo(servicoAnterior.getValorBoleto())!=0){
-                    
-                    view.exibeMensagem("Não é possível alterar, pois ainda existem alunos utilizando o serviço!");
-                 }
-                else{
-                    servicosDao.atualizarDados(servico);   
-                        this.setarLog("Edição de Serviços", "Edição do serviço "+nome);
-                    
-                    view.exibeMensagem("Sucesso!");
-                    //Limpando Campos
-                    limparTabela();
-                    listarServicos();
-                    view.setarValores();
-                    selecionarTabela();
-                }
-            }
-            else{
-                if(this.verificarPeriodo(periodDays)){
-                    servicosDao.atualizarDados(servico);   
+            if(nome.equals("")){
+                 view.exibeMensagem("Campos Preenchidos Incorretamente");
+            } else{
+                servicosDao.atualizarSituacao(codServico, nome, situacao);   
+                setarLog("Edição de Serviços", "Edição do serviço "+nome);
 
-                    this.setarLog("Edição de Serviços", "Edição do serviço "+nome);
-                    
-                    view.exibeMensagem("Sucesso!");
-                    //Limpando Campos
-                    limparTabela();
-                    listarServicos();
-                    view.setarValores();
-                    selecionarTabela(); 
-                }
-                else{
-                    view.exibeMensagem("Por motivos de compatibilidade, esse período de dias não pôde ser aceito!");
-                }
-            }
+                listarServicos();
+                view.getTabelaServicos().addRowSelectionInterval(linhaSelecionada, linhaSelecionada);
+                view.exibeMensagem("Sucesso!");
+                //Limpando Campos
+                
+            }   
         }
-            //Turmas 
-        }
-        
-        else{this.view.exibeMensagem("Erro, Nenhum Servio Selecionado!");}
+        else{view.mensagemCritica("Nenhum Servio Selecionado!", "Erro");}
     }
     
-    public void selecionarTabela(){
-      if(this.view.getTabelaServicos().getSelectedRow()!=-1){
-        view.setarValores();
-        //Número da linha selecionada
-          int linhaSelecionada = this.view.getTabelaServicos().getSelectedRow();
-          //Habilita itens que ficam acima da tabela
-          this.view.habilitarComponentes();
-          //Pega o valor da coluna Tipo
-          String periodo = tabelaDeServicos.getValueAt(linhaSelecionada, 2).toString();
-          //Pega o valor da coluna Forma de Pagamento
-          //Joga o valor das colunas no combobox
-          this.preencherComboPeriodo();
-          view.getComboPeriodo().setSelectedItem(periodo);
-          view.getComboDias().setSelectedIndex(0);
-          
-          int codServico = Integer.parseInt(view.getTabelaServicos().getValueAt(linhaSelecionada, 0).toString());
-          
-          Servicos servico = this.retornarServicoAnterior(codServico);
-          view.getCampoDias().setText(servico.getPeriodDays()+"");
-      }
+    public void editarVariosServicos(){
+        int linhasTabela = tabelaDeServicos.getRowCount();
+        boolean erro = false;
+        String erroServicos="(";
+        if(linhasTabela>0){
+            for(int linha=0; linha<linhasTabela; linha++){
+                int codServico = Integer.parseInt(tabelaDeServicos.getValueAt(linha, 0).toString());
+                String nome = tabelaDeServicos.getValueAt(linha, 1).toString();
+                String situacao = tabelaDeServicos.getValueAt(linha, 3).toString();
+            //Inserindo Dados
+                if(nome.equals("")){
+                     view.exibeMensagem("Campos Preenchidos Incorretamente");
+                     erro=true;
+                     erroServicos+=nome+", ";
+                } else{
+                    servicosDao.atualizarSituacao(codServico, nome, situacao);   
+                }
+            }
+            
+            setarLog("Edição de Serviços", "Edição de vários serviços ");
+            
+            if(erro){
+                view.mensagemCritica("Os serviços "+erroServicos.substring(0, erroServicos.length()-2)+") não puderam ser editados", "Aviso");
+            }
+            view.exibeMensagem("Sucesso!");
+            listarServicos();
+            
+        }
+        else{view.mensagemCritica("Sem dados na tabela", "Erro");}
     }
     
     public void removerServico(){
@@ -192,136 +127,44 @@ public class ServicosController {
             int codServico = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
             String nomeServico = tabelaDeServicos.getValueAt(linhaSelecionada, 1).toString();
             
-            if(this.retornarAlunosUsando(codServico)){
+            if(retornarAlunosUsando(codServico)){
                 servicosDao.removerServico(codServico);
 
                 this.setarLog("Remoção de Serviços", "Remoção do serviço "+nomeServico);
                 
                 this.view.exibeMensagem("Sucesso");
                 limparTabela();
-                this.view.desabilitarComponentes();
                 listarServicos();
             }
             else{
-                view.exibeMensagem("Não é possível remover, pois ainda existem alunos utilizando o serviço!");
+                view.mensagemCritica("Não é possível remover, pois ainda existem alunos utilizando o serviço!", "Erro");
             }
             
         }
         else{this.view.exibeMensagem("Erro, Nenhum Serviço Selecionado!");}
     }
     
-    private String retornarPeriodo(){
-        if(view.getComboPeriodo().isEnabled()){
-            return view.getComboPeriodo().getSelectedItem().toString();
-        }
+    public void buscarServico(){
+        String nomeServico = view.getCampoDePesquisa().getText();
+        
+        if(nomeServico.equals("")){listarServicos();}
         else{
-            return view.getCampoOutroPeriodo().getText();
-        }
-    }
-    
-    public void preencherComboPeriodo(){
-        ArrayList <Servicos> servicos = servicosDao.selecionarTodosServicos();
-        
-        String periodoServicoAnterior="";
-        String periodoServico;
-        if(servicos!=null){
-            view.getComboPeriodo().removeAllItems();
-            view.getComboPeriodo().addItem("[Nenhum]");
-            view.getComboPeriodo().addItem("Diária");
-            view.getComboPeriodo().addItem("Semanal");
-            view.getComboPeriodo().addItem("Mensal");
-            view.getComboPeriodo().addItem("Trimestral");
-            view.getComboPeriodo().addItem("Quadrimestral");
-            view.getComboPeriodo().addItem("Semestral");
-            view.getComboPeriodo().addItem("Anual");
-            
-            for(int linhas=0; linhas<servicos.size();linhas++){
-                periodoServico = servicos.get(linhas).getPeriodo();
-                
-                if(!periodoServico.equals(periodoServicoAnterior)){
-                    if(!periodoServico.equals("[Nenhum]")&&!periodoServico.equals("Diária")&&!periodoServico.equals("Semanal")
-                        &&!periodoServico.equals("Mensal")&&!periodoServico.equals("Trimestral")&&!periodoServico.equals("Quadrimestral")
-                        &&!periodoServico.equals("Semestral")&&!periodoServico.equals("Anual")){
-                        view.getComboPeriodo().addItem(periodoServico);
-                    }
-                }
-                periodoServicoAnterior=periodoServico;
+            ArrayList <Servicos> servicos = servicosDao.pesquisarPorNome(nomeServico);
+            if(servicos==null){view.exibeMensagem("Serviço Não Encontrada!"); limparTabela();}
+            else{
+                limparTabela();
+                for(Servicos servico : servicos){
+                Object[] dadosDaTabela = {servico.getCodBanco(), servico.getNome(),  servico.getPeriodo(), servico.getSituacao()};
+                tabelaDeServicos.addRow(dadosDaTabela);
+                  
+            }
             }
         }
     }
     
-    private int periodDays(){
-        if(view.getComboPeriodo().isEnabled()){
-            String tipo = view.getComboPeriodo().getSelectedItem().toString();
-            switch(tipo){
-                case "Diária":
-                    return 1;
-                case "Semanal":
-                    return 7;
-                case "Mensal":
-                    return 30;
-                case "Trimestral":
-                    return 90;
-                case "Quadrimestral":
-                    return 120;
-                case "Semestral":
-                    return 180;
-                case "Anual":
-                    return 365;
-            }
-            ArrayList <Servicos> servicos = servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE periodo = '"+tipo+"'");
-            if(servicos!=null){
-                return servicos.get(0).getPeriodDays();
-            }
-        }
-        else{
-            
-        }
-        
-        return this.periodOfOutro();
-    }
-    
-    private int periodOfOutro(){
-        String period = view.getComboDias().getSelectedItem().toString();
-        int dias=0;
-        if(view.getCampoDias() !=null){
-         dias = Integer.parseInt(view.getCampoDias().getText());
-        }
-        
-        if(period.equals("M")){
-            return 30*dias;
-        }
-        if(period.equals("A")){
-            return 365*dias;
-        }
-        return dias;
-    }
-    
-    private Servicos retornarServicoAnterior(int codServico){
-        return servicosDao.pesquisarServicos("SELECT * FROM tblServicos WHERE codServico = "+codServico).get(0);
-    }
-    
-    private boolean retornarAlunosUsando(int codServico){
+    protected boolean retornarAlunosUsando(int codServico){
         ArrayList <Aluno> alunos = alunoDao.pesquisarAlunos("SELECT * FROM tblAlunos WHERE codServico = "+codServico);
         return alunos ==null;
-    }
-    
-    private boolean verificarPeriodo(int period){
-        BigDecimal periodDays = new BigDecimal(period);
-        
-        String mensal = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
-        String anual = periodDays.divide(new BigDecimal(365), 3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
-
-        
-        boolean resultadoMensal = mensal.matches("[0-9]*");
-        boolean resultadoAnual = anual.matches("[0-9]*");
-        
-        if(resultadoMensal||resultadoAnual){
-            return true;
-        }
-        else{
-            return period<30;
-        }
     }
     
     public void encerrarReabrirServico(){
@@ -329,10 +172,11 @@ public class ServicosController {
         
         if(linhaSelecionada>-1){
             int codServico = Integer.parseInt(tabelaDeServicos.getValueAt(linhaSelecionada, 0).toString());
+            String nome = tabelaDeServicos.getValueAt(linhaSelecionada, 1).toString();
             
             ArrayList <Planos> planos= planosDao.pesquisarPlanos("SELECT * FROM tblPlanos WHERE codServico = "+codServico+" AND situacao != 'Encerrado'");
             
-            String situacao = tabelaDeServicos.getValueAt(linhaSelecionada, 5).toString();
+            String situacao = tabelaDeServicos.getValueAt(linhaSelecionada, 3).toString();
             if(situacao.equals("Aberto")){
                 situacao = "Encerrado";
             }else{
@@ -342,7 +186,7 @@ public class ServicosController {
             if(situacao.equals("Encerrado")&&planos!=null){
                 view.exibeMensagem("Não é possível encerrar o Serviço, pois ainda existem Planos Não Encerrados!");
             }else{
-                servicosDao.atualizarSituacao(codServico, situacao);
+                servicosDao.atualizarSituacao(codServico, nome, situacao);
                 view.exibeMensagem("Sucesso!");
                 listarServicos();
             }
@@ -377,7 +221,7 @@ public class ServicosController {
         }
     }
     
-    private Funcionario setarLog(String acao, String descricao){
+    protected Funcionario setarLog(String acao, String descricao){
         ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
         if(funcionarios!=null){
             Funcionario funcionario = funcionarios.get(0);

@@ -87,7 +87,7 @@ public class TurmasDetalhes extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         botaoEditar = new javax.swing.JButton();
         botaoConcluir = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        botaoSair = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         campoCapMax = new FormatacaodeCamposRestritos();
 
@@ -203,7 +203,7 @@ public class TurmasDetalhes extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraSegI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraSegI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 30));
+        painelHorDiversos.add(campoHoraSegI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 60, 30));
 
         try {
             campoHoraTerI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -211,7 +211,7 @@ public class TurmasDetalhes extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraTerI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraTerI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 60, 30));
+        painelHorDiversos.add(campoHoraTerI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 60, 30));
 
         try {
             campoHoraQuaI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -219,7 +219,7 @@ public class TurmasDetalhes extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraQuaI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraQuaI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 60, 30));
+        painelHorDiversos.add(campoHoraQuaI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 60, 30));
 
         try {
             campoHoraQuiI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -227,7 +227,7 @@ public class TurmasDetalhes extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraQuiI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraQuiI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 60, 30));
+        painelHorDiversos.add(campoHoraQuiI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 60, 30));
 
         try {
             campoHoraSexI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -235,7 +235,7 @@ public class TurmasDetalhes extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraSexI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraSexI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 60, 30));
+        painelHorDiversos.add(campoHoraSexI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 60, 30));
 
         try {
             campoHoraSabI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -243,7 +243,7 @@ public class TurmasDetalhes extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraSabI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraSabI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 60, 30));
+        painelHorDiversos.add(campoHoraSabI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 60, 30));
 
         try {
             campoHoraDomI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -251,7 +251,7 @@ public class TurmasDetalhes extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraDomI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraDomI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 60, 30));
+        painelHorDiversos.add(campoHoraDomI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 60, 30));
 
         try {
             campoHoraSegF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -391,14 +391,14 @@ public class TurmasDetalhes extends javax.swing.JDialog {
         });
         jPanel1.add(botaoConcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 580, 140, 50));
 
-        jButton1.setBackground(new java.awt.Color(255, 51, 51));
-        jButton1.setText("X");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoSair.setBackground(new java.awt.Color(255, 51, 51));
+        botaoSair.setText("X");
+        botaoSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoSairActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
+        jPanel1.add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(11, 13, 138));
@@ -465,9 +465,9 @@ public class TurmasDetalhes extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoQuantPresenteActionPerformed
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
         controller.sairTela();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botaoSairActionPerformed
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
         trocaBotoes(true);
@@ -527,6 +527,7 @@ public class TurmasDetalhes extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoConcluir;
     private javax.swing.JButton botaoEditar;
+    private javax.swing.JButton botaoSair;
     private javax.swing.JCheckBox caixaDomingo;
     private javax.swing.JCheckBox caixaQuarta;
     private javax.swing.JCheckBox caixaQuinta;
@@ -554,7 +555,6 @@ public class TurmasDetalhes extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField campoHoraUnicoI;
     private javax.swing.JTextField campoNome;
     private javax.swing.JTextField campoQuantPresente;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -652,9 +652,23 @@ public class TurmasDetalhes extends javax.swing.JDialog {
         trocaBotoes(false);
     }
     
-    private void paineisHorarios(boolean unico){
+    public void paineisHorarios(boolean unico){
         painelHorUnico.setVisible(unico);
         painelHorDiversos.setVisible(!unico);
+        radioHorDiversos.setSelected(!unico);
+        if(radioHorDiversos.isSelected()){
+            visibilidadeHorariosPosTroca();
+        }
+    }
+    
+    private void visibilidadeHorariosPosTroca(){
+        int cont=1;
+        for(JCheckBox caixa : diasSemana){
+            if(caixa.isSelected()){
+                visibleHorario(caixa, campoHorariosI.get(cont), campoHorariosF.get(cont));
+            }
+            cont++;
+        }
     }
     
     private void visibleHorario(JCheckBox caixaSelecao, JFormattedTextField campo, JFormattedTextField campo2){

@@ -36,9 +36,7 @@ public class TurmasView extends javax.swing.JDialog {
     private final int numeroTela = 2;
     private final TurmasController controller;
     private final TurmasDetalhesController controllerDetalhes;
-    private String diasDaSemana=null;
     private ArrayList <String> diasDaSemanaUnitarios;
-    private String campoHorario="";
     private final TurmasAdicionar telaTurmasAdicionar;
     private final turmasFrequencia telaTurmasFrequencia;
     private final PainelAjuda painelAjuda;
@@ -69,7 +67,6 @@ public class TurmasView extends javax.swing.JDialog {
         botaobuscar.setBackground(new Color(0,0,0,0));
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         
-        this.setarComposicaoTabelas();
         this.teclasDeAtalho();
         this.setarBotaoEditar(false, 0);
     }
@@ -201,6 +198,7 @@ public class TurmasView extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabelaTurmas.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaTurmas.getTableHeader().setReorderingAllowed(false);
         tabelaTurmas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -237,17 +235,23 @@ public class TurmasView extends javax.swing.JDialog {
         getContentPane().add(botaoEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 354, 20, 20));
 
         planodefundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/turmas/fundo.jpg"))); // NOI18N
-        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, -1));
+        getContentPane().add(planodefundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoRemoverTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverTurmasActionPerformed
+        if(turmasDetalhes.isVisible()){
+            controllerDetalhes.sairTela();
+        }
         controller.removerTurma();
     }//GEN-LAST:event_botaoRemoverTurmasActionPerformed
 
     private void botaoAdicionarTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarTurmasActionPerformed
+        if(turmasDetalhes.isVisible()){
+            controllerDetalhes.sairTela();
+        }
         telaTurmasAdicionar.setModal(true);
         telaTurmasAdicionar.setLocationRelativeTo(null);         
         telaTurmasAdicionar.setVisible(true);
@@ -263,6 +267,9 @@ public class TurmasView extends javax.swing.JDialog {
 
     private void botaoListarTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoListarTurmasActionPerformed
         // TODO add your handling code here:
+        if(turmasDetalhes.isVisible()){
+            controllerDetalhes.sairTela();
+        }
         telaTurmasFrequencia.setModal(true);
         telaTurmasFrequencia.setLocationRelativeTo(null);         
         telaTurmasFrequencia.setVisible(true);
@@ -277,11 +284,7 @@ public class TurmasView extends javax.swing.JDialog {
     }//GEN-LAST:event_formMouseClicked
 
     private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
-        try {
-            controller.buscarTurmas();
-        } catch (Exception ex) {
-            Logger.getLogger(TurmasView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        controller.buscarTurmas();
     }//GEN-LAST:event_botaobuscarActionPerformed
 
     private void campoDePesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDePesquisaKeyPressed
@@ -394,16 +397,8 @@ public class TurmasView extends javax.swing.JDialog {
         return tabelaTurmas;
     }
 
-    public String getDiasDaSemana() {
-        return diasDaSemana;
-    }
-
     public ArrayList<String> getDiasDaSemanaUnitarios() {
         return diasDaSemanaUnitarios;
-    }
-
-    public String getCampoHorario() {
-        return campoHorario;
     }
 
     public int getNumeroTela() {
@@ -456,7 +451,7 @@ public class TurmasView extends javax.swing.JDialog {
         }
     }
     
-    public void teclasDeAtalho() {
+    private void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
         meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
@@ -520,6 +515,9 @@ public class TurmasView extends javax.swing.JDialog {
         meurootpane.getRootPane().getActionMap().put("ENCERRARREABRIR", new AbstractAction("ENCERRARREABRIR") {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(turmasDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
                 controller.encerrarReabrirTurma();
             }
         });
@@ -541,14 +539,13 @@ public class TurmasView extends javax.swing.JDialog {
         meurootpane.getRootPane().getActionMap().put("NOVO", new AbstractAction("NOVO") {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(turmasDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
                 telaTurmasAdicionar.setModal(true);
                 telaTurmasAdicionar.setLocationRelativeTo(null);         
                 telaTurmasAdicionar.setVisible(true);
             }
         });
-    }
-    
-    private void setarComposicaoTabelas(){
-        tabelaTurmas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new FormatacaodeCamposRestritos()));
     }
 }

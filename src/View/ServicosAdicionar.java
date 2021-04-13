@@ -45,12 +45,12 @@ public class ServicosAdicionar extends javax.swing.JDialog {
         controller = new AdicionarServicosController(this);
         btnFechar.setBackground(new Color(0,0,0,0));
         botaoConfirmar.setBackground(new Color(0,0,0,0));
-        this.setarValores();
         controller.preencherComboPeriodo();
         
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         this.teclasDeAtalho();
         this.grupoBotoes();
+        this.setarValores();
     }
 
     /**

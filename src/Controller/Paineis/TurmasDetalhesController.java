@@ -55,6 +55,7 @@ public class TurmasDetalhesController extends TurmasController{
     
     public void releasedTable(){
         if(viewSecundaria.isVisible()){
+            limparCampos();
             selecionarTabela();
         }
     }
@@ -91,6 +92,9 @@ public class TurmasDetalhesController extends TurmasController{
         }
         else{
             turmasDao.atualizarDados(turma, horarios);
+            setarLog("Edição de Dados de Turma", "Editou os dados da turma "+nome);
+            listarTurmas();
+            view.getTabelaTurmas().addRowSelectionInterval(linhaSelecionada, linhaSelecionada);
             view.exibeMensagem("Sucesso!");
             viewSecundaria.trocaBotoes(false);
         }
@@ -110,7 +114,7 @@ public class TurmasDetalhesController extends TurmasController{
             viewSecundaria.getCampoHorariosI().get(0).setText(horaI);
             viewSecundaria.getCampoHorariosF().get(0).setText(horaF);
         }else{
-            viewSecundaria.getRadioHorUnico().setSelected(false);
+            viewSecundaria.paineisHorarios(false);
             for(Horarios horario : horarios){
                 viewSecundaria.getDiasSemana().get(horario.getIndiceSemana()-1).setSelected(true);
                 
@@ -120,6 +124,11 @@ public class TurmasDetalhesController extends TurmasController{
                 //Adicionando no painel com horários diversos
                 viewSecundaria.getCampoHorariosI().get(horario.getIndiceSemana()).setText(horaI);
                 viewSecundaria.getCampoHorariosF().get(horario.getIndiceSemana()).setText(horaF);
+                
+                viewSecundaria.getCampoHorariosI().get(horario.getIndiceSemana()).setVisible(true);
+                viewSecundaria.getCampoHorariosF().get(horario.getIndiceSemana()).setVisible(true);
+                
+                
             }
         }
     }
@@ -202,16 +211,17 @@ public class TurmasDetalhesController extends TurmasController{
         int largView1 = view.getWidth();
         int largView2 = viewSecundaria.getWidth();
         int deslocamentoX = largView2/2;
+        int espacoEntreViews = 1;
         
         if(ativarDetalhes){
             view.setLocation(view1X-deslocamentoX, view1Y);
-            viewSecundaria.setLocation(view1X+largView1-deslocamentoX, view1Y);
+            viewSecundaria.setLocation(view1X+largView1+espacoEntreViews-deslocamentoX, view1Y);
             viewSecundaria.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
             viewSecundaria.setVisible(true);
         }
         else{
             view.setLocation(view1X+deslocamentoX, view1Y);
-            viewSecundaria.setLocation(view1X+largView1+deslocamentoX, view1Y);
+            viewSecundaria.setLocation(view1X+largView1+espacoEntreViews+deslocamentoX, view1Y);
             limparCampos();
             viewSecundaria.dispose();
         }

@@ -42,7 +42,7 @@ public class AdicionarServicosController {
         //Pegando Dados Da tela
         String nomeServico = view.getNomeServico().getText();
         String periodo= this.retornarPeriodo();
-        String metodoDePagamento = "Unica";
+        String metodoDePagamento = "Unico";
         String situacao = "Aberto";
 
         BigDecimal valor = converterDinheiro.converterParaBigDecimal(view.getValorUnico().getText());
@@ -145,10 +145,6 @@ public class AdicionarServicosController {
                 return servicos.get(0).getPeriodDays();
             }
         }
-        else{
-            
-        }
-        
         return this.periodOfOutro();
     }
     

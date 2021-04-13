@@ -84,20 +84,17 @@ public class TurmasController {
                 TurmasDao turmaDao = new TurmasDao();
                 turmaDao.atualizarSituacao(codTurma, nome, situacao);
 
-                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    String acao = "Edição de Dados de Turma";
-                    String descricao = "Editou os dados da turma "+nome;
-                    this.setarLog(funcionarios, acao, descricao);
-                }
+                this.setarLog("Edição de Dados de Turma", "Editou os dados da turma "+nome);
+                
                 view.exibeMensagem("Sucesso!");
                 //Limpando Campos
                 listarTurmas();
+                view.getTabelaTurmas().addRowSelectionInterval(linhaSelecionada, linhaSelecionada);
         }
             //Turmas 
         }
         
-        else{this.view.exibeMensagem("Erro, Nenhuma Turma Selecionada!");}
+        else{view.mensagemCritica("Erro, Nenhuma Turma Selecionada!", "Erro");}
     }
     
         public void editarVariasTurmas(){
@@ -120,12 +117,8 @@ public class TurmasController {
                     }
                 }
                 
-                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    String acao = "Edição de Dados de Turma";
-                    String descricao = "Editou os dados de várias Turmas";
-                    this.setarLog(funcionarios, acao, descricao);
-                }
+                this.setarLog("Edição de Dados de Turma", "Editou os dados de várias Turmas");
+                
                 
                 if(erros){
                     view.mensagemCritica("As turmas "+errosTurmas.substring(0, errosTurmas.length()-2)+") não puderam ser editadas.", "Atenção");
@@ -136,7 +129,7 @@ public class TurmasController {
                 
             }
 
-            else{this.view.exibeMensagem("Sem dados na tabela");}
+            else{view.mensagemCritica("Sem dados na tabela", "Erro");}
     }
     
     public void removerTurma(){
@@ -147,13 +140,8 @@ public class TurmasController {
             
             if(this.retornarAlunosUsando(codTurma)){
                 turmasDao.removerTurma(codTurma);
-
-                ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
-                if(funcionarios!=null){
-                    String acao = "Remoção de Turma";
-                    String descricao = "Remoção da turma "+nomeTurma;
-                    this.setarLog(funcionarios, acao, descricao);
-                }
+                    this.setarLog("Remoção de Turma", "Remoção da turma "+nomeTurma);
+                
                 this.view.exibeMensagem("Sucesso");
                 listarTurmas(); 
             }
@@ -184,11 +172,15 @@ public class TurmasController {
         }
     }
     
-    protected LogAçoesFuncionario setarLog(ArrayList <Funcionario> funcionarios, String acao, String descricao){
-        Funcionario funcionario = funcionarios.get(0);
-        Date dataEvento = new Date();
-        LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
-        return logAcao;
+    protected LogAçoesFuncionario setarLog(String acao, String descricao){
+        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
+            if(funcionarios!=null){
+            Funcionario funcionario = funcionarios.get(0);
+            Date dataEvento = new Date();
+            LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
+            return logAcao;
+        }
+            return null;
     }
     
     protected boolean retornarAlunosUsando(int codTurma){

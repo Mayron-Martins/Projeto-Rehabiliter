@@ -81,9 +81,6 @@ public class TurmasAdicionar extends javax.swing.JDialog {
         caixaDomingo = new javax.swing.JCheckBox();
         radioHorDiversos = new javax.swing.JRadioButton();
         radioHorUnico = new javax.swing.JRadioButton();
-        painelHorUnico = new javax.swing.JPanel();
-        campoHoraUnicoI = new javax.swing.JFormattedTextField();
-        campoHoraUnicoF = new javax.swing.JFormattedTextField();
         painelHorDiversos = new javax.swing.JPanel();
         campoHoraSegI = new javax.swing.JFormattedTextField();
         campoHoraTerI = new javax.swing.JFormattedTextField();
@@ -99,6 +96,9 @@ public class TurmasAdicionar extends javax.swing.JDialog {
         campoHoraSexF = new javax.swing.JFormattedTextField();
         campoHoraSabF = new javax.swing.JFormattedTextField();
         campoHoraDomF = new javax.swing.JFormattedTextField();
+        painelHorUnico = new javax.swing.JPanel();
+        campoHoraUnicoI = new javax.swing.JFormattedTextField();
+        campoHoraUnicoF = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -230,27 +230,6 @@ public class TurmasAdicionar extends javax.swing.JDialog {
         });
         getContentPane().add(radioHorUnico, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, -1, -1));
 
-        painelHorUnico.setBackground(new java.awt.Color(157, 197, 187));
-        painelHorUnico.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        try {
-            campoHoraUnicoI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        campoHoraUnicoI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorUnico.add(campoHoraUnicoI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 60, 30));
-
-        try {
-            campoHoraUnicoF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        campoHoraUnicoF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorUnico.add(campoHoraUnicoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 60, 30));
-
-        getContentPane().add(painelHorUnico, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 210, 270));
-
         painelHorDiversos.setBackground(new java.awt.Color(157, 197, 187));
         painelHorDiversos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -260,7 +239,7 @@ public class TurmasAdicionar extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraSegI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraSegI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 30));
+        painelHorDiversos.add(campoHoraSegI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 60, 30));
 
         try {
             campoHoraTerI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -268,7 +247,7 @@ public class TurmasAdicionar extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraTerI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraTerI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 60, 30));
+        painelHorDiversos.add(campoHoraTerI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 60, 30));
 
         try {
             campoHoraQuaI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -276,7 +255,7 @@ public class TurmasAdicionar extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraQuaI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraQuaI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 60, 30));
+        painelHorDiversos.add(campoHoraQuaI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 60, 30));
 
         try {
             campoHoraQuiI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -284,7 +263,7 @@ public class TurmasAdicionar extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraQuiI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraQuiI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 60, 30));
+        painelHorDiversos.add(campoHoraQuiI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 60, 30));
 
         try {
             campoHoraSexI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -292,7 +271,7 @@ public class TurmasAdicionar extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraSexI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraSexI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 60, 30));
+        painelHorDiversos.add(campoHoraSexI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 60, 30));
 
         try {
             campoHoraSabI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -300,7 +279,7 @@ public class TurmasAdicionar extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraSabI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraSabI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 60, 30));
+        painelHorDiversos.add(campoHoraSabI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 60, 30));
 
         try {
             campoHoraDomI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -308,7 +287,7 @@ public class TurmasAdicionar extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         campoHoraDomI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        painelHorDiversos.add(campoHoraDomI, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 60, 30));
+        painelHorDiversos.add(campoHoraDomI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 60, 30));
 
         try {
             campoHoraSegF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -367,6 +346,27 @@ public class TurmasAdicionar extends javax.swing.JDialog {
         painelHorDiversos.add(campoHoraDomF, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 60, 30));
 
         getContentPane().add(painelHorDiversos, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 210, 270));
+
+        painelHorUnico.setBackground(new java.awt.Color(157, 197, 187));
+        painelHorUnico.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        try {
+            campoHoraUnicoI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        campoHoraUnicoI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        painelHorUnico.add(campoHoraUnicoI, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 60, 30));
+
+        try {
+            campoHoraUnicoF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        campoHoraUnicoF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        painelHorUnico.add(campoHoraUnicoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 60, 30));
+
+        getContentPane().add(painelHorUnico, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 210, 270));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(11, 13, 138));
@@ -631,6 +631,19 @@ public class TurmasAdicionar extends javax.swing.JDialog {
     private void paineisHorarios(boolean unico){
         painelHorUnico.setVisible(unico);
         painelHorDiversos.setVisible(!unico);
+        if(radioHorDiversos.isSelected()){
+            visibilidadeHorariosPosTroca();
+        }
+    }
+    
+    private void visibilidadeHorariosPosTroca(){
+        int cont=1;
+        for(JCheckBox caixa : diasSemana){
+            if(caixa.isSelected()){
+                visibleHorario(caixa, campoHorariosI.get(cont), campoHorariosF.get(cont));
+            }
+            cont++;
+        }
     }
     
     private void visibleHorario(JCheckBox caixaSelecao, JFormattedTextField campo, JFormattedTextField campo2){

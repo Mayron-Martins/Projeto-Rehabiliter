@@ -82,15 +82,16 @@ public class ServicosDao extends Conexao{
         }
     }
     
-    public void atualizarSituacao(int codServico, String situacao){
+    public void atualizarSituacao(int codServico, String nome, String situacao){
         try{
             //atualizando a tabela de turmas
             String inServicos = atualizar.concat("tblServicos "
-                    + "SET situacao = ? where codServico = ?");
+                    + "SET nome = ?, situacao = ? where codServico = ?");
 
             PreparedStatement statement = gerarStatement(inServicos);
-            statement.setString(1, situacao);
-            statement.setInt(2, codServico);
+            statement.setString(1, nome);
+            statement.setString(2, situacao);
+            statement.setInt(3, codServico);
 
             statement.execute();
             statement.close();
@@ -157,6 +158,20 @@ public class ServicosDao extends Conexao{
             return null;
         }
         
+    }
+    
+    public ArrayList<Servicos> pesquisarPorNome(String nomeTurma){
+       ArrayList <Servicos> turmas = selecionarTodosServicos();
+       ArrayList<Servicos> turmasBuscadas = new ArrayList<>();
+       for(int repeticoes = 0; repeticoes<turmas.size(); repeticoes++){
+           if(turmas.get(repeticoes).getNome().toLowerCase().contains(nomeTurma.toLowerCase())== true){
+               turmasBuscadas.add(turmas.get(repeticoes));
+           }
+       }
+       if(turmasBuscadas.size()<1){
+           return null;
+       }
+       return turmasBuscadas;
     }
     
     //Gerar arquivo com o log de erro, caso haja
