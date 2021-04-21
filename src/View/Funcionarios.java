@@ -247,6 +247,9 @@ public class Funcionarios extends javax.swing.JDialog {
 
     private void botaoFechar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFechar1ActionPerformed
         // TODO add your handling code here:
+        if(funcionariosDetalhes.isVisible()){
+            controllerDetalhes.sairTela();
+        }
         this.dispose();
     }//GEN-LAST:event_botaoFechar1ActionPerformed
 

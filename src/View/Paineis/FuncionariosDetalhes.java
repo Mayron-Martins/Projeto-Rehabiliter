@@ -699,6 +699,7 @@ public class FuncionariosDetalhes extends javax.swing.JDialog {
     
     private void configsIniciais(){
         painelNovoTipo.setVisible(false);
+        campoNovoTipo.setEnabled(false);
         
         for(JCheckBox caixa : grupoAlteracoes){
             caixa.setEnabled(false);

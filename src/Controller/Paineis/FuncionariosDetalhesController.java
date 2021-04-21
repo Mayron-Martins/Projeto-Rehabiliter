@@ -233,6 +233,7 @@ public class FuncionariosDetalhesController extends FuncionariosController{
         ArrayList <String> cargos = funcionarioDao.selecionarCargos();
         if(cargos!=null){
             viewSecundaria.getComboCargos().removeAllItems();
+            viewSecundaria.getComboCargos().addItem("[Nenhum]");
             
             for(String cargo : cargos){
                 viewSecundaria.getComboCargos().addItem(cargo);
