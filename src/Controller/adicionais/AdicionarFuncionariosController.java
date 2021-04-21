@@ -8,19 +8,15 @@ package Controller.adicionais;
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.LogsSystem;
-import Controller.auxiliar.VerificarCodigoNoBanco;
-import Dao.EnderecoFuncionarioDao;
 import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
 import Dao.TableCriatorPosInput;
 import Model.Funcionario;
-import Model.auxiliar.EnderecoFuncionario;
 import Model.auxiliar.LogAçoesFuncionario;
 import View.FuncionariosAdicionar;
 import View.LoginFuncionario;
 import View.LoginGerente;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,7 +27,6 @@ import java.util.Date;
 public class AdicionarFuncionariosController {
     private final FuncionariosAdicionar view;
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
-    private final EnderecoFuncionarioDao endereco = new EnderecoFuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
@@ -51,19 +46,10 @@ public class AdicionarFuncionariosController {
         String telefone = view.getCampoTelefone().getText();
         String usuario = cpf;
         String senha = new String(view.getCampoSenha().getPassword());
-        BigDecimal salario = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoSalario().getText()).toString()); //Seta setado em 0 reais
+        BigDecimal salario = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoSalario().getText()).toString());
         String cargo = view.getCampoCargo().getText();
         String email = view.getCampoEmail().getText();
 
-        //dados do Endereço
-        String logradouro = "";
-        String bairro = "";
-        String numero = "";
-        String cidade = "";
-        String estado = "";
-        String cep = "";
-        String complemento = "";
-        String referencia = "";
 
         String telasPermitidas = "1,2,3,4,5,6,7,8,9,10";
         String status = "Inativo";
@@ -71,15 +57,14 @@ public class AdicionarFuncionariosController {
 
         //Cria os tipos Aluno, Endereco e Matricula com os dados
         Funcionario funcionario = new Funcionario(nome, cpf, "", telefone, celular, email, dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status, situacao);
-        EnderecoFuncionario endereco = new EnderecoFuncionario(logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
-
+        
         //Verifica se não há dados irregulares antes de colocar na tabela
         if(nome==null||dataNascimento==null|| verificarSenha() ||cpf.equals("   .   .   -  ")){
         view.exibeMensagem("Valores Preenchidos Incorretamente!");
         }
 
         else{
-            funcionarioDao.inserirDados(funcionario, endereco);
+            funcionarioDao.inserirDados(funcionario);
             criarTabelas.tableLogdeAcoesdoFunc();
 
 

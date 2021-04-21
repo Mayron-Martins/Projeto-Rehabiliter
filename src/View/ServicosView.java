@@ -87,7 +87,6 @@ public class ServicosView extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(873, 700));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -126,7 +125,6 @@ public class ServicosView extends javax.swing.JDialog {
         });
         getContentPane().add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 230, 60));
 
-        tabelaServicos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaServicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -190,6 +188,11 @@ public class ServicosView extends javax.swing.JDialog {
         });
         getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 10, 30, 30));
 
+        campoDePesquisa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                campoDePesquisaFocusLost(evt);
+            }
+        });
         campoDePesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 campoDePesquisaMouseEntered(evt);
@@ -293,12 +296,18 @@ public class ServicosView extends javax.swing.JDialog {
     }//GEN-LAST:event_botaobuscarActionPerformed
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
-        controllerDetalhes.selecionarTabela();
+        if(!servicosDetalhes.isVisible()){
+            controllerDetalhes.selecionarTabela();
+        }
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void comboSituacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSituacaoActionPerformed
         controller.listarServicos();
     }//GEN-LAST:event_comboSituacaoActionPerformed
+
+    private void campoDePesquisaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoDePesquisaFocusLost
+        aumentarPesquisa(false);
+    }//GEN-LAST:event_campoDePesquisaFocusLost
 
     /**
      * @param args the command line arguments
@@ -414,12 +423,17 @@ public class ServicosView extends javax.swing.JDialog {
         int altCampo = campoDePesquisa.getHeight();
         
         if(aumentar){
-            campoDePesquisa.setSize(largCampo+200, altCampo);
-            campoDePesquisa.setLocation(campoX-200, campoY);
+            if(campoDePesquisa.getSize().width<260){
+                campoDePesquisa.setSize(largCampo+200, altCampo);
+                campoDePesquisa.setLocation(campoX-200, campoY);
+            }
+            
         }
         else{
-            campoDePesquisa.setSize(largCampo-200, altCampo);
-            campoDePesquisa.setLocation(campoX+200, campoY);
+            if(campoDePesquisa.getText().trim().equals("")){
+                campoDePesquisa.setSize(largCampo-200, altCampo);
+                campoDePesquisa.setLocation(campoX+200, campoY);
+            }
         }
     }
     
@@ -451,6 +465,9 @@ public class ServicosView extends javax.swing.JDialog {
         meurootpane.getRootPane().getActionMap().put("DELETE", new AbstractAction("DELETE") {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(servicosDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
                 controller.removerServico();
             }
         });

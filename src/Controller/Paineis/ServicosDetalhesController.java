@@ -241,6 +241,7 @@ public class ServicosDetalhesController extends ServicosController{
         
     }
     
+    @Override
     public void sairTela(){
         alterarLocalizacaoViews(false);
     }

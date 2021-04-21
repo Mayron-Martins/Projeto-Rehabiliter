@@ -289,11 +289,13 @@ public class ServicosDetalhes extends javax.swing.JDialog {
     }//GEN-LAST:event_nomeServicoActionPerformed
 
     private void comboPeriodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboPeriodoMouseClicked
-        comboPeriodo.setEnabled(true);
-        campoOutroTipo.setText("Outro");
-        campoOutroTipo.setEnabled(false);
-        campoDias.setEnabled(false);
-        comboDias.setEnabled(false);
+        if(!botaoEditar.isVisible()){
+            comboPeriodo.setEnabled(true);
+            campoOutroTipo.setText("Outro");
+            campoOutroTipo.setEnabled(false);
+            campoDias.setEnabled(false);
+            comboDias.setEnabled(false);
+        }
     }//GEN-LAST:event_comboPeriodoMouseClicked
 
     private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed

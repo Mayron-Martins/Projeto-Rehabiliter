@@ -38,7 +38,6 @@ public class TableCriator {
             this.tableEndAlunoseClientes();
             this.tableClientes();
             this.tableFuncionarios();
-            this.tableEndFuncionarios();
             this.tableEmpresa();
             this.tableEndEmpresa();
             this.tableProdutos();
@@ -149,24 +148,6 @@ public class TableCriator {
                 + "telasPermitidas VARCHAR(20) NULL,"
                 + "status VARCHAR(10) NULL,"
                 + "situacao VARCHAR(15) NULL"
-                + ") ON [Funcionarios];");
-    }
-    
-    //Criação da tabela de Endereço dos Funcionários
-    private void tableEndFuncionarios() throws SQLException{
-        telaDeInicio.mudartexto("Criando tabela de Endereço F...");
-        telaDeInicio.mudarPercentual();
-        this.gerarStatement().execute("CREATE TABLE tblEndFuncionarios("
-                + "codEndFuncionarios INT IDENTITY(1,1) PRIMARY KEY," // É gerado um código único de endereço de funcionário
-                + "codFuncionario INT NOT NULL,"  //Associação do endereço ao funcionário.
-                + "logradouro VARCHAR(50) NULL,"
-                + "bairro VARCHAR(25) NULL,"
-                + "numero VARCHAR(10) NULL,"
-                + "complemento VARCHAR(50) NULL,"
-                + "referencia VARCHAR(50) NULL,"
-                + "cidade VARCHAR(20) NULL,"
-                + "estado CHAR(2) NULL,"
-                + "CEP VARCHAR(10) NULL"
                 + ") ON [Funcionarios];");
     }
     

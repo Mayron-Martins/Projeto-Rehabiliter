@@ -53,6 +53,13 @@ public abstract class Pessoa {
         this.datadenascimento = converter.getSqlDate(datadenascimento);
     }
     
+    public Pessoa(int codBanco, String telefone, String celular, String email){
+        this.codBanco = codBanco;
+        this.telefone = telefone;
+        this.celular = celular;
+        this.email = email;
+    }
+    
     //___________________________________________________________________________
     //CONSTRUTORES PARA LOGAR
     public Pessoa(String usuario) {

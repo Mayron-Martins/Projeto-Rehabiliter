@@ -228,6 +228,7 @@ public class TurmasDetalhesController extends TurmasController{
         
     }
     
+    @Override
     public void sairTela(){
         alterarLocalizacaoViews(false);
     }

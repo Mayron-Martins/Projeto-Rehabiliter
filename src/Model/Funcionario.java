@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -41,8 +42,28 @@ public class Funcionario extends Pessoa{
         this.situacao = situacao;
     }
     
+    public Funcionario(int codBanco, String nome, String cargo, String situacao){
+        super(codBanco);
+        this.nome = nome;
+        this.cargo = cargo;
+        this.situacao = situacao;
+    }
     
+    public Funcionario(int codBanco, String nome, String cpf, Date nascimento, String cargo, BigDecimal salario){
+        super(codBanco);
+        this.nome = nome;
+        this.cpf = cpf;
+        ConversaodeDataParaPadraoDesignado converter = new ConversaodeDataParaPadraoDesignado();
+        this.datadenascimento = converter.getSqlDate(datadenascimento);
+        this.cargo = cargo;
+        this.salario = new BigDecimal(salario.toString());
+    }
     
+    public Funcionario(int codBanco, String telefone, String celular, String email, String usuario, String senha){
+        super(codBanco, telefone, celular, email);
+        this.usuario = usuario;
+        this.senha = senha;
+    }
     
     
     //***************************************************************************

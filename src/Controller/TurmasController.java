@@ -18,6 +18,8 @@ import Model.Funcionario;
 import Model.auxiliar.LogAçoesFuncionario;
 import Model.auxiliar.Planos;
 import Model.auxiliar.Turmas;
+import View.LoginFuncionario;
+import View.LoginGerente;
 import View.TurmasView;
 import java.util.ArrayList;
 import java.util.Date;
@@ -172,13 +174,13 @@ public class TurmasController {
         }
     }
     
-    protected LogAçoesFuncionario setarLog(String acao, String descricao){
+    protected Funcionario setarLog(String acao, String descricao){
         ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
             if(funcionarios!=null){
             Funcionario funcionario = funcionarios.get(0);
             Date dataEvento = new Date();
             LogAçoesFuncionario logAcao = new LogAçoesFuncionario(funcionario.getCodBanco(), dataEvento, acao, descricao);
-            return logAcao;
+            return funcionario;
         }
             return null;
     }
@@ -210,6 +212,20 @@ public class TurmasController {
                 view.exibeMensagem("Sucesso!");
                 listarTurmas();
             }
+        }
+    }
+    
+    public void sairTela(){
+        funcionarioDao.atualizarStatusAll();
+        Funcionario funcionario = this.setarLog("Saída do Sistema", null);
+        view.getParent().dispose();
+        if(funcionario==null||!funcionario.getCargo().equals("Gerente")){
+            LoginFuncionario jump = new LoginFuncionario();
+            jump.setVisible(true);
+        }
+        else{
+            LoginGerente jump = new LoginGerente();
+            jump.setVisible(true);
         }
     }
     

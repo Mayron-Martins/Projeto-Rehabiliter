@@ -7,11 +7,9 @@ package Controller.adicionais;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
-import Dao.EnderecoFuncionarioDao;
 import Dao.FuncionarioDao;
 import Dao.TableCriatorPosInput;
 import Model.Funcionario;
-import Model.auxiliar.EnderecoFuncionario;
 import View.LoginGerente;
 import View.RegistrodeGerente;
 import java.math.BigDecimal;
@@ -25,7 +23,6 @@ import java.util.Date;
 public class AdicionarGerenteController {
     private final RegistrodeGerente view;
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
-    private final EnderecoFuncionarioDao endereco = new EnderecoFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     private final LoginGerente loginView = new LoginGerente();
@@ -47,16 +44,6 @@ public class AdicionarGerenteController {
         BigDecimal salario = new BigDecimal("0"); //Seta setado em 0 reais
         String cargo = "Gerente";
         
-        //dados do Endereço
-        int codEndereco = 1;
-        String logradouro = "";
-        String bairro = "";
-        String numero = "";
-        String cidade = "";
-        String estado = "";
-        String cep = "";
-        String complemento = "";
-        String referencia = "";
         
         String telasPermitidas = "1,2,3,4,5,6,7,8,9,10";
         String status = "Inativo";
@@ -64,7 +51,6 @@ public class AdicionarGerenteController {
         
         //Cria os tipos Aluno, Endereco e Matricula com os dados
         Funcionario funcionario = new Funcionario(nome, cpf, "", "", celular, "", dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status, situacao);
-        EnderecoFuncionario endereco = new EnderecoFuncionario(logradouro, bairro, numero, complemento, referencia, cidade, estado, cep);
         
         //Verifica se não há dados irregulares antes de colocar na tabela
         if(nome==null||dataNascimento==null|| verificarSenha() ||cpf.equals("   .   .   -  ")){
@@ -72,7 +58,7 @@ public class AdicionarGerenteController {
         }
         
         else{
-            funcionarioDao.inserirDados(funcionario, endereco);
+            funcionarioDao.inserirDados(funcionario);
             criarTabelas.tableLogdeAcoesdoFunc();
             view.exibeMensagem("Sucesso!");
             this.loginView.setVisible(true);

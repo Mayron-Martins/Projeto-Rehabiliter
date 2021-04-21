@@ -8,7 +8,6 @@ package Dao;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
 import Controller.auxiliar.LogsSystem;
 import Model.Funcionario;
-import Model.auxiliar.EnderecoFuncionario;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -25,12 +24,11 @@ public class FuncionarioDao extends Conexao{
     private final String atualizar = "UPDATE ";
     private final String remover = "DELETE FROM ";
     private final String selecionarTudo = "SELECT * FROM ";
-    private final EnderecoFuncionarioDao enderecoDao = new EnderecoFuncionarioDao();
     private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
     
     
     //Inserir dados na tabela Alunos
-    public void inserirDados (Funcionario funcionario, EnderecoFuncionario endereco){
+    public void inserirDados (Funcionario funcionario){
         try{
             //Adicionando aluno
             String inFuncionario = inserir.concat("tblFuncionarios("
@@ -57,7 +55,6 @@ public class FuncionarioDao extends Conexao{
             statement.close();
 
             //Adicionando endereco e matrícula do aluno
-            enderecoDao.inserirDadosEmEnderecoFuncionario(endereco);
         } catch (SQLException ex) {
             gerarLog(ex);
         }
@@ -69,37 +66,83 @@ public class FuncionarioDao extends Conexao{
     public void atualizarDados(Funcionario funcionario){
         try{
             String inFuncionario = atualizar.concat("tblFuncionarios "
-                    + "SET nome = ?, cpf = ?, rg = ?, telefone=?, celular=?, salario=?, telasPermitidas=? where codFuncionario = ?");
+                    + "SET telefone=?, celular=?, email=? where codFuncionario = ?");
 
             PreparedStatement statement = gerarStatement(inFuncionario);
-            statement.setString(1, funcionario.getNome());
-            statement.setString(2, funcionario.getCpf());
-            statement.setString(3, funcionario.getRg());
-            statement.setString(4, funcionario.getTelefone());
-            statement.setString(5, funcionario.getCelular());
-            statement.setBigDecimal(6, new BigDecimal(funcionario.getSalario().toString()));
-            statement.setString(7, funcionario.getTelasPermitidas());
-            statement.setInt(8, funcionario.getCodBanco());
+            statement.setString(1, funcionario.getTelefone());
+            statement.setString(2, funcionario.getCelular());
+            statement.setString(3, funcionario.getEmail());
+            statement.setInt(4, funcionario.getCodBanco());
 
             statement.execute();
             statement.close();
         } catch (SQLException ex) {
             gerarLog(ex);
         }
-        
-
     }
     
-    public void atualizarTelasPermitidas(Funcionario funcionario){
+    public void atualizarContato(Funcionario funcionario){
+        try{
+            String inFuncionario = atualizar.concat("tblFuncionarios "
+                    + "SET nome = ?, cpf = ?, dataNascimento=?, cargo=?, salario=? where codFuncionario = ?");
+
+            PreparedStatement statement = gerarStatement(inFuncionario);
+            statement.setString(1, funcionario.getNome());
+            statement.setString(2, funcionario.getCpf());
+            statement.setDate(3, (Date) funcionario.getDatadenascimento());
+            statement.setString(4, funcionario.getCargo());
+            statement.setBigDecimal(5, new BigDecimal(funcionario.getSalario().toString()));
+            statement.setInt(6, funcionario.getCodBanco());
+
+            statement.execute();
+            statement.close();
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
+    }
+    
+    public void atualizarTelasPermitidas(int codBanco, String telasPermitidas){
         try{
             String inFuncionario = atualizar.concat("tblFuncionarios "
                     + "SET telasPermitidas=? WHERE codFuncionario = ?");
 
             PreparedStatement statement = gerarStatement(inFuncionario);
-            statement.setString(1, funcionario.getTelasPermitidas());
-            statement.setInt(2, funcionario.getCodBanco());
+            statement.setString(1, telasPermitidas);
+            statement.setInt(2, codBanco);
             statement.execute();
             statement.close();  
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
+    }
+    
+        public void atualizarSenha(Funcionario funcionario){
+        try{
+            String inFuncionario = atualizar.concat("tblFuncionarios "
+                    + "SET senha=? WHERE usuario = ?");
+
+            PreparedStatement statement = gerarStatement(inFuncionario);
+            statement.setString(1, funcionario.getSenha());
+            statement.setString(2, funcionario.getUsuario());
+            statement.execute();
+            statement.close();    
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
+    }
+    
+    public void atualizarSituacao(Funcionario funcionario){
+        try{
+            String inFuncionario = atualizar.concat("tblFuncionarios "
+                    + "SET nome=?, cargo=?, situacao=? WHERE codFuncionario = ?");
+
+            PreparedStatement statement = gerarStatement(inFuncionario);
+            statement.setString(1, funcionario.getNome());
+            statement.setString(2, funcionario.getCargo());
+            statement.setString(3, funcionario.getSituacao());
+            statement.setInt(4, funcionario.getCodBanco());
+            statement.execute();
+            statement.close();    
         } catch (SQLException ex) {
             gerarLog(ex);
         }
@@ -135,43 +178,9 @@ public class FuncionarioDao extends Conexao{
         }
     }
     
-    public void atualizarSenha(Funcionario funcionario){
-        try{
-            String inFuncionario = atualizar.concat("tblFuncionarios "
-                    + "SET senha=? WHERE usuario = ?");
-
-            PreparedStatement statement = gerarStatement(inFuncionario);
-            statement.setString(1, funcionario.getSenha());
-            statement.setString(2, funcionario.getUsuario());
-            statement.execute();
-            statement.close();    
-        } catch (SQLException ex) {
-            gerarLog(ex);
-        }
-    }
-    
-    public void atualizarSituacao(int codFuncionario, String situacao){
-        try{
-            String inFuncionario = atualizar.concat("tblFuncionarios "
-                    + "SET situacao=? WHERE codFuncionario = ?");
-
-            PreparedStatement statement = gerarStatement(inFuncionario);
-            statement.setString(1, situacao);
-            statement.setInt(2, codFuncionario);
-            statement.execute();
-            statement.close();    
-        } catch (SQLException ex) {
-            gerarLog(ex);
-        }
-    }
-    
     //Remover Dados
     public void removerFuncionario(int codFuncionario){
         try{
-            //Removendo endereço e matricula do aluno
-            enderecoDao.removerEnderecoFuncionario(codFuncionario);
-
-
             //Removendo Alunos
             String inAlunos = remover.concat("tblFuncionarios WHERE codFuncionario = ?");
 
@@ -243,6 +252,29 @@ public class FuncionarioDao extends Conexao{
            return null;
        }
        return funcionariosBuscados;
+    }
+    
+    public ArrayList <String> selecionarCargos(){
+        try{
+            ArrayList <String> cargos = new ArrayList();
+            PreparedStatement statement = gerarStatement("SELECT DISTINCT cargo FROM tblFuncionarios ORDER BY cargo ASC");
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            boolean next = resultSet.next();
+            
+            if(!next){
+                return null;
+            }
+            
+            do{
+                cargos.add(resultSet.getString("cargo")); 
+            }while(resultSet.next());
+
+            return cargos;
+        }catch(SQLException ex){
+            gerarLog(ex);
+            return null;
+        } 
     }
     
     //Gerar arquivo com o log de erro, caso haja

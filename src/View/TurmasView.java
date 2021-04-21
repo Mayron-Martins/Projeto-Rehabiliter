@@ -12,6 +12,7 @@ import Controller.auxiliar.FormatacaodeCamposRestritos;
 import View.Paineis.PainelAjuda;
 import View.Paineis.TurmasDetalhes;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -157,6 +158,11 @@ public class TurmasView extends javax.swing.JDialog {
         });
         getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, 50, 40));
 
+        campoDePesquisa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                campoDePesquisaFocusLost(evt);
+            }
+        });
         campoDePesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 campoDePesquisaMouseEntered(evt);
@@ -311,7 +317,9 @@ public class TurmasView extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoAjudaActionPerformed
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
-        controllerDetalhes.selecionarTabela();
+        if(!turmasDetalhes.isVisible()){
+            controllerDetalhes.selecionarTabela();
+        }
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void campoDePesquisaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDePesquisaMouseExited
@@ -321,6 +329,10 @@ public class TurmasView extends javax.swing.JDialog {
     private void campoDePesquisaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDePesquisaMouseEntered
         aumentarPesquisa(true);
     }//GEN-LAST:event_campoDePesquisaMouseEntered
+
+    private void campoDePesquisaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoDePesquisaFocusLost
+        aumentarPesquisa(false);
+    }//GEN-LAST:event_campoDePesquisaFocusLost
    
     /**
      * @param args the command line arguments
@@ -412,6 +424,11 @@ public class TurmasView extends javax.swing.JDialog {
     public PainelAjuda getPainelAjuda() {
         return painelAjuda;
     }
+
+    public Frame getParent() {
+        return parent;
+    }
+    
     
     private void setarBotaoEditar(boolean visible, int y){
         
@@ -440,14 +457,19 @@ public class TurmasView extends javax.swing.JDialog {
         int altCampo = campoDePesquisa.getHeight();
         
         if(aumentar){
-            campoDePesquisa.setSize(largCampo+200, altCampo);
-            campoDePesquisa.setLocation(campoX, campoY);
-            botaobuscar.setLocation(botaoX+200, botaoY);
+            if(campoDePesquisa.getSize().width<260){
+                campoDePesquisa.setSize(largCampo+200, altCampo);
+                campoDePesquisa.setLocation(campoX, campoY);
+                botaobuscar.setLocation(botaoX+200, botaoY);
+            }
         }
         else{
-            campoDePesquisa.setSize(largCampo-200, altCampo);
-            campoDePesquisa.setLocation(campoX, campoY);
-            botaobuscar.setLocation(botaoX-200, botaoY);
+            if(campoDePesquisa.getText().trim().equals("")){
+                campoDePesquisa.setSize(largCampo-200, altCampo);
+                campoDePesquisa.setLocation(campoX, campoY);
+                botaobuscar.setLocation(botaoX-200, botaoY);
+            }
+            
         }
     }
     
@@ -529,7 +551,7 @@ public class TurmasView extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
                 if(showConfirmDialog == JOptionPane.YES_OPTION){
-                    parent.dispose();
+                    controller.sairTela();
                 }
             }
         });
