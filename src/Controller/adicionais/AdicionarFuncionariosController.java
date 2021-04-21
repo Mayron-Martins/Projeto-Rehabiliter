@@ -47,7 +47,11 @@ public class AdicionarFuncionariosController {
         String usuario = cpf;
         String senha = new String(view.getCampoSenha().getPassword());
         BigDecimal salario = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoSalario().getText()).toString());
-        String cargo = view.getCampoCargo().getText();
+        String cargo = view.getComboCargos().getSelectedItem().toString();
+        if(view.getCampoNovoTipo().isEnabled()){
+            cargo = view.getCampoNovoTipo().getText();
+        }
+        
         String email = view.getCampoEmail().getText();
 
 
@@ -59,7 +63,7 @@ public class AdicionarFuncionariosController {
         Funcionario funcionario = new Funcionario(nome, cpf, "", telefone, celular, email, dataNascimento, usuario, senha, salario, cargo, telasPermitidas, status, situacao);
         
         //Verifica se não há dados irregulares antes de colocar na tabela
-        if(nome==null||dataNascimento==null|| verificarSenha() ||cpf.equals("   .   .   -  ")){
+        if(nome==null||dataNascimento==null|| verificarSenha() ||cpf.trim().equals("..-")||cargo.trim().equals("")){
         view.exibeMensagem("Valores Preenchidos Incorretamente!");
         }
 
@@ -80,15 +84,31 @@ public class AdicionarFuncionariosController {
     return view.getCampoSenha().getPassword()==null;
     }
     
+    public void listarCargos(){
+        ArrayList <String> cargos = funcionarioDao.selecionarCargos();
+        view.getComboCargos().removeAllItems();
+        view.getComboCargos().addItem("[Nenhum]");
+        if(cargos!=null){
+            for(String cargo : cargos){
+                view.getComboCargos().addItem(cargo);
+            }
+            view.getComboCargos().removeItem("Gerente");
+        }
+    }
+    
     public void limparCampos(){
         view.getCampoNome().setText("");
         view.getCampoCPF().setValue(null);
         view.getCampoTelefone().setValue(null);
         view.getCampoCelular().setValue(null);
-        view.getCampoCargo().setText("");
         view.getCampoSalario().setText("");
         view.getCampoSenha().setText("");
         view.getCampoNascimento().setDate(null);
+        listarCargos();
+        view.getComboCargos().setSelectedIndex(0);
+        view.getComboCargos().setEnabled(true);
+        view.getCampoNovoTipo().setText("Outro");
+        view.configsIniciais(false);
     }
     
     private void gerarLog(Throwable erro){

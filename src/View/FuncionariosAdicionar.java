@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -47,9 +48,9 @@ public class FuncionariosAdicionar extends javax.swing.JDialog {
         controller = new AdicionarFuncionariosController(this);
         botaoConfirmar.setBackground(new Color(0,0,0,0));
         botaofechar.setBackground(new Color(0,0,0,0));
-        comboFuncionarios.setVisible(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
         this.teclasDeAtalho();
+        configsIniciais(false);
     }
 
     /**
@@ -71,13 +72,21 @@ public class FuncionariosAdicionar extends javax.swing.JDialog {
         campoSenha = new javax.swing.JPasswordField();
         campoNome = new javax.swing.JTextField();
         campoEmail = new javax.swing.JTextField();
-        comboFuncionarios = new javax.swing.JComboBox<>();
-        campoCargo = new javax.swing.JTextField();
+        comboCargos = new javax.swing.JComboBox<>();
+        painelNovoTipo = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        campoNovoTipo = new javax.swing.JTextField();
+        checkExibirSenha = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botaoConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/cadastroalunos/botaoConfirmar.png"))); // NOI18N
@@ -126,9 +135,44 @@ public class FuncionariosAdicionar extends javax.swing.JDialog {
         getContentPane().add(campoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 230, 30));
         getContentPane().add(campoEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, 140, 30));
 
-        comboFuncionarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
-        getContentPane().add(comboFuncionarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 280, 160, 30));
-        getContentPane().add(campoCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 280, 160, 30));
+        comboCargos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
+        comboCargos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboCargosMouseClicked(evt);
+            }
+        });
+        comboCargos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboCargosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(comboCargos, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 280, 160, 30));
+
+        painelNovoTipo.setBackground(new java.awt.Color(157, 197, 188));
+        painelNovoTipo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel9.setText("Novo Tipo");
+        painelNovoTipo.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        campoNovoTipo.setText("Outro");
+        campoNovoTipo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoNovoTipoMouseClicked(evt);
+            }
+        });
+        painelNovoTipo.add(campoNovoTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 150, 30));
+
+        getContentPane().add(painelNovoTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 260, -1, 60));
+
+        checkExibirSenha.setText("Exibir Senha");
+        checkExibirSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkExibirSenhaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(checkExibirSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 360, -1, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios/cadastro/fundo.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -145,6 +189,35 @@ public class FuncionariosAdicionar extends javax.swing.JDialog {
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
         controller.adicionarFuncionario();
     }//GEN-LAST:event_botaoConfirmarActionPerformed
+
+    private void campoNovoTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoNovoTipoMouseClicked
+        painelNovoCargo(true);
+    }//GEN-LAST:event_campoNovoTipoMouseClicked
+
+    private void comboCargosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboCargosMouseClicked
+        painelNovoCargo(false);
+    }//GEN-LAST:event_comboCargosMouseClicked
+
+    private void comboCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCargosActionPerformed
+        if(comboCargos.getSelectedIndex()==0){
+            painelNovoTipo.setVisible(true);
+        }
+        else{
+            painelNovoTipo.setVisible(false);
+        }
+    }//GEN-LAST:event_comboCargosActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        controller.listarCargos();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void checkExibirSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkExibirSenhaActionPerformed
+        if(checkExibirSenha.isSelected()){
+            campoSenha.setEchoChar('\u0000');
+        }else{
+            campoSenha.setEchoChar('\u2022');
+        }
+    }//GEN-LAST:event_checkExibirSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,24 +265,31 @@ public class FuncionariosAdicionar extends javax.swing.JDialog {
     private javax.swing.JButton botaoConfirmar;
     private javax.swing.JButton botaofechar;
     private javax.swing.JFormattedTextField campoCPF;
-    private javax.swing.JTextField campoCargo;
     private javax.swing.JFormattedTextField campoCelular;
     private javax.swing.JTextField campoEmail;
     private com.toedter.calendar.JDateChooser campoNascimento;
     private javax.swing.JTextField campoNome;
+    private javax.swing.JTextField campoNovoTipo;
     private javax.swing.JFormattedTextField campoSalario;
     private javax.swing.JPasswordField campoSenha;
     private javax.swing.JFormattedTextField campoTelefone;
-    private javax.swing.JComboBox<String> comboFuncionarios;
+    private javax.swing.JCheckBox checkExibirSenha;
+    private javax.swing.JComboBox<String> comboCargos;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel painelNovoTipo;
     // End of variables declaration//GEN-END:variables
 
     public JFormattedTextField getCampoCPF() {
         return campoCPF;
     }
 
-    public JTextField getCampoCargo() {
-        return campoCargo;
+    public JTextField getCampoNovoTipo() {
+        return campoNovoTipo;
+    }
+
+    public JComboBox<String> getComboCargos() {
+        return comboCargos;
     }
 
     public JFormattedTextField getCampoCelular() {
@@ -248,6 +328,22 @@ public class FuncionariosAdicionar extends javax.swing.JDialog {
 
     public void exibeMensagem(String mensagem) {
       JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    private void painelNovoCargo(boolean novoCargo){
+        comboCargos.setEnabled(!novoCargo);
+        campoNovoTipo.setEnabled(novoCargo);
+        if(novoCargo){
+            campoNovoTipo.setText("");
+        }else{
+            campoNovoTipo.setText("Outro");
+        }   
+    }
+    
+    public void configsIniciais(boolean enable){
+        painelNovoTipo.setVisible(enable);
+        campoNovoTipo.setEnabled(enable);
+        checkExibirSenha.setSelected(enable);
     }
     
     private void teclasDeAtalho() {
