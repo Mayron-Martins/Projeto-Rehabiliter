@@ -20,19 +20,21 @@ public class Gastos {
     private String formaPagamento;
     private BigDecimal valorGasto;
     private Date dataCadastro;
+    private String status;
     private long chaveTransacao;
 
-    public Gastos(String motivo, float quantidade, String formaPagamento, BigDecimal valorGasto, Date dataCadastro) {
+    public Gastos(String motivo, float quantidade, String formaPagamento, BigDecimal valorGasto, Date dataCadastro, String status) {
         this.motivo = motivo;
         this.quantidade = quantidade;
         this.formaPagamento = formaPagamento;
         this.valorGasto = valorGasto;
         ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();    
         this.dataCadastro = converterData.getSqlDate(dataCadastro);
+        this.status = status;
         this.chaveTransacao = converterData.dataEHoraCodificada();
     }
 
-    public Gastos(int codBanco, String motivo, float quantidade, String formaPagamento, BigDecimal valorGasto, Date dataCadastro, long chaveTransacao) {
+    public Gastos(int codBanco, String motivo, float quantidade, String formaPagamento, BigDecimal valorGasto, Date dataCadastro, String status, long chaveTransacao) {
         this.codBanco = codBanco;
         this.motivo = motivo;
         this.quantidade = quantidade;
@@ -40,6 +42,7 @@ public class Gastos {
         this.valorGasto = valorGasto;
         ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();    
         this.dataCadastro = converterData.getSqlDate(dataCadastro);
+        this.status = status;
         this.chaveTransacao = chaveTransacao;
     }
 
@@ -66,6 +69,12 @@ public class Gastos {
     public Date getDataCadastro() {
         return dataCadastro;
     }
+
+    public String getStatus() {
+        return status;
+    }
+    
+    
 
     public long getChaveTransacao() {
         return chaveTransacao;

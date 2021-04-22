@@ -172,7 +172,7 @@ public class FuncionariosDetalhes extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(11, 13, 138));
         jLabel6.setText("Nascimento");
-        painelDados.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, -1, -1));
+        painelDados.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(11, 13, 138));
@@ -185,13 +185,13 @@ public class FuncionariosDetalhes extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        painelDados.add(campoCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 170, 30));
-        painelDados.add(campoNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 170, 30));
+        painelDados.add(campoCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 170, 30));
+        painelDados.add(campoNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 170, 30));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(11, 13, 138));
         jLabel7.setText("Cargo");
-        painelDados.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+        painelDados.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
 
         comboCargos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
         comboCargos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -204,12 +204,12 @@ public class FuncionariosDetalhes extends javax.swing.JDialog {
                 comboCargosActionPerformed(evt);
             }
         });
-        painelDados.add(comboCargos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
+        painelDados.add(comboCargos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 170, 30));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(11, 13, 138));
         jLabel8.setText("CPF");
-        painelDados.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        painelDados.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
         painelNovoTipo.setBackground(new java.awt.Color(157, 197, 188));
         painelNovoTipo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -227,7 +227,7 @@ public class FuncionariosDetalhes extends javax.swing.JDialog {
         });
         painelNovoTipo.add(campoNovoTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 170, 30));
 
-        painelDados.add(painelNovoTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 170, 60));
+        painelDados.add(painelNovoTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 170, 60));
         painelDados.add(campoSalario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 160, 30));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -243,12 +243,12 @@ public class FuncionariosDetalhes extends javax.swing.JDialog {
         checkAlteracoesContatos.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
         checkAlteracoesContatos.setText("Há alterações não salvas");
         painelContato.add(checkAlteracoesContatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
-        painelContato.add(campoEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 370, 30));
+        painelContato.add(campoEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 370, 30));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(11, 13, 138));
         jLabel13.setText("Senha");
-        painelContato.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+        painelContato.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
 
         try {
             campoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
@@ -273,12 +273,12 @@ public class FuncionariosDetalhes extends javax.swing.JDialog {
         jLabel12.setForeground(new java.awt.Color(11, 13, 138));
         jLabel12.setText("Telefone");
         painelContato.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
-        painelContato.add(campoSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 180, 30));
+        painelContato.add(campoSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 180, 30));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(11, 13, 138));
         jLabel14.setText("E-mail");
-        painelContato.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        painelContato.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
         checkExibirSenha.setText("Exibir Senha");
         checkExibirSenha.addActionListener(new java.awt.event.ActionListener() {
@@ -286,7 +286,7 @@ public class FuncionariosDetalhes extends javax.swing.JDialog {
                 checkExibirSenhaActionPerformed(evt);
             }
         });
-        painelContato.add(checkExibirSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, -1, 30));
+        painelContato.add(checkExibirSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, -1, 30));
 
         jTabbedPane2.addTab("Contato", painelContato);
 

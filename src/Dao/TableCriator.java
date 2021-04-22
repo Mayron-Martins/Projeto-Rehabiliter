@@ -348,6 +348,7 @@ public class TableCriator {
                 + "formaPagamento VARCHAR(10) NOT NULL,"
                 + "valorGasto DECIMAL(16,2) NOT NULL,"
                 + "dataGasto DATE NOT NULL,"
+                + "status VARCHAR(10) NULL,"
                 + "chaveTransacao BIGINT PRIMARY KEY" //Chave gerada por meio de função data-hora codificada, utilizada para idenficação de itens comprados.
                 + ") ON [Transacoes];");
     }

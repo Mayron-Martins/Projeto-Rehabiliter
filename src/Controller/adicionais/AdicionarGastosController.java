@@ -43,7 +43,7 @@ public class AdicionarGastosController {
         this.view = view;
     }
     
-    public void adicionarEntrada(){
+    public void adicionarGasto(){
         try{
             //Dados Entrada
             int codGasto = (int) (verificar.verificarUltimo("tblGastos", "codGasto") +1);
@@ -52,14 +52,15 @@ public class AdicionarGastosController {
             BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
             float quantidade = quantidadeGrande.floatValue();
 
-            String formaPagamento = this.retornarFormaPagamento();
+            String formaPagamento = view.getComboSituacao().getSelectedItem().toString();
             BigDecimal valorGasto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
             Date dataCadastro = view.getCampoData().getDate();
+            String status = view.getComboSituacao().getSelectedItem().toString();
 
-            Gastos gasto = new Gastos(motivo, quantidade, formaPagamento, valorGasto, dataCadastro);
+            Gastos gasto = new Gastos(motivo, quantidade, formaPagamento, valorGasto, dataCadastro, status);
             DetOrcamentario orcamentario = new DetOrcamentario("Gastos", formaPagamento, valorGasto, dataCadastro, gasto.getChaveTransacao());
 
-            if(motivo.equals("")||quantidade==0||formaPagamento.equals("[Nenhum]")||valorGasto.compareTo(BigDecimal.ZERO)==0
+            if(motivo.trim().equals("")||quantidade==0||valorGasto.compareTo(BigDecimal.ZERO)==0
                     || dataCadastro == null){
                 view.exibeMensagem("Dados Preenchidos Incorretamente!");
             }
@@ -80,22 +81,6 @@ public class AdicionarGastosController {
             limparCampos();
         }
         
-    }
-    
-    private String retornarFormaPagamento(){
-        int valorSelecionado = view.getCampoFormaPagamento().getSelectedIndex();
-        
-        switch(valorSelecionado){
-            case 1:
-                return "Dinheiro";
-            case 2:
-                return "Boleto";
-            case 3:
-                return "Crédito";
-            case 4:
-                return "Débito";
-        }
-        return "[Nenhum]";
     }
     
     public void sairTela(){

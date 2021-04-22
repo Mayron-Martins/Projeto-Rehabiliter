@@ -69,6 +69,8 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
         campoValor = new JMoneyField();
         campoData = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        comboSituacao = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -95,10 +97,10 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
             }
         });
         getContentPane().add(botaoConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 330, 50));
-        getContentPane().add(campoReferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 200, 150, 30));
-        getContentPane().add(campoQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(473, 200, 60, 30));
+        getContentPane().add(campoReferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 200, 130, 30));
+        getContentPane().add(campoQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, 60, 30));
 
-        campoFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
+        campoFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
         getContentPane().add(campoFormaPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 130, 30));
         getContentPane().add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 280, 90, 30));
         getContentPane().add(campoData, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 280, 130, 30));
@@ -107,6 +109,14 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
         jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setText("R$");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 284, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel5.setText("Status");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 170, -1, -1));
+
+        comboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Pago" }));
+        getContentPane().add(comboSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 200, 130, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodecontradc.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -121,7 +131,7 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoFecharActionPerformed
 
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
-        controller.adicionarEntrada();
+        controller.adicionarGasto();
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     /**
@@ -174,8 +184,10 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField campoQuantidade;
     private javax.swing.JTextField campoReferencia;
     private javax.swing.JFormattedTextField campoValor;
+    private javax.swing.JComboBox<String> comboSituacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
     public void exibeMensagem(String mensagem) {
       JOptionPane.showMessageDialog(null, mensagem);
@@ -201,6 +213,10 @@ public class FinanceiroPlanodeContraAdc extends javax.swing.JDialog {
         return campoValor;
     }
 
+    public JComboBox<String> getComboSituacao() {
+        return comboSituacao;
+    }
+    
     public Frame getParent() {
         return parent;
     }

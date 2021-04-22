@@ -7,7 +7,6 @@ package Controller;
 
 import Controller.auxiliar.ConversaoDeDinheiro;
 import Controller.auxiliar.ConversaodeDataParaPadraoDesignado;
-import Dao.EnderecoFuncionarioDao;
 import Dao.FuncionarioDao;
 import Dao.LogAçoesFuncionarioDao;
 import Dao.ProdutosDao;
@@ -32,7 +31,6 @@ public class ProdutosController {
     private final ProdutosView view;
     private final DefaultTableModel tabelaDeProdutos;
     private final ProdutosDao produtosDao = new ProdutosDao();
-    private final EnderecoFuncionarioDao enderecoDao = new EnderecoFuncionarioDao();
     private final FuncionarioDao funcionarioDao = new FuncionarioDao();
     private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
     private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();

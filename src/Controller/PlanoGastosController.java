@@ -12,15 +12,12 @@ import Dao.FuncionarioDao;
 import Dao.GastosDao;
 import Dao.LogAçoesFuncionarioDao;
 import Model.Funcionario;
-import Model.auxiliar.DetOrcamentario;
 import Model.auxiliar.Gastos;
 import Model.auxiliar.LogAçoesFuncionario;
 import View.FinanceiroPlanodeContra;
 import View.LoginFuncionario;
 import View.LoginGerente;
 import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,10 +63,12 @@ public class PlanoGastosController {
     //Parte Detalhada
     private void setarTabelasDetalhadas(){
         int tipoSelecionado = view.getComboTipos().getSelectedIndex();
-        ArrayList <Gastos> gastos = this.pegarGastosNoPeriodo();
-        
+        String tipo = "LIKE 'Pagamento Salarial%'";
+        ArrayList <Gastos> gastos;
         switch(tipoSelecionado){
             case 0:
+                tipo = "NOT "+tipo;
+                gastos = this.pegarGastosNoPeriodo(tipo);
                 if(gastos!=null){
                    this.setarGastosDetalhados(gastos);
                 }
@@ -77,26 +76,31 @@ public class PlanoGastosController {
                    view.exibeMensagem("Sem Dados de Gastos");
                    limparTabelaGastos();
                 }
-
-            break; 
+            break;
+            
+            case 1:
+                gastos = this.pegarGastosNoPeriodo(tipo);
+                if(gastos!=null){
+                   this.setarGastosDetalhados(gastos);
+                }
+                else{
+                   view.exibeMensagem("Sem Dados de Gastos");
+                   limparTabelaGastos();
+                }
+            break;
         }
+        
+        
+        
+        
     }
     
     //Setar Entradas Detalhadas
     private void setarGastosDetalhados(ArrayList <Gastos> gastos){
         limparTabelaGastos();
-        for(int linhas=0; linhas<gastos.size(); linhas++){
-            int codEntrada = gastos.get(linhas).getCodBanco();
-            String motivo = gastos.get(linhas).getMotivo();
-            float quantidade = gastos.get(linhas).getQuantidade();
-            String formaPagamento = gastos.get(linhas).getFormaPagamento();
-            BigDecimal valor = new BigDecimal(gastos.get(linhas).getValorGasto().toString());
-            String dataGasto = converterData.parseDate(gastos.get(linhas).getDataCadastro());
-            
-            Object[] dadosDaTabela = {codEntrada, motivo, quantidade, formaPagamento, valor, dataGasto};
+        for(Gastos gasto : gastos){
+            Object[] dadosDaTabela = {gasto.getCodBanco(), gasto.getMotivo(), gasto.getValorGasto(), gasto.getDataCadastro()};
             tabelaGastos.addRow(dadosDaTabela);
-            view.getComboPagamentoGasto().setEnabled(true);
-            view.getComboPagamentoGasto().setSelectedItem(formaPagamento);
         }
     }
     //__________________________________________________________________________
@@ -105,10 +109,14 @@ public class PlanoGastosController {
     //Setar Tabelas Resumidamente
     private void setarTabelasResumidas(){
         int tipoSelecionado = view.getComboTipos().getSelectedIndex();
-        ArrayList <Gastos> gastos = this.pegarGastosNoPeriodo();
+        String tipo = "LIKE 'Pagamento Salarial%'";
+        ArrayList <Gastos> gastos;
         
         switch(tipoSelecionado){
+            //Contra-Serviços sem Pagamento de Funcionários
             case 0:
+                tipo = "NOT "+tipo;
+                gastos = this.pegarGastosNoPeriodo(tipo);
                 if(gastos!=null){
                    this.setarGastosResumidos(gastos);
                 }
@@ -116,7 +124,17 @@ public class PlanoGastosController {
                    view.exibeMensagem("Sem Dados de Gastos");
                    limparTabelaGastos();
                 }
-
+            break;
+            
+            case 1:
+                gastos = this.pegarGastosNoPeriodo(tipo);
+                if(gastos!=null){
+                   this.setarGastosResumidos(gastos);
+                }
+                else{
+                   view.exibeMensagem("Sem Dados de Gastos");
+                   limparTabelaGastos();
+                }
             break;
         }
     }
@@ -128,12 +146,10 @@ public class PlanoGastosController {
         
         String codGasto = "Diversos";
         String motivo = "Diversas";
-        float quantidade = 0;
-        BigDecimal valor = new BigDecimal("0");
-        String formaPagamento = this.pegarFormaPagamento();
-        if(view.getComboPagamento().getSelectedIndex()==0){
-            formaPagamento = "Diversas";
+        if(view.getComboTipos().getSelectedIndex()==1){
+            motivo = "Pagamento Salarial";
         }
+        BigDecimal valor = new BigDecimal("0");
         
         for(int linhas=0; linhas<gastos.size(); linhas++){
             Date dataGasto = gastos.get(linhas).getDataCadastro();
@@ -142,154 +158,100 @@ public class PlanoGastosController {
             Date dataEntradaBanco = converterData.parseDate(converterData.parseDate(dataGasto));
             Date dataProxima;
             Date dataAnterior;
+            
+            //Verifica se há uma próxima data
             if(linhas!=gastos.size()-1){dataProxima = gastos.get(linhas+1).getDataCadastro();}
             else{
                 LocalDate data = converterData.conversaoLocalforDate(dataEntradaBanco).plusDays(1);
                 dataProxima = converterData.conversaoLocalforDate(data);}
             
+            //Verifica se há uma data anterior
             if(linhas!=0){dataAnterior= gastos.get(linhas-1).getDataCadastro();}
             else{
                 LocalDate data = converterData.conversaoLocalforDate(dataEntradaBanco).plusDays(-1);
                 dataAnterior = converterData.conversaoLocalforDate(data);}
             
+            //Se a data do gasto for diferente da anterior, o valor é zerado
             if(dataGasto.compareTo(dataAnterior)!=0){
-                quantidade = 0;
                 valor = new BigDecimal("0"); 
             }
-            
-            quantidade += gastos.get(linhas).getQuantidade();
+            //Caso contrário é somado ao montante
             valor = valor.add(gastos.get(linhas).getValorGasto());
             
+            //Se minha próxima data for diferente da atual, seto o valor na tabela, caso contrário, segue a repetição
             if(dataGasto.compareTo(dataProxima)!=0){
             String dataGastoFormatada = converterData.parseDate(dataGasto);
-            Object[] dadosDaTabela = {codGasto, motivo, quantidade, formaPagamento, valor, dataGastoFormatada};
+            Object[] dadosDaTabela = {codGasto, motivo, valor, dataGastoFormatada};
             tabelaGastos.addRow(dadosDaTabela);
-            view.getComboPagamentoGasto().setEnabled(false);
             }
         }
     }
     
     //Pega os Gastos em determinado Período
-    private ArrayList <Gastos> pegarGastosNoPeriodo(){
+    private ArrayList <Gastos> pegarGastosNoPeriodo(String tipo){
         LocalDate dataAtual = LocalDate.now();
-        Date dataBanco = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
-        Date dataPassada;
+        //Captura a data Atual e a torna principal
+        Date dataPrincipal = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
         
         int periodo = view.getComboPeriodo().getSelectedIndex();
+        //Verifica se há algum data específica e torna ela a principal
         if(view.getCampoDataEspecífica().isEnabled()&&view.getCampoDataEspecífica().getDate()!=null){
             periodo = 0;
             Date dataCampo = view.getCampoDataEspecífica().getDate();
-            dataBanco = converterData.getSqlDate(dataCampo);
+            dataPrincipal = converterData.getSqlDate(dataCampo);
         }
         
-        String formaPagamento = this.pegarFormaPagamento();
+        Date dataPassada = dataPrincipal;
         
+        String formaPagamento = view.getComboPagamento().getSelectedItem().toString();
+        
+        //Se não houver uma data específica ou diária retorna o correspondente àquele período
         switch(periodo){
-            case 0:
-                if(formaPagamento.equals("nenhuma")){
-                    return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataBanco+"' AND '"+dataBanco+"';");
-                }else{
-                    return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE  formaPagamento = '"+formaPagamento+"' AND dataGasto BETWEEN '"+dataBanco+"' AND '"+dataBanco+"';");
-                } 
-                
-            case 1:   
-                if(formaPagamento.equals("nenhuma")){
-                    return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataAtual+"' AND '"+dataAtual+"';");
-                }else{
-                    return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE  formaPagamento = '"+formaPagamento+"' AND dataGasto BETWEEN '"+dataAtual+"' AND '"+dataAtual+"';");
-                }                
-
             case 2:
-            dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusWeeks(1)));    
-                if(formaPagamento.equals("nenhuma")){
-                    return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
-                }else{
-                return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE formaPagamento = '"+formaPagamento+"' AND dataGasto BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
-                }      
-
+                dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusWeeks(1)));
+            break;
+            
             case 3:
-                dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusMonths(1)));    
-                if(formaPagamento.equals("nenhuma")){
-                    return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
-                }else{
-                return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE formaPagamento = '"+formaPagamento+"' AND dataGasto BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
-                }  
-
+                dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusMonths(1)));  
+            break;
+            
             case 4:
-                dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusMonths(6)));    
-                if(formaPagamento.equals("nenhuma")){
-                    return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
-                }else{
-                return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE formaPagamento = '"+formaPagamento+"' AND dataGasto BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
-                }  
-
+                dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusMonths(6))); 
+            break;
+            
             case 5:
-                dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusYears(1)));    
-                if(formaPagamento.equals("nenhuma")){
-                    return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
-                }else{
-                return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE formaPagamento = '"+formaPagamento+"' AND dataGasto BETWEEN '"+dataPassada+"' AND '"+dataAtual+"';");
-                }  
+                dataPassada = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual.minusYears(1)));
+            break;
         }
         
-        return null;
-    }
-    
-    //Pega a forma de pagamento do combo Forma de Pagamento e retorna um valor
-    private String pegarFormaPagamento(){
-        int comboPagamento = view.getComboPagamento().getSelectedIndex();
-        
-        switch(comboPagamento){
-            case 1:
-            return "Dinheiro";
-            
-            case 2:
-            if(view.getComboTipos().getSelectedIndex()==0){
-                return "Boleto";
-            }
-            return "Dinheiro";
-            
-            case 3:
-            return "Crédito";
-
-            case 4:
-            return "Débito";
-        }
-        return "nenhuma";
+        if(formaPagamento.equals("[Nenhum]")){
+            return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataPassada+"' AND '"+dataPrincipal+"' AND motivo "+tipo+";");
+        }else{
+            return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE  formaPagamento = '"+formaPagamento+"' AND dataGasto BETWEEN '"+dataPassada+"' AND '"+dataPrincipal+"' AND motivo "+tipo+";");
+        }         
     }
     
    //Fim das Funções de Setar Tabela
     //Editar Entradas
     public void editarEntradas(){
         if(view.getBotaoVDetalhada().isEnabled()){
-            if(view.getPainelGastos().isVisible()){
-                if(view.getTabelaGastos().getSelectedRow()!=-1){
-                    int linhaSelecionada = view.getTabelaGastos().getSelectedRow();
-                    
-                    int codGasto = Integer.parseInt(tabelaGastos.getValueAt(linhaSelecionada, 0).toString());
-                    String motivo = tabelaGastos.getValueAt(linhaSelecionada, 1).toString();
-                    BigDecimal quantGrande = converterDinheiro.converterParaBigDecimal(tabelaGastos.getValueAt(linhaSelecionada, 2).toString());
-                    float quantidade = quantGrande.floatValue();
-                    String formaPagamento = this.retornarFormaPagamento();
-                    BigDecimal valorGasto = converterDinheiro.converterParaBigDecimal(view.getTabelaGastos().getValueAt(linhaSelecionada, 4).toString());
-                    
-                    Gastos gasto = new Gastos(codGasto, motivo, quantidade, formaPagamento, valorGasto, null);
-                    DetOrcamentario orcamentario = new DetOrcamentario(0, "Gastos", formaPagamento, valorGasto, null, this.chaveGasto(codGasto));
-                    if(motivo==null||quantidade==0||formaPagamento.equals("[Nenhum]")||valorGasto.compareTo(BigDecimal.ZERO)==0){
-                        view.exibeMensagem("Valores Inválidos!");
-                    }
-                    else{
-                        gastosDao.atualizarDados(gasto);
-                        orcamentarioDao.atualizarDados(orcamentario);
-                        
-                        
-                        this.setarLog("Edição de Gasto", "Editou o gasto "+motivo);
-                        
-                        view.exibeMensagem("Sucesso!");
-                        setarTabelas();
-                    }                   
-                }else{view.exibeMensagem("Selecione uma Linha na Tabela Gastos!");}
-            }else{view.exibeMensagem("Permitida Edição Somente de Gastos!");}
+            if(view.getTabelaGastos().getSelectedRow()!=-1){
+                int linhaSelecionada = view.getTabelaGastos().getSelectedRow();
+
+                int codGasto = Integer.parseInt(tabelaGastos.getValueAt(linhaSelecionada, 0).toString());
+                String motivo = tabelaGastos.getValueAt(linhaSelecionada, 1).toString();
+
+                if(motivo==null){
+                    view.exibeMensagem("Valores Inválidos!");
+                }
+                else{
+                    gastosDao.atualizarMotivo(codGasto, motivo);     
+                    this.setarLog("Edição de Gasto", "Editou o gasto "+motivo);
+
+                    view.exibeMensagem("Sucesso!");
+                    setarTabelas();
+                }                   
+            }else{view.exibeMensagem("Selecione uma Linha na Tabela Gastos!");}
         }else{view.exibeMensagem("Selecione a Exibição Detalhada");}
     }
     
@@ -315,22 +277,6 @@ public class PlanoGastosController {
                 }else{view.exibeMensagem("Selecione uma Linha na Tabela Gastos!");}
             }else{view.exibeMensagem("Permitida Remoção Somente de Gastos!");}
         }else{view.exibeMensagem("Selecione a Exibição Detalhada");}
-    }
-    
-        private String retornarFormaPagamento(){
-        int valorSelecionado = view.getComboPagamentoGasto().getSelectedIndex();
-        
-        switch(valorSelecionado){
-            case 1:
-                return "Dinheiro";
-            case 2:
-                return "Boleto";
-            case 3:
-                return "Crédito";
-            case 4:
-                return "Débito";
-        }
-        return "[Nenhum]";
     }
         
     private long chaveGasto(int codGasto){

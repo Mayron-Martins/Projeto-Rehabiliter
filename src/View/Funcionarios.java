@@ -516,6 +516,17 @@ public class Funcionarios extends javax.swing.JDialog {
             }
         });
         
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl shift E"), "EDITARVARIOSFUNCIONARIOS");
+        meurootpane.getRootPane().getActionMap().put("EDITARVARIOSFUNCIONARIOS", new AbstractAction("EDITARVARIOSFUNCIONARIOS") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(funcionariosDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
+                controller.editarVariosFuncionario();
+            }
+        });
+        
         //Encerrar Contrato
         meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl F"), "ENCERRARREABRIR");
         meurootpane.getRootPane().getActionMap().put("ENCERRARREABRIR", new AbstractAction("ENCERRARREABRIR") {

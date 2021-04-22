@@ -6,23 +6,16 @@
 package View;
 
 import Controller.PlanoGastosController;
-import Controller.auxiliar.JMoneyField;
 import View.Paineis.PainelAjuda;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractAction;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
@@ -37,7 +30,6 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final PlanoGastosController controller;
     private final FinanceiroPlanodeContraAdc telaContraAdicionar;
-    private final JComboBox comboPagamentoGasto = new JComboBox();
     private final PainelAjuda painelAjuda;
 
     /**
@@ -60,7 +52,6 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         btnAdicionar.setBackground(new Color(0,0,0,0));
         btnAplicar.setBackground(new Color(0,0,0,0));
         botaoVDetalhada.setBackground(new Color(0,0,0,0));
-        btnEditar.setBackground(new Color(0,0,0,0));
         btnRemover.setBackground(new Color(0,0,0,0));
         botaoVResumida.setBackground(new Color(0,0,0,0));
         this.setarComponentes();
@@ -68,10 +59,6 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         
         //Fechar a tela quando pressionar ESC
         this.teclasDeAtalho();
-        this.setarComponentesTabela();
-        
-        
-        
     }
 
     /**
@@ -95,11 +82,11 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         botaoVResumida = new javax.swing.JButton();
         botaoVDetalhada = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
         botaoAjuda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(873, 700));
         setUndecorated(true);
         setResizable(false);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -126,14 +113,14 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
 
             },
             new String [] {
-                "codBanco", "Referência", "Quantidade", "Forma de Pagamento", "Valor", "Data"
+                "codBanco", "Referência", "Valor", "Data"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, false
+                false, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -168,7 +155,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         });
         getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 140, -1));
 
-        comboTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contra-Serviços" }));
+        comboTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contra-Serviços", "Pagamento Salarial" }));
         comboTipos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboTiposActionPerformed(evt);
@@ -187,7 +174,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 btnAplicarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 290, 146, 35));
+        getContentPane().add(btnAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 146, 35));
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnRemover.png"))); // NOI18N
         btnRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -197,7 +184,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 btnRemoverActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, 146, 34));
+        getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 146, 34));
 
         botaoVResumida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumido.png"))); // NOI18N
         botaoVResumida.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -227,17 +214,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 btnAdicionarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 146, 34));
-
-        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnEditar.png"))); // NOI18N
-        btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEditar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnEditarHover.png"))); // NOI18N
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 146, 34));
+        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 146, 34));
 
         botaoAjuda.setBackground(new java.awt.Color(255, 255, 255));
         botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -314,10 +291,6 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         controller.removerEntradas();
     }//GEN-LAST:event_btnRemoverActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        controller.editarEntradas();
-    }//GEN-LAST:event_btnEditarActionPerformed
-
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
          if(evt.getKeyCode() == KeyEvent.VK_ENTER){
@@ -378,7 +351,6 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private javax.swing.JButton botaoVResumida;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnAplicar;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnRemover;
     private com.toedter.calendar.JDateChooser campoDataEspecífica;
     private javax.swing.JComboBox<String> comboPagamento;
@@ -405,10 +377,6 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         botaoVDetalhada.setEnabled(false);
         
         campoDataEspecífica.setEnabled(false);
-    }
-
-    public JComboBox getComboPagamentoGasto() {
-        return comboPagamentoGasto;
     }
 
     public JButton getBotaoVDetalhada() {
@@ -451,15 +419,6 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         return painelAjuda;
     }
     
-    
-    
-    private void setarComponentesTabela(){
-        comboPagamentoGasto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
-        
-        tabelaGastos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JMoneyField()));
-        tabelaGastos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboPagamentoGasto));
-        tabelaGastos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JMoneyField()));
-    }
     
     private void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();

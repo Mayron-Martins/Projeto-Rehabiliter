@@ -35,16 +35,17 @@ public class GastosDao extends Conexao{
         try{
             //Adicionando Turma
             String inGastos = inserir.concat("tblGastos("
-                    + "motivo, quantidade, formaPagamento, valorGasto, dataGasto, chaveTransacao)"
+                    + "motivo, quantidade, formaPagamento, valorGasto, dataGasto, status, chaveTransacao)"
                     + "VALUES("
-                    + "?,?,?,?,?,?);");
+                    + "?,?,?,?,?,?,?);");
             PreparedStatement statement = gerarStatement(inGastos);
             statement.setString(1, gasto.getMotivo());
             statement.setFloat(2, gasto.getQuantidade());
             statement.setString(3, gasto.getFormaPagamento());
             statement.setBigDecimal(4, new BigDecimal(gasto.getValorGasto().toString()));
             statement.setDate(5, (Date) gasto.getDataCadastro());
-            statement.setLong(6, gasto.getChaveTransacao());
+            statement.setString(6, gasto.getStatus());
+            statement.setLong(7, gasto.getChaveTransacao());
             statement.execute();
             statement.close();
         } catch (SQLException ex) {
@@ -72,8 +73,40 @@ public class GastosDao extends Conexao{
         } catch (SQLException ex) {
             gerarLog(ex);
         }
-        
-        
+    }
+    
+    public void atualizarStatus(int codBanco, String status){
+        try{
+            //atualizando a tabela de turmas
+            String inGastos = atualizar.concat("tblGastos "
+                    + "SET status=? where codGasto = ?");
+
+            PreparedStatement statement = gerarStatement(inGastos);
+            statement.setString(1, status);
+            statement.setInt(2, codBanco);
+
+            statement.execute();
+            statement.close();
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
+    }
+    
+    public void atualizarMotivo(int codBanco, String motivo){
+        try{
+            //atualizando a tabela de turmas
+            String inGastos = atualizar.concat("tblGastos "
+                    + "SET motivo = ? where codGasto = ?");
+
+            PreparedStatement statement = gerarStatement(inGastos);
+            statement.setString(1, motivo);
+            statement.setInt(2, codBanco);
+
+            statement.execute();
+            statement.close();
+        } catch (SQLException ex) {
+            gerarLog(ex);
+        }
     }
     
     //Remover Dados
@@ -114,9 +147,10 @@ public class GastosDao extends Conexao{
             String formaPagamento = resultset.getString("formaPagamento");
             BigDecimal valorGasto = new BigDecimal(resultset.getBigDecimal("valorGasto").toString());
             Date dataCadastro = resultset.getDate("dataGasto");
+            String status = resultset.getString("status");
             long chaveTransacao = resultset.getLong("chaveTransacao");
 
-            Gastos gasto = new Gastos(codGasto, motivo, quantidade, formaPagamento, valorGasto, dataCadastro, chaveTransacao);
+            Gastos gasto = new Gastos(codGasto, motivo, quantidade, formaPagamento, valorGasto, dataCadastro, status, chaveTransacao);
 
             gastos.add(gasto);
              }while(resultset.next());
