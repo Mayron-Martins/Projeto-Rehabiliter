@@ -59,14 +59,15 @@ public class GastosDao extends Conexao{
         try{
             //atualizando a tabela de turmas
             String inGastos = atualizar.concat("tblGastos "
-                    + "SET motivo = ?, quantidade = ?, formaPagamento = ?, valorGasto=? where codGasto = ?");
+                    + "SET motivo = ?, quantidade = ?, formaPagamento = ?, valorGasto=?, dataGasto=? where codGasto = ?");
 
             PreparedStatement statement = gerarStatement(inGastos);
             statement.setString(1, gasto.getMotivo());
             statement.setFloat(2, gasto.getQuantidade());
             statement.setString(3, gasto.getFormaPagamento());
             statement.setBigDecimal(4, new BigDecimal(gasto.getValorGasto().toString()));
-            statement.setInt(5, gasto.getCodBanco());
+            statement.setDate(5, (Date) gasto.getDataCadastro());
+            statement.setInt(6, gasto.getCodBanco());
 
             statement.execute();
             statement.close();

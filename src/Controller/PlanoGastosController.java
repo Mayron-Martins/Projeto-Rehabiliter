@@ -28,14 +28,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Mayro
  */
 public class PlanoGastosController {
-    private final FinanceiroPlanodeContra view;
-    private final DefaultTableModel tabelaGastos;
-    private final GastosDao gastosDao = new GastosDao();
-    private final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
-    private final FuncionarioDao funcionarioDao = new FuncionarioDao();
-    private final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
-    private final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
-    private final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
+    protected final FinanceiroPlanodeContra view;
+    protected final DefaultTableModel tabelaGastos;
+    protected final GastosDao gastosDao = new GastosDao();
+    protected final DetOrcamentarioDao orcamentarioDao = new DetOrcamentarioDao();
+    protected final FuncionarioDao funcionarioDao = new FuncionarioDao();
+    protected final LogAçoesFuncionarioDao logDao = new LogAçoesFuncionarioDao();
+    protected final ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+    protected final ConversaoDeDinheiro converterDinheiro = new ConversaoDeDinheiro();
 
     public PlanoGastosController(FinanceiroPlanodeContra view) {
         this.view = view;
@@ -61,7 +61,7 @@ public class PlanoGastosController {
     }
     
     //Parte Detalhada
-    private void setarTabelasDetalhadas(){
+    protected void setarTabelasDetalhadas(){
         int tipoSelecionado = view.getComboTipos().getSelectedIndex();
         String tipo = "LIKE 'Pagamento Salarial%'";
         ArrayList <Gastos> gastos;
@@ -96,7 +96,7 @@ public class PlanoGastosController {
     }
     
     //Setar Entradas Detalhadas
-    private void setarGastosDetalhados(ArrayList <Gastos> gastos){
+    protected void setarGastosDetalhados(ArrayList <Gastos> gastos){
         limparTabelaGastos();
         for(Gastos gasto : gastos){
             Object[] dadosDaTabela = {gasto.getCodBanco(), gasto.getMotivo(), gasto.getValorGasto(), gasto.getDataCadastro()};
@@ -107,7 +107,7 @@ public class PlanoGastosController {
     
     //Parte Resumida
     //Setar Tabelas Resumidamente
-    private void setarTabelasResumidas(){
+    protected void setarTabelasResumidas(){
         int tipoSelecionado = view.getComboTipos().getSelectedIndex();
         String tipo = "LIKE 'Pagamento Salarial%'";
         ArrayList <Gastos> gastos;
@@ -141,7 +141,7 @@ public class PlanoGastosController {
     
     
     //Setar Entradas Resumidamente
-    private void setarGastosResumidos(ArrayList <Gastos> gastos){
+    protected void setarGastosResumidos(ArrayList <Gastos> gastos){
         limparTabelaGastos();
         
         String codGasto = "Diversos";
@@ -188,7 +188,7 @@ public class PlanoGastosController {
     }
     
     //Pega os Gastos em determinado Período
-    private ArrayList <Gastos> pegarGastosNoPeriodo(String tipo){
+    protected ArrayList <Gastos> pegarGastosNoPeriodo(String tipo){
         LocalDate dataAtual = LocalDate.now();
         //Captura a data Atual e a torna principal
         Date dataPrincipal = converterData.getSqlDate(converterData.conversaoLocalforDate(dataAtual));
@@ -233,7 +233,7 @@ public class PlanoGastosController {
     
    //Fim das Funções de Setar Tabela
     //Editar Entradas
-    public void editarEntradas(){
+    public void editarGasto(){
         if(view.getBotaoVDetalhada().isEnabled()){
             if(view.getTabelaGastos().getSelectedRow()!=-1){
                 int linhaSelecionada = view.getTabelaGastos().getSelectedRow();
@@ -241,7 +241,7 @@ public class PlanoGastosController {
                 int codGasto = Integer.parseInt(tabelaGastos.getValueAt(linhaSelecionada, 0).toString());
                 String motivo = tabelaGastos.getValueAt(linhaSelecionada, 1).toString();
 
-                if(motivo==null){
+                if(motivo.trim().equals("")){
                     view.exibeMensagem("Valores Inválidos!");
                 }
                 else{
@@ -250,13 +250,14 @@ public class PlanoGastosController {
 
                     view.exibeMensagem("Sucesso!");
                     setarTabelas();
+                    view.getTabelaGastos().addRowSelectionInterval(linhaSelecionada, linhaSelecionada);
                 }                   
             }else{view.exibeMensagem("Selecione uma Linha na Tabela Gastos!");}
         }else{view.exibeMensagem("Selecione a Exibição Detalhada");}
     }
     
     //Remover entradas
-    public void removerEntradas(){
+    public void removerGasto(){
         if(view.getBotaoVDetalhada().isEnabled()){
             if(view.getPainelGastos().isVisible()){
                 if(view.getTabelaGastos().getSelectedRow()!=-1){
@@ -279,7 +280,7 @@ public class PlanoGastosController {
         }else{view.exibeMensagem("Selecione a Exibição Detalhada");}
     }
         
-    private long chaveGasto(int codGasto){
+    protected long chaveGasto(int codGasto){
         Gastos gasto = gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE codGasto = "+codGasto).get(0);
         return gasto.getChaveTransacao();
     }
@@ -308,7 +309,7 @@ public class PlanoGastosController {
         view.getPainelAjuda().setVisible(true);
     }
         
-    private Funcionario setarLog(String acao, String descricao){
+    protected Funcionario setarLog(String acao, String descricao){
         ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE status = 'Ativo'");
         if(funcionarios!=null){
             Funcionario funcionario = funcionarios.get(0);

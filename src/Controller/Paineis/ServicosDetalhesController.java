@@ -41,6 +41,7 @@ public class ServicosDetalhesController extends ServicosController{
 
           inserirMetodoPagamento(servico);
 
+          viewSecundaria.trocaBotoes(false);
           if(!viewSecundaria.isVisible()){
               alterarLocalizacaoViews(true);
           }

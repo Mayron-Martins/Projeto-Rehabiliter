@@ -11,7 +11,6 @@ import Controller.auxiliar.LogsSystem;
 import View.Paineis.FuncionariosDetalhes;
 import View.Paineis.PainelAjuda;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;

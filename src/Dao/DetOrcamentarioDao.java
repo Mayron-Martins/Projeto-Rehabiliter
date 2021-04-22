@@ -53,13 +53,14 @@ public class DetOrcamentarioDao extends Conexao{
     public void atualizarDados(DetOrcamentario orcamentario){
         try{
             String inOrcamentarios = atualizar.concat("tblDetOrcamentario "
-                    + "SET formaPagamento = ?, valor=? where tipo = ? AND chave = ?");
+                    + "SET formaPagamento = ?, valor=?, dataCadastro=? where tipo = ? AND chave = ?");
 
             PreparedStatement statement = gerarStatement(inOrcamentarios);
             statement.setString(1, orcamentario.getFormaPagamento());
             statement.setBigDecimal(2, new BigDecimal(orcamentario.getValor().toString()));
-            statement.setString(3, orcamentario.getTipo());
-            statement.setLong(4, orcamentario.getChave());
+            statement.setDate(3, (Date) orcamentario.getDataCadastro());
+            statement.setString(4, orcamentario.getTipo());
+            statement.setLong(5, orcamentario.getChave());
 
             statement.execute();
             statement.close();

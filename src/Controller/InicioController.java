@@ -85,47 +85,37 @@ public class InicioController {
     
     
     private void verificarDataPagamento(LocalDate dataAgendada){
-        try{
-            //Verificar se está entre os dias 5 e 7
-            if(dataAgendada.getDayOfMonth()>=5&&dataAgendada.getDayOfMonth()<=7){
-                //Verificar se é um fim de semana
-                if(dataAgendada.getDayOfWeek()!=DayOfWeek.SATURDAY && dataAgendada.getDayOfWeek()!=DayOfWeek.SUNDAY){
-                    ArrayList <Funcionario> funcionarios = funcionariosDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE situacao != 'Desvinculado'");
-                    //Verificar se há funcionários habilitados
-                    if(funcionarios!=null){
-                        int codGasto= (int) (verificar.verificarUltimo("tblGastos", "codGasto") +1); 
-                        int codOrcamentario = (int) (verificar.verificarUltimo("tblDetOrcamentario", "codBanco")+1);                   
-                        String motivo, formaPagamento = "Dinheiro";
-                        Date dataCadastro = converterData.conversaoLocalforDate(dataAgendada);
+        //Verificar se está entre os dias 5 e 7
+        if(dataAgendada.getDayOfMonth()>=5&&dataAgendada.getDayOfMonth()<=7){
+            //Verificar se é um fim de semana
+            if(dataAgendada.getDayOfWeek()!=DayOfWeek.SATURDAY && dataAgendada.getDayOfWeek()!=DayOfWeek.SUNDAY){
+                ArrayList <Funcionario> funcionarios = funcionariosDao.pesquisarFuncionario("SELECT * FROM tblFuncionarios WHERE situacao != 'Desvinculado'");
+                //Verificar se há funcionários habilitados
+                if(funcionarios!=null){
 
-                        Gastos gasto;
-                        DetOrcamentario orcamentario;
-                        for(Funcionario funcionario : funcionarios){
-                            //Verificar se o salário não é zero
-                            if(funcionario.getSalario().compareTo(BigDecimal.ZERO)>0){
-                                motivo = "Pagamento Salarial do "+funcionario.getNome();
+                    String motivo, formaPagamento = "Dinheiro";
+                    Date dataCadastro = converterData.conversaoLocalforDate(dataAgendada);
 
-                                gasto = new Gastos(codGasto, motivo, 1, formaPagamento, funcionario.getSalario(), dataCadastro, codGasto);
-                                orcamentario = new DetOrcamentario(codOrcamentario, "Gastos", formaPagamento, funcionario.getSalario(), dataCadastro, gasto.getChaveTransacao());
+                    Gastos gasto;
+                    DetOrcamentario orcamentario;
+                    for(Funcionario funcionario : funcionarios){
+                        //Verificar se o salário não é zero
+                        if(funcionario.getSalario().compareTo(BigDecimal.ZERO)>0){
+                            motivo = "Pagamento Salarial do "+funcionario.getNome();
 
-                                gastosDao.inserirDados(gasto);
-                                orcamentarioDao.inserirDados(orcamentario);
-                                codGasto++; 
-                                codOrcamentario++;
-                            }
+                            gasto = new Gastos(motivo, 1, formaPagamento, funcionario.getSalario(), dataCadastro, "Pago");
+                            orcamentario = new DetOrcamentario("Gastos", formaPagamento, funcionario.getSalario(), dataCadastro, gasto.getChaveTransacao());
+
+                            gastosDao.inserirDados(gasto);
+                            orcamentarioDao.inserirDados(orcamentario);
                         }
                     }
                 }
-                else{
-                    verificarDataPagamento(dataAgendada.plusDays(1));
-                }
-            }  
-            
-            
-        } catch (SQLException ex) {
-            gerarLog(ex);
-        }
-        
+            }
+            else{
+                verificarDataPagamento(dataAgendada.plusDays(1));
+            }
+        }  
     }
     
     private boolean verificarFuncionarios(){

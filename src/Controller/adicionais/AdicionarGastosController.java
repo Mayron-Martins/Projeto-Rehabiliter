@@ -44,43 +44,35 @@ public class AdicionarGastosController {
     }
     
     public void adicionarGasto(){
-        try{
-            //Dados Entrada
-            int codGasto = (int) (verificar.verificarUltimo("tblGastos", "codGasto") +1);
-            String motivo = view.getCampoReferencia().getText();
+        //Dados Entrada
+        String motivo = view.getCampoReferencia().getText();
 
-            BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
-            float quantidade = quantidadeGrande.floatValue();
+        BigDecimal quantidadeGrande = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoQuantidade().getText()).toString());
+        float quantidade = quantidadeGrande.floatValue();
 
-            String formaPagamento = view.getComboSituacao().getSelectedItem().toString();
-            BigDecimal valorGasto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
-            Date dataCadastro = view.getCampoData().getDate();
-            String status = view.getComboSituacao().getSelectedItem().toString();
+        String formaPagamento = view.getComboSituacao().getSelectedItem().toString();
+        BigDecimal valorGasto = new BigDecimal(converterDinheiro.converterParaBigDecimal(view.getCampoValor().getText()).toString());
+        Date dataCadastro = view.getCampoData().getDate();
+        String status = view.getComboSituacao().getSelectedItem().toString();
 
-            Gastos gasto = new Gastos(motivo, quantidade, formaPagamento, valorGasto, dataCadastro, status);
-            DetOrcamentario orcamentario = new DetOrcamentario("Gastos", formaPagamento, valorGasto, dataCadastro, gasto.getChaveTransacao());
+        Gastos gasto = new Gastos(motivo, quantidade, formaPagamento, valorGasto, dataCadastro, status);
+        DetOrcamentario orcamentario = new DetOrcamentario("Gastos", formaPagamento, valorGasto, dataCadastro, gasto.getChaveTransacao());
 
-            if(motivo.trim().equals("")||quantidade==0||valorGasto.compareTo(BigDecimal.ZERO)==0
-                    || dataCadastro == null){
-                view.exibeMensagem("Dados Preenchidos Incorretamente!");
-            }
-            else{
-              //Adicionando no Banco
-              gastosDao.inserirDados(gasto);
-              orcamentarioDao.inserirDados(orcamentario);
-
-              
-            this.setarLog("Cadastro de Gasto", "Cadastrou o gasto "+motivo);
-                
-              view.exibeMensagem("Sucesso!");
-              limparCampos();
-            }
-        } catch (SQLException ex) {
-            gerarLog(ex);
-            view.exibeMensagem("Não foi possível salvar o Gasto corretamente!");
-            limparCampos();
+        if(motivo.trim().equals("")||quantidade==0||valorGasto.compareTo(BigDecimal.ZERO)==0
+                || dataCadastro == null){
+            view.exibeMensagem("Dados Preenchidos Incorretamente!");
         }
-        
+        else{
+          //Adicionando no Banco
+          gastosDao.inserirDados(gasto);
+          orcamentarioDao.inserirDados(orcamentario);
+
+
+        this.setarLog("Cadastro de Gasto", "Cadastrou o gasto "+motivo);
+
+          view.exibeMensagem("Sucesso!");
+          limparCampos();
+        }
     }
     
     public void sairTela(){

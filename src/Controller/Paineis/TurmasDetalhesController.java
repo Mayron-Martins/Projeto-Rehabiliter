@@ -47,6 +47,7 @@ public class TurmasDetalhesController extends TurmasController{
           
           inserirHorarios(horarios, turma.getHorario());
           
+          viewSecundaria.trocaBotoes(false);
           if(!viewSecundaria.isVisible()){
               alterarLocalizacaoViews(true);
           }

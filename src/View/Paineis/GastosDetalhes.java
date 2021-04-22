@@ -5,7 +5,9 @@
  */
 package View.Paineis;
 
+import Controller.Paineis.GastosDetalhesController;
 import Controller.auxiliar.JMoneyField;
+import View.FinanceiroPlanodeContra;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -16,13 +18,15 @@ import javax.swing.JTextField;
  * @author Mayro
  */
 public class GastosDetalhes extends javax.swing.JDialog {
-
+    private final GastosDetalhesController controller;
     /**
      * Creates new form GastosDetalhes
      */
-    public GastosDetalhes(java.awt.Frame parent, boolean modal) {
+    public GastosDetalhes(FinanceiroPlanodeContra planoContra, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        controller = new GastosDetalhesController(planoContra, this);
     }
 
     /**
@@ -35,6 +39,8 @@ public class GastosDetalhes extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        campoChaveTransacao = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         campoReferencia = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -51,15 +57,27 @@ public class GastosDetalhes extends javax.swing.JDialog {
         campoData = new com.toedter.calendar.JDateChooser();
         botaoEditar = new javax.swing.JButton();
         botaoConcluir = new javax.swing.JButton();
+        botaoSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(400, 700));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(157, 197, 188));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        campoChaveTransacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoChaveTransacaoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(campoChaveTransacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 380, 130, 30));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel10.setText("Chave Transação");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 360, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(11, 13, 138));
@@ -135,6 +153,18 @@ public class GastosDetalhes extends javax.swing.JDialog {
         });
         jPanel1.add(botaoConcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 580, 140, 50));
 
+        botaoSair.setBackground(new java.awt.Color(255, 51, 51));
+        botaoSair.setText("X");
+        botaoSair.setMaximumSize(new java.awt.Dimension(40, 25));
+        botaoSair.setMinimumSize(new java.awt.Dimension(40, 25));
+        botaoSair.setPreferredSize(new java.awt.Dimension(40, 25));
+        botaoSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSairActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 40, 25));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 700));
 
         pack();
@@ -149,8 +179,16 @@ public class GastosDetalhes extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
-        //controller.editarServico();
+        controller.editarGasto();
     }//GEN-LAST:event_botaoConcluirActionPerformed
+
+    private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
+        controller.sairTela();
+    }//GEN-LAST:event_botaoSairActionPerformed
+
+    private void campoChaveTransacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoChaveTransacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoChaveTransacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,7 +220,8 @@ public class GastosDetalhes extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                GastosDetalhes dialog = new GastosDetalhes(new javax.swing.JFrame(), true);
+                javax.swing.JFrame frame = new javax.swing.JFrame();
+                GastosDetalhes dialog = new GastosDetalhes(new FinanceiroPlanodeContra(frame, true), frame, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -197,12 +236,15 @@ public class GastosDetalhes extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoConcluir;
     private javax.swing.JButton botaoEditar;
+    private javax.swing.JButton botaoSair;
+    private javax.swing.JTextField campoChaveTransacao;
     private com.toedter.calendar.JDateChooser campoData;
     private javax.swing.JFormattedTextField campoQuantidade;
     private javax.swing.JTextField campoReferencia;
     private javax.swing.JFormattedTextField campoValor;
     private javax.swing.JComboBox<String> comboFormaPagamento;
     private javax.swing.JComboBox<String> comboStatus;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -237,6 +279,11 @@ public class GastosDetalhes extends javax.swing.JDialog {
     public JComboBox<String> getComboStatus() {
         return comboStatus;
     }
+
+    public JTextField getCampoChaveTransacao() {
+        return campoChaveTransacao;
+    }
+    
     
     public void trocaBotoes(boolean editar){
         botaoEditar.setVisible(!editar);
@@ -251,6 +298,7 @@ public class GastosDetalhes extends javax.swing.JDialog {
         campoQuantidade.setEditable(enable);
         campoValor.setEditable(enable);
         campoData.setEnabled(enable);
+        campoChaveTransacao.setEnabled(false);
     }
     
 }

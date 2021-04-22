@@ -82,6 +82,7 @@ public class FuncionariosController {
                         view.exibeMensagem("Sucesso!");
                         //Limpando Campos
                         listarFuncionarios();
+                        view.getTabelaFuncionarios().addRowSelectionInterval(linhaSelecionada, linhaSelecionada);
                     } 
                 }else{
                     view.exibeMensagem("Não é possível editar os dados de um Funcionário Desvinculado");

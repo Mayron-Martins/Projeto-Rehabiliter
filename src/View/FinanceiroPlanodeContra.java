@@ -5,7 +5,9 @@
  */
 package View;
 
+import Controller.Paineis.GastosDetalhesController;
 import Controller.PlanoGastosController;
+import View.Paineis.GastosDetalhes;
 import View.Paineis.PainelAjuda;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
@@ -29,7 +31,9 @@ import javax.swing.KeyStroke;
 public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private final java.awt.Frame parent;
     private final PlanoGastosController controller;
+    private final GastosDetalhesController controllerDetalhes;
     private final FinanceiroPlanodeContraAdc telaContraAdicionar;
+    private final GastosDetalhes gastosDetalhes;
     private final PainelAjuda painelAjuda;
 
     /**
@@ -43,11 +47,13 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         
         this.parent = parent;
         telaContraAdicionar= new FinanceiroPlanodeContraAdc(parent, false);
-         painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
+        painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
+        gastosDetalhes = new GastosDetalhes(this, parent, false);
         
         
         
         controller = new PlanoGastosController(this);
+        controllerDetalhes = new GastosDetalhesController(this, gastosDetalhes);
         botaoFechar.setBackground(new Color(0,0,0,0));
         btnAdicionar.setBackground(new Color(0,0,0,0));
         btnAplicar.setBackground(new Color(0,0,0,0));
@@ -83,6 +89,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         botaoVDetalhada = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
         botaoAjuda = new javax.swing.JButton();
+        botaoEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -107,7 +114,6 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
         getContentPane().add(campoDataEspecífica, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 120, -1));
 
-        tabelaGastos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaGastos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -134,13 +140,17 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         tabelaGastos.setFocusable(false);
         tabelaGastos.setGridColor(new java.awt.Color(255, 255, 255));
         tabelaGastos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaGastos.setRowHeight(25);
         tabelaGastos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaGastos.setShowVerticalLines(false);
         tabelaGastos.getTableHeader().setReorderingAllowed(false);
-        tabelaGastos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaGastosComponentHidden(evt);
+        tabelaGastos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaGastosMouseClicked(evt);
+            }
+        });
+        tabelaGastos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaGastosKeyReleased(evt);
             }
         });
         painelGastos.setViewportView(tabelaGastos);
@@ -228,6 +238,14 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         });
         getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 10, 30, 30));
 
+        botaoEditar.setText("...");
+        botaoEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEditarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 354, 20, 20));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodecontra.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -236,13 +254,11 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharActionPerformed
-        // TODO add your handling code here:
+        if(gastosDetalhes.isVisible()){
+            controllerDetalhes.sairTela();
+        }
         this.dispose();
     }//GEN-LAST:event_botaoFecharActionPerformed
-
-    private void tabelaGastosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaGastosComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaGastosComponentHidden
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
@@ -254,11 +270,17 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private void botaoVResumidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVResumidaMouseClicked
         botaoVResumida.setEnabled(true);
         botaoVDetalhada.setEnabled(false);
+        if(botaoEditar.isVisible()){
+            botaoEditar.setVisible(false);
+        }
     }//GEN-LAST:event_botaoVResumidaMouseClicked
 
     private void botaoVDetalhadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVDetalhadaMouseClicked
         botaoVDetalhada.setEnabled(true);
         botaoVResumida.setEnabled(false);
+        if(botaoEditar.isVisible()){
+            botaoEditar.setVisible(false);
+        }
     }//GEN-LAST:event_botaoVDetalhadaMouseClicked
 
     private void comboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeriodoActionPerformed
@@ -288,7 +310,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAplicarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        controller.removerEntradas();
+        controller.removerGasto();
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -301,6 +323,25 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
         controller.ajuda();
     }//GEN-LAST:event_botaoAjudaActionPerformed
+
+    private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
+        if(!gastosDetalhes.isVisible()){
+            controllerDetalhes.selecionarTabela();
+        }
+    }//GEN-LAST:event_botaoEditarActionPerformed
+
+    private void tabelaGastosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaGastosMouseClicked
+        controllerDetalhes.releasedTable();
+        if(tabelaGastos.getSelectedRow()!=-1&&botaoVDetalhada.isEnabled()){
+            setarBotaoEditar(true, evt.getYOnScreen());
+        }else{
+            setarBotaoEditar(false, 0);
+        }
+    }//GEN-LAST:event_tabelaGastosMouseClicked
+
+    private void tabelaGastosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaGastosKeyReleased
+        controllerDetalhes.releasedTable();
+    }//GEN-LAST:event_tabelaGastosKeyReleased
 
     /**
      * @param args the command line arguments
@@ -346,6 +387,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAjuda;
+    private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoVDetalhada;
     private javax.swing.JButton botaoVResumida;
@@ -365,6 +407,10 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
       JOptionPane.showMessageDialog(null, mensagem);
     }
     
+    public void mensagemCritica(String mensagem, String titulo){
+       JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.WARNING_MESSAGE);
+    }
+    
         private void setarComponentes(){
         //combos
         comboTipos.setSelectedIndex(0);
@@ -377,6 +423,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         botaoVDetalhada.setEnabled(false);
         
         campoDataEspecífica.setEnabled(false);
+        this.setarBotaoEditar(false, 0);
     }
 
     public JButton getBotaoVDetalhada() {
@@ -419,6 +466,23 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         return painelAjuda;
     }
     
+    private void setarBotaoEditar(boolean visible, int y){
+        
+        if(visible){
+            int cont=370;
+            while(cont<=670){
+                if(y>=cont&&y<cont+15){
+                    botaoEditar.setLocation(botaoEditar.getX(), cont-16);
+                    botaoEditar.setVisible(visible);
+                    break;
+                }
+                cont+=15;
+            }  
+        }
+        else{
+            botaoEditar.setVisible(false);
+        }
+    }
     
     private void teclasDeAtalho() {
         JRootPane meurootpane = getRootPane();
@@ -440,8 +504,10 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
             public void actionPerformed(ActionEvent e) {
                 int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Deseja Realmente encerrar esta sessão", "Nota", JOptionPane.YES_NO_OPTION);
                 if(showConfirmDialog == JOptionPane.YES_OPTION){
+                    if(gastosDetalhes.isVisible()){
+                        controllerDetalhes.sairTela();
+                    }
                     controller.sairTela();
-                    
                 }
             }
         });
@@ -451,9 +517,24 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         meurootpane.getRootPane().getActionMap().put("NOVO", new AbstractAction("NOVO") {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(gastosDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
                 telaContraAdicionar.setModal(true);
                 telaContraAdicionar.setLocationRelativeTo(null);
                 telaContraAdicionar.setVisible(true);
+            }
+        });
+        
+        //Editar Gasto
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ctrl E"), "EDITARGASTO");
+        meurootpane.getRootPane().getActionMap().put("EDITARGASTO", new AbstractAction("EDITARGASTO") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(gastosDetalhes.isVisible()){
+                    controllerDetalhes.sairTela();
+                }
+                controller.editarGasto();
             }
         });
     }

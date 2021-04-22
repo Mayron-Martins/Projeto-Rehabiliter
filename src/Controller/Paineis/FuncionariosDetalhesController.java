@@ -63,6 +63,8 @@ public class FuncionariosDetalhesController extends FuncionariosController{
             //Painel Permissões
             setarTelasPermitidas(funcionario);
             
+            viewSecundaria.trocaBotoes(false);
+            
             if(!viewSecundaria.isVisible()){
                 alterarLocalizacaoViews(true);
             }
