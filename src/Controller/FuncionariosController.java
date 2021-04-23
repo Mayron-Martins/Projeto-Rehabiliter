@@ -72,7 +72,7 @@ public class FuncionariosController {
                     Funcionario funcionario = new Funcionario(codFuncionario, nome, cargo, situacao);
 
                     //Inserindo Dados
-                    if(nome.equals("")){
+                    if(nome.trim().equals("")){
                         view.exibeMensagem("Campos Preenchidos Incorretamente");
                     } else{
                         funcionarioDao.atualizarSituacao(funcionario);

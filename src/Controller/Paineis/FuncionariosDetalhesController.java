@@ -129,7 +129,7 @@ public class FuncionariosDetalhesController extends FuncionariosController{
         
         Funcionario funcionario = new Funcionario(codBanco, nome, cpf, nascimento, cargo, salario);
         
-        if(!nome.trim().equals("")||nascimento!=null||!cargo.trim().equals("")){
+        if(nome.trim().equals("")||nascimento==null||cargo.trim().equals("")){
             return true;
         }else{
             funcionarioDao.atualizarDados(funcionario);
