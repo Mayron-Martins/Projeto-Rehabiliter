@@ -451,12 +451,12 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setText("Plano");
         jPanelCadastroFinal.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
-        jPanelCadastroFinal.add(campoValorMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 100, 32));
-        jPanelCadastroFinal.add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 100, 32));
+        jPanelCadastroFinal.add(campoValorMensal, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, 100, 32));
+        jPanelCadastroFinal.add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, 100, 32));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel27.setText("Valor Mensal");
-        jPanelCadastroFinal.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, 90, -1));
+        jPanelCadastroFinal.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 90, -1));
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setText("Data de Vencimento");
@@ -508,7 +508,7 @@ public class AlunosCadastro extends javax.swing.JDialog {
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel28.setText("Valor Total");
-        jPanelCadastroFinal.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, -1, -1));
+        jPanelCadastroFinal.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, -1, -1));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setText("Data Cadastro");
@@ -517,12 +517,12 @@ public class AlunosCadastro extends javax.swing.JDialog {
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(0, 102, 102));
         jLabel30.setText("R$");
-        jPanelCadastroFinal.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(596, 74, -1, -1));
+        jPanelCadastroFinal.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(595, 65, -1, -1));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(0, 102, 102));
         jLabel32.setText("R$");
-        jPanelCadastroFinal.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(456, 74, -1, -1));
+        jPanelCadastroFinal.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 65, -1, -1));
 
         getContentPane().add(jPanelCadastroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 150, 740, 490));
 

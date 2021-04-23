@@ -250,17 +250,7 @@ public class AdicionarAlunosController {
             String nomeServico = view.getComboPlano().getSelectedItem().toString();
             int codServico = Integer.parseInt(nomeServico.split("\\.")[0]);
             Servicos servico = this.buscarServico(codServico);
-            
-            String metodoDePagamento = servico.getFormaPagamento();
-            
-            BigDecimal valorContrato = null;
-            if(metodoDePagamento.equals("[Nenhuma]")){valorContrato = new BigDecimal(servico.getValor().toString());}
-            if(metodoDePagamento.equals("Dinheiro")){valorContrato = new BigDecimal(servico.getValorVista().toString());}
-            if(metodoDePagamento.equals("Boleto")){valorContrato = new BigDecimal(servico.getValorBoleto().toString());}
-            if(metodoDePagamento.equals("Cartão de Crédito")){valorContrato = new BigDecimal(servico.getValorPrazoCredito().toString());}
-            if(metodoDePagamento.equals("Cartão de Débito")){valorContrato = new BigDecimal(servico.getValorPrazoDebito().toString());}   
-            
-            view.getCampoValor().setText(valorContrato.toString());
+            view.getCampoValor().setText(servico.getValor().toString());
             this.setarValorMensal(servico);
         }
     }
@@ -296,24 +286,7 @@ public class AdicionarAlunosController {
     
     private void setarValorMensal(Servicos servicoContratado){
         BigDecimal periodDays = new BigDecimal(servicoContratado.getPeriodDays());
-        BigDecimal valorTotal = new BigDecimal(0);
-        
-        if(servicoContratado.getValor().compareTo(BigDecimal.ZERO)!=0){
-            valorTotal = servicoContratado.getValor();
-        }
-        if(servicoContratado.getValorBoleto().compareTo(BigDecimal.ZERO)!=0){
-            valorTotal = servicoContratado.getValorBoleto();
-        }
-        if(servicoContratado.getValorPrazoCredito().compareTo(BigDecimal.ZERO)!=0){
-            valorTotal = servicoContratado.getValorPrazoCredito();
-        }
-        if(servicoContratado.getValorPrazoDebito().compareTo(BigDecimal.ZERO)!=0){
-            valorTotal = servicoContratado.getValorPrazoDebito();
-        }
-        if(servicoContratado.getValorVista().compareTo(BigDecimal.ZERO)!=0){
-            valorTotal = servicoContratado.getValorVista();
-        }
-
+        BigDecimal valorTotal = servicoContratado.getValor();
         
         BigDecimal valorMensal = new BigDecimal(0);
         String mensal = periodDays.divide(new BigDecimal(30), 2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
