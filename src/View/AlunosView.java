@@ -149,7 +149,9 @@ public class AlunosView extends javax.swing.JDialog {
         planodefundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(873, 700));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(873, 700));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
