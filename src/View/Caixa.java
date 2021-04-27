@@ -94,6 +94,7 @@ public class Caixa extends javax.swing.JDialog {
         alternarClienteSemCadastro = new javax.swing.JRadioButton();
         alternarProdCodigo = new javax.swing.JRadioButton();
         alternarProdNome = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
         jPanelFormaDePagamento = new javax.swing.JPanel();
         campoParcelas = new FormatacaodeCamposRestritos();
         botaoConfirmar1 = new javax.swing.JButton();
@@ -137,9 +138,21 @@ public class Caixa extends javax.swing.JDialog {
         botaoAjuda = new javax.swing.JButton();
         campoSaldo = new JMoneyField();
         jLabel4 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
         Fundo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setBackground(new java.awt.Color(153, 153, 0));
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -188,6 +201,11 @@ public class Caixa extends javax.swing.JDialog {
             }
         });
         getContentPane().add(alternarProdNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 360, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Consolas", 0, 36)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Produto");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
 
         jPanelFormaDePagamento.setBackground(new java.awt.Color(0, 122, 185));
         jPanelFormaDePagamento.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -266,7 +284,7 @@ public class Caixa extends javax.swing.JDialog {
         });
         jPanelFormaDePagamento.add(btnFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        getContentPane().add(jPanelFormaDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 470, 410, 300));
+        getContentPane().add(jPanelFormaDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 580, 410, 300));
 
         campoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -278,7 +296,7 @@ public class Caixa extends javax.swing.JDialog {
         quantParcelas.setEditable(false);
         quantParcelas.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         quantParcelas.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(quantParcelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 550, 30, 20));
+        getContentPane().add(quantParcelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 540, 30, 20));
 
         botaoBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
         botaoBuscarCliente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
@@ -480,7 +498,7 @@ public class Caixa extends javax.swing.JDialog {
                 btnPlanoDePagamentoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnPlanoDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 580, 190, -1));
+        getContentPane().add(btnPlanoDePagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 570, 190, -1));
 
         botaoPagamentoMensalidade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnPagamentodeMensalidade.png"))); // NOI18N
         botaoPagamentoMensalidade.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -498,7 +516,7 @@ public class Caixa extends javax.swing.JDialog {
                 btnFinalizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 630, 160, -1));
+        getContentPane().add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 620, 160, -1));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/btnCancelar.png"))); // NOI18N
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -507,15 +525,15 @@ public class Caixa extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 680, 150, -1));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 670, 150, -1));
 
         campoVPago.setEditable(false);
         campoVPago.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(campoVPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 660, 95, 40));
+        getContentPane().add(campoVPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 650, 95, 40));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel8.setText("R$");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 660, 38, 40));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 650, 38, 40));
 
         campoVDesconto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         campoVDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -523,11 +541,11 @@ public class Caixa extends javax.swing.JDialog {
                 campoVDescontoKeyPressed(evt);
             }
         });
-        getContentPane().add(campoVDesconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 580, 95, 40));
+        getContentPane().add(campoVDesconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 570, 95, 40));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel7.setText("R$");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 580, 38, 40));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 570, 38, 40));
 
         campoVTroco.setEditable(false);
         campoVTroco.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -536,19 +554,19 @@ public class Caixa extends javax.swing.JDialog {
                 campoVTrocoActionPerformed(evt);
             }
         });
-        getContentPane().add(campoVTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 490, 95, 40));
+        getContentPane().add(campoVTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 490, 95, 40));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel6.setText("R$");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 490, 38, 40));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 490, 38, 40));
 
         campoVTotal.setEditable(false);
         campoVTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(campoVTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 490, 95, 40));
+        getContentPane().add(campoVTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 490, 95, 40));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel2.setText("R$");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 490, 38, 40));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 490, 38, 40));
 
         botaoAjuda.setBackground(new java.awt.Color(255, 255, 255));
         botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -571,7 +589,58 @@ public class Caixa extends javax.swing.JDialog {
         jLabel4.setText("SALDO");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1045, 17, -1, -1));
 
-        Fundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/caixa/fundo.jpg"))); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Consolas", 0, 36)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Produtos Adicionados");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, -1, -1));
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Cliente com Cadastro");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("TOTAL");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 470, -1, -1));
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Nome");
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, -1, -1));
+
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Cliente sem Cadastro");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Consolas", 0, 36)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Cliente");
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
+
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Código");
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 320, -1, -1));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Quantidade");
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 340, -1, -1));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("VALOR PAGO");
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 630, -1, -1));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("TROCO");
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 470, -1, -1));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("DESCONTO");
+        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 550, -1, -1));
+
+        Fundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/CAIXAFINAL.png"))); // NOI18N
         getContentPane().add(Fundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -857,12 +926,24 @@ public class Caixa extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField campoVTotal;
     private javax.swing.JFormattedTextField campoVTroco;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelFormaDePagamento;
     private javax.swing.JScrollPane jScrollPane1;

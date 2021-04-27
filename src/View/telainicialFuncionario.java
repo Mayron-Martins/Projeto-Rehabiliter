@@ -382,7 +382,7 @@ public class telainicialFuncionario extends javax.swing.JFrame {
         menuFuncionario.add(botaoSair1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 930, 270, 52));
 
         planodefundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/menu-principal-funcionárioFundo.png"))); // NOI18N
-        menuFuncionario.add(planodefundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, -1));
+        menuFuncionario.add(planodefundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, 1000));
 
         getContentPane().add(menuFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 

@@ -68,6 +68,11 @@ public class FinanceiroPlanodeEntradasAdc extends javax.swing.JDialog {
         campoFormaPagamento = new javax.swing.JComboBox<>();
         campoValor = new JMoneyField();
         campoData = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -108,7 +113,32 @@ public class FinanceiroPlanodeEntradasAdc extends javax.swing.JDialog {
         getContentPane().add(campoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 280, 90, 30));
         getContentPane().add(campoData, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 280, 130, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodecontradc.jpg"))); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel4.setText("Referência");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel6.setText("Quantidade");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel7.setText("Tipo");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel8.setText("Valor");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel3.setText("Data");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 250, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/adicionarNova.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -179,6 +209,11 @@ public class FinanceiroPlanodeEntradasAdc extends javax.swing.JDialog {
     private javax.swing.JTextField campoReferencia;
     private javax.swing.JFormattedTextField campoValor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     // End of variables declaration//GEN-END:variables
     
     public void exibeMensagem(String mensagem) {

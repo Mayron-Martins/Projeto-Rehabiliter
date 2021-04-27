@@ -90,6 +90,10 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         btnAdicionar = new javax.swing.JButton();
         botaoAjuda = new javax.swing.JButton();
         botaoEditar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -246,7 +250,27 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         });
         getContentPane().add(botaoEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 354, 20, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodecontra.jpg"))); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel2.setText("TIPOS");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel3.setText("PAGAMENTO");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 270, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel4.setText("VERSÕES");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 210, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel5.setText("PERÍODO");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/planodecontraservicosFINAL.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -399,6 +423,10 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JComboBox<String> comboTipos;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane painelGastos;
     private javax.swing.JTable tabelaGastos;
     // End of variables declaration//GEN-END:variables

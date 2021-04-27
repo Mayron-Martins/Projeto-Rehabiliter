@@ -79,6 +79,7 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         campoDataEspecífica = new com.toedter.calendar.JDateChooser();
         botaoFechar = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
@@ -99,7 +100,13 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         btnMensalidadesAReceber = new javax.swing.JButton();
         btnContasRecebidas = new javax.swing.JButton();
         botaoAjuda = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
@@ -348,7 +355,27 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
         });
         getContentPane().add(botaoAjuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 10, 30, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/planodeentrada.jpg"))); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel3.setText("Pagamento");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel4.setText("VERSÕES");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 160, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel5.setText("Período");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel6.setText("Tipos");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/planodeentradasFinal.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -493,6 +520,11 @@ public class FinanceiroPlanodeEntradas extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboPeriodo;
     private javax.swing.JComboBox<String> comboTipos;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane painelEntradas;
     private javax.swing.JScrollPane painelPlanos;
     private javax.swing.JScrollPane painelVendas;
