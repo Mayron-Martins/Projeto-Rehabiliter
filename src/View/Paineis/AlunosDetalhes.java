@@ -5,22 +5,54 @@
  */
 package View.Paineis;
 
+import Controller.Paineis.AlunosDetalhesController;
 import Controller.auxiliar.FormatacaoCamposRestritosLetras;
 import Controller.auxiliar.FormatacaodeCamposRestritos;
 import Controller.auxiliar.JMoneyField;
+import View.AlunosView;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JDayChooser;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.beans.PropertyVetoException;
+import java.util.Vector;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
  * @author Mayro
  */
 public class AlunosDetalhes extends javax.swing.JDialog {
+    private final AlunosDetalhesController controller;
+    private Vector<JCheckBox> grupoAlteracoes = new Vector<JCheckBox>();
+    
 
     /**
      * Creates new form AlunosDetalhes
      */
-    public AlunosDetalhes(java.awt.Frame parent, boolean modal) {
+    public AlunosDetalhes(AlunosView alunosView, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        controller = new AlunosDetalhesController(alunosView, this);
+        
+        botaoAplicar.setBackground(new Color(0,0,0,0));
+        botaoSetarVencimento.setBackground(new Color(0,0,0,0));
+        this.agrupamentos();
+        this.actionListenerPaineis();
+        this.configsIniciais();
     }
 
     /**
@@ -65,6 +97,7 @@ public class AlunosDetalhes extends javax.swing.JDialog {
         campoCPFMae = new javax.swing.JFormattedTextField();
         campoCelularMae = new javax.swing.JFormattedTextField();
         jLabel14 = new javax.swing.JLabel();
+        checkAlteracoesPais = new javax.swing.JCheckBox();
         painelEndereco = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         campoRua = new FormatacaodeCamposRestritos(50, 0);
@@ -78,6 +111,7 @@ public class AlunosDetalhes extends javax.swing.JDialog {
         comboEstado = new javax.swing.JComboBox<>();
         jLabel23 = new javax.swing.JLabel();
         campoCEP = new javax.swing.JFormattedTextField();
+        checkAlteracoesEndereco = new javax.swing.JCheckBox();
         painelPlano = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         comboPlano = new javax.swing.JComboBox<>();
@@ -92,6 +126,7 @@ public class AlunosDetalhes extends javax.swing.JDialog {
         campoDiaVencimento = new com.toedter.calendar.JDayChooser();
         jLabel29 = new javax.swing.JLabel();
         renovacaoAuto = new javax.swing.JCheckBox();
+        checkAlteracoesPlanos = new javax.swing.JCheckBox();
         painelAdicional = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         campoDataCadastro = new com.toedter.calendar.JDateChooser();
@@ -105,14 +140,39 @@ public class AlunosDetalhes extends javax.swing.JDialog {
         campoDataVencimento = new com.toedter.calendar.JDateChooser();
         botaoSetarVencimento = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel2 = new javax.swing.JPanel();
+        barraFerramentas = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        jButton2 = new javax.swing.JButton();
+        painelDesktop = new javax.swing.JDesktopPane();
+        painelEditarAdicionarPlano = new javax.swing.JInternalFrame();
+        painelEAPlanoInterno = new javax.swing.JPanel();
+        campoNovoPlano = new javax.swing.JCheckBox();
+        comboTurmas = new javax.swing.JComboBox<>();
+        comboServicos = new javax.swing.JComboBox<>();
+        campoRenovAutomatica = new javax.swing.JCheckBox();
+        jLabel36 = new javax.swing.JLabel();
+        campoValorTotal = new JMoneyField();
+        jLabel37 = new javax.swing.JLabel();
+        campoValorMensal1 = new JMoneyField();
+        jLabel38 = new javax.swing.JLabel();
+        comboDiaVencimento = new javax.swing.JComboBox<>();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        botaoAplicar = new javax.swing.JButton();
+        painelHistoricoPlanos = new javax.swing.JInternalFrame();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaHistoricoPlanos = new javax.swing.JTable();
+        painelHistoricoPagamentos = new javax.swing.JInternalFrame();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabelaHistoricoPagamentos = new javax.swing.JTable();
+        checkAlteracoesAdicional = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(400, 700));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -280,6 +340,10 @@ public class AlunosDetalhes extends javax.swing.JDialog {
         jLabel14.setText("Celular (Mãe)");
         painelPais.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
 
+        checkAlteracoesPais.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        checkAlteracoesPais.setText("Há alterações não salvas");
+        painelPais.add(checkAlteracoesPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
+
         jTabbedPane1.addTab("Pais", painelPais);
 
         painelEndereco.setBackground(new java.awt.Color(157, 197, 188));
@@ -343,6 +407,10 @@ public class AlunosDetalhes extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         painelEndereco.add(campoCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 130, 30));
+
+        checkAlteracoesEndereco.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        checkAlteracoesEndereco.setText("Há alterações não salvas");
+        painelEndereco.add(checkAlteracoesEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
 
         jTabbedPane1.addTab("Endereço", painelEndereco);
 
@@ -414,6 +482,10 @@ public class AlunosDetalhes extends javax.swing.JDialog {
         });
         painelPlano.add(renovacaoAuto, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, -1, -1));
 
+        checkAlteracoesPlanos.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        checkAlteracoesPlanos.setText("Há alterações não salvas");
+        painelPlano.add(checkAlteracoesPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
+
         jTabbedPane1.addTab("Plano Atual", painelPlano);
 
         painelAdicional.setBackground(new java.awt.Color(157, 197, 188));
@@ -463,31 +535,254 @@ public class AlunosDetalhes extends javax.swing.JDialog {
         jLabel4.setText("Histórico de Planos e Pagamento");
         painelAdicional.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
 
-        jInternalFrame1.setIconifiable(true);
-        jInternalFrame1.setTitle("Histórico de Planos");
-        jInternalFrame1.setVisible(true);
-        jInternalFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
+        jPanel2.setBackground(new java.awt.Color(157, 197, 188));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        barraFerramentas.setBackground(new java.awt.Color(255, 255, 255));
+        barraFerramentas.setBorder(null);
+        barraFerramentas.setFloatable(false);
+        barraFerramentas.setDoubleBuffered(true);
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(11, 13, 138));
+        jButton1.setText("PLANOS");
+        jButton1.setBorder(null);
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setMaximumSize(new java.awt.Dimension(55, 25));
+        jButton1.setMinimumSize(new java.awt.Dimension(55, 25));
+        jButton1.setPreferredSize(new java.awt.Dimension(55, 25));
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        barraFerramentas.add(jButton1);
+
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setForeground(new java.awt.Color(11, 13, 138));
+        jButton3.setText("Adicionar");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setMaximumSize(new java.awt.Dimension(60, 25));
+        jButton3.setMinimumSize(new java.awt.Dimension(60, 25));
+        jButton3.setPreferredSize(new java.awt.Dimension(60, 25));
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        barraFerramentas.add(jButton3);
+
+        jButton4.setBackground(new java.awt.Color(255, 255, 255));
+        jButton4.setForeground(new java.awt.Color(11, 13, 138));
+        jButton4.setText("Editar");
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setMaximumSize(new java.awt.Dimension(45, 25));
+        jButton4.setMinimumSize(new java.awt.Dimension(45, 25));
+        jButton4.setPreferredSize(new java.awt.Dimension(45, 25));
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        barraFerramentas.add(jButton4);
+
+        jSeparator1.setBackground(new java.awt.Color(11, 13, 138));
+        jSeparator1.setForeground(new java.awt.Color(11, 13, 138));
+        barraFerramentas.add(jSeparator1);
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(11, 13, 138));
+        jButton2.setText("PAGAMENTOS");
+        jButton2.setBorder(null);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setMaximumSize(new java.awt.Dimension(90, 25));
+        jButton2.setMinimumSize(new java.awt.Dimension(90, 25));
+        jButton2.setPreferredSize(new java.awt.Dimension(90, 25));
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        barraFerramentas.add(jButton2);
+
+        jPanel2.add(barraFerramentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 25));
+
+        painelDesktop.setBackground(new java.awt.Color(157, 197, 188));
+
+        painelEditarAdicionarPlano.setBackground(new java.awt.Color(157, 197, 188));
+        painelEditarAdicionarPlano.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        painelEditarAdicionarPlano.setVisible(true);
+        painelEditarAdicionarPlano.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        painelEAPlanoInterno.setBackground(new java.awt.Color(157, 197, 188));
+        painelEAPlanoInterno.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        campoNovoPlano.setText("Novo Plano");
+        campoNovoPlano.setEnabled(false);
+        painelEAPlanoInterno.add(campoNovoPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, -1, -1));
+
+        comboTurmas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhuma]" }));
+        painelEAPlanoInterno.add(comboTurmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 35, 354, 30));
+
+        comboServicos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]" }));
+        comboServicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboServicosActionPerformed(evt);
+            }
+        });
+        painelEAPlanoInterno.add(comboServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 85, 354, 30));
+
+        campoRenovAutomatica.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        campoRenovAutomatica.setForeground(new java.awt.Color(255, 255, 255));
+        campoRenovAutomatica.setText("Renovação Automática");
+        campoRenovAutomatica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoRenovAutomaticaActionPerformed(evt);
+            }
+        });
+        painelEAPlanoInterno.add(campoRenovAutomatica, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 0, -1, -1));
+
+        jLabel36.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel36.setText("Valor Total");
+        painelEAPlanoInterno.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 120, -1, -1));
+        painelEAPlanoInterno.add(campoValorTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 135, 90, 30));
+
+        jLabel37.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel37.setText("Valor Mensal");
+        painelEAPlanoInterno.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 120, -1, -1));
+        painelEAPlanoInterno.add(campoValorMensal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 135, 90, 30));
+
+        jLabel38.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel38.setText("Dia Venc.");
+        painelEAPlanoInterno.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, -1, -1));
+
+        painelEAPlanoInterno.add(comboDiaVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 135, 60, 30));
+        comboDiaVencimento.removeAllItems();
+        for(int dia=1; dia<=30;dia++){
+            comboDiaVencimento.addItem(dia+"");
+        }
+
+        jLabel39.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel39.setText("Serviço");
+        painelEAPlanoInterno.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, -1, -1));
+
+        jLabel40.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel40.setText("Turma");
+        painelEAPlanoInterno.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, -1, -1));
+
+        botaoAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnAplicar3.png"))); // NOI18N
+        botaoAplicar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAplicarActionPerformed(evt);
+            }
+        });
+        painelEAPlanoInterno.add(botaoAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 125, 70, -1));
+
+        painelEditarAdicionarPlano.getContentPane().add(painelEAPlanoInterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 173));
+
+        painelDesktop.add(painelEditarAdicionarPlano);
+        painelEditarAdicionarPlano.setBounds(0, 0, 370, 200);
+
+        painelHistoricoPlanos.setBackground(new java.awt.Color(157, 197, 188));
+        painelHistoricoPlanos.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        painelHistoricoPlanos.setIconifiable(true);
+        painelHistoricoPlanos.setTitle("Histórico de Planos");
+        painelHistoricoPlanos.setVisible(true);
+        painelHistoricoPlanos.getContentPane().setLayout(null);
+
+        tabelaHistoricoPlanos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2"
+                "Chave", "Cadastro", "Encerramento", "Status"
             }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 100));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        jInternalFrame1.getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaHistoricoPlanos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tabelaHistoricoPlanos);
 
-        painelAdicional.add(jInternalFrame1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 310, -1));
+        painelHistoricoPlanos.getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(0, 0, 360, 170);
+
+        painelDesktop.add(painelHistoricoPlanos);
+        painelHistoricoPlanos.setBounds(0, 0, 370, 200);
+
+        painelHistoricoPagamentos.setBackground(new java.awt.Color(157, 197, 188));
+        painelHistoricoPagamentos.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        painelHistoricoPagamentos.setTitle("Histórico de Pagamentos");
+        painelHistoricoPagamentos.setVisible(true);
+        painelHistoricoPagamentos.getContentPane().setLayout(null);
+
+        tabelaHistoricoPagamentos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cod", "Valor", "Data"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaHistoricoPagamentos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(tabelaHistoricoPagamentos);
+
+        painelHistoricoPagamentos.getContentPane().add(jScrollPane3);
+        jScrollPane3.setBounds(0, 0, 360, 170);
+
+        painelDesktop.add(painelHistoricoPagamentos);
+        painelHistoricoPagamentos.setBounds(0, 0, 370, 200);
+
+        jPanel2.add(painelDesktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 370, 230));
+
+        painelAdicional.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 370, 260));
+
+        checkAlteracoesAdicional.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        checkAlteracoesAdicional.setText("Há alterações não salvas");
+        painelAdicional.add(checkAlteracoesAdicional, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
 
         jTabbedPane1.addTab("Adicional", painelAdicional);
 
@@ -527,12 +822,41 @@ public class AlunosDetalhes extends javax.swing.JDialog {
     }//GEN-LAST:event_comboTurmaActionPerformed
 
     private void renovacaoAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renovacaoAutoActionPerformed
+        ativarCheckAlteracao(checkAlteracoesPlanos, true);
         //controller.setarValorContrato();
     }//GEN-LAST:event_renovacaoAutoActionPerformed
 
     private void botaoSetarVencimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSetarVencimentoActionPerformed
         //controller.setarDataVencimento();
     }//GEN-LAST:event_botaoSetarVencimentoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        trocarPaineisHistorico(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        trocarPaineisHistorico(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        trocarPainelEditarAdicionarPlano(true, true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void comboServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboServicosActionPerformed
+        
+    }//GEN-LAST:event_comboServicosActionPerformed
+
+    private void campoRenovAutomaticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoRenovAutomaticaActionPerformed
+        
+    }//GEN-LAST:event_campoRenovAutomaticaActionPerformed
+
+    private void botaoAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAplicarActionPerformed
+
+    }//GEN-LAST:event_botaoAplicarActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        trocarPainelEditarAdicionarPlano(false, true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -564,7 +888,8 @@ public class AlunosDetalhes extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AlunosDetalhes dialog = new AlunosDetalhes(new javax.swing.JFrame(), true);
+                javax.swing.JFrame frame = new javax.swing.JFrame();
+                AlunosDetalhes dialog = new AlunosDetalhes(new AlunosView(frame, true), frame, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -577,6 +902,8 @@ public class AlunosDetalhes extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToolBar barraFerramentas;
+    private javax.swing.JButton botaoAplicar;
     private javax.swing.JButton botaoConcluir;
     private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoSair;
@@ -601,16 +928,30 @@ public class AlunosDetalhes extends javax.swing.JDialog {
     private javax.swing.JTextField campoNome;
     private javax.swing.JTextField campoNomeMae;
     private javax.swing.JTextField campoNomePai;
+    private javax.swing.JCheckBox campoNovoPlano;
     private javax.swing.JTextField campoNum;
+    private javax.swing.JCheckBox campoRenovAutomatica;
     private javax.swing.JTextField campoRua;
     private javax.swing.JFormattedTextField campoTelefone;
     private javax.swing.JFormattedTextField campoValor;
     private javax.swing.JFormattedTextField campoValorMensal;
+    private javax.swing.JTextField campoValorMensal1;
+    private javax.swing.JTextField campoValorTotal;
+    private javax.swing.JCheckBox checkAlteracoesAdicional;
     private javax.swing.JCheckBox checkAlteracoesDados;
+    private javax.swing.JCheckBox checkAlteracoesEndereco;
+    private javax.swing.JCheckBox checkAlteracoesPais;
+    private javax.swing.JCheckBox checkAlteracoesPlanos;
+    private javax.swing.JComboBox<String> comboDiaVencimento;
     private javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JComboBox<String> comboPlano;
+    private javax.swing.JComboBox<String> comboServicos;
     private javax.swing.JComboBox<String> comboTurma;
-    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JComboBox<String> comboTurmas;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -637,7 +978,12 @@ public class AlunosDetalhes extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -646,14 +992,22 @@ public class AlunosDetalhes extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel painelAdicional;
     private javax.swing.JPanel painelDados;
+    private javax.swing.JDesktopPane painelDesktop;
+    private javax.swing.JPanel painelEAPlanoInterno;
+    private javax.swing.JInternalFrame painelEditarAdicionarPlano;
     private javax.swing.JPanel painelEndereco;
+    private javax.swing.JInternalFrame painelHistoricoPagamentos;
+    private javax.swing.JInternalFrame painelHistoricoPlanos;
     private javax.swing.JPanel painelPais;
     private javax.swing.JPanel painelPlano;
     private javax.swing.JCheckBox renovacaoAuto;
+    private javax.swing.JTable tabelaHistoricoPagamentos;
+    private javax.swing.JTable tabelaHistoricoPlanos;
     // End of variables declaration//GEN-END:variables
 
     public void trocaBotoes(boolean editar){
@@ -662,11 +1016,243 @@ public class AlunosDetalhes extends javax.swing.JDialog {
         enableCampos(editar);
     }
     
+    public void ativarCheckAlteracao(JCheckBox caixa, boolean visible){
+        if(!caixa.isVisible()){
+            caixa.setSelected(visible);
+            caixa.setVisible(visible);
+        }
+        else{
+            if(!visible){
+                caixa.setSelected(visible);
+                caixa.setVisible(visible);
+            }
+        }
+    }
+    
+    private void agrupamentos(){
+        checkAlteracoesDados.setActionCommand("Dados");
+        checkAlteracoesPais.setActionCommand("Pais");
+        checkAlteracoesEndereco.setActionCommand("Endereço");
+        checkAlteracoesPlanos.setActionCommand("Planos");
+        checkAlteracoesAdicional.setActionCommand("Adicional");
+        
+        grupoAlteracoes.add(checkAlteracoesDados);
+        grupoAlteracoes.add(checkAlteracoesPais);
+        grupoAlteracoes.add(checkAlteracoesEndereco);
+        grupoAlteracoes.add(checkAlteracoesPlanos);
+        grupoAlteracoes.add(checkAlteracoesAdicional);
+    }
     
     private void configsIniciais(){
+        ComponentListener component = new ComponentListener() {
+            public void componentResized(ComponentEvent e) {}
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                ((JInternalFrame) e.getComponent()).setLocation(0, 0);
+            }
+            public void componentShown(ComponentEvent e) {}
+            public void componentHidden(ComponentEvent e) {}
+        };
+        painelHistoricoPlanos.addComponentListener(component);
+        painelHistoricoPagamentos.addComponentListener(component);
+        painelEditarAdicionarPlano.addComponentListener(component);
+        trocarPaineisHistorico(true);
+        trocaBotoes(false);
+        
+        for(JCheckBox caixa : grupoAlteracoes){
+            ativarCheckAlteracao(caixa, false);
+            caixa.setEnabled(false);
+        }
+    }
+    
+    //Paineis do Plano Adicional
+    private void trocarPaineisHistorico(boolean plano){
+        try{
+            painelHistoricoPlanos.setIcon(!plano);
+            painelHistoricoPagamentos.setIcon(plano);
+        }catch(PropertyVetoException ex){}
+        
+        trocarPainelEditarAdicionarPlano(false, false);
+        
+    }
+    
+    private void trocarPainelEditarAdicionarPlano(boolean adicionar, boolean visible){
+        try{
+            if(visible){
+                painelHistoricoPlanos.setIcon(true);
+                painelHistoricoPagamentos.setIcon(true);
+                if(adicionar){
+                    painelEditarAdicionarPlano.setTitle("Adicionar Novo Plano");
+                }else{
+                    painelEditarAdicionarPlano.setTitle("Editar Plano");
+                }
+                painelEditarAdicionarPlano.setLocation(0, 0);
+                campoNovoPlano.setSelected(adicionar);
+            }
+            
+            painelEditarAdicionarPlano.setIcon(!visible);
+            
+            
+        }catch(PropertyVetoException ex){}
+        
     }
     
     private void enableCampos(boolean enable){
+        enableComponents(enable, painelDados.getComponents());
+        campoDescricao.setEditable(enable);
+        enableComponents(enable, painelPais.getComponents());
+        enableComponents(enable, painelEndereco.getComponents());
+        enableComponents(enable, painelPlano.getComponents());
+        renovacaoAuto.setEnabled(enable);
+        enableComponents(enable, painelAdicional.getComponents());
+        enableComponents(enable, painelEAPlanoInterno.getComponents());
+        campoRenovAutomatica.setEnabled(enable);
+        botaoAplicar.setEnabled(enable);
+        
+    }
+    
+    private void enableComponents(boolean enable, Component[] components ){
+        for(Component component : components){
+            //JTextField
+            if(component instanceof JTextField){
+                ((JTextField)component).setEditable(enable);
+            }
+            
+            //JComboBox
+            if(component instanceof JComboBox){
+                ((JComboBox)component).setEnabled(enable);
+            }
+            
+            //JDateChooser
+            if(component instanceof JDateChooser){
+                ((JDateChooser)component).setEnabled(enable);
+            }
+            
+            //JDayChooser
+            if(component instanceof JDayChooser){
+                ((JDayChooser)component).setEnabled(enable);
+            }
+        }
+    }
+    
+    private void actionListenerPaineis(){
+        //Para o painel de dados
+        ActionListener action1 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ativarCheckAlteracao(checkAlteracoesDados, true);
+            }
+        };
+        
+        KeyListener key1 = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                ativarCheckAlteracao(checkAlteracoesDados, true);
+            }
+            public void keyPressed(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {}
+        };
+        
+        //Para o painel de Pais
+        ActionListener action2 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ativarCheckAlteracao(checkAlteracoesPais, true);
+            }
+        };
+        
+        KeyListener key2 = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                ativarCheckAlteracao(checkAlteracoesPais, true);
+            }
+            public void keyPressed(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {}
+        };
+        
+        //Para o painel de endereço
+        ActionListener action3 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ativarCheckAlteracao(checkAlteracoesEndereco, true);
+            }
+        };
+        
+        KeyListener key3 = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                ativarCheckAlteracao(checkAlteracoesEndereco, true);
+            }
+            public void keyPressed(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {}
+        };
+        //Para o painel de Plano
+        ActionListener action4 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ativarCheckAlteracao(checkAlteracoesPlanos, true);
+            }
+        };
+        
+        KeyListener key4 = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                ativarCheckAlteracao(checkAlteracoesPlanos, true);
+            }
+            public void keyPressed(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {}
+        };
+        
+        //Para o painel de Plano Adicional
+        ActionListener action5 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ativarCheckAlteracao(checkAlteracoesAdicional, true);
+            }
+        };
+        
+        KeyListener key5 = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                ativarCheckAlteracao(checkAlteracoesAdicional, true);
+            }
+            public void keyPressed(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {}
+        };
+        
+        listenerComponents(painelDados.getComponents(), action1, key1);
+        listenerComponents(painelPais.getComponents(), action2, key2);
+        listenerComponents(painelEndereco.getComponents(), action3, key3);
+        listenerComponents(painelPlano.getComponents(), action4, key4);
+        listenerComponents(painelAdicional.getComponents(), action5, key5);
+    }
 
+    private void listenerComponents(Component[] components, ActionListener action, KeyListener key){
+        for(Component component : components){
+            //JTextField
+            if(component instanceof JTextField){
+                ((JTextField)component).addKeyListener(key);
+            }
+            
+            //JComboBox
+            if(component instanceof JComboBox){
+                ((JComboBox)component).addActionListener(action);
+            }
+            
+            //JChooserDate
+            if(component instanceof JDateChooser){
+                ((JDateChooser)component).getDateEditor().getUiComponent().addKeyListener(key);
+                ((JDateChooser)component).getCalendarButton().addActionListener(action);
+            }
+            
+            //JDayChooser
+            if(component instanceof JDayChooser){
+                for(Component componente : ((JDayChooser)component).getDayPanel().getComponents()){
+                    if(componente instanceof JButton){
+                        ((JButton)componente).addActionListener(action);
+                    }
+                }
+            } 
+        }
     }
 }

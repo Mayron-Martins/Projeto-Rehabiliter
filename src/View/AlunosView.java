@@ -46,8 +46,6 @@ public class AlunosView extends javax.swing.JDialog {
     private Point point = new Point();
     private final AlunosController controller;
     private final AlunosCadastro telaAlunosCadastro;
-    private final AlunosConfigAdicionais painelConfigAdicionais;
-    private final AlunosDescricao painelDescricao;
     private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
     private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
     private javax.swing.JComboBox<String> comboEstado = new JComboBox<>();
@@ -66,9 +64,7 @@ public class AlunosView extends javax.swing.JDialog {
         painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
         
         this.setarComposicaoTabelas();
-        this.painelConfigAdicionais = new AlunosConfigAdicionais(parent, false, this);
-        this.painelDescricao = new AlunosDescricao(parent, false, this);
-        controller = new AlunosController(this, painelConfigAdicionais, painelDescricao);
+        controller = new AlunosController(this);
         
         botaoConfigAdicionais.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
@@ -691,15 +687,11 @@ public class AlunosView extends javax.swing.JDialog {
         
         //Adiciona as informações aos campos
         controller.setarDatasConfiguracoesAd();
-        painelConfigAdicionais.setModal(true);
-        painelConfigAdicionais.setVisible(true);
     }//GEN-LAST:event_botaoConfigAdicionaisActionPerformed
 
     private void botaoObservacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoObservacaoActionPerformed
         this.trocarTabelas(4);
         this.selecionarTabelas(4);
-        painelDescricao.setModal(true);
-        painelDescricao.setVisible(true);
     }//GEN-LAST:event_botaoObservacaoActionPerformed
 
     private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
@@ -1190,17 +1182,12 @@ public class AlunosView extends javax.swing.JDialog {
         return controller;
     }
 
-    public AlunosConfigAdicionais getPainelConfigAdicionais() {
-        return painelConfigAdicionais;
-    }
+
 
     public JLabel getModoTurma() {
         return modoTurma;
     }
 
-    public AlunosDescricao getPainelDescricao() {
-        return painelDescricao;
-    }
 
     public JButton getBotaoObservacao() {
         return botaoObservacao;

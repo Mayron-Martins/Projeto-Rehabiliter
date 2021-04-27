@@ -389,7 +389,8 @@ public class TableCriator {
         this.gerarStatement().execute("CREATE TABLE tblPlanos("
                 + "codAluno INT NOT NULL," //Código do aluno ao qual o plano será associado.
                 + "codTurma INT NOT NULL," //Código da turma ao qual o plano será associado.
-                + "codServico INT NOT NULL," //Código do serviço ao qual o plano será associado.
+                + "codServico INT NOT NULL,"
+                + "dataCadastro DATE NULL," //Código do serviço ao qual o plano será associado.
                 + "dataPagamento DATE NULL," //Caso o plano tenha sido pago.
                 + "diaVencimento INT NULL,"
                 + "dataVencimento DATE NULL," //Data escolhida para vencimento do plano.

@@ -31,8 +31,6 @@ import Model.auxiliar.Turmas;
 import View.AlunosView;
 import View.LoginFuncionario;
 import View.LoginGerente;
-import View.Paineis.AlunosConfigAdicionais;
-import View.Paineis.AlunosDescricao;
 import java.awt.Color;
 import java.awt.Component;
 import java.math.BigDecimal;
@@ -53,14 +51,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AlunosController {
     private final AlunosView view;
-    private final AlunosConfigAdicionais view2;
-    private final AlunosDescricao view3;
     private final DefaultTableModel tabelaDeAlunos;
     private final DefaultTableModel tabelaDePais;
     private final DefaultTableModel tabelaDeEnderecos;
     private final DefaultTableModel tabelaDePlanos;
-    private final DefaultTableModel tabelaDePlanosAdicionais;
-    private final DefaultTableModel tabelaDePagamentos;
     private final AlunosDao alunosDao = new AlunosDao();
     private final MatriculasDao matriculasDao = new MatriculasDao();
     private final TurmasDao turmasDao = new TurmasDao();
@@ -75,16 +69,12 @@ public class AlunosController {
     private final VerificarCodigoNoBanco verificar = new VerificarCodigoNoBanco();
     private final ImpressaoComponentes imprimirTabela = new ImpressaoComponentes();
 
-    public AlunosController(AlunosView view, AlunosConfigAdicionais view2, AlunosDescricao view3) {
+    public AlunosController(AlunosView view) {
         this.view = view;
-        this.view2 = view2;
-        this.view3 = view3;
         this.tabelaDeAlunos = (DefaultTableModel)view.getTabelaAlunos().getModel();
         this.tabelaDePais = (DefaultTableModel)view.getTabelaPais().getModel();
         this.tabelaDeEnderecos = (DefaultTableModel)view.getTabelaEnderecos().getModel();
         this.tabelaDePlanos = (DefaultTableModel) view.getTabelaPlanos().getModel();
-        this.tabelaDePlanosAdicionais = (DefaultTableModel) view2.getTabelaPlanos().getModel();
-        this.tabelaDePagamentos = (DefaultTableModel) view2.getTabelaPagamentos().getModel();
     }
 
     

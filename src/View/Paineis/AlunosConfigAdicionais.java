@@ -39,7 +39,6 @@ public class AlunosConfigAdicionais extends javax.swing.JDialog {
         initComponents();
         
         this.view = view;
-        this.controller = new AlunosController(view, this, view.getPainelDescricao());
         botaoFecharConf.setBackground(new Color(0,0,0,0));
         botaoCadNvo.setBackground(new Color(0,0,0,0));
         botaoReativarPlano.setBackground(new Color(0,0,0,0));

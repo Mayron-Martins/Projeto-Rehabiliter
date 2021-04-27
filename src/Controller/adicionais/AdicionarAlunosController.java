@@ -182,7 +182,7 @@ public class AdicionarAlunosController {
         Matriculas matricula = new Matriculas(codTurma, anoAtual, matriculaObtida);
         
         Date dataVencimento = this.dataVencimento(aluno, servicoContratado, dataUltimoPag, diaVencimento);
-        Planos planoAluno = new Planos(chavePlano, codAluno, codTurma, codServico, diaVencimento, dataVencimento, dataUltimoPag, null, null, situacao);
+        Planos planoAluno = new Planos(chavePlano, codAluno, codTurma, codServico, diaVencimento, dataCadastro, dataVencimento, dataUltimoPag, null, null, situacao);
         
         
         //Obtem a quantidade de alunos presentes na turma

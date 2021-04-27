@@ -17,6 +17,7 @@ public class Planos {
     private int codTurma;
     private int codServico;
     private int diaVencimento;
+    private Date dataCadastro;
     private Date dataVencimento;
     private Date dataPagamento;
     private Date dataCancelamento;
@@ -24,13 +25,14 @@ public class Planos {
     private String situacao;
     private long chavePlano;
 
-    public Planos(long chavePlano, int codAluno, int codTurma, int codServico, int diaVencimento, Date dataVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
+    public Planos(long chavePlano, int codAluno, int codTurma, int codServico, int diaVencimento, Date dataCadastro, Date dataVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
         this.codAluno = codAluno;
         this.codTurma = codTurma;
         this.codServico = codServico;
         this.diaVencimento = diaVencimento;
         
         ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+        this.dataCadastro = converterData.getSqlDate(dataCadastro);
         this.dataPagamento = converterData.getSqlDate(dataPagamento);
         this.dataCancelamento = converterData.getSqlDate(dataCancelamento);
         this.dataRenovacao = converterData.getSqlDate(dataRenovacao);
@@ -39,11 +41,12 @@ public class Planos {
         this.chavePlano = chavePlano;
     }
     
-    public Planos(int codTurma, int codServico, int diaVencimento, Date dataVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
+    public Planos(int codTurma, int codServico, int diaVencimento, Date dataCadastro, Date dataVencimento, Date dataPagamento, Date dataCancelamento, Date dataRenovacao, String situacao) {
         this.codTurma = codTurma;
         this.codServico = codServico;
         this.diaVencimento = diaVencimento;
         ConversaodeDataParaPadraoDesignado converterData = new ConversaodeDataParaPadraoDesignado();
+        this.dataCadastro = converterData.getSqlDate(dataCadastro);
         this.dataPagamento = converterData.getSqlDate(dataPagamento);
         this.dataCancelamento = converterData.getSqlDate(dataCancelamento);
         this.dataRenovacao = converterData.getSqlDate(dataRenovacao);
@@ -65,6 +68,10 @@ public class Planos {
 
     public int getDiaVencimento() {
         return diaVencimento;
+    }
+
+    public Date getDataCadastro() {
+        return dataCadastro;
     }
 
     public Date getDataPagamento() {
