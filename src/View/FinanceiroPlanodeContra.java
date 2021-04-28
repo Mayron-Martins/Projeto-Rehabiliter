@@ -22,7 +22,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -54,6 +56,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         
         controller = new PlanoGastosController(this);
         controllerDetalhes = new GastosDetalhesController(this, gastosDetalhes);
+        botaobuscar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
         btnAdicionar.setBackground(new Color(0,0,0,0));
         btnAplicar.setBackground(new Color(0,0,0,0));
@@ -65,6 +68,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         
         //Fechar a tela quando pressionar ESC
         this.teclasDeAtalho();
+        this.tableResizing();
     }
 
     /**
@@ -83,6 +87,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         comboPeriodo = new javax.swing.JComboBox<>();
         comboTipos = new javax.swing.JComboBox<>();
         comboPagamento = new javax.swing.JComboBox<>();
+        comboStatus = new javax.swing.JComboBox<>();
         btnAplicar = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
         botaoVResumida = new javax.swing.JButton();
@@ -90,10 +95,13 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         btnAdicionar = new javax.swing.JButton();
         botaoAjuda = new javax.swing.JButton();
         botaoEditar = new javax.swing.JButton();
+        campoBuscar = new javax.swing.JTextField();
+        botaobuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -116,21 +124,21 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
             }
         });
         getContentPane().add(botaoFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 40, 220, 50));
-        getContentPane().add(campoDataEspecífica, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 120, -1));
+        getContentPane().add(campoDataEspecífica, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 110, -1));
 
         tabelaGastos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "codBanco", "Referência", "Valor", "Data"
+                "CodBanco", "Referência", "Valor", "Data", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, false
+                false, true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -167,7 +175,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 comboPeriodoActionPerformed(evt);
             }
         });
-        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 140, -1));
+        getContentPane().add(comboPeriodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 120, -1));
 
         comboTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contra-Serviços", "Pagamento Salarial" }));
         comboTipos.addActionListener(new java.awt.event.ActionListener() {
@@ -175,10 +183,13 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 comboTiposActionPerformed(evt);
             }
         });
-        getContentPane().add(comboTipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 120, -1));
+        getContentPane().add(comboTipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 140, -1));
 
         comboPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Dinheiro", "Boleto", "Cartão de Crédito", "Cartão de Débito" }));
-        getContentPane().add(comboPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, 130, -1));
+        getContentPane().add(comboPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, 130, -1));
+
+        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "Pendente", "Pago" }));
+        getContentPane().add(comboStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 300, 100, -1));
 
         btnAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAplicar.png"))); // NOI18N
         btnAplicar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -188,7 +199,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 btnAplicarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 146, 35));
+        getContentPane().add(btnAplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 290, 146, 35));
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnRemover.png"))); // NOI18N
         btnRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -198,7 +209,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 btnRemoverActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 146, 34));
+        getContentPane().add(btnRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 146, 34));
 
         botaoVResumida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnResumido.png"))); // NOI18N
         botaoVResumida.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -208,7 +219,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 botaoVResumidaMouseClicked(evt);
             }
         });
-        getContentPane().add(botaoVResumida, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 146, 34));
+        getContentPane().add(botaoVResumida, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 200, 146, 34));
 
         botaoVDetalhada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnDetalhada.png"))); // NOI18N
         botaoVDetalhada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -218,7 +229,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 botaoVDetalhadaMouseClicked(evt);
             }
         });
-        getContentPane().add(botaoVDetalhada, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 146, 34));
+        getContentPane().add(botaoVDetalhada, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 200, 146, 34));
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/financeiro/btnAdicionar.png"))); // NOI18N
         btnAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -228,7 +239,7 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
                 btnAdicionarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 146, 34));
+        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 146, 34));
 
         botaoAjuda.setBackground(new java.awt.Color(255, 255, 255));
         botaoAjuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -250,25 +261,59 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         });
         getContentPane().add(botaoEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 354, 20, 20));
 
+        campoBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                campoBuscarFocusLost(evt);
+            }
+        });
+        campoBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                campoBuscarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                campoBuscarMouseExited(evt);
+            }
+        });
+        campoBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoBuscarKeyPressed(evt);
+            }
+        });
+        getContentPane().add(campoBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 60, 40));
+
+        botaobuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscar.png"))); // NOI18N
+        botaobuscar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoBuscarHover.png"))); // NOI18N
+        botaobuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaobuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaobuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, 50, 40));
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(11, 13, 138));
         jLabel2.setText("TIPOS");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(11, 13, 138));
         jLabel3.setText("PAGAMENTO");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 270, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(11, 13, 138));
         jLabel4.setText("VERSÕES");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 210, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(11, 13, 138));
         jLabel5.setText("PERÍODO");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(11, 13, 138));
+        jLabel6.setText("STATUS");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/planodecontraservicosFINAL.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -367,6 +412,28 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         controllerDetalhes.releasedTable();
     }//GEN-LAST:event_tabelaGastosKeyReleased
 
+    private void campoBuscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoBuscarFocusLost
+        aumentarPesquisa(false);
+    }//GEN-LAST:event_campoBuscarFocusLost
+
+    private void campoBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoBuscarMouseEntered
+        aumentarPesquisa(true);
+    }//GEN-LAST:event_campoBuscarMouseEntered
+
+    private void campoBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoBuscarMouseExited
+        aumentarPesquisa(false);
+    }//GEN-LAST:event_campoBuscarMouseExited
+
+    private void campoBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBuscarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            getRootPane().setDefaultButton(botaobuscar);
+        }
+    }//GEN-LAST:event_campoBuscarKeyPressed
+
+    private void botaobuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaobuscarActionPerformed
+        controller.buscarGasto();
+    }//GEN-LAST:event_botaobuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -415,18 +482,22 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoVDetalhada;
     private javax.swing.JButton botaoVResumida;
+    private javax.swing.JButton botaobuscar;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnAplicar;
     private javax.swing.JButton btnRemover;
+    private javax.swing.JTextField campoBuscar;
     private com.toedter.calendar.JDateChooser campoDataEspecífica;
     private javax.swing.JComboBox<String> comboPagamento;
     private javax.swing.JComboBox<String> comboPeriodo;
+    private javax.swing.JComboBox<String> comboStatus;
     private javax.swing.JComboBox<String> comboTipos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane painelGastos;
     private javax.swing.JTable tabelaGastos;
     // End of variables declaration//GEN-END:variables
@@ -437,21 +508,6 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
     
     public void mensagemCritica(String mensagem, String titulo){
        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.WARNING_MESSAGE);
-    }
-    
-        private void setarComponentes(){
-        //combos
-        comboTipos.setSelectedIndex(0);
-        comboTipos.setEnabled(false);
-        comboPagamento.setSelectedIndex(0);
-        comboPagamento.setEnabled(false);
-        
-        //botões
-        botaoVResumida.setEnabled(true);
-        botaoVDetalhada.setEnabled(false);
-        
-        campoDataEspecífica.setEnabled(false);
-        this.setarBotaoEditar(false, 0);
     }
 
     public JButton getBotaoVDetalhada() {
@@ -486,6 +542,14 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         return campoDataEspecífica;
     }
 
+    public JComboBox<String> getComboStatus() {
+        return comboStatus;
+    }
+
+    public JTextField getCampoBuscar() {
+        return campoBuscar;
+    }
+
     public Frame getParent() {
         return parent;
     }
@@ -494,6 +558,45 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         return painelAjuda;
     }
     
+     private void setarComponentes(){
+        //combos
+        comboTipos.setSelectedIndex(0);
+        comboTipos.setEnabled(false);
+        comboPagamento.setSelectedIndex(0);
+        comboPagamento.setEnabled(false);
+        
+        //botões
+        botaoVResumida.setEnabled(true);
+        botaoVDetalhada.setEnabled(false);
+        
+        campoDataEspecífica.setEnabled(false);
+        this.setarBotaoEditar(false, 0);
+    }
+    
+    private void tableResizing(){
+        //Definição de Colunas
+        TableColumn coluna0 = tabelaGastos.getColumn("CodBanco");
+        TableColumn coluna1 = tabelaGastos.getColumn("Referência");
+        TableColumn coluna2 = tabelaGastos.getColumn("Valor");
+        TableColumn coluna3 = tabelaGastos.getColumn("Data");
+        TableColumn coluna4 = tabelaGastos.getColumn("Status");
+        
+        //Tamanhos de colunas
+        int widhtTabela = tabelaGastos.getWidth();
+        int codBanco = 70;
+        int valor = 100;
+        int data = 80;
+        int status = 100;
+        int referencia = widhtTabela-codBanco-data-valor-status;
+
+        
+        //Definição de Tamanho Preferencial (Total Tabela = 225)
+        coluna0.setMaxWidth(codBanco);
+        coluna1.setMaxWidth(referencia);
+        coluna2.setMaxWidth(valor);
+        coluna3.setMaxWidth(data);
+        coluna4.setMaxWidth(status);
+    }
     private void setarBotaoEditar(boolean visible, int y){
         
         if(visible){
@@ -509,6 +612,32 @@ public class FinanceiroPlanodeContra extends javax.swing.JDialog {
         }
         else{
             botaoEditar.setVisible(false);
+        }
+    }
+    
+    private void aumentarPesquisa(boolean aumentar){
+        int campoX = campoBuscar.getX();
+        int campoY = campoBuscar.getY();
+        int botaoX = botaobuscar.getX();
+        int botaoY = botaobuscar.getY();
+        int largCampo = campoBuscar.getWidth();
+        int altCampo = campoBuscar.getHeight();
+        
+        if(aumentar){
+            if(campoBuscar.getSize().width<260){
+                campoBuscar.setSize(largCampo+200, altCampo);
+                campoBuscar.setLocation(campoX, campoY);
+                botaobuscar.setLocation(botaoX+200, botaoY);
+            }
+            
+        }
+        else{
+            if(campoBuscar.getText().trim().equals("")){
+                campoBuscar.setSize(largCampo-200, altCampo);
+                campoBuscar.setLocation(campoX, campoY);
+                botaobuscar.setLocation(botaoX-200, botaoY);
+            }
+            
         }
     }
     

@@ -46,9 +46,6 @@ public class AlunosView extends javax.swing.JDialog {
     private Point point = new Point();
     private final AlunosController controller;
     private final AlunosCadastro telaAlunosCadastro;
-    private javax.swing.JComboBox<String> comboServicos = new JComboBox<>();
-    private javax.swing.JComboBox<String> comboTurmas = new JComboBox<>();
-    private javax.swing.JComboBox<String> comboEstado = new JComboBox<>();
     private final PainelAjuda painelAjuda;
     /**
      * Creates new form Alunos
@@ -63,10 +60,8 @@ public class AlunosView extends javax.swing.JDialog {
         telaAlunosCadastro = new AlunosCadastro(parent, false);
         painelAjuda = new PainelAjuda(parent, false, this.getLocation().x+this.getSize().width+4, this.getLocation().y);
         
-        this.setarComposicaoTabelas();
         controller = new AlunosController(this);
         
-        botaoConfigAdicionais.setBackground(new Color(0,0,0,0));
         botaobuscar.setBackground(new Color(0,0,0,0));
         botaoFechar.setBackground(new Color(0,0,0,0));
         botaoAdicionar.setBackground(new Color(0,0,0,0));
@@ -78,33 +73,9 @@ public class AlunosView extends javax.swing.JDialog {
         tabelaAlunos.getTableHeader().setBackground(new Color(0,0,0));
         tabelaAlunos.getTableHeader().setForeground(new Color(0,0,0));
         tabelaAlunos.setRowHeight(25);
-        botaoEndereco.setBackground(new Color(0,0,0,0));
-        botaoPais.setBackground(new Color(0,0,0,0));
-        botaoAlunos.setBackground(new Color(0,0,0,0));
-        botaoPlanos.setBackground(new Color(0,0,0,0));
-        
-        botaoConfigAdicionais.setVisible(false);
-        botaoObservacao.setVisible(false);
-        this.setInicialBotoes();
+
         fecharTelaESC();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/imagens/rehabi.png")).getImage());
-        
-        
-        comboServicos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboServicosActionPerformed(evt);
-            }
-            private void comboServicosActionPerformed(ActionEvent evt) {
-            int linhaSelecionada = tabelaPlanos.getSelectedRow();
-                if(tabelaPlanos.isRowSelected(linhaSelecionada)){
-                    selecionarTabelas(2); 
-                    controller.setarValorContrato();
-                }
-        
-    }
-        });
-        
-        
     }
 
     /**
@@ -119,13 +90,6 @@ public class AlunosView extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         painelAlunos = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
-        painelPlanos = new javax.swing.JScrollPane();
-        tabelaPlanos = new javax.swing.JTable();
-        painelPais = new javax.swing.JScrollPane();
-        tabelaPais = new javax.swing.JTable();
-        painelEnderecos = new javax.swing.JScrollPane();
-        tabelaEnderecos = new javax.swing.JTable();
-        botaoConfigAdicionais = new javax.swing.JButton();
         botaoRemover = new javax.swing.JButton();
         botaoEditar = new javax.swing.JButton();
         botaoListar = new javax.swing.JButton();
@@ -135,11 +99,6 @@ public class AlunosView extends javax.swing.JDialog {
         campoPesquisa = new javax.swing.JTextField();
         comboListar = new javax.swing.JComboBox<>();
         comboTurmasExistentes = new javax.swing.JComboBox<>();
-        botaoPlanos = new javax.swing.JButton();
-        botaoPais = new javax.swing.JButton();
-        botaoEndereco = new javax.swing.JButton();
-        botaoAlunos = new javax.swing.JButton();
-        botaoObservacao = new javax.swing.JButton();
         modoTurma = new javax.swing.JLabel();
         botaoAjuda = new javax.swing.JButton();
         planodefundo = new javax.swing.JLabel();
@@ -147,7 +106,6 @@ public class AlunosView extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(873, 700));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(873, 700));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
@@ -178,14 +136,14 @@ public class AlunosView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "CodBanco", "Nome", "Turma", "Débito", "Renovação Auto."
+                "ChavePlano", "CodBanco", "Nome", "Turma", "Status Plano"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true
+                false, false, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -222,152 +180,7 @@ public class AlunosView extends javax.swing.JDialog {
 
         jPanel1.add(painelAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 320));
 
-        tabelaPlanos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaPlanos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ChavePlano", "Plano/Período", "Valor Contrato", "Valor Mensal", "Dia Vencimento", "Situacao"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabelaPlanos.setFocusable(false);
-        tabelaPlanos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaPlanos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaPlanos.setRowHeight(25);
-        tabelaPlanos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tabelaPlanos.setShowVerticalLines(false);
-        tabelaPlanos.getTableHeader().setReorderingAllowed(false);
-        tabelaPlanos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelaPlanosMouseClicked(evt);
-            }
-        });
-        tabelaPlanos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaPlanosComponentHidden(evt);
-            }
-        });
-        tabelaPlanos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tabelaPlanosKeyReleased(evt);
-            }
-        });
-        painelPlanos.setViewportView(tabelaPlanos);
-
-        jPanel1.add(painelPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 320));
-
-        tabelaPais.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaPais.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Pai", "CPF (P)", "Contato (P)", "Mãe", "CPF (M)", "Contato (M)"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tabelaPais.setFocusable(false);
-        tabelaPais.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaPais.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaPais.setRowHeight(25);
-        tabelaPais.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tabelaPais.setShowVerticalLines(false);
-        tabelaPais.getTableHeader().setReorderingAllowed(false);
-        tabelaPais.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelaPaisMouseClicked(evt);
-            }
-        });
-        tabelaPais.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaPaisComponentHidden(evt);
-            }
-        });
-        tabelaPais.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tabelaPaisKeyReleased(evt);
-            }
-        });
-        painelPais.setViewportView(tabelaPais);
-
-        jPanel1.add(painelPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 320));
-
-        tabelaEnderecos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabelaEnderecos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Logradouro", "Nº", "Bairro", "Cidade", "Estado", "CEP"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tabelaEnderecos.setFocusable(false);
-        tabelaEnderecos.setGridColor(new java.awt.Color(255, 255, 255));
-        tabelaEnderecos.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tabelaEnderecos.setRowHeight(25);
-        tabelaEnderecos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tabelaEnderecos.setShowVerticalLines(false);
-        tabelaEnderecos.getTableHeader().setReorderingAllowed(false);
-        tabelaEnderecos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelaEnderecosMouseClicked(evt);
-            }
-        });
-        tabelaEnderecos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                tabelaEnderecosComponentHidden(evt);
-            }
-        });
-        tabelaEnderecos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tabelaEnderecosKeyReleased(evt);
-            }
-        });
-        painelEnderecos.setViewportView(tabelaEnderecos);
-
-        jPanel1.add(painelEnderecos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 811, 320));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 811, 320));
-
-        botaoConfigAdicionais.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagensparaseremtrocadas/btnConfiguracoes.png"))); // NOI18N
-        botaoConfigAdicionais.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoConfigAdicionais.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoConfigAdicionaisActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoConfigAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 190, 30));
 
         botaoRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/botaoRemover.png"))); // NOI18N
         botaoRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -446,51 +259,6 @@ public class AlunosView extends javax.swing.JDialog {
         });
         getContentPane().add(comboTurmasExistentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 270, 30));
 
-        botaoPlanos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPlanos.png"))); // NOI18N
-        botaoPlanos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoPlanos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPlanosHover.png"))); // NOI18N
-        botaoPlanos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoPlanosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoPlanos, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
-
-        botaoPais.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPais.png"))); // NOI18N
-        botaoPais.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnPaishover.png"))); // NOI18N
-        botaoPais.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoPaisActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
-
-        botaoEndereco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnEndereco.png"))); // NOI18N
-        botaoEndereco.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnEnderecohover.png"))); // NOI18N
-        botaoEndereco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoEnderecoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
-
-        botaoAlunos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunosh.png"))); // NOI18N
-        botaoAlunos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alunos/btnAlunos.png"))); // NOI18N
-        botaoAlunos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAlunosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoAlunos, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 310, 120, -1));
-
-        botaoObservacao.setText("...");
-        botaoObservacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoObservacaoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botaoObservacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(842, 350, 30, 28));
-
         modoTurma.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         modoTurma.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(modoTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 678, 190, 15));
@@ -558,29 +326,6 @@ public class AlunosView extends javax.swing.JDialog {
         
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
-    private void tabelaPaisComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaPaisComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaPaisComponentHidden
-
-    private void tabelaEnderecosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaEnderecosComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaEnderecosComponentHidden
-
-    private void botaoPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPaisActionPerformed
-        this.trocarTabelas(2);
-        this.selecionarTabelas(2);
-    }//GEN-LAST:event_botaoPaisActionPerformed
-
-    private void botaoEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEnderecoActionPerformed
-        this.trocarTabelas(3);
-        this.selecionarTabelas(3);
-    }//GEN-LAST:event_botaoEnderecoActionPerformed
-
-    private void botaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlunosActionPerformed
-        this.trocarTabelas(4);
-        this.selecionarTabelas(4);
-    }//GEN-LAST:event_botaoAlunosActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
     controller.verificacaoDeTurmaEServico();
@@ -611,18 +356,6 @@ public class AlunosView extends javax.swing.JDialog {
     }
     }//GEN-LAST:event_botaoListarActionPerformed
 
-    private void botaoPlanosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlanosActionPerformed
-        this.trocarTabelas(1);
-        for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
-                painelPlanos.getComponent(linhas).setVisible(true);
-        }
-        this.selecionarTabelas(1);
-    }//GEN-LAST:event_botaoPlanosActionPerformed
-
-    private void tabelaPlanosComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelaPlanosComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaPlanosComponentHidden
-
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
          if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
@@ -631,68 +364,16 @@ public class AlunosView extends javax.swing.JDialog {
     }//GEN-LAST:event_formKeyPressed
 
     private void tabelaAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlunosMouseClicked
-        this.selecionarTabelas(1);
-        for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
-                painelPlanos.getComponent(linhas).setVisible(false);
-        }
         controller.selecionarTabela();
     }//GEN-LAST:event_tabelaAlunosMouseClicked
 
-    private void tabelaPlanosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPlanosMouseClicked
-        this.selecionarTabelas(2);
-        controller.selecionarTabela();
-    }//GEN-LAST:event_tabelaPlanosMouseClicked
-
-    private void tabelaPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPaisMouseClicked
-        this.selecionarTabelas(3);
-        controller.selecionarTabela();
-    }//GEN-LAST:event_tabelaPaisMouseClicked
-
-    private void tabelaEnderecosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaEnderecosMouseClicked
-        this.selecionarTabelas(4);
-        controller.selecionarTabela();
-    }//GEN-LAST:event_tabelaEnderecosMouseClicked
-
     private void tabelaAlunosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaAlunosKeyReleased
-        this.selecionarTabelas(1);
-        for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
-            painelPlanos.getComponent(linhas).setVisible(false);
-        }
         controller.selecionarTabela();
     }//GEN-LAST:event_tabelaAlunosKeyReleased
-
-    private void tabelaPlanosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaPlanosKeyReleased
-        this.selecionarTabelas(2);
-        controller.selecionarTabela();
-    }//GEN-LAST:event_tabelaPlanosKeyReleased
-
-    private void tabelaPaisKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaPaisKeyReleased
-        this.selecionarTabelas(3);
-        controller.selecionarTabela();
-    }//GEN-LAST:event_tabelaPaisKeyReleased
-
-    private void tabelaEnderecosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaEnderecosKeyReleased
-        this.selecionarTabelas(4);
-        controller.selecionarTabela();
-    }//GEN-LAST:event_tabelaEnderecosKeyReleased
 
     private void comboTurmasExistentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTurmasExistentesActionPerformed
         controller.listarAlunos();
     }//GEN-LAST:event_comboTurmasExistentesActionPerformed
-
-    private void botaoConfigAdicionaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfigAdicionaisActionPerformed
-        //Mantém sempre na tabela de alunos
-        this.trocarTabelas(4);
-        this.selecionarTabelas(4);
-        
-        //Adiciona as informações aos campos
-        controller.setarDatasConfiguracoesAd();
-    }//GEN-LAST:event_botaoConfigAdicionaisActionPerformed
-
-    private void botaoObservacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoObservacaoActionPerformed
-        this.trocarTabelas(4);
-        this.selecionarTabelas(4);
-    }//GEN-LAST:event_botaoObservacaoActionPerformed
 
     private void botaoAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAjudaActionPerformed
         controller.ajuda();
@@ -743,15 +424,9 @@ public class AlunosView extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoAjuda;
-    private javax.swing.JButton botaoAlunos;
-    private javax.swing.JButton botaoConfigAdicionais;
     private javax.swing.JButton botaoEditar;
-    private javax.swing.JButton botaoEndereco;
     private javax.swing.JButton botaoFechar;
     private javax.swing.JButton botaoListar;
-    private javax.swing.JButton botaoObservacao;
-    private javax.swing.JButton botaoPais;
-    private javax.swing.JButton botaoPlanos;
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaobuscar;
     private javax.swing.JTextField campoPesquisa;
@@ -760,110 +435,13 @@ public class AlunosView extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel modoTurma;
     private javax.swing.JScrollPane painelAlunos;
-    private javax.swing.JScrollPane painelEnderecos;
-    private javax.swing.JScrollPane painelPais;
-    private javax.swing.JScrollPane painelPlanos;
     private javax.swing.JLabel planodefundo;
     private javax.swing.JTable tabelaAlunos;
-    private javax.swing.JTable tabelaEnderecos;
-    private javax.swing.JTable tabelaPais;
-    private javax.swing.JTable tabelaPlanos;
     // End of variables declaration//GEN-END:variables
-
-    private void trocarTabelas(int opcao){
-        switch(opcao){
-            case 1:
-                //Desativar visibilidade dos outros botões dos paineis
-                this.botaoAlunos.setVisible(false);
-                this.botaoPlanos.setVisible(false);
-                this.botaoEndereco.setVisible(false);
-                //Desativa vibilidades dos outros paineis
-                this.painelAlunos.setVisible(false);
-                this.painelEnderecos.setVisible(false);
-                this.painelPais.setVisible(false);
-                
-                //Ativa o botão pais e o painel de planos
-                this.botaoPais.setVisible(true);
-                this.painelPlanos.setVisible(true);
-            break;
-            
-            case 2:
-                //Desativa os outros botões dos paineis
-                this.botaoAlunos.setVisible(false);
-                this.botaoPlanos.setVisible(false);
-                this.botaoPais.setVisible(false);
-                
-                //Desativa os outros painéis
-                this.painelAlunos.setVisible(false);
-                this.painelPlanos.setVisible(false);
-                this.painelEnderecos.setVisible(false);
-                
-                //Ativa o botão de endereço e o painel de pais
-                this.botaoEndereco.setVisible(true);
-                this.painelPais.setVisible(true);
-            break;
-            
-            case 3:
-                //Desativa os outros botões dos paineis
-                this.botaoPlanos.setVisible(false);
-                this.botaoPais.setVisible(false);
-                this.botaoEndereco.setVisible(false);
-                
-                //Desativa os outros paineis
-                this.painelAlunos.setVisible(false);
-                this.painelPlanos.setVisible(false);
-                this.painelPais.setVisible(false);
-                
-                //Ativa o botão de alunos e o painel de endereços
-                this.botaoAlunos.setVisible(true);
-                this.painelEnderecos.setVisible(true);
-            break;
-            
-            case 4:
-                //Desativa os outros botões dos paineis
-                this.botaoAlunos.setVisible(false);
-                this.botaoPais.setVisible(false);
-                this.botaoEndereco.setVisible(false);
-                
-                //Desativa os outros paineis
-                this.painelPlanos.setVisible(false);
-                this.painelPais.setVisible(false);
-                this.painelEnderecos.setVisible(false);
-                
-                //Ativa o botão de planos e o painel de alunos
-                this.botaoPlanos.setVisible(true);
-                this.painelAlunos.setVisible(true);
-            break;
-        }
-        
-    }
     
     public void exibeMensagem(String mensagem) {
       JOptionPane.showMessageDialog(null, mensagem);
     }
-    
-    private void setInicialBotoes(){
-        this.botaoPais.setVisible(true);
-        this.painelAlunos.setVisible(true);
-        this.botaoEndereco.setVisible(false);
-        this.painelPais.setVisible(false);
-        this.botaoAlunos.setVisible(false);
-        this.painelEnderecos.setVisible(false);
-        this.painelPlanos.setVisible(false);
-    }
-
-    public JComboBox<String> getComboServicos() {
-        return comboServicos;
-    }
-
-    public JComboBox<String> getComboTurmas() {
-        return comboTurmas;
-    }
-
-    public JComboBox<String> getComboEstado() {
-        return comboEstado;
-    }
-
 
     public JTextField getCampoPesquisa() {
         return campoPesquisa;
@@ -877,28 +455,12 @@ public class AlunosView extends javax.swing.JDialog {
         return tabelaAlunos;
     }
 
-    public JTable getTabelaEnderecos() {
-        return tabelaEnderecos;
-    }
-
-    public JTable getTabelaPais() {
-        return tabelaPais;
-    }
-
-    public JTable getTabelaPlanos() {
-        return tabelaPlanos;
-    }
-
     public int getNumeroTela() {
         return numeroTela;
     }
 
     public JComboBox<String> getComboTurmasExistentes() {
         return comboTurmasExistentes;
-    }
-
-    public JButton getBotaoConfigAdicionais() {
-        return botaoConfigAdicionais;
     }
 
     public PainelAjuda getPainelAjuda() {
@@ -908,55 +470,13 @@ public class AlunosView extends javax.swing.JDialog {
     public JScrollPane getPainelAlunos() {
         return painelAlunos;
     }
-
-    public JScrollPane getPainelEnderecos() {
-        return painelEnderecos;
-    }
-
-    public JScrollPane getPainelPais() {
-        return painelPais;
-    }
-
-    public JScrollPane getPainelPlanos() {
-        return painelPlanos;
+    
+    public Frame getParent() {
+        return parent;
     }
     
-    
-        
-    private void selecionarTabelas(int opcao){
-        switch(opcao){
-            case 1:
-            if(tabelaAlunos.getSelectedRow()>-1){
-            tabelaPlanos.addRowSelectionInterval(tabelaAlunos.getSelectedRow(), tabelaAlunos.getSelectedRow());
-            tabelaPais.addRowSelectionInterval(tabelaAlunos.getSelectedRow(), tabelaAlunos.getSelectedRow());
-            tabelaEnderecos.addRowSelectionInterval(tabelaAlunos.getSelectedRow(), tabelaAlunos.getSelectedRow());
-            }
-            break;
-            
-            case 2:
-            if(tabelaPlanos.getSelectedRow()>-1){
-            tabelaPais.addRowSelectionInterval(tabelaPlanos.getSelectedRow(), tabelaPlanos.getSelectedRow());
-            tabelaEnderecos.addRowSelectionInterval(tabelaPlanos.getSelectedRow(), tabelaPlanos.getSelectedRow());
-            tabelaAlunos.addRowSelectionInterval(tabelaPlanos.getSelectedRow(), tabelaPlanos.getSelectedRow());
-            }
-            break;
-            
-            case 3:
-            if(tabelaPais.getSelectedRow()>-1){
-            tabelaEnderecos.addRowSelectionInterval(tabelaPais.getSelectedRow(), tabelaPais.getSelectedRow());
-            tabelaAlunos.addRowSelectionInterval(tabelaPais.getSelectedRow(), tabelaPais.getSelectedRow());
-            tabelaPlanos.addRowSelectionInterval(tabelaPais.getSelectedRow(), tabelaPais.getSelectedRow());
-            }
-            break;
-            
-            case 4:
-            if(tabelaEnderecos.getSelectedRow()>-1){
-            tabelaAlunos.addRowSelectionInterval(tabelaEnderecos.getSelectedRow(), tabelaEnderecos.getSelectedRow());
-            tabelaPlanos.addRowSelectionInterval(tabelaEnderecos.getSelectedRow(), tabelaEnderecos.getSelectedRow());
-            tabelaPais.addRowSelectionInterval(tabelaEnderecos.getSelectedRow(), tabelaEnderecos.getSelectedRow());
-            }
-            break;
-        }
+    public JLabel getModoTurma() {
+        return modoTurma;
     }
     
     
@@ -992,26 +512,6 @@ public class AlunosView extends javax.swing.JDialog {
                     controller.verificacaoDeTurmaEServico();
                 }
                 controller.removerAluno();
-            }
-        });
-        
-        //passar paineis direita
-        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "RIGHT");
-        meurootpane.getRootPane().getActionMap().put("RIGHT", new AbstractAction("RIGHT") {
-
-            
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                atalhosPaineis(0);
-            }
-        });
-        //passar paineis direita
-        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LEFT");
-        meurootpane.getRootPane().getActionMap().put("LEFT", new AbstractAction("LEFT") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                atalhosPaineis(1);
             }
         });
         
@@ -1081,121 +581,5 @@ public class AlunosView extends javax.swing.JDialog {
                 controller.encerrarPlano();
             }
         });
-    }
-
-
-    public Frame getParent() {
-        return parent;
-    }
-    
-    private void setarComposicaoTabelas(){
-        //Variáveis
-        JFormattedTextField telefonePai = new JFormattedTextField();
-        JFormattedTextField cpfPai = new JFormattedTextField();
-        JFormattedTextField telefoneMae = new JFormattedTextField();
-        JFormattedTextField cpfMae = new JFormattedTextField();
-        JFormattedTextField cep = new JFormattedTextField();
-        
-        try {
-            //Transformação de variáveis
-            cpfPai.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-            cpfMae.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-            telefonePai.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-            telefoneMae.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-            cep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###-###")));
-            comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Nenhum]", "AC", "AL", "AM", "AP", "BA", "CE", 
-            "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RO", "RN", "RR", "RS", "SC", "SE", "SP", "TO" }));
-            
-        } catch (ParseException ex) {
-            gerarLog(ex);
-        }
-        
-        //Alunos
-        tabelaAlunos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboTurmas));
-        tabelaAlunos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JMoneyField()));
-        
-        //Planos
-        tabelaPlanos.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(comboServicos));
-        tabelaPlanos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JMoneyField()));
-        tabelaPlanos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JMoneyField()));
-        tabelaPlanos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new FormatacaodeCamposRestritos(2)));
-        
-        
-        
-        //Pais
-        tabelaPais.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cpfPai));
-        tabelaPais.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(telefonePai));
-        tabelaPais.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(cpfMae));
-        tabelaPais.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(telefoneMae));
-        
-        //Enderecos
-        tabelaEnderecos.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboEstado));
-        tabelaEnderecos.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cep));
-        
-    }
-    
-    
-    private void atalhosPaineis(int leftOrRight){
-        //0 - Direita
-        //1 - Esquerda
-        switch(leftOrRight){
-            case 0:
-                if(painelAlunos.isVisible()){
-                    for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
-                        painelPlanos.getComponent(linhas).setVisible(true);
-                    }
-                    this.trocarTabelas(1);
-                }else if(painelPlanos.isVisible()){
-                    this.trocarTabelas(2);
-                }else if(painelPais.isVisible()){
-                    this.trocarTabelas(3);
-                }else if(painelEnderecos.isVisible()){
-                    for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
-                        painelPlanos.getComponent(linhas).setVisible(false);
-                    }
-                    this.trocarTabelas(4);
-                }
-            break;
-            
-            case 1:
-                if(painelAlunos.isVisible()){
-                    this.trocarTabelas(3);
-                }else if(painelPlanos.isVisible()){
-                    for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
-                        painelPlanos.getComponent(linhas).setVisible(false);
-                    }
-                    this.trocarTabelas(4);
-                }else if(painelPais.isVisible()){
-                    for(int linhas=0; linhas<painelPlanos.getComponentCount(); linhas++){
-                        painelPlanos.getComponent(linhas).setVisible(true);
-                    }
-                    this.trocarTabelas(1);
-                }else if(painelEnderecos.isVisible()){
-                    this.trocarTabelas(2);
-                }
-            break;
-        }
-        
-    }
-
-    public AlunosController getController() {
-        return controller;
-    }
-
-
-
-    public JLabel getModoTurma() {
-        return modoTurma;
-    }
-
-
-    public JButton getBotaoObservacao() {
-        return botaoObservacao;
-    }
-    
-    private void gerarLog(Throwable erro){
-        LogsSystem gerarLog = new LogsSystem();
-        gerarLog.gravarErro(erro);
-        gerarLog.close();
     }
 }

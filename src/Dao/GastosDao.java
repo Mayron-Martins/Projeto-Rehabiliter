@@ -165,6 +165,20 @@ public class GastosDao extends Conexao{
         
     }
     
+    public ArrayList<Gastos> pesquisarPorNome(String motivo){
+       ArrayList <Gastos> gastos = selecionarTodasGastos();
+       ArrayList<Gastos> gastosBuscados = new ArrayList<>();
+       for(Gastos gasto : gastos){
+           if(gasto.getMotivo().toLowerCase().contains(motivo.toLowerCase())== true){
+               gastosBuscados.add(gasto);
+           }
+       }
+       if(gastosBuscados.size()<1){
+           return null;
+       }
+       return gastosBuscados;
+    }
+    
     //Gerar arquivo com o log de erro, caso haja
     private void gerarLog(Throwable erro){
         LogsSystem gerarLog = new LogsSystem();

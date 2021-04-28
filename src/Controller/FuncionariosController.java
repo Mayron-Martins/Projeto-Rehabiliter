@@ -152,9 +152,11 @@ public class FuncionariosController {
     //Buscar Funcionários no campo de busca
     public void buscarFuncionarios(){
         String funcionarioPesquisa = view.getCampoBuscar().getText();
-        ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarPorNome(funcionarioPesquisa);
         if(funcionarioPesquisa.equals("")){listarFuncionarios();}
-        else{this.buscas(funcionarios);}        
+        else{
+            ArrayList <Funcionario> funcionarios = funcionarioDao.pesquisarPorNome(funcionarioPesquisa);
+            this.buscas(funcionarios);
+        }        
     }
     
     //Buscar Aniversariantes

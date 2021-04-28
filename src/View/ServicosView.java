@@ -7,7 +7,6 @@ package View;
 
 import Controller.Paineis.ServicosDetalhesController;
 import Controller.ServicosController;
-import Controller.auxiliar.JMoneyField;
 import View.Paineis.PainelAjuda;
 import View.Paineis.ServicosDetalhes;
 import java.awt.Color;
@@ -15,7 +14,6 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -23,6 +21,7 @@ import javax.swing.JRootPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -61,7 +60,7 @@ public class ServicosView extends javax.swing.JDialog {
         
         this.teclasDeAtalho();
         setarBotaoEditar(false, 0);
-        
+        this.tableResizing();
     }
 
     /**
@@ -396,6 +395,28 @@ public class ServicosView extends javax.swing.JDialog {
 
     public PainelAjuda getPainelAjuda() {
         return painelAjuda;
+    }
+    
+    private void tableResizing(){
+        //Definição de Colunas
+        TableColumn coluna0 = tabelaServicos.getColumn("CodBanco");
+        TableColumn coluna1 = tabelaServicos.getColumn("Nome");
+        TableColumn coluna2 = tabelaServicos.getColumn("Período");
+        TableColumn coluna3 = tabelaServicos.getColumn("Situação");
+        
+        //Tamanhos de colunas
+        int widhtTabela = tabelaServicos.getWidth();
+        int codBanco = 70;
+        int periodo = 120;
+        int situacao = 70;
+        int nome = widhtTabela-codBanco-situacao;
+
+        
+        //Definição de Tamanho Preferencial (Total Tabela = 225)
+        coluna0.setMaxWidth(codBanco);
+        coluna1.setMaxWidth(nome);
+        coluna2.setMaxWidth(periodo);
+        coluna3.setMaxWidth(situacao);
     }
     
     private void setarBotaoEditar(boolean visible, int y){

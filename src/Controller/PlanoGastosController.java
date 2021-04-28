@@ -88,18 +88,14 @@ public class PlanoGastosController {
                    limparTabelaGastos();
                 }
             break;
-        }
-        
-        
-        
-        
+        }    
     }
     
     //Setar Entradas Detalhadas
     protected void setarGastosDetalhados(ArrayList <Gastos> gastos){
         limparTabelaGastos();
         for(Gastos gasto : gastos){
-            Object[] dadosDaTabela = {gasto.getCodBanco(), gasto.getMotivo(), gasto.getValorGasto(), gasto.getDataCadastro()};
+            Object[] dadosDaTabela = {gasto.getCodBanco(), gasto.getMotivo(), gasto.getValorGasto(), gasto.getDataCadastro(), gasto.getStatus()};
             tabelaGastos.addRow(dadosDaTabela);
         }
     }
@@ -151,6 +147,11 @@ public class PlanoGastosController {
         }
         BigDecimal valor = new BigDecimal("0");
         
+        String status = "Diversos";
+        if(view.getComboStatus().getSelectedIndex()>0){
+            status = view.getComboStatus().getSelectedItem().toString();
+        }
+        
         for(int linhas=0; linhas<gastos.size(); linhas++){
             Date dataGasto = gastos.get(linhas).getDataCadastro();
             
@@ -181,7 +182,7 @@ public class PlanoGastosController {
             //Se minha próxima data for diferente da atual, seto o valor na tabela, caso contrário, segue a repetição
             if(dataGasto.compareTo(dataProxima)!=0){
             String dataGastoFormatada = converterData.parseDate(dataGasto);
-            Object[] dadosDaTabela = {codGasto, motivo, valor, dataGastoFormatada};
+            Object[] dadosDaTabela = {codGasto, motivo, valor, dataGastoFormatada, status};
             tabelaGastos.addRow(dadosDaTabela);
             }
         }
@@ -205,6 +206,11 @@ public class PlanoGastosController {
         
         String formaPagamento = view.getComboPagamento().getSelectedItem().toString();
         
+        String status ="";
+        if(view.getComboStatus().getSelectedIndex()>0){
+            status = " AND status = '"+view.getComboStatus().getSelectedItem()+"'";
+        }
+        
         //Se não houver uma data específica ou diária retorna o correspondente àquele período
         switch(periodo){
             case 2:
@@ -225,9 +231,9 @@ public class PlanoGastosController {
         }
         
         if(formaPagamento.equals("[Nenhum]")){
-            return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataPassada+"' AND '"+dataPrincipal+"' AND motivo "+tipo+";");
+            return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE dataGasto BETWEEN '"+dataPassada+"' AND '"+dataPrincipal+"' AND motivo "+tipo+status+";");
         }else{
-            return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE  formaPagamento = '"+formaPagamento+"' AND dataGasto BETWEEN '"+dataPassada+"' AND '"+dataPrincipal+"' AND motivo "+tipo+";");
+            return gastosDao.pesquisarGastos("SELECT * FROM tblGastos WHERE  formaPagamento = '"+formaPagamento+"' AND dataGasto BETWEEN '"+dataPassada+"' AND '"+dataPrincipal+"' AND motivo "+tipo+status+";");
         }         
     }
     
@@ -278,6 +284,21 @@ public class PlanoGastosController {
                 }else{view.exibeMensagem("Selecione uma Linha na Tabela Gastos!");}
             }else{view.exibeMensagem("Permitida Remoção Somente de Gastos!");}
         }else{view.exibeMensagem("Selecione a Exibição Detalhada");}
+    }
+    
+    //Buscar Funcionários no campo de busca
+    public void buscarGasto(){
+        String gastoPesquisa = view.getCampoBuscar().getText();
+        if(gastoPesquisa.equals("")){setarTabelas();}
+        else{
+            ArrayList <Gastos> gastos = gastosDao.pesquisarPorNome(gastoPesquisa);
+            if(gastos!=null){setarGastosDetalhados(gastos);}
+            else{
+                view.exibeMensagem("Sem Dados de Gastos");
+                limparTabelaGastos();
+            }
+            
+        }        
     }
         
     protected long chaveGasto(int codGasto){

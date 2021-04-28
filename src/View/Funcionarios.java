@@ -22,6 +22,7 @@ import javax.swing.JRootPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -63,6 +64,7 @@ public class Funcionarios extends javax.swing.JDialog {
         botaoAjuda.setBackground(new Color(0,0,0,0));
         this.teclasDeAtalho();
         this.setarBotaoEditar(false, 0);
+        this.tableResizing();
     }
 
     /**
@@ -173,7 +175,7 @@ public class Funcionarios extends javax.swing.JDialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, true, false, false
@@ -416,6 +418,28 @@ public class Funcionarios extends javax.swing.JDialog {
 
     public PainelAjuda getPainelAjuda() {
         return painelAjuda;
+    }
+    
+    private void tableResizing(){
+        //Definição de Colunas
+        TableColumn coluna0 = tabelaFuncionarios.getColumn("CodBanco");
+        TableColumn coluna1 = tabelaFuncionarios.getColumn("Nome");
+        TableColumn coluna2 = tabelaFuncionarios.getColumn("Cargo");
+        TableColumn coluna3 = tabelaFuncionarios.getColumn("Situação");
+        
+        //Tamanhos de colunas
+        int widhtTabela = tabelaFuncionarios.getWidth();
+        int codBanco = 70;
+        int cargo = 150;
+        int situacao = 100;
+        int nome = widhtTabela-codBanco-cargo-situacao;
+
+        
+        //Definição de Tamanho Preferencial (Total Tabela = 225)
+        coluna0.setMaxWidth(codBanco);
+        coluna1.setMaxWidth(nome);
+        coluna2.setMaxWidth(cargo);
+        coluna3.setMaxWidth(situacao);
     }
     
     private void setarBotaoEditar(boolean visible, int y){

@@ -8,7 +8,6 @@ package View;
 
 import Controller.Paineis.TurmasDetalhesController;
 import Controller.TurmasController;
-import Controller.auxiliar.FormatacaodeCamposRestritos;
 import View.Paineis.PainelAjuda;
 import View.Paineis.TurmasDetalhes;
 import java.awt.Color;
@@ -16,10 +15,7 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractAction;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -27,6 +23,7 @@ import javax.swing.JRootPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -70,6 +67,7 @@ public class TurmasView extends javax.swing.JDialog {
         
         this.teclasDeAtalho();
         this.setarBotaoEditar(false, 0);
+        this.tableResizing();
     }
 
     /**
@@ -427,6 +425,25 @@ public class TurmasView extends javax.swing.JDialog {
 
     public Frame getParent() {
         return parent;
+    }
+    
+    private void tableResizing(){
+        //Definição de Colunas
+        TableColumn coluna0 = tabelaTurmas.getColumn("CodBanco");
+        TableColumn coluna1 = tabelaTurmas.getColumn("Nome");
+        TableColumn coluna2 = tabelaTurmas.getColumn("Situação");
+        
+        //Tamanhos de colunas
+        int widhtTabela = tabelaTurmas.getWidth();
+        int codBanco = 70;
+        int situacao = 70;
+        int nome = widhtTabela-codBanco-situacao;
+
+        
+        //Definição de Tamanho Preferencial (Total Tabela = 225)
+        coluna0.setMaxWidth(codBanco);
+        coluna1.setMaxWidth(nome);
+        coluna2.setMaxWidth(situacao);
     }
     
     
